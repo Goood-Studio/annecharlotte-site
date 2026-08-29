@@ -39,7 +39,7 @@ export const SITE = {
   // Captation des guides : URL du webhook (n8n) qui reçoit
   // {guide, prenom, email, telephone, consentement}. Tant que c'est vide,
   // le formulaire bascule sur WhatsApp (message prérempli).
-  captureEndpoint: '',
+  captureEndpoint: 'https://n8n.gooodstudio.com/webhook/annecharlotte-guides',
 
   // Cabinets de consultation (adresses publiques, nécessaires au SEO local).
   cabinets: [

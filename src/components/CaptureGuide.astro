@@ -109,6 +109,7 @@ const { guide } = Astro.props;
     font-weight: 700;
     color: var(--rose);
   }
+  .capture-etat :global(a) { color: var(--rose); text-decoration-color: var(--dore); }
 </style>
 
 <script>
@@ -133,6 +134,11 @@ const { guide } = Astro.props;
       }
 
       const endpoint = f.dataset.endpoint;
+      const messageWhatsApp =
+        `Bonjour ! Je veux recevoir le guide « ${donnees.guide} ».` +
+        (donnees.prenom ? ` Je m’appelle ${donnees.prenom}.` : '');
+      const lienWhatsApp = f.dataset.whatsapp + '?text=' + encodeURIComponent(messageWhatsApp);
+
       if (endpoint) {
         try {
           const reponse = await fetch(endpoint, {
@@ -142,13 +148,19 @@ const { guide } = Astro.props;
           });
           if (!reponse.ok) throw new Error(String(reponse.status));
           etat.hidden = false;
-          etat.textContent = donnees.telephone
-            ? 'C’est noté ! Tu reçois le guide sur WhatsApp très vite.'
-            : 'C’est noté ! Le guide arrive dans ta boîte mail.';
+          // Le clic WhatsApp déclenche le message d'accueil automatique
+          // d'Anne-Charlotte (WhatsApp Business) : bienvenue immédiate.
+          etat.innerHTML =
+            'C’est noté ! ' +
+            (donnees.telephone
+              ? 'Tu reçois le guide sur WhatsApp très vite. Pour l’avoir tout de suite : '
+              : 'Le guide arrive par e-mail. Encore plus rapide : ') +
+            `<a href="${lienWhatsApp}" target="_blank" rel="noopener">envoie-moi le message prérempli sur WhatsApp</a>.`;
           f.querySelectorAll('input, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
         } catch {
           etat.hidden = false;
-          etat.textContent = 'Oups, l’envoi a échoué. Réessaie, ou écris directement sur WhatsApp.';
+          etat.innerHTML =
+            `Oups, l’envoi a échoué. Réessaie, ou <a href="${lienWhatsApp}" target="_blank" rel="noopener">demande le guide directement sur WhatsApp</a>.`;
         }
         return;
       }
