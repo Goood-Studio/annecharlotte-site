@@ -1,0 +1,137 @@
+{
+  "_commentaire": "Généré par scripts/sync-notion.mjs depuis la base Notion « FAQ Chatbot ». Ne pas éditer à la main.",
+  "faq": [
+    {
+      "question": "Peux-tu m'aider pour mon syndrome de l'intestin irritable (SII) ?",
+      "reponse": "Oui, c'est ma spécialité. J'accompagne le SII, les ballonnements, le reflux, la constipation et la diarrhée avec une approche evidence-based (dont le protocole FODMAP quand il est pertinent).",
+      "variantes": [
+        "intestin irritable",
+        "ballonnements",
+        "colopathie",
+        "FODMAP",
+        "maux de ventre"
+      ],
+      "categorie": "Troubles digestifs",
+      "lien": "https://www.annecharlotte.be/troubles-digestifs",
+      "priorite": 1
+    },
+    {
+      "question": "Combien coûte une consultation ?",
+      "reponse": "La consultation individuelle (ou à deux) est à 80€. Il existe aussi un accompagnement complet à 290€ par personne pour prendre un objectif à bras-le-corps. Une partie est remboursable selon ta mutuelle.",
+      "variantes": [
+        "tarif",
+        "prix",
+        "combien ça coûte",
+        "coût consultation diététicienne"
+      ],
+      "categorie": "Tarifs & remboursement",
+      "lien": null,
+      "priorite": 1
+    },
+    {
+      "question": "Comment prendre rendez-vous ?",
+      "reponse": "Tu peux réserver directement en ligne : en visio (le plus rapide) ou au cabinet à Malonne. Choisis le créneau qui t'arrange, la confirmation est immédiate.",
+      "variantes": [
+        "prendre rdv",
+        "réserver une consultation",
+        "comment vous contacter",
+        "disponibilités",
+        "agenda"
+      ],
+      "categorie": "RDV & pratique",
+      "lien": "https://cal.com/anne-charlotte-diet/premiers-pas-visio",
+      "priorite": 1
+    },
+    {
+      "question": "Est-ce que tu accompagnes le SOPK et l'endométriose ?",
+      "reponse": "Oui. La santé féminine est mon deuxième pilier : SOPK, endométriose, SPM, alimentation et cycle. On travaille sur ton assiette sans régime punitif.",
+      "variantes": [
+        "sopk",
+        "endométriose",
+        "spm",
+        "syndrome prémenstruel",
+        "hormones",
+        "cycle menstruel"
+      ],
+      "categorie": "Santé féminine",
+      "lien": "https://www.annecharlotte.be/sante-feminine",
+      "priorite": 1
+    },
+    {
+      "question": "C'est quoi l'app pour déculpabiliser son alimentation ?",
+      "reponse": "C'est Gooodeat : une app qui t'aide à mieux manger sans culpabilité, sans compter les calories. Tu peux la télécharger sur iOS et Android.",
+      "variantes": [
+        "application",
+        "gooodeat",
+        "app nutrition",
+        "télécharger l'app"
+      ],
+      "categorie": "Apps",
+      "lien": "https://gooodeat.com",
+      "priorite": 2
+    },
+    {
+      "question": "Je suis diététicien·ne, proposes-tu des formations ?",
+      "reponse": "Oui ! J'ai déjà formé plus de 250 diététicien·nes et j'anime une communauté de pairs : Nutriciens. Tu y trouves formation continue, cas cliniques et entraide.",
+      "variantes": [
+        "formation diététicienne",
+        "formation continue",
+        "communauté diététiciens",
+        "nutriciens"
+      ],
+      "categorie": "Formation diététicien·nes",
+      "lien": "https://nutriciens.com",
+      "priorite": 2
+    },
+    {
+      "question": "Où se trouve le cabinet ?",
+      "reponse": "Le cabinet est à Malonne, à 10-15 minutes de Namur. Et si tu es plus loin (ou pressé·e), toutes les consultations existent aussi en visio.",
+      "variantes": [
+        "adresse cabinet",
+        "où consulter",
+        "Malonne c'est où",
+        "venir en consultation"
+      ],
+      "categorie": "RDV & pratique",
+      "lien": null,
+      "priorite": 2
+    },
+    {
+      "question": "Est-ce que tu fais des consultations en ligne ?",
+      "reponse": "Oui, toutes les consultations sont possibles en visio, où que tu sois. C'est même souvent le plus rapide pour démarrer.",
+      "variantes": [
+        "visio",
+        "téléconsultation",
+        "consultation à distance",
+        "en ligne"
+      ],
+      "categorie": "RDV & pratique",
+      "lien": "https://cal.com/anne-charlotte-diet/premiers-pas-visio",
+      "priorite": 2
+    },
+    {
+      "question": "Est-ce que la mutuelle rembourse les consultations ?",
+      "reponse": "Oui, la plupart des mutuelles belges remboursent une partie des consultations diététiques. Le montant dépend de ta mutuelle : vérifie ton forfait « diététique » ou demande-moi sur WhatsApp.",
+      "variantes": [
+        "remboursement mutuelle",
+        "intervention mutuelle",
+        "diététicienne conventionnée INAMI"
+      ],
+      "categorie": "Tarifs & remboursement",
+      "lien": null,
+      "priorite": 2
+    },
+    {
+      "question": "Combien de temps dure un accompagnement ?",
+      "reponse": "Ça dépend de ton objectif. Un premier bilan suffit parfois à y voir clair ; pour un trouble digestif ou hormonal, on travaille en général sur quelques mois, à ton rythme.",
+      "variantes": [
+        "durée suivi",
+        "combien de séances",
+        "fréquence consultations"
+      ],
+      "categorie": "RDV & pratique",
+      "lien": null,
+      "priorite": 3
+    }
+  ]
+}

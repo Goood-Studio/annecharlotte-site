@@ -1,0 +1,76 @@
+---
+// La page FAQ : le chat en haut (réponse immédiate) + toutes les questions
+// en clair dessous (accordéons). Le contenu visible nourrit le SEO et le
+// JSON-LD FAQPage ; le chat sert l'humain pressé.
+import Base from '../layouts/Base.astro';
+import ChatFaq from '../components/ChatFaq.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import faqData from '../data/faq.json';
+import { faqJsonLd } from '../data/jsonld';
+import { u } from '../data/site';
+
+const faq = faqData.faq;
+
+// Regroupe par catégorie, dans un ordre lisible.
+const ordre = ['RDV & pratique', 'Tarifs & remboursement', 'Troubles digestifs', 'Santé féminine', 'Mieux manger', 'Formation diététicien·nes', 'Apps', 'Autre'];
+const parCat: Record<string, typeof faq> = {};
+for (const f of faq) (parCat[f.categorie ?? 'Autre'] ??= []).push(f);
+const cats = [...ordre.filter((c) => parCat[c]), ...Object.keys(parCat).filter((c) => !ordre.includes(c))];
+
+const jsonLd = [faqJsonLd(faq.map((f) => ({ q: f.question, r: f.reponse })))];
+
+function lienInterne(url: string | null): string | null {
+  if (!url) return null;
+  const m = url.match(/annecharlotte\.be(\/.*)$/);
+  return m ? u(m[1]) : url;
+}
+---
+
+<Base
+  titre="Questions fréquentes | Anne-Charlotte Diététicienne"
+  description="Toutes les réponses sur les consultations avec Anne-Charlotte, diététicienne à Namur : prise de RDV, tarifs, remboursement mutuelle, troubles digestifs, santé féminine, visio. Réponse immédiate."
+  chemin="/faq/"
+  jsonLd={jsonLd}
+>
+  <section class="hero-faq fond-sapin">
+    <div class="contenu">
+      <h1>Tes questions, mes réponses</h1>
+      <p class="hero-sous">
+        Pose ta question à l’assistante ci-dessous pour une réponse immédiate,
+        ou parcours les réponses les plus fréquentes.
+      </p>
+    </div>
+  </section>
+
+  <ChatFaq titre="Demande à l’assistante" />
+
+  {cats.map((cat) => (
+    <section aria-label={cat}>
+      <div class="contenu" data-reveal>
+        <h2>{cat}</h2>
+        <div class="faq-liste">
+          {parCat[cat].map((f) => (
+            <details>
+              <summary>{f.question}</summary>
+              <div class="reponse">
+                <p>{f.reponse}</p>
+                {lienInterne(f.lien) && (
+                  <p><a href={lienInterne(f.lien)}>En savoir plus →</a></p>
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-faq { padding: 56px 0 48px; }
+  .hero-sous { font-size: 18.5px; max-width: 56ch; margin: 0; }
+  section { padding: 34px 0; }
+  .hero-faq { padding: 56px 0 48px; }
+</style>

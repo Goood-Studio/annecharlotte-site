@@ -103,6 +103,7 @@ const cheminsHistoriques = [
   'technique/politique-confidentialite/index.html',
   'technique/conditions-generales-utilisation/index.html',
   'articles/index.html',
+  'faq/index.html',
   'guides/index.html',
   'formation-dieteticiennes/index.html',
   'apps/index.html',

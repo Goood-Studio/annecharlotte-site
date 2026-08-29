@@ -6,6 +6,7 @@ import Base from '../layouts/Base.astro';
 import Tarifs from '../components/Tarifs.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
+import ChatFaq from '../components/ChatFaq.astro';
 import villesData from '../data/villes.json';
 import articlesData from '../data/articles.json';
 import { SITE, u } from '../data/site';
@@ -171,6 +172,8 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
       </div>
     </div>
   </section>
+
+  <ChatFaq />
 
   <CtaFinal />
 </Base>

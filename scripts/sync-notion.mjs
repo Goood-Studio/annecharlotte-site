@@ -13,6 +13,7 @@ const TOKEN = process.env.NOTION_TOKEN;
 const VILLES_DB = 'f502a218-6a01-485b-a16c-2bb40a2f7983';
 const ARTICLES_DB = '23f665c1-a07a-4f4d-aa4b-0d137e8d267f';
 const GUIDES_DB = '5defdb51-6534-48be-8b85-8afa11be2d60';
+const FAQ_DB = '04ffef32-79bc-4083-8ed7-e248b5c65c55';
 
 if (!TOKEN) {
   console.error('NOTION_TOKEN manquant. Lance via doppler ou définis le secret CI.');
@@ -196,6 +197,26 @@ for (const ligne of await toutesLesLignes(GUIDES_DB)) {
   });
 }
 
+/* ---------- FAQ CHATBOT ---------- */
+// On sert toute question qui a une réponse (statut Brouillon ou Validée AC) :
+// le chat doit fonctionner tout de suite. AC affine ensuite dans Notion.
+const faq = [];
+for (const ligne of await toutesLesLignes(FAQ_DB)) {
+  const p = ligne.properties;
+  const question = texte(p['Question']);
+  const reponse = texte(p['Réponse']);
+  if (!question || !reponse) continue;
+  faq.push({
+    question,
+    reponse,
+    variantes: texte(p['Variantes']).split(';').map((s) => s.trim()).filter(Boolean),
+    categorie: p['Catégorie']?.select?.name ?? null,
+    lien: p['Lien utile']?.url ?? null,
+    priorite: p['Priorité']?.number ?? 99,
+  });
+}
+faq.sort((a, b) => a.priorite - b.priorite);
+
 /* ---------- ÉCRITURE ---------- */
 const entete = (source) =>
   `Généré par scripts/sync-notion.mjs depuis la base Notion « ${source} ». Ne pas éditer à la main.`;
@@ -203,8 +224,9 @@ const entete = (source) =>
 writeFileSync('src/data/villes.json', JSON.stringify({ _commentaire: entete('Villes — pages locales'), villes }, null, 2) + '\n');
 writeFileSync('src/data/articles.json', JSON.stringify({ _commentaire: entete('Articles — blog'), articles }, null, 2) + '\n');
 writeFileSync('src/data/guides.json', JSON.stringify({ _commentaire: entete('Guides — lead magnets'), guides }, null, 2) + '\n');
+writeFileSync('src/data/faq.json', JSON.stringify({ _commentaire: entete('FAQ Chatbot'), faq }, null, 2) + '\n');
 
-console.log(`✅ ${villes.length} villes, ${articles.length} articles, ${guides.length} guides écrits dans src/data/.`);
+console.log(`✅ ${villes.length} villes, ${articles.length} articles, ${guides.length} guides, ${faq.length} FAQ écrits dans src/data/.`);
 if (villesIgnorees.length) {
   console.log(`⚠️ ${villesIgnorees.length} ville(s) au statut Publiée mais incomplète(s), ignorée(s) :`);
   for (const v of villesIgnorees) console.log(' - ' + v);

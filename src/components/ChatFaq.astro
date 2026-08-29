@@ -1,0 +1,349 @@
+---
+// Le chat FAQ : répond aux questions courantes tout de suite, sans serveur.
+// Les réponses viennent de la base Notion « FAQ Chatbot » (faq.json au build).
+// Le matching se fait dans le navigateur (question + variantes). Aucune
+// réponse trouvée → renvoi vers le WhatsApp d'Anne-Charlotte, avec la
+// question de la personne préremplie. Zéro coût, zéro donnée qui fuit.
+import faqData from '../data/faq.json';
+import { SITE } from '../data/site';
+
+interface Props {
+  titre?: string;
+  compact?: boolean;
+}
+const { titre = 'Une question ? Réponse tout de suite', compact = false } = Astro.props;
+
+const faq = faqData.faq;
+// Les puces de démarrage : les questions prioritaires.
+const suggestions = faq.filter((f) => f.priorite <= 2).slice(0, 5);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<section class={'chat-faq' + (compact ? ' chat-compact' : '')} aria-labelledby="titre-chat">
+  <div class="contenu">
+    <h2 id="titre-chat">{titre}</h2>
+    <p class="chat-intro">
+      Pose ta question sur les consultations, les tarifs, la digestion, les
+      hormones… Je te réponds dans la seconde. Et si je sèche, Anne-Charlotte
+      prend le relais sur WhatsApp.
+    </p>
+
+    <div
+      class="chat"
+      data-base={base}
+      data-whatsapp={SITE.whatsapp}
+      data-faq={JSON.stringify(faq)}
+    >
+      <div class="chat-fil" role="log" aria-live="polite" aria-label="Conversation">
+        <div class="bulle bulle-ac">
+          <span class="chat-avatar" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="30" height="30">
+              <ellipse cx="39" cy="26" rx="7.5" ry="12" fill="#16352C" transform="rotate(-32 39 26)"/>
+              <ellipse cx="58" cy="22" rx="6.5" ry="11" fill="#B98D45" transform="rotate(18 58 22)"/>
+              <circle cx="48" cy="64" r="30" fill="#DE9CAA"/>
+              <circle cx="52" cy="60" r="27" fill="#F0C3CB"/>
+              <ellipse cx="43" cy="50" rx="9" ry="7" fill="#FAF5EE" opacity="0.55" transform="rotate(-30 43 50)"/>
+            </svg>
+          </span>
+          <div class="bulle-texte">
+            <p>Hello&nbsp;! Ici l’assistante d’Anne-Charlotte 👋 Sur quoi puis-je t’aider&nbsp;?</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-suggestions" aria-label="Questions fréquentes">
+        {suggestions.map((s) => (
+          <button type="button" class="chip" data-question={s.question}>{s.question}</button>
+        ))}
+      </div>
+
+      <form class="chat-saisie">
+        <label class="lecteur-ecran" for="chat-input">Ta question</label>
+        <input
+          type="text"
+          id="chat-input"
+          name="q"
+          autocomplete="off"
+          placeholder="Écris ta question ici…"
+        />
+        <button type="submit" class="chat-envoyer" aria-label="Envoyer">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chat-faq { background: var(--ecru-2); }
+  .chat-intro { color: var(--encre-2); max-width: 60ch; margin-bottom: 22px; }
+
+  .chat {
+    max-width: 640px;
+    background: var(--blanc);
+    border: 1px solid var(--ligne);
+    border-radius: var(--rayon-grand);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .chat-fil {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 420px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+  .bulle { display: flex; gap: 10px; align-items: flex-end; }
+  .bulle-ac { align-self: flex-start; max-width: 92%; }
+  .bulle-user { align-self: flex-end; max-width: 88%; flex-direction: row-reverse; }
+  .chat-avatar {
+    flex: none;
+    width: 40px; height: 40px;
+    border-radius: 999px;
+    background: var(--ecru);
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--ligne);
+  }
+  .bulle-texte {
+    background: var(--ecru);
+    border-radius: 16px 16px 16px 4px;
+    padding: 12px 15px;
+  }
+  .bulle-texte p { margin: 0 0 8px; }
+  .bulle-texte p:last-child { margin: 0; }
+  .bulle-user .bulle-texte {
+    background: var(--sapin);
+    color: var(--ecru);
+    border-radius: 16px 16px 4px 16px;
+  }
+  .bulle-lien {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-weight: 700;
+    color: var(--sapin);
+    text-decoration: underline;
+    text-decoration-color: var(--rose-fort);
+    text-underline-offset: 3px;
+  }
+  .bulle-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    background: var(--whatsapp);
+    color: #fff;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-weight: 700;
+    text-decoration: none;
+    min-height: 44px;
+  }
+  .bulle-wa:hover { color: #fff; background: #17924a; }
+
+  .chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    border: 1.5px solid var(--ligne);
+    background: var(--ecru);
+    color: var(--sapin);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: var(--police-texte);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: 40px;
+    text-align: left;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .chip:hover { border-color: var(--dore); background: var(--blanc); }
+
+  .chat-saisie { display: flex; gap: 8px; }
+  .chat-saisie input {
+    flex: 1;
+    min-height: 52px;
+    border-radius: 999px;
+    border: 2px solid var(--ligne);
+    background: var(--ecru);
+    font-family: var(--police-texte);
+    font-size: 16.5px;
+    padding: 12px 20px;
+    color: var(--encre);
+  }
+  .chat-saisie input:focus-visible { outline: 3px solid var(--dore); outline-offset: 1px; }
+  .chat-envoyer {
+    flex: none;
+    width: 52px; height: 52px;
+    border-radius: 999px;
+    border: 0;
+    background: var(--sapin);
+    color: var(--ecru);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s ease;
+  }
+  .chat-envoyer:hover { background: var(--sapin-2); }
+
+  .lecteur-ecran {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .chat-compact { background: transparent; }
+  .chat-compact .contenu { padding-left: 0; padding-right: 0; }
+</style>
+
+<script>
+  function normaliser(s: string): string {
+    return s
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  const STOP = new Set([
+    'est', 'que', 'qui', 'quoi', 'une', 'des', 'les', 'pour', 'avec', 'mon',
+    'mes', 'ton', 'tes', 'ma', 'ta', 'ce', 'cet', 'cette', 'the', 'and',
+    'dans', 'sur', 'par', 'pas', 'plus', 'vous', 'nous', 'elle', 'ils',
+    'je', 'tu', 'il', 'de', 'du', 'la', 'le', 'un', 'et', 'ou', 'a', 'as',
+    'ai', 'en', 'au', 'aux', 'se', 'sa', 'son', 'ses', 'y', 'j', 't', 'c',
+    // Verbes et mots trop génériques : ils ne doivent pas déclencher un match.
+    'aider', 'aide', 'aides', 'aidee', 'faire', 'fais', 'fait', 'veux',
+    'peux', 'peut', 'besoin', 'comment', 'quand', 'quel', 'quelle', 'avoir',
+    'etre', 'aussi', 'tout', 'tous', 'toute', 'toutes', 'savoir', 'dire',
+  ]);
+
+  function motsUtiles(s: string): string[] {
+    return normaliser(s)
+      .split(' ')
+      .filter((m) => m.length >= 3 && !STOP.has(m));
+  }
+
+  document.querySelectorAll('.chat').forEach((racine) => {
+    const el = racine as HTMLElement;
+    const faq = JSON.parse(el.dataset.faq || '[]');
+    const base = el.dataset.base || '';
+    const whatsapp = el.dataset.whatsapp || '';
+    const fil = el.querySelector('.chat-fil') as HTMLElement;
+    const form = el.querySelector('.chat-saisie') as HTMLFormElement;
+    const input = el.querySelector('#chat-input') as HTMLInputElement;
+
+    // Pré-calcule le sac de mots de chaque entrée.
+    const index = faq.map((f: any) => ({
+      ...f,
+      sac: new Set(motsUtiles(f.question + ' ' + (f.variantes || []).join(' '))),
+      normQ: normaliser(f.question),
+    }));
+
+    function lienInterne(url: string): string {
+      // Un lien vers annecharlotte.be devient relatif (marche en recette).
+      const m = url.match(/annecharlotte\.be(\/.*)$/);
+      if (m) return base + m[1];
+      return url;
+    }
+
+    function echapper(s: string): string {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    function ajouterBulle(html: string, qui: 'ac' | 'user') {
+      const bulle = document.createElement('div');
+      bulle.className = 'bulle bulle-' + qui;
+      if (qui === 'ac') {
+        bulle.innerHTML =
+          '<span class="chat-avatar" aria-hidden="true">' +
+          '<svg viewBox="0 0 100 100" width="30" height="30">' +
+          '<ellipse cx="39" cy="26" rx="7.5" ry="12" fill="#16352C" transform="rotate(-32 39 26)"/>' +
+          '<ellipse cx="58" cy="22" rx="6.5" ry="11" fill="#B98D45" transform="rotate(18 58 22)"/>' +
+          '<circle cx="48" cy="64" r="30" fill="#DE9CAA"/>' +
+          '<circle cx="52" cy="60" r="27" fill="#F0C3CB"/>' +
+          '<ellipse cx="43" cy="50" rx="9" ry="7" fill="#FAF5EE" opacity="0.55" transform="rotate(-30 43 50)"/>' +
+          '</svg></span><div class="bulle-texte">' + html + '</div>';
+      } else {
+        bulle.innerHTML = '<div class="bulle-texte">' + html + '</div>';
+      }
+      fil.appendChild(bulle);
+      fil.scrollTop = fil.scrollHeight;
+    }
+
+    function repondre(question: string) {
+      ajouterBulle('<p>' + echapper(question) + '</p>', 'user');
+      const mots = motsUtiles(question);
+      const nq = normaliser(question);
+
+      let meilleur: any = null;
+      let meilleurScore = 0;
+      let meilleurSolide = false;
+      for (const e of index) {
+        let score = 0;
+        let exacts = 0; // mots-clés réellement partagés (signal fiable)
+        // Correspondance forte : la question tapée contient/est contenue.
+        const substring = nq.length >= 6 && (e.normQ.includes(nq) || nq.includes(e.normQ));
+        if (substring) score += 5;
+        for (const m of mots) {
+          if (e.sac.has(m)) { score += 2; exacts += 1; }
+          // Partiel : seulement sur des mots assez longs, pour éviter le bruit.
+          else if (m.length >= 5 && [...e.sac].some((x: string) => x.length >= 5 && (x.includes(m) || m.includes(x)))) {
+            score += 1;
+          }
+        }
+        const solide = exacts >= 1 || substring;
+        if (score > meilleurScore || (score === meilleurScore && meilleur && e.priorite < meilleur.priorite)) {
+          meilleur = e;
+          meilleurScore = score;
+          meilleurSolide = solide;
+        }
+      }
+
+      setTimeout(() => {
+        // On ne répond que si un vrai mot-clé est partagé : sinon, WhatsApp.
+        if (meilleur && meilleurSolide && meilleurScore >= 2) {
+          let html = '<p>' + echapper(meilleur.reponse) + '</p>';
+          if (meilleur.lien) {
+            html += '<a class="bulle-lien" href="' + lienInterne(meilleur.lien) + '">En savoir plus →</a>';
+          }
+          ajouterBulle(html, 'ac');
+        } else {
+          const lien = whatsapp + '?text=' + encodeURIComponent(
+            'Bonjour ! J’ai une question : ' + question
+          );
+          ajouterBulle(
+            '<p>Bonne question ! Je préfère laisser Anne-Charlotte te répondre elle-même, pour être sûre de bien t’aider.</p>' +
+            '<a class="bulle-wa" href="' + lien + '" target="_blank" rel="noopener">' +
+            '<svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M16 2.9C8.8 2.9 3 8.7 3 15.9c0 2.3.6 4.5 1.8 6.5L3 29.1l6.9-1.8c1.9 1 4 1.6 6.1 1.6 7.2 0 13-5.8 13-13S23.2 2.9 16 2.9zm5.9 15.7c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.6.1-.2.1-.4 0-.6-.1-.2-.7-1.8-1-2.4-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.4c.2.2 2.3 3.5 5.5 4.9 3.2 1.4 3.2.9 3.8.9.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5z"/></svg>' +
+            'Écrire à Anne-Charlotte</a>',
+            'ac'
+          );
+        }
+      }, 350);
+    }
+
+    el.querySelectorAll('.chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const q = (chip as HTMLElement).dataset.question || '';
+        repondre(q);
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = input.value.trim();
+      if (!q) return;
+      repondre(q);
+      input.value = '';
+    });
+  });
+</script>
