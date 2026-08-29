@@ -1,0 +1,92 @@
+---
+import villesData from '../data/villes.json';
+import { SITE, u } from '../data/site';
+
+const villes = villesData.villes;
+const annee = new Date().getFullYear();
+---
+
+<footer class="pied fond-sapin">
+  <div class="contenu">
+    <div class="colonnes">
+      <div>
+        <p class="pied-intro">
+          <strong class="pied-nom">Anne-Charlotte Jalhay</strong><br />
+          Diététicienne passionnée pour celles et ceux qui veulent (re)trouver du
+          plaisir à manger.
+        </p>
+        <p>
+          <a href={SITE.whatsappMessage}>WhatsApp : {SITE.telephone}</a><br />
+          <a href={'mailto:' + SITE.email}>{SITE.email}</a>
+        </p>
+      </div>
+
+      <nav aria-label="Accompagnements">
+        <h3 class="pied-titre">Ici</h3>
+        <a href={u('/troubles-digestifs/')}>Troubles digestifs</a>
+        <a href={u('/sante-feminine/')}>Santé féminine</a>
+        <a href={u('/mieux-manger/')}>Mieux manger</a>
+        <a href={u('/parcours/')}>Mon parcours</a>
+        <a href={u('/contact/')}>Me contacter</a>
+      </nav>
+
+      <nav aria-label="Consultations par ville">
+        <h3 class="pied-titre">Près de chez toi</h3>
+        {villes.map((v) => <a href={u('/' + v.slug + '/')}>Diététicienne {v.ville}</a>)}
+      </nav>
+
+      <nav aria-label="Liens utiles">
+        <h3 class="pied-titre">Toujours utile</h3>
+        <a href={SITE.rdvVisio}>Prendre RDV en ligne</a>
+        <a href={SITE.gooodeat}>L’app Gooodeat</a>
+        <a href={SITE.nutriciens}>Communauté Nutriciens</a>
+        <a href={u('/technique/politique-confidentialite/')}>Politique de confidentialité</a>
+        <a href={u('/technique/conditions-generales-utilisation/')}>Conditions d’utilisation</a>
+      </nav>
+    </div>
+
+    <p class="pied-legal">
+      {annee} © un site Goood Studio, par Anne-Charlotte &amp; Valentin. Tous droits réservés.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .pied { padding: 44px 0 28px; }
+  .colonnes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  @media (min-width: 760px) {
+    .colonnes { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 20px; }
+  }
+  .pied-nom {
+    font-family: var(--police-titre);
+    font-size: 20px;
+    color: var(--ecru);
+    font-weight: 400;
+  }
+  .pied-titre {
+    font-family: var(--police-texte);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin: 0 0 10px;
+  }
+  nav { display: flex; flex-direction: column; gap: 2px; }
+  nav a {
+    color: #E6DFD1;
+    text-decoration: none;
+    padding: 6px 0;
+    font-size: 15.5px;
+  }
+  nav a:hover { color: var(--rose); text-decoration: underline; }
+  .pied-legal {
+    margin: 34px 0 0;
+    font-size: 13.5px;
+    color: #A8B5AC;
+  }
+</style>

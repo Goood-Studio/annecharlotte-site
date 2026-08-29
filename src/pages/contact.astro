@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import FaqDiet from '../components/FaqDiet.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE } from '../data/site';
+import { cabinetJsonLd, faqJsonLd } from '../data/jsonld';
+import { FAQ_DIET } from '../data/contenu';
+
+const siteUrl =
+  (import.meta.env.SITE ?? '').replace(/\/$/, '') +
+  import.meta.env.BASE_URL.replace(/\/$/, '') +
+  '/contact/';
+
+const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonLd(FAQ_DIET)];
+---
+
+<Base
+  titre="Contact et prise de RDV | Anne-Charlotte Diététicienne"
+  description="Prendre rendez-vous avec Anne-Charlotte, diététicienne à Namur et Malonne : en ligne (le plus rapide), au cabinet, par téléphone ou WhatsApp au +32 472 62 91 95."
+  chemin="/contact/"
+  jsonLd={jsonLd}
+>
+  <section class="hero-contact fond-sapin">
+    <div class="contenu">
+      <span class="etiquette">À l’écoute de tes besoins</span>
+      <h1>Discutons, dès aujourd’hui</h1>
+      <p>Choisis ce qui est le plus simple pour toi : tout marche.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu">
+      <div class="grille-2 moyens">
+        <div class="carte moyen">
+          <h2>En ligne <span class="pastille">plus rapide</span></h2>
+          <p>
+            Tu choisis ton créneau, la confirmation est immédiate. En visio ou
+            au cabinet.
+          </p>
+          <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>Prendre RDV en visio</a>
+        </div>
+
+        <div class="carte moyen">
+          <h2>Téléphone ou WhatsApp</h2>
+          <p>
+            Une question avant de réserver ? Écris-moi ou appelle-moi, je te
+            réponds directement.
+          </p>
+          <a class="btn btn-contour btn-bloc" href={SITE.whatsappMessage}>
+            WhatsApp : {SITE.telephone}
+          </a>
+        </div>
+
+        {SITE.cabinets.map((cabinet) => (
+          <div class="carte moyen">
+            <h2>{cabinet.nom}</h2>
+            <p>
+              {cabinet.rue}, {cabinet.codePostal} {cabinet.ville} (BE)<br />
+              {SITE.horaires}
+            </p>
+            <a class="btn btn-contour btn-bloc" href={cabinet.rdv}>
+              Prendre RDV à {cabinet.ville}
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <p class="email-ligne">
+        Par e-mail : <a href={'mailto:' + SITE.email}>{SITE.email}</a>
+      </p>
+    </div>
+  </section>
+
+  <FaqDiet />
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-contact { padding: 52px 0 40px; }
+  .hero-contact h1 { color: var(--ecru); }
+  .moyens { margin-top: 6px; }
+  .moyen { display: flex; flex-direction: column; }
+  .moyen h2 {
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .moyen .btn { margin-top: auto; }
+  .email-ligne { margin-top: 20px; color: var(--encre-2); }
+</style>

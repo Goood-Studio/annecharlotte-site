@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, u } from '../data/site';
+---
+
+<Base
+  titre="Page introuvable | Anne-Charlotte Diététicienne"
+  description="Cette page n'existe pas ou plus. Retrouve l'accueil, les accompagnements ou prends directement rendez-vous en ligne."
+  chemin="/404/"
+  noindex={true}
+>
+  <section class="centre">
+    <div class="contenu">
+      <h1>Oups, cette page n’existe pas (ou plus)</h1>
+      <p>Pas de panique : tout ce qui compte est à un clic.</p>
+      <div class="boutons-404">
+        <a class="btn btn-principal" href={u('/')}>Retour à l’accueil</a>
+        <a class="btn btn-rose" href={SITE.rdvVisio}>Prendre RDV en ligne</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  section { padding: 90px 0; }
+  .boutons-404 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+</style>

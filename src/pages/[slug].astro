@@ -1,0 +1,183 @@
+---
+// Le gabarit des pages villes. Une page par ville publiée dans le CMS Notion
+// (snapshot : src/data/villes.json). La structure est commune, les champs
+// locaux (intro, quartiers, accès, FAQ locale) rendent chaque page unique.
+import Base from '../layouts/Base.astro';
+import Tarifs from '../components/Tarifs.astro';
+import FaqDiet from '../components/FaqDiet.astro';
+import Nutriciens from '../components/Nutriciens.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import villesData from '../data/villes.json';
+import { SITE, u } from '../data/site';
+import { faqJsonLd, villeJsonLd } from '../data/jsonld';
+import { FAQ_DIET, SERVICES } from '../data/contenu';
+
+export function getStaticPaths() {
+  return villesData.villes.map((ville) => ({
+    params: { slug: ville.slug },
+    props: { ville },
+  }));
+}
+
+const { ville } = Astro.props;
+
+const siteUrl =
+  (import.meta.env.SITE ?? '').replace(/\/$/, '') +
+  import.meta.env.BASE_URL.replace(/\/$/, '') +
+  '/' + ville.slug + '/';
+
+const jsonLd = [
+  villeJsonLd(ville.ville, siteUrl),
+  faqJsonLd([...ville.faqLocale, ...FAQ_DIET]),
+];
+
+const autresVilles = villesData.villes.filter((v) => v.slug !== ville.slug);
+---
+
+<Base
+  titre={ville.metaTitle}
+  description={ville.metaDescription}
+  chemin={'/' + ville.slug + '/'}
+  jsonLd={jsonLd}
+>
+  <!-- Hero local -->
+  <section class="hero-ville fond-sapin">
+    <div class="contenu">
+      <span class="etiquette">Diététicienne près de chez toi</span>
+      <h1>Ta diététicienne à {ville.ville}</h1>
+      <p class="chapeau">
+        Diététicienne spécialisée en <strong>troubles digestifs</strong> et
+        <strong>santé féminine</strong>. Ballonnements, diarrhée, SII,
+        endométriose, SOPK, troubles hormonaux ? Je t’accompagne vers un
+        mieux-être digestif et hormonal, {ville.cabinetSurPlace ? 'en cabinet ou en visio' : 'en cabinet près de chez toi ou en visio'}.
+      </p>
+      <p class="intro-locale">{ville.introLocale}</p>
+      <div class="hero-boutons">
+        <a class="btn btn-rose" href={SITE.rdvVisio}>
+          Prendre RDV en ligne <span class="pastille">plus rapide</span>
+        </a>
+        <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
+      </div>
+      <p class="hero-stats">
+        <span><strong>{SITE.statsPatients}</strong> patient·es accompagné·es</span>
+        <span><strong>{SITE.statsDiet}</strong> diététicien·nes formées</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Infos pratiques locales -->
+  <section aria-labelledby="titre-pratique">
+    <div class="contenu">
+      <span class="etiquette">En pratique</span>
+      <h2 id="titre-pratique">Consulter depuis {ville.ville}</h2>
+      <div class="grille-2">
+        <div class="carte">
+          <h3>Comment venir (ou pas)</h3>
+          <p>{ville.acces}</p>
+          <p><strong>Horaires :</strong> {SITE.horaires}</p>
+        </div>
+        <div class="carte">
+          <h3>La zone que je couvre</h3>
+          <p>{ville.quartiers}.</p>
+          <p>
+            Et si tu es ailleurs : la visio marche partout, le suivi est
+            exactement le même.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ce que je propose -->
+  <section aria-labelledby="titre-services">
+    <div class="contenu">
+      <span class="etiquette">Ce que je te propose</span>
+      <h2 id="titre-services">Un accompagnement complet, à ton rythme</h2>
+      <div class="grille-3">
+        {SERVICES.map((service) => (
+          <div class="carte">
+            <h3>{service.titre}</h3>
+            <p>{service.texte}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ locale -->
+  <section aria-labelledby="titre-faq-locale">
+    <div class="contenu">
+      <span class="etiquette">Questions fréquentes à {ville.ville}</span>
+      <h2 id="titre-faq-locale">On me demande souvent</h2>
+      <div class="faq-liste">
+        {ville.faqLocale.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <div class="reponse"><p>{item.r}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Tarifs />
+  <FaqDiet />
+  <Nutriciens />
+
+  <!-- Maillage : les villes voisines -->
+  <section aria-labelledby="titre-voisines">
+    <div class="contenu">
+      <h2 id="titre-voisines">Je consulte aussi près de chez toi</h2>
+      <div class="villes-liens">
+        {autresVilles.map((v) => (
+          <a class="ville-lien" href={u('/' + v.slug + '/')}>Diététicienne {v.ville}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-ville { padding: 52px 0; }
+  .hero-ville h1 { color: var(--ecru); }
+  .chapeau { font-size: 18px; }
+  .intro-locale {
+    border-left: 4px solid var(--rose);
+    padding-left: 16px;
+    font-size: 17px;
+    color: #F3EDE1;
+  }
+  .hero-boutons { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 14px; }
+  .btn-contour-clair {
+    background: transparent;
+    color: var(--ecru);
+    border-color: var(--ecru);
+  }
+  .btn-contour-clair:hover { background: var(--ecru); color: var(--sapin); }
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    color: var(--rose);
+    font-size: 15px;
+    margin: 0;
+  }
+  .hero-stats strong { color: var(--rose); font-size: 18px; }
+  .faq-liste { margin-top: 16px; max-width: 780px; }
+  .villes-liens { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .ville-lien {
+    background: var(--blanc);
+    border: 1px solid var(--ligne);
+    border-radius: 999px;
+    padding: 10px 18px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--sapin);
+  }
+  .ville-lien:hover { border-color: var(--dore); }
+</style>

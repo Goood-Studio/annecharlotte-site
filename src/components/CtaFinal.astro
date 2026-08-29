@@ -1,0 +1,28 @@
+---
+import { SITE } from '../data/site';
+---
+
+<section class="cta-final centre" aria-labelledby="titre-cta-final">
+  <div class="contenu">
+    <h2 id="titre-cta-final">Prêt·e à (re)trouver du plaisir à manger ?</h2>
+    <p>À ton rythme, avec le sourire.</p>
+    <div class="cta-boutons">
+      <a class="btn btn-principal" href={SITE.rdvVisio}>
+        Prendre RDV en ligne <span class="pastille">plus rapide</span>
+      </a>
+      <a class="btn btn-contour" href={SITE.rdvMalonne}>Prendre RDV à Malonne</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final { background: var(--rose); }
+  .cta-final h2, .cta-final p { color: var(--sapin); }
+  .cta-boutons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+</style>

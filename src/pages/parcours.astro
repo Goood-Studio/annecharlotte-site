@@ -1,0 +1,124 @@
+---
+// Mon parcours : le copy du site actuel, repris et aéré, avec un vrai H1.
+import Base from '../layouts/Base.astro';
+import Nutriciens from '../components/Nutriciens.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE, u } from '../data/site';
+---
+
+<Base
+  titre="Mon parcours | Anne-Charlotte Diététicienne"
+  description="Diététicienne troubles digestifs et santé féminine. Ma formation : Institut Paul Lambin à Bruxelles, nutrition du sportif à l'UCL, syndrome de l'intestin irritable (Monash University), alimentation durable et prise en charge des menstruations au SIIN."
+  chemin="/parcours/"
+>
+  <section class="hero-parcours fond-sapin">
+    <div class="contenu">
+      <span class="etiquette">La passion</span>
+      <h1>Écouter, comprendre, accompagner</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu recit">
+      <img
+        class="portrait"
+        src={u('/img/hero-900.jpg')}
+        alt="Anne-Charlotte Jalhay, diététicienne"
+        loading="lazy"
+        width="360"
+        height="480"
+      />
+      <div>
+        <p>
+          Toute petite, je me nourrissais principalement de tartines de choco
+          (👋 Nutella) et de pâtes au ketchup. C’est lors de mon parcours
+          scientifique que j’ai eu le déclic, en comprenant réellement comment
+          fonctionne le corps humain.
+        </p>
+        <p>
+          Depuis, je me forme continuellement afin de rester à jour et
+          d’apporter le meilleur des accompagnements à mes patient·es. Je veux
+          que chacune et chacun retrouve <strong>de la sérénité et du plaisir</strong>
+          face à son alimentation quotidienne.
+        </p>
+        <p>
+          Plus que jamais, l’alimentation de tous les jours est galvaudée par
+          une multitude de régimes, plans et autres restrictions. À mon sens, il
+          s’agit plutôt d’ouverture d’esprit, de découvertes, de saveurs et de
+          plaisir.
+        </p>
+        <p>
+          Par l’écoute active de l’humain, par les goûts et par une pratique à
+          jour basée sur les recommandations scientifiques précises, je vise une
+          éducation nutritionnelle <strong>positive, durable et simple</strong>,
+          pour un vrai impact santé au quotidien. Tout ça avec le sourire
+          communicateur, du franc-parler et de la bienveillance.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="titre-formations">
+    <div class="contenu">
+      <span class="etiquette">Diététicienne agréée</span>
+      <h2 id="titre-formations">Mes formations</h2>
+      <div class="grille-2">
+        <div class="carte">
+          <h3>Bachelier en diététique</h3>
+          <p>Institut Paul Lambin, Bruxelles. Le diplôme reconnu qui protège le titre de diététicienne en Belgique.</p>
+        </div>
+        <div class="carte">
+          <h3>Nutrition du sportif</h3>
+          <p>UCLouvain. Comprendre les besoins spécifiques des corps qui bougent.</p>
+        </div>
+        <div class="carte">
+          <h3>Syndrome de l’intestin irritable</h3>
+          <p>Monash University, la référence mondiale du protocole FODMAP pour le SII.</p>
+        </div>
+        <div class="carte">
+          <h3>Alimentation durable et menstruations</h3>
+          <p>SIIN. Alimentation durable et prise en charge nutritionnelle du cycle menstruel.</p>
+        </div>
+      </div>
+      <p class="stats-parcours">
+        <span><strong>{SITE.statsPatients}</strong> patient·es accompagné·es</span>
+        <span><strong>{SITE.statsDiet}</strong> diététicien·nes formées</span>
+        <span><strong>+3 h</strong> de formation chaque semaine</span>
+      </p>
+    </div>
+  </section>
+
+  <Nutriciens />
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-parcours { padding: 52px 0 44px; }
+  .hero-parcours h1 { color: var(--ecru); }
+  .recit {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 26px;
+    align-items: start;
+  }
+  @media (min-width: 800px) { .recit { grid-template-columns: 320px 1fr; } }
+  .portrait {
+    border-radius: var(--rayon-grand);
+    object-fit: cover;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 3 / 4;
+  }
+  .stats-parcours {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 30px;
+    margin-top: 24px;
+    color: var(--encre-2);
+  }
+  .stats-parcours strong {
+    font-family: var(--police-titre);
+    font-size: 26px;
+    color: var(--sapin);
+  }
+</style>

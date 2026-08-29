@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../data/site';
+---
+
+<Base
+  titre="Politique de confidentialité | Anne-Charlotte Diététicienne"
+  description="Comment annecharlotte.be collecte, utilise et protège tes données personnelles, conformément au RGPD."
+  chemin="/technique/politique-confidentialite/"
+>
+  <section>
+    <div class="contenu juridique">
+      <h1>Politique de confidentialité</h1>
+
+      <h2>1. Introduction</h2>
+      <p>
+        La présente politique de confidentialité décrit comment nous collectons,
+        utilisons et protégeons vos données personnelles lorsque vous utilisez
+        notre site internet et nos services. En accédant à ce site, vous
+        acceptez les termes ci-dessous.
+      </p>
+
+      <h2>2. Définitions</h2>
+      <ul>
+        <li><strong>Vous / l’utilisateur·rice</strong> : toute personne consultant ce site ou sollicitant un service.</li>
+        <li><strong>Nous / le site / la diététicienne</strong> : Anne-Charlotte Jalhay, diététicienne agréée en Belgique.</li>
+        <li><strong>Service</strong> : consultations, bilans et accompagnements nutritionnels proposés sur ce site.</li>
+      </ul>
+
+      <h2>3. Collecte et utilisation des données</h2>
+      <p>Nous collectons uniquement les données nécessaires à :</p>
+      <ul>
+        <li>la prise de rendez-vous,</li>
+        <li>la communication avec vous,</li>
+        <li>l’élaboration de votre accompagnement nutritionnel.</li>
+      </ul>
+      <p>
+        Ces données sont traitées de manière confidentielle, conformément au
+        RGPD (Règlement Général sur la Protection des Données). Ce site ne
+        dépose aucun cookie publicitaire et ne charge aucune ressource depuis
+        des serveurs tiers de suivi.
+      </p>
+
+      <h2>4. Vos droits</h2>
+      <p>Conformément à la législation belge et européenne, vous disposez des droits suivants :</p>
+      <ul>
+        <li>droit d’accès à vos données,</li>
+        <li>droit de rectification ou de suppression,</li>
+        <li>droit d’opposition au traitement,</li>
+        <li>droit à la portabilité des données.</li>
+      </ul>
+      <p>
+        Pour exercer ces droits, contactez :
+        <a href={'mailto:' + SITE.email}>{SITE.email}</a>.
+      </p>
+
+      <h2>5. Sécurité</h2>
+      <p>
+        Nous mettons tout en œuvre pour assurer la sécurité de vos données.
+        Celles-ci sont hébergées sur des plateformes sécurisées, et nous
+        utilisons plusieurs outils externes (prise de rendez-vous, messagerie)
+        sélectionnés pour leur fiabilité et leur conformité avec le RGPD. Vos
+        données ne sont jamais revendues ni utilisées à d’autres fins sans
+        votre consentement.
+      </p>
+
+      <p class="maj">Dernière mise à jour : 29 août 2026</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .juridique { max-width: 760px; }
+  .juridique h1 { margin-bottom: 24px; }
+  .juridique h2 { font-size: 22px; margin-top: 30px; }
+  .maj { color: var(--encre-2); font-size: 15px; margin-top: 34px; }
+</style>

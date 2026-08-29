@@ -1,0 +1,60 @@
+name: Publier annecharlotte.be
+
+# Généré et déployé à chaque poussée sur main, plus un build quotidien qui
+# resynchronise le CMS Notion (une modification dans Notion part en ligne
+# au plus tard le lendemain matin, sans toucher au code).
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    env:
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+
+      # Resynchronise les villes depuis Notion quand le secret est configuré.
+      # Sans secret, le snapshot commité fait foi : le build reste possible.
+      - name: Synchroniser le CMS Notion
+        if: env.NOTION_TOKEN != ''
+        run: npm run sync
+
+      # AC_PROD=1 à la bascule DNS (phase 3) : domaine final et base racine.
+      # Tant que le domaine pointe vers Framer, on publie la recette github.io.
+      - name: Construire le site (détecteur inclus)
+        env:
+          AC_PROD: ${{ vars.AC_PROD || '' }}
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deployer:
+    needs: construire
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4

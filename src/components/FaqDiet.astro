@@ -1,0 +1,33 @@
+---
+// La FAQ « diététicien·ne » en accordéons natifs (accessibles sans JS).
+// Le JSON-LD FAQPage correspondant est émis par la page via faqJsonLd().
+import { FAQ_DIET } from '../data/contenu';
+
+interface Props {
+  titre?: string;
+}
+const { titre = 'Tes questions sur les diététicien·nes' } = Astro.props;
+---
+
+<section aria-labelledby="titre-faq-diet">
+  <div class="contenu">
+    <span class="etiquette">FAQ diététique</span>
+    <h2 id="titre-faq-diet">{titre}</h2>
+    <p>
+      Un·e diététicien·ne est un·e professionnel·le de santé spécialisé·e en
+      nutrition humaine. Voici les questions qu’on me pose le plus souvent.
+    </p>
+    <div class="faq-liste">
+      {FAQ_DIET.map((item) => (
+        <details>
+          <summary>{item.q}</summary>
+          <div class="reponse"><p>{item.r}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-liste { margin-top: 18px; max-width: 780px; }
+</style>

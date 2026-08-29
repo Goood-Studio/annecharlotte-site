@@ -1,0 +1,260 @@
+---
+// L'accueil nouvelle formule : la photo d'Anne-Charlotte pleine hauteur
+// et des blocs d'action. Objectif n°1 : le RDV en ligne.
+import Base from '../layouts/Base.astro';
+import Tarifs from '../components/Tarifs.astro';
+import Nutriciens from '../components/Nutriciens.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import villesData from '../data/villes.json';
+import { SITE, u } from '../data/site';
+import { cabinetJsonLd } from '../data/jsonld';
+
+const villes = villesData.villes;
+const siteUrl =
+  (import.meta.env.SITE ?? '').replace(/\/$/, '') +
+  import.meta.env.BASE_URL.replace(/\/$/, '') +
+  '/';
+
+const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
+---
+
+<Base
+  titre="Diététicienne à Namur, troubles digestifs & santé féminine | Anne-Charlotte Jalhay"
+  description="Anne-Charlotte, diététicienne agréée à Namur et Malonne : troubles digestifs (SII, ballonnements), santé féminine (SOPK, endométriose), mieux manger sans culpabilité. Prends RDV en ligne, en visio ou au cabinet."
+  chemin="/"
+  jsonLd={jsonLd}
+>
+  <!-- HERO : photo pleine hauteur + blocs d'action -->
+  <section class="hero">
+    <div class="hero-grille">
+      <div class="hero-photo">
+        <img
+          src={u('/img/hero-900.jpg')}
+          srcset={`${u('/img/hero-900.jpg')} 900w, ${u('/img/hero-1600.jpg')} 1600w`}
+          sizes="(min-width: 900px) 42vw, 100vw"
+          alt="Anne-Charlotte Jalhay, diététicienne, souriante devant un mur vert"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="hero-blocs">
+        <div class="hero-intro">
+          <h1>Retrouve du plaisir à manger, sans culpabilité</h1>
+          <p class="hero-texte">
+            Ici Anne-Charlotte, <strong>diététicienne spécialisée en troubles
+            digestifs et santé féminine</strong>. Je t’aide à apaiser ta digestion
+            tout en réapprenant à bien manger.
+          </p>
+          <p class="hero-stats">
+            <span><strong>{SITE.statsPatients}</strong> patient·es accompagné·es</span>
+            <span><strong>{SITE.statsDiet}</strong> diététicien·nes formées</span>
+          </p>
+        </div>
+
+        <a class="bloc-action principal" href={SITE.rdvVisio}>
+          <span class="bloc-titre">Prendre RDV en ligne <span class="pastille">plus rapide</span></span>
+          <span class="bloc-sous">En visio, depuis chez toi. Confirmation immédiate.</span>
+        </a>
+
+        <a class="bloc-action" href={SITE.rdvMalonne}>
+          <span class="bloc-titre">Prendre RDV à Malonne</span>
+          <span class="bloc-sous">Au cabinet, rue Chapelle Lessire 54 (ou à Namur).</span>
+        </a>
+
+        <a class="bloc-action" href={SITE.gooodeat}>
+          <span class="bloc-titre">Télécharger l’app Gooodeat</span>
+          <span class="bloc-sous">Pour déculpabiliser ton alimentation au quotidien.</span>
+        </a>
+
+        <a class="bloc-action" href={SITE.nutriciens}>
+          <span class="bloc-titre">Diététicien·ne ? Rejoins Nutriciens</span>
+          <span class="bloc-sous">Formation continue et communauté de pairs.</span>
+        </a>
+
+        <a class="bloc-action" href={SITE.whatsappMessage}>
+          <span class="bloc-titre">Poser une question</span>
+          <span class="bloc-sous">Réponse directe sur WhatsApp.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Distribution SEO : les piliers -->
+  <section aria-labelledby="titre-piliers">
+    <div class="contenu">
+      <span class="etiquette">On parle de quoi ici ?</span>
+      <h2 id="titre-piliers">Comment te sens-tu ?</h2>
+      <p>
+        Estomac en galère ? Hormones en folie ? Vie à 100 à l’heure ? Si ta
+        digestion déraille et que tu cours après le temps, il y a sûrement une
+        solution du côté de ton assiette.
+      </p>
+      <div class="grille-3">
+        <a class="carte pilier" href={u('/troubles-digestifs/')}>
+          <h3>Troubles digestifs</h3>
+          <p>
+            Maux de ventre, ballonnements, diarrhée, constipation, reflux,
+            intestin irritable (SII), SIBO… Chaque ajustement compte.
+          </p>
+          <span class="pilier-lien">Voir comment je t’aide</span>
+        </a>
+        <a class="carte pilier" href={u('/sante-feminine/')}>
+          <h3>Santé féminine</h3>
+          <p>
+            SOPK, endométriose, syndrome prémenstruel, cycles difficiles…
+            L’alimentation joue un vrai rôle sur tes hormones.
+          </p>
+          <span class="pilier-lien">Voir comment je t’aide</span>
+        </a>
+        <a class="carte pilier" href={u('/mieux-manger/')}>
+          <h3>Mieux manger</h3>
+          <p>
+            Mal dans ton corps, envie de mieux manger sans régime punitif ?
+            Retrouvons ta confiance, à ton rythme.
+          </p>
+          <span class="pilier-lien">Voir comment je t’aide</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approche -->
+  <section class="fond-sapin" aria-labelledby="titre-approche">
+    <div class="contenu">
+      <span class="etiquette">Ma façon de travailler</span>
+      <h2 id="titre-approche">Viens comme tu es</h2>
+      <div class="grille-2 approche">
+        <div>
+          <h3>Positivité</h3>
+          <p>Bonne humeur, sourire, écoute active et professionnalisme.</p>
+        </div>
+        <div>
+          <h3>Ouverture</h3>
+          <p>Chacun·e a un vécu unique et mérite d’être écouté·e et respecté·e, sans jugement.</p>
+        </div>
+        <div>
+          <h3>Scientifique</h3>
+          <p>Une pratique basée sur les preuves (evidence-based). Plus de 3 h par semaine à me former.</p>
+        </div>
+        <div>
+          <h3>Impact</h3>
+          <p>Prendre soin de soi, c’est déjà rendre le monde un peu meilleur, chacun·e à son échelle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Tarifs />
+  <Nutriciens />
+
+  <!-- Villes : distribution du jus SEO vers les pages locales -->
+  <section aria-labelledby="titre-villes">
+    <div class="contenu">
+      <span class="etiquette">Près de chez toi</span>
+      <h2 id="titre-villes">Consultations à Namur et dans toute la province</h2>
+      <p>En cabinet à Malonne ou Namur, ou en visio où que tu sois.</p>
+      <div class="villes-liens">
+        {villes.map((v) => (
+          <a class="ville-lien" href={u('/' + v.slug + '/')}>Diététicienne {v.ville}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  /* HERO mobile d'abord : photo en haut, blocs dessous.
+     Desktop : photo pleine hauteur à gauche, blocs à droite. */
+  .hero { padding: 0; background: var(--sapin); }
+  .hero-grille { display: grid; grid-template-columns: 1fr; }
+  .hero-photo { position: relative; max-height: 46vh; overflow: hidden; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+  .hero-blocs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 26px 18px 34px;
+  }
+  .hero-intro h1 { color: var(--ecru); }
+  .hero-texte { color: #E6DFD1; font-size: 18px; }
+  .hero-texte strong { color: var(--rose); }
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    color: var(--rose);
+    font-size: 15.5px;
+    margin-bottom: 6px;
+  }
+  .hero-stats strong { color: var(--rose); font-size: 19px; }
+
+  .bloc-action {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--ecru);
+    border-radius: var(--rayon);
+    padding: 15px 18px;
+    text-decoration: none;
+    min-height: 56px;
+    justify-content: center;
+    border: 2px solid transparent;
+    transition: transform .12s ease;
+  }
+  .bloc-action:active { transform: scale(.99); }
+  .bloc-action:hover { border-color: var(--dore); }
+  .bloc-action.principal { background: var(--rose); }
+  .bloc-titre {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-weight: 800;
+    font-size: 17.5px;
+    color: var(--sapin);
+  }
+  .bloc-sous { color: var(--encre-2); font-size: 14.5px; }
+  .bloc-action.principal .bloc-sous { color: var(--sapin-2); }
+
+  @media (min-width: 900px) {
+    .hero-grille {
+      grid-template-columns: 42% 58%;
+      max-width: var(--contenu);
+      margin: 0 auto;
+      min-height: min(88vh, 820px);
+    }
+    .hero-photo { max-height: none; }
+    .hero-blocs { padding: 44px 40px; justify-content: center; }
+  }
+
+  .pilier { text-decoration: none; display: flex; flex-direction: column; }
+  .pilier p { color: var(--encre-2); }
+  .pilier-lien {
+    margin-top: auto;
+    font-weight: 700;
+    color: var(--sapin);
+    text-decoration: underline;
+    text-decoration-color: var(--rose-fort);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .approche { margin-top: 10px; }
+  .approche h3 { margin-bottom: 4px; }
+
+  .villes-liens { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .ville-lien {
+    background: var(--blanc);
+    border: 1px solid var(--ligne);
+    border-radius: 999px;
+    padding: 10px 18px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--sapin);
+  }
+  .ville-lien:hover { border-color: var(--dore); }
+</style>

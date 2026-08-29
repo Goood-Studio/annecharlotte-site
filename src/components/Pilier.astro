@@ -1,0 +1,153 @@
+---
+// Gabarit commun des 3 pages piliers (troubles digestifs, santé féminine,
+// mieux manger) : définition « dictionnaire » en hero, réponse citable
+// (GEO), approche, services, tarifs, FAQ.
+import Base from '../layouts/Base.astro';
+import Tarifs from '../components/Tarifs.astro';
+import FaqDiet from '../components/FaqDiet.astro';
+import Nutriciens from '../components/Nutriciens.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE } from '../data/site';
+import { faqJsonLd } from '../data/jsonld';
+import { FAQ_DIET, SERVICES } from '../data/contenu';
+
+interface Props {
+  metaTitle: string;
+  metaDescription: string;
+  chemin: string;
+  terme: string;
+  nature: string;
+  definition: string;
+  titre: string;
+  questionCle: string;
+  reponseCle: string;
+  symptomes: string[];
+  approche: string;
+  faqPilier: { q: string; r: string }[];
+}
+
+const {
+  metaTitle,
+  metaDescription,
+  chemin,
+  terme,
+  nature,
+  definition,
+  titre,
+  questionCle,
+  reponseCle,
+  symptomes,
+  approche,
+  faqPilier,
+} = Astro.props;
+
+const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...FAQ_DIET])];
+---
+
+<Base titre={metaTitle} description={metaDescription} chemin={chemin} jsonLd={jsonLd}>
+  <!-- Hero définition -->
+  <section class="hero-pilier fond-sapin">
+    <div class="contenu">
+      <span class="etiquette">{terme} <em>({nature})</em></span>
+      <h1>{titre}</h1>
+      <p class="definition">{definition}</p>
+      <div class="hero-boutons">
+        <a class="btn btn-rose" href={SITE.rdvVisio}>
+          Prendre RDV en ligne <span class="pastille">plus rapide</span>
+        </a>
+        <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Réponse citable : la question posée à Google et aux IA, répondue en 2 phrases -->
+  <section aria-labelledby="titre-question-cle">
+    <div class="contenu">
+      <h2 id="titre-question-cle">{questionCle}</h2>
+      <p class="reponse-cle">{reponseCle}</p>
+    </div>
+  </section>
+
+  <!-- Symptômes / situations -->
+  <section aria-labelledby="titre-symptomes">
+    <div class="contenu">
+      <span class="etiquette">Tu te reconnais ?</span>
+      <h2 id="titre-symptomes">Les situations que j’accompagne</h2>
+      <ul class="symptomes">
+        {symptomes.map((s) => <li>{s}</li>)}
+      </ul>
+      <p>{approche}</p>
+    </div>
+  </section>
+
+  <!-- Ce que je propose -->
+  <section aria-labelledby="titre-services-pilier">
+    <div class="contenu">
+      <span class="etiquette">Ce que je te propose</span>
+      <h2 id="titre-services-pilier">Un accompagnement complet, à ton rythme</h2>
+      <div class="grille-3">
+        {SERVICES.map((service) => (
+          <div class="carte">
+            <h3>{service.titre}</h3>
+            <p>{service.texte}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ du pilier -->
+  <section aria-labelledby="titre-faq-pilier">
+    <div class="contenu">
+      <span class="etiquette">Questions fréquentes</span>
+      <h2 id="titre-faq-pilier">On me demande souvent</h2>
+      <div class="faq-liste">
+        {faqPilier.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <div class="reponse"><p>{item.r}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Tarifs />
+  <FaqDiet />
+  <Nutriciens />
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-pilier { padding: 52px 0; }
+  .hero-pilier h1 { color: var(--ecru); }
+  .definition {
+    font-size: 18px;
+    border-left: 4px solid var(--rose);
+    padding-left: 16px;
+    max-width: 62ch;
+  }
+  .hero-boutons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+  .btn-contour-clair {
+    background: transparent;
+    color: var(--ecru);
+    border-color: var(--ecru);
+  }
+  .btn-contour-clair:hover { background: var(--ecru); color: var(--sapin); }
+  .reponse-cle {
+    font-size: 19px;
+    color: var(--sapin);
+    background: var(--blanc);
+    border: 1px solid var(--ligne);
+    border-left: 5px solid var(--dore);
+    border-radius: var(--rayon);
+    padding: 18px 20px;
+    max-width: 72ch;
+  }
+  .symptomes {
+    columns: 1;
+    margin: 10px 0 18px;
+  }
+  @media (min-width: 700px) { .symptomes { columns: 2; column-gap: 40px; } }
+  .faq-liste { margin-top: 16px; max-width: 780px; }
+</style>

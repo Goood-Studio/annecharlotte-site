@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../data/site';
+---
+
+<Base
+  titre="Conditions générales d'utilisation | Anne-Charlotte Diététicienne"
+  description="Les conditions générales d'utilisation du site annecharlotte.be : contenu, responsabilité, droit applicable."
+  chemin="/technique/conditions-generales-utilisation/"
+>
+  <section>
+    <div class="contenu juridique">
+      <h1>Conditions générales d’utilisation</h1>
+
+      <h2>1. Acceptation des conditions</h2>
+      <p>
+        En accédant à ce site, vous acceptez de vous conformer à ces conditions.
+        Si vous êtes en désaccord, merci de ne pas utiliser ce site.
+      </p>
+
+      <h2>2. Utilisation du contenu</h2>
+      <p>
+        Le contenu proposé (textes, visuels, outils) est protégé par le droit
+        d’auteur. Toute reproduction, modification ou réutilisation sans
+        autorisation est interdite.
+      </p>
+
+      <h2>3. Responsabilité</h2>
+      <p>
+        Les informations fournies sont à visée éducative et ne remplacent pas
+        une consultation médicale. L’utilisation de ces informations se fait
+        sous votre seule responsabilité.
+      </p>
+
+      <h2>4. Modification</h2>
+      <p>
+        Nous nous réservons le droit de modifier ces conditions à tout moment.
+        Les mises à jour seront publiées sur cette page. L’utilisation continue
+        du site vaut acceptation des modifications.
+      </p>
+
+      <h2>5. Droit applicable</h2>
+      <p>
+        Le présent site est régi par le droit belge. En cas de litige, seuls
+        les tribunaux de Namur sont compétents.
+      </p>
+
+      <p>
+        Pour toute question concernant ces conditions ou la politique de
+        confidentialité : <a href={'mailto:' + SITE.email}>{SITE.email}</a>.
+      </p>
+
+      <p class="maj">Dernière mise à jour : 29 août 2026</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .juridique { max-width: 760px; }
+  .juridique h1 { margin-bottom: 24px; }
+  .juridique h2 { font-size: 22px; margin-top: 30px; }
+  .maj { color: var(--encre-2); font-size: 15px; margin-top: 34px; }
+</style>

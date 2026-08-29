@@ -1,0 +1,203 @@
+/* Charte annecharlotte.be, tirée de la photo d'Anne-Charlotte :
+   mur vert sapin, chemise rose velours, lumière écru, collier doré.
+   Mobile d'abord : tout est conçu pour l'écran téléphone (55 %+ du trafic),
+   le desktop élargit ensuite. Public parfois peu digital : gros textes,
+   gros boutons, contrastes forts. */
+
+:root {
+  --sapin: #16352C;
+  --sapin-2: #1E4438;
+  --sapin-3: #2A5748;
+  --rose: #F0C3CB;
+  --rose-fort: #D97E90;
+  --ecru: #FAF5EE;
+  --ecru-2: #F1E8DA;
+  --dore: #B98D45;
+  --encre: #22312C;
+  --encre-2: #52625B;
+  --ligne: #E3D8C7;
+  --blanc: #FFFFFF;
+  --whatsapp: #25D366;
+
+  --police-titre: 'Young Serif', Georgia, 'Times New Roman', serif;
+  --police-texte: 'Figtree', 'Avenir Next', 'Segoe UI', Arial, sans-serif;
+
+  --rayon: 14px;
+  --rayon-grand: 22px;
+  --contenu: 1080px;
+}
+
+/* Les @font-face vivent dans Base.astro : leurs URLs dépendent de la base
+   de déploiement (recette GitHub Pages vs domaine final). */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ecru);
+  color: var(--encre);
+  font-family: var(--police-texte);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* La barre RDV mobile est fixée en bas : on garde la place. */
+  padding-bottom: 76px;
+}
+@media (min-width: 860px) {
+  body { font-size: 18px; padding-bottom: 0; }
+}
+
+h1, h2, h3 {
+  font-family: var(--police-titre);
+  font-weight: 400;
+  line-height: 1.18;
+  color: var(--sapin);
+  text-wrap: balance;
+  margin: 0 0 14px;
+}
+h1 { font-size: clamp(30px, 7vw, 46px); }
+h2 { font-size: clamp(24px, 5vw, 34px); }
+h3 { font-size: clamp(19px, 4vw, 23px); }
+
+p { margin: 0 0 14px; max-width: 68ch; }
+ul { padding-left: 22px; }
+li { margin-bottom: 8px; }
+strong { color: var(--sapin); }
+
+a { color: var(--sapin-2); text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--rose-fort); }
+a:hover { color: var(--sapin); }
+
+:focus-visible {
+  outline: 3px solid var(--dore);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+img { max-width: 100%; height: auto; }
+
+.contenu {
+  max-width: var(--contenu);
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+section { padding: 44px 0; }
+@media (min-width: 860px) { section { padding: 64px 0; } }
+
+.etiquette {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dore);
+  margin-bottom: 8px;
+}
+
+/* ---- Boutons : gros, clairs, tactiles (min 48px) ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-family: var(--police-texte);
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform .12s ease, background .15s ease;
+}
+.btn:active { transform: scale(.98); }
+.btn-principal { background: var(--sapin); color: var(--ecru); }
+.btn-principal:hover { background: var(--sapin-2); color: var(--ecru); }
+.btn-rose { background: var(--rose); color: var(--sapin); }
+.btn-rose:hover { background: #E9B3BD; color: var(--sapin); }
+.btn-contour { background: transparent; color: var(--sapin); border-color: var(--sapin); }
+.btn-contour:hover { background: var(--sapin); color: var(--ecru); }
+.btn-bloc { width: 100%; }
+
+.pastille {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  background: var(--dore);
+  color: var(--blanc);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* ---- Cartes ---- */
+.carte {
+  background: var(--blanc);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  padding: 22px;
+}
+
+/* ---- Sections sur fond sapin ---- */
+.fond-sapin {
+  background: var(--sapin);
+  color: var(--ecru);
+}
+.fond-sapin h2, .fond-sapin h3 { color: var(--ecru); }
+.fond-sapin .etiquette { color: var(--rose); }
+.fond-sapin p { color: #E6DFD1; }
+.fond-sapin strong { color: var(--rose); }
+.fond-sapin a { color: var(--rose); }
+
+/* ---- Accordéons (FAQ) : natifs, accessibles ---- */
+details {
+  background: var(--blanc);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  padding: 0;
+  margin-bottom: 10px;
+}
+details summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 16px 46px 16px 18px;
+  font-weight: 700;
+  color: var(--sapin);
+  position: relative;
+  min-height: 48px;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after {
+  content: '+';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--dore);
+  font-weight: 400;
+}
+details[open] summary::after { content: '−'; }
+details .reponse { padding: 0 18px 16px; }
+details .reponse p:last-child { margin-bottom: 0; }
+
+/* ---- Grilles ---- */
+.grille-2, .grille-3 { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 700px) {
+  .grille-2 { grid-template-columns: 1fr 1fr; }
+  .grille-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* ---- Tableaux qui débordent ---- */
+.defile-x { overflow-x: auto; }
+
+.centre { text-align: center; }
+.centre p { margin-left: auto; margin-right: auto; }

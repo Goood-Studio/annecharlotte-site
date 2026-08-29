@@ -1,0 +1,29 @@
+---
+// Barre RDV fixée en bas de l'écran mobile : l'objectif n°1 du site est
+// le RDV en ligne, ce bouton ne quitte jamais l'écran (55 %+ de trafic mobile).
+import { SITE } from '../data/site';
+---
+
+<div class="barre-rdv">
+  <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>
+    Prendre RDV en ligne
+    <span class="pastille">plus rapide</span>
+  </a>
+</div>
+
+<style>
+  .barre-rdv {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 55;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--ecru) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--ligne);
+  }
+  @media (min-width: 860px) {
+    .barre-rdv { display: none; }
+  }
+</style>

@@ -1,0 +1,23 @@
+---
+// L'ancienne URL Framer contenait un accent (/santé-feminine). GitHub Pages
+// ne fait pas de redirection serveur : cette page relais renvoie
+// instantanément vers la nouvelle URL propre et déclare le canonique.
+import { u } from '../data/site';
+const cible = u('/sante-feminine/');
+const site = (import.meta.env.SITE ?? '').replace(/\/$/, '');
+const canonique = site + import.meta.env.BASE_URL.replace(/\/$/, '') + '/sante-feminine/';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Santé féminine | Anne-Charlotte Diététicienne</title>
+    <meta http-equiv="refresh" content={`0; url=${cible}`} />
+    <link rel="canonical" href={canonique} />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <p>Cette page a déménagé : <a href={cible}>continue vers Santé féminine</a>.</p>
+  </body>
+</html>

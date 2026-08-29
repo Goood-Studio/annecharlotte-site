@@ -1,0 +1,132 @@
+---
+// Le gabarit unique : head SEO complet, JSON-LD, header, footer,
+// bouton WhatsApp flottant et barre RDV mobile. Une page ne peut pas
+// sortir sans title ni description : c'est le layout qui les exige.
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import StickyRdv from '../components/StickyRdv.astro';
+import { SITE, u } from '../data/site';
+
+interface Props {
+  titre: string;
+  description: string;
+  /** Chemin canonique SANS la base, ex. "/dieteticienne-namur/" */
+  chemin: string;
+  /** JSON-LD additionnels propres à la page */
+  jsonLd?: object[];
+  /** Pas d'indexation (pages techniques) */
+  noindex?: boolean;
+}
+
+const { titre, description, chemin, jsonLd = [], noindex = false } = Astro.props;
+
+const site = (import.meta.env.SITE ?? 'https://www.annecharlotte.be').replace(/\/$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonique = site + base + chemin;
+const ogImage = site + base + '/img/og.jpg';
+
+// L'entité Anne-Charlotte : le socle du GEO. Présente sur toutes les pages.
+const personne = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': site + base + '/#anne-charlotte',
+  name: SITE.nomComplet,
+  jobTitle: 'Diététicienne agréée',
+  description:
+    'Diététicienne agréée en Belgique, spécialisée en troubles digestifs et santé féminine. Plus de 1 500 patient·es accompagné·es et plus de 250 diététicien·nes formées.',
+  url: site + base + '/',
+  telephone: SITE.telephone,
+  email: SITE.email,
+  sameAs: [SITE.instagram, SITE.linkedin],
+  knowsAbout: [
+    'Troubles digestifs',
+    'Syndrome de l’intestin irritable',
+    'Santé féminine',
+    'SOPK',
+    'Endométriose',
+    'Nutrition',
+  ],
+  workLocation: SITE.cabinets.map((c) => ({
+    '@type': 'Place',
+    name: c.nom,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: c.rue,
+      postalCode: c.codePostal,
+      addressLocality: c.ville,
+      addressCountry: 'BE',
+    },
+  })),
+};
+
+const tousJsonLd = [personne, ...jsonLd];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonique} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={u('/sitemap-index.xml')} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BE" />
+    <meta property="og:site_name" content={SITE.nom} />
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonique} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link
+      rel="preload"
+      href={u('/fonts/youngserif-latin.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={u('/fonts/figtree-latin.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <style set:html={`
+      @font-face { font-family:'Figtree'; font-style:normal; font-weight:400 700; font-display:swap;
+        src:url('${u('/fonts/figtree-latin.woff2')}') format('woff2');
+        unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2212; }
+      @font-face { font-family:'Figtree'; font-style:normal; font-weight:400 700; font-display:swap;
+        src:url('${u('/fonts/figtree-latin-ext.woff2')}') format('woff2');
+        unicode-range:U+0100-02BA,U+1E00-1E9F,U+2020,U+20A0-20C0; }
+      @font-face { font-family:'Figtree'; font-style:italic; font-weight:400; font-display:swap;
+        src:url('${u('/fonts/figtree-italic-latin.woff2')}') format('woff2'); }
+      @font-face { font-family:'Young Serif'; font-style:normal; font-weight:400; font-display:swap;
+        src:url('${u('/fonts/youngserif-latin.woff2')}') format('woff2');
+        unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2212; }
+      @font-face { font-family:'Young Serif'; font-style:normal; font-weight:400; font-display:swap;
+        src:url('${u('/fonts/youngserif-latin-ext.woff2')}') format('woff2');
+        unicode-range:U+0100-02BA,U+1E00-1E9F,U+2020,U+20A0-20C0; }
+    `} />
+
+    {tousJsonLd.map((donnees) => (
+      <script type="application/ld+json" set:html={JSON.stringify(donnees)} />
+    ))}
+  </head>
+  <body>
+    <Header />
+    <main id="contenu-principal">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat />
+    <StickyRdv />
+  </body>
+</html>

@@ -1,0 +1,47 @@
+---
+// Les offres, réutilisées sur l'accueil, les piliers et les pages villes.
+import { OFFRES } from '../data/contenu';
+import { SITE } from '../data/site';
+---
+
+<section class="tarifs" aria-labelledby="titre-tarifs">
+  <div class="contenu">
+    <span class="etiquette">Deux façons de t’aider</span>
+    <h2 id="titre-tarifs">Tu es à un clic de la solution</h2>
+    <p>Disponibilités : {SITE.horaires}. En visio ou en cabinet, c’est toi qui choisis.</p>
+
+    <div class="grille-2 cartes-offres">
+      {OFFRES.map((offre) => (
+        <article class={'carte offre' + (offre.meilleurChoix ? ' meilleure' : '')}>
+          {offre.meilleurChoix && <span class="pastille">Meilleur choix</span>}
+          <h3>{offre.nom}</h3>
+          <p class="offre-prix">
+            <span class="prix">{offre.prix}</span>
+            <span class="unite">{offre.unite}</span>
+          </p>
+          <p>{offre.description}</p>
+          <ul>
+            {offre.inclus.map((item) => <li>{item}</li>)}
+          </ul>
+          <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>{offre.ctaTexte}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cartes-offres { margin-top: 22px; align-items: start; }
+  .offre { position: relative; display: flex; flex-direction: column; gap: 4px; }
+  .offre .pastille { position: absolute; top: -12px; right: 18px; }
+  .offre.meilleure { border: 2px solid var(--dore); }
+  .offre-prix { display: flex; align-items: baseline; gap: 10px; margin: 0; }
+  .prix {
+    font-family: var(--police-titre);
+    font-size: 38px;
+    color: var(--sapin);
+  }
+  .unite { color: var(--encre-2); font-size: 15px; }
+  .offre ul { margin: 8px 0 16px; }
+  .offre .btn { margin-top: auto; }
+</style>
