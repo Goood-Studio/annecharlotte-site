@@ -4,7 +4,16 @@ import { SITE, u } from '../data/site';
 
 <header class="entete">
   <div class="contenu barre">
-    <a class="logo" href={u('/')}>Anne-Charlotte<span class="logo-sous">Diététicienne</span></a>
+    <a class="logo" href={u('/')} aria-label="Anne-Charlotte, diététicienne — accueil">
+      <svg class="logo-fruit" viewBox="0 0 100 100" width="40" height="40" aria-hidden="true" focusable="false">
+        <ellipse cx="39" cy="26" rx="7.5" ry="12" fill="#16352C" transform="rotate(-32 39 26)"/>
+        <ellipse cx="58" cy="22" rx="6.5" ry="11" fill="#B98D45" transform="rotate(18 58 22)"/>
+        <circle cx="48" cy="64" r="30" fill="#DE9CAA"/>
+        <circle cx="52" cy="60" r="27" fill="#F0C3CB"/>
+        <ellipse cx="43" cy="50" rx="9" ry="7" fill="#FAF5EE" opacity="0.55" transform="rotate(-30 43 50)"/>
+      </svg>
+      <span class="logo-texte">Anne-Charlotte<span class="logo-sous">Diététicienne</span></span>
+    </a>
 
     <nav class="nav" id="menu-principal" aria-label="Navigation principale">
       <a href={u('/troubles-digestifs/')}>Troubles digestifs</a>
@@ -43,10 +52,16 @@ import { SITE, u } from '../data/site';
     min-height: 64px;
   }
   .logo {
-    font-family: var(--police-titre);
-    font-size: 20px;
     color: var(--sapin);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-fruit { flex: none; display: block; }
+  .logo-texte {
+    font-family: var(--police-titre);
+    font-size: 20px;
     line-height: 1.05;
     display: flex;
     flex-direction: column;
