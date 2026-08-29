@@ -9,12 +9,11 @@ export const OFFRES = [
   {
     nom: 'Premiers pas',
     prix: '80 €',
-    unite: 'la consultation + 1 appel',
+    unite: 'la consultation',
     description:
-      'Consultation individuelle (ou à deux) + un appel une semaine après pour savoir comment tu vas.',
+      'Consultation individuelle (ou à deux) : on fait le point et tu repars avec un plan clair.',
     inclus: [
       'Bilan initial complet',
-      'Appel de suivi une semaine après',
       'Remboursement mutuelle possible',
       'Canal direct de discussion',
       'Planificateur de recettes et analyses',
@@ -29,7 +28,7 @@ export const OFFRES = [
     description:
       'On prend un problème ou un objectif, et on solutionne la situation ensemble.',
     inclus: [
-      'Suivi hebdomadaire sur 10 semaines',
+      'Suivi hebdomadaire jusqu’à 10 semaines*',
       'Plan alimentaire personnalisé',
       'Remboursement mutuelle possible',
       'Canal direct de discussion',
@@ -86,7 +85,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, la consultation « Premiers pas » est à 80 € (avec un appel de suivi une semaine après), et l’accompagnement complet à 290 € par personne. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, la consultation « Premiers pas » est à 80 €, et l’accompagnement complet à 290 € par personne. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',

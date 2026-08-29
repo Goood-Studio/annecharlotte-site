@@ -28,6 +28,110 @@
       "metaDescription": "Diététicienne à Malonne (cabinet rue Chapelle Lessire) : troubles digestifs, SII, SOPK, endométriose, mieux manger. Consultations au cabinet ou en visio. Prends RDV en ligne."
     },
     {
+      "ville": "Flawinne",
+      "slug": "dieteticienne-flawinne",
+      "zone": "Grand Namur",
+      "distanceMin": 7,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Flawinne fait face à Malonne, juste de l'autre côté de la Sambre : mon cabinet est à cinq minutes de chez toi. Difficile de faire plus proche, sauf à consulter en visio depuis ton canapé.",
+      "quartiers": "Flawinne, Malonne, Belgrade, Suarlée, et la vallée de la Sambre à l'ouest de Namur",
+      "acces": "Depuis Flawinne, traverse la Sambre : le cabinet de Malonne (rue Chapelle Lessire 54) est à environ 5 minutes, avec du parking facile. Le cabinet de Namur et la visio restent possibles.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne tout près de Flawinne ?",
+          "r": "Oui, la plus proche possible : mon cabinet de Malonne est juste de l'autre côté de la Sambre, à environ 5 minutes. Tu réserves ton créneau en ligne."
+        },
+        {
+          "q": "On se gare facilement au cabinet ?",
+          "r": "Oui, le parking est facile aux abords du cabinet de Malonne. Et si tu préfères éviter le déplacement, la visio marche tout aussi bien."
+        }
+      ],
+      "metaTitle": "Diététicienne à Flawinne | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne à 5 minutes de Flawinne : cabinet à Malonne (parking facile), troubles digestifs, SOPK, mieux manger. Cabinet ou visio, RDV en ligne."
+    },
+    {
+      "ville": "Suarlée",
+      "slug": "dieteticienne-suarlee",
+      "zone": "Grand Namur",
+      "distanceMin": 10,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Côté ouest, près de l'aérodrome, Suarlée est à une dizaine de minutes du cabinet de Malonne. Assez proche pour venir en vrai, assez loin pour apprécier la visio les semaines de rush.",
+      "quartiers": "Suarlée, Temploux, Belgrade, Rhisnes, et l'ouest de la commune de Namur",
+      "acces": "Depuis Suarlée, une dizaine de minutes en voiture jusqu'au cabinet de Malonne (rue Chapelle Lessire 54, parking facile). Le cabinet de Namur et la visio restent possibles.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne près de Suarlée ?",
+          "r": "Oui, mon cabinet de Malonne est à une dizaine de minutes. Et si tu préfères rester chez toi, la visio offre exactement le même accompagnement."
+        },
+        {
+          "q": "Quels résultats espérer, et en combien de temps ?",
+          "r": "Les premiers effets (digestion, énergie) arrivent souvent en quelques semaines. Pour un trouble installé, on raisonne en mois, avec des étapes mesurables à chaque rendez-vous."
+        }
+      ],
+      "metaTitle": "Diététicienne à Suarlée | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Suarlée (Namur) : SII, ballonnements, santé hormonale, rééquilibrage durable. Cabinet à Malonne à 10 minutes ou visio. RDV en ligne."
+    },
+    {
+      "ville": "Temploux",
+      "slug": "dieteticienne-temploux",
+      "zone": "Grand Namur",
+      "distanceMin": 10,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Célèbre un week-end par an pour sa brocante, Temploux est surtout, toute l'année, à une dizaine de minutes de mon cabinet de Malonne. Et à zéro minute de la visio.",
+      "quartiers": "Temploux, Suarlée, Belgrade, Flawinne, et l'ouest de la commune de Namur",
+      "acces": "Depuis Temploux, compte une dizaine de minutes en voiture jusqu'au cabinet de Malonne (parking facile). Le cabinet de Namur est aussi accessible, et la visio marche depuis chez toi.",
+      "faqLocale": [
+        {
+          "q": "Où consulter une diététicienne quand on habite Temploux ?",
+          "r": "Au cabinet de Malonne, à une dizaine de minutes, au cabinet de Namur, ou en visio. Tu choisis au moment de réserver ton créneau en ligne."
+        },
+        {
+          "q": "Je n'ai jamais consulté de diététicienne, c'est pour moi ?",
+          "r": "Si l'alimentation te questionne ou te pèse (digestion, hormones, énergie, rapport à la nourriture), oui. Pas besoin d'un « gros problème » pour mériter un accompagnement."
+        }
+      ],
+      "metaTitle": "Diététicienne à Temploux | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Temploux (Namur) : troubles digestifs, SOPK, endométriose, mieux manger. Cabinet à Malonne à 10 minutes ou visio. RDV en ligne."
+    },
+    {
+      "ville": "Belgrade",
+      "slug": "dieteticienne-belgrade",
+      "zone": "Grand Namur",
+      "distanceMin": 10,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Depuis le plateau de Belgrade, mon cabinet de Malonne est à une dizaine de minutes en descendant vers la Sambre, et celui de Namur n'est pas plus loin. Pratique pour caler un rendez-vous sans chambouler ta journée.",
+      "quartiers": "Belgrade, le plateau ouest de Namur, et les villages voisins : Flawinne, Suarlée, Saint-Servais",
+      "acces": "De Belgrade, compte environ 10 minutes en voiture vers le cabinet de Malonne (rue Chapelle Lessire 54) ou celui de Namur. Et toutes les consultations existent aussi en visio.",
+      "faqLocale": [
+        {
+          "q": "Quelle diététicienne consulter quand on habite Belgrade ?",
+          "r": "Mes deux cabinets sont à une dizaine de minutes de Belgrade. Tu choisis Malonne, Namur ou la visio au moment de réserver en ligne."
+        },
+        {
+          "q": "Peut-on alterner cabinet et visio ?",
+          "r": "Oui, et beaucoup de patient·es le font : un premier rendez-vous au cabinet pour se rencontrer, puis des suivis en visio quand l'agenda se corse."
+        }
+      ],
+      "metaTitle": "Diététicienne à Belgrade | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Belgrade (Namur) : troubles digestifs, SOPK, endométriose, alimentation apaisée. Cabinet à Malonne à 10 minutes ou visio. RDV en ligne."
+    },
+    {
       "ville": "Salzinnes",
       "slug": "dieteticienne-salzinnes",
       "zone": "Namur centre",
@@ -54,6 +158,36 @@
       "metaDescription": "Diététicienne à deux pas de Salzinnes (Namur) : troubles digestifs, SOPK, endométriose, alimentation apaisée. Cabinet à Namur, à Malonne ou en visio. Prends RDV en ligne."
     },
     {
+      "ville": "Saint-Marc",
+      "slug": "dieteticienne-saint-marc",
+      "zone": "Grand Namur",
+      "distanceMin": 12,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Au nord-ouest de Namur, Saint-Marc touche Saint-Servais : mes cabinets sont à une douzaine de minutes, et la visio te permet de consulter sans même sortir le vélo.",
+      "quartiers": "Saint-Marc, Saint-Servais, Vedrin, Belgrade, et le nord-ouest de la commune de Namur",
+      "acces": "Depuis Saint-Marc, compte une douzaine de minutes vers le cabinet de Namur (rue Martine Bourtonbourt 2) ou celui de Malonne. Toutes les consultations existent aussi en visio.",
+      "faqLocale": [
+        {
+          "q": "Quelle diététicienne consulter près de Saint-Marc ?",
+          "r": "Je consulte à une douzaine de minutes de Saint-Marc, au cabinet de Namur ou de Malonne, et en visio. Tu réserves le créneau qui t'arrange en ligne."
+        },
+        {
+          "q": "Par où commencer si je ne sais pas ce qu'il me faut ?",
+          "r": "Par la consultation « Premiers pas » : on fait le point ensemble et tu repars avec une stratégie claire. Tu verras ensuite si un accompagnement complet a du sens."
+        },
+        {
+          "q": "Peux-tu te coordonner avec mon médecin généraliste ?",
+          "r": "Volontiers : avec ton accord, je peux échanger un courrier avec ton ou ta généraliste, tenir compte de tes prises de sang et signaler ce qui mérite un avis médical. L'alimentation avance mieux quand tout le monde rame dans le même sens."
+        }
+      ],
+      "metaTitle": "Diététicienne à Saint-Marc | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Saint-Marc (Namur) : troubles digestifs, santé féminine, mieux manger. Cabinet à Namur/Malonne à 12 minutes ou visio. RDV en ligne."
+    },
+    {
       "ville": "Saint-Servais",
       "slug": "dieteticienne-saint-servais",
       "zone": "Grand Namur",
@@ -78,6 +212,57 @@
       ],
       "metaTitle": "Diététicienne à Saint-Servais | Anne-Charlotte Jalhay",
       "metaDescription": "Diététicienne près de Saint-Servais (Namur) : troubles digestifs, santé hormonale, alimentation sans culpabilité. Cabinet à Namur à quelques minutes ou en visio. RDV en ligne."
+    },
+    {
+      "ville": "Wépion",
+      "slug": "dieteticienne-wepion",
+      "zone": "Grand Namur",
+      "distanceMin": 12,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Au pays de la fraise, on sait qu'on peut se faire plaisir en mangeant bien. Wépion est à une douzaine de minutes de mes cabinets, le long de la Meuse, et la visio fait le reste de l'année.",
+      "quartiers": "Wépion, La Plante, Dave en face, et les bords de Meuse au sud de Namur",
+      "acces": "Depuis Wépion, remonte la Meuse vers le cabinet de Namur ou traverse vers Malonne : une douzaine de minutes dans les deux cas. Toutes les consultations existent aussi en visio.",
+      "faqLocale": [
+        {
+          "q": "Quelle diététicienne consulter près de Wépion ?",
+          "r": "Je consulte à une douzaine de minutes de Wépion, à Namur ou à Malonne, et en visio. Tu réserves ton créneau en ligne, la confirmation est immédiate."
+        },
+        {
+          "q": "Tu ne vas pas m'interdire les desserts, hein ?",
+          "r": "Non, promis. Aucun aliment n'est interdit chez moi, pas même les fraises à la chantilly. On travaille l'équilibre global, pas la privation."
+        }
+      ],
+      "metaTitle": "Diététicienne à Wépion | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Wépion (Namur) : troubles digestifs, santé hormonale, mieux manger avec plaisir. Cabinet à Namur/Malonne ou visio. RDV en ligne."
+    },
+    {
+      "ville": "Rhisnes",
+      "slug": "dieteticienne-rhisnes",
+      "zone": "Province de Namur",
+      "distanceMin": 15,
+      "consultation": [
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Côté La Bruyère, Rhisnes est aux portes de Namur. Mes patient·es de Rhisnes consultent en visio : le même bilan, le même plan alimentaire et le même suivi que face à face, sans prendre la voiture.",
+      "quartiers": "Rhisnes, Emines, Villers-lez-Heest, et la commune de La Bruyère au nord-ouest de Namur",
+      "acces": "Depuis Rhisnes, tout se fait en visio : tu réserves ton créneau en ligne et on se voit en vidéo. Il te faut juste une connexion internet et un endroit calme.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne qui suit des patient·es à Rhisnes ?",
+          "r": "Oui, en visio : j'accompagne plusieurs patient·es de La Bruyère à distance. Tu réserves en ligne et la confirmation est immédiate."
+        },
+        {
+          "q": "La consultation en visio vaut-elle une consultation au cabinet ?",
+          "r": "Oui. L'accompagnement diététique repose sur l'échange et le suivi, pas sur des examens physiques : la vidéo fait parfaitement l'affaire."
+        }
+      ],
+      "metaTitle": "Diététicienne à Rhisnes | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne pour Rhisnes et La Bruyère : troubles digestifs, santé féminine, mieux manger sans régime. Consultations en visio, RDV en ligne en 2 minutes."
     },
     {
       "ville": "Namur",
@@ -132,6 +317,162 @@
       "metaDescription": "Diététicienne près de Jambes : troubles digestifs, santé féminine, mieux manger. Cabinet à Namur juste de l'autre côté de la Meuse, à Malonne ou en visio. RDV en ligne."
     },
     {
+      "ville": "Erpent",
+      "slug": "dieteticienne-erpent",
+      "zone": "Grand Namur",
+      "distanceMin": 18,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Sur les hauteurs de Jambes, Erpent est à un quart d'heure de mes cabinets. Entre l'école, le travail et le reste, beaucoup de mes patient·es d'Erpent choisissent la visio et gardent le cabinet pour les grandes étapes.",
+      "quartiers": "Erpent, Jambes, Wierde, Naninne, et le sud-est de la commune de Namur",
+      "acces": "Depuis Erpent, compte un bon quart d'heure vers le cabinet de Namur (rue Martine Bourtonbourt 2) ou une vingtaine de minutes vers Malonne. En visio : zéro trajet, même suivi.",
+      "faqLocale": [
+        {
+          "q": "Quelle diététicienne consulter à Erpent ?",
+          "r": "Je suis à un quart d'heure d'Erpent, au cabinet de Namur ou de Malonne, et je consulte aussi en visio. Tu réserves ton créneau en ligne, la confirmation est immédiate."
+        },
+        {
+          "q": "Accompagnes-tu aussi les couples ou les duos ?",
+          "r": "Oui, la consultation existe en individuel ou à deux : partenaire, parent, ami·e. À deux, on avance souvent plus vite sur les habitudes de la maison."
+        }
+      ],
+      "metaTitle": "Diététicienne à Erpent | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près d'Erpent (Namur) : troubles digestifs, santé féminine, alimentation apaisée. Cabinet à Namur à 15 minutes ou visio. RDV en ligne."
+    },
+    {
+      "ville": "Vedrin",
+      "slug": "dieteticienne-vedrin",
+      "zone": "Grand Namur",
+      "distanceMin": 18,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Entre Saint-Servais et les villages du nord, Vedrin est à un bon quart d'heure de mes cabinets. Cabinet ou visio, tu peux même alterner selon les semaines : le suivi reste le même.",
+      "quartiers": "Vedrin, Saint-Marc, Daussoulx, Champion, et le nord de la commune de Namur",
+      "acces": "Depuis Vedrin, compte un bon quart d'heure vers le cabinet de Namur (rue Martine Bourtonbourt 2) ou une vingtaine de minutes vers Malonne. La visio t'évite le trajet quand tu veux.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne proche de Vedrin ?",
+          "r": "Oui : mes cabinets de Namur et Malonne sont à un quart d'heure environ, et je consulte aussi en visio. La réservation se fait en ligne, en deux minutes."
+        },
+        {
+          "q": "Vais-je devoir suivre un régime strict ?",
+          "r": "Non. Les régimes restrictifs finissent presque toujours en effet yoyo. On ajuste tes habitudes progressivement, en gardant le plaisir de manger au centre."
+        }
+      ],
+      "metaTitle": "Diététicienne à Vedrin | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Vedrin (Namur) : maux de ventre, SII, santé féminine, alimentation sans culpabilité. Cabinet Namur/Malonne ou visio. RDV en ligne."
+    },
+    {
+      "ville": "Naninne",
+      "slug": "dieteticienne-naninne",
+      "zone": "Grand Namur",
+      "distanceMin": 20,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Entre village et parc d'activités, Naninne est à une vingtaine de minutes de mes cabinets. Pause de midi en visio ou détour par Namur en fin de journée : ton suivi s'adapte à ton agenda, pas l'inverse.",
+      "quartiers": "Naninne, Erpent, Dave, Wierde, et le sud-est de la commune de Namur",
+      "acces": "Depuis Naninne, compte une vingtaine de minutes vers le cabinet de Namur ou celui de Malonne. En visio, une pause de 30 minutes au calme suffit.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne proche de Naninne ?",
+          "r": "Oui : mes cabinets de Namur et Malonne sont à une vingtaine de minutes, et la visio marche depuis chez toi ou ton bureau. Réservation en ligne."
+        },
+        {
+          "q": "Peut-on consulter sur le temps de midi ?",
+          "r": "Oui, je consulte du lundi au vendredi de 8h30 à 17h : il y a des créneaux de midi, très pratiques en visio. Premier arrivé, premier servi dans l'agenda en ligne."
+        }
+      ],
+      "metaTitle": "Diététicienne à Naninne | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Naninne (Namur) : SII, ballonnements, SOPK, alimentation apaisée. Visio (même le midi) ou cabinets Namur/Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Beez",
+      "slug": "dieteticienne-beez",
+      "zone": "Grand Namur",
+      "distanceMin": 20,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Coincé entre la Meuse et ses rochers, Beez est à un petit quart d'heure de mes cabinets namurois. Et quand la route ne vaut pas le détour, la visio prend le relais sans rien changer au suivi.",
+      "quartiers": "Beez, les bords de Meuse du nord-est namurois, et les villages voisins vers Marche-les-Dames",
+      "acces": "Depuis Beez, compte une quinzaine de minutes en voiture vers le cabinet de Namur (rue Martine Bourtonbourt 2) ou celui de Malonne. En visio, zéro trajet : tu réserves et on se voit en vidéo.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne près de Beez ?",
+          "r": "Oui, mes cabinets de Namur et Malonne sont à un quart d'heure de Beez, et je consulte aussi en visio. Tu réserves ton créneau en ligne, la confirmation est immédiate."
+        },
+        {
+          "q": "Le suivi en visio est-il sérieux ?",
+          "r": "Autant qu'au cabinet : même bilan, même plan alimentaire, même suivi. Il te faut juste une connexion internet et un endroit tranquille."
+        }
+      ],
+      "metaTitle": "Diététicienne à Beez | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Beez (Namur) : maux de ventre, SII, santé féminine, mieux manger. Consultation en visio ou en cabinet à Namur et Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Dave",
+      "slug": "dieteticienne-dave",
+      "zone": "Grand Namur",
+      "distanceMin": 20,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Le long de la Meuse, entre Jambes et le sud namurois, Dave est à un petit quart d'heure du cabinet de Namur. Et pour les semaines chargées, la visio garde ton suivi sur les rails.",
+      "quartiers": "Dave, Jambes, Naninne, Wépion en face, et la rive droite de la Meuse",
+      "acces": "Depuis Dave, remonte la Meuse jusqu'au cabinet de Namur en un petit quart d'heure, ou rejoins Malonne en une vingtaine de minutes. Toutes les consultations existent aussi en visio.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne près de Dave ?",
+          "r": "Oui : mon cabinet de Namur est à un petit quart d'heure en remontant la Meuse, et la visio marche depuis chez toi. Réservation en ligne dans les deux cas."
+        },
+        {
+          "q": "Est-ce remboursé par la mutuelle ?",
+          "r": "En partie, oui : la plupart des mutuelles belges ont un forfait diététique. Le montant dépend de la tienne, je t'aide à y voir clair au premier rendez-vous."
+        }
+      ],
+      "metaTitle": "Diététicienne à Dave | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Dave (Namur) : maux de ventre, SII, endométriose, SOPK, mieux manger. Cabinet à Namur ou visio. Prends RDV en ligne."
+    },
+    {
+      "ville": "Champion",
+      "slug": "dieteticienne-champion",
+      "zone": "Grand Namur",
+      "distanceMin": 20,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Entre Bouge et Boninne, Champion est à une vingtaine de minutes de mes cabinets. Beaucoup de mes patient·es championnois·es font le bilan au cabinet puis passent en visio pour les suivis : à toi de composer.",
+      "quartiers": "Champion, Bouge, Boninne, Vedrin, et le nord de la commune de Namur",
+      "acces": "Depuis Champion, une vingtaine de minutes en voiture suffisent pour rejoindre le cabinet de Namur (rue Martine Bourtonbourt 2) ou celui de Malonne. En visio, tu consultes depuis ton salon.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne proche de Champion ?",
+          "r": "Oui : mes cabinets de Namur et Malonne sont à une vingtaine de minutes, et la visio marche depuis chez toi. Le rendez-vous se réserve en ligne dans les deux cas."
+        },
+        {
+          "q": "Combien coûte une consultation ?",
+          "r": "La consultation « Premiers pas » est à 80 €, l'accompagnement complet à 290 € par personne. La plupart des mutuelles remboursent une partie."
+        }
+      ],
+      "metaTitle": "Diététicienne à Champion | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Champion (Namur) : troubles digestifs, santé féminine, alimentation sans culpabilité. Visio ou cabinet à Namur/Malonne. RDV en ligne."
+    },
+    {
       "ville": "Bouge",
       "slug": "dieteticienne-bouge",
       "zone": "Grand Namur",
@@ -151,11 +492,227 @@
         },
         {
           "q": "Combien coûte la première consultation ?",
-          "r": "La consultation « Premiers pas » est à 80 €, avec un appel une semaine après pour voir comment tu vas. Une partie est remboursée par la plupart des mutuelles."
+          "r": "La consultation « Premiers pas » est à 80 €. Une partie est remboursée par la plupart des mutuelles."
         }
       ],
       "metaTitle": "Diététicienne à Bouge | Anne-Charlotte Jalhay",
       "metaDescription": "Diététicienne près de Bouge (Namur) : maux de ventre, SII, santé féminine, mieux manger sans régime. Cabinet à Namur à 10 minutes ou consultation en visio. RDV en ligne."
+    },
+    {
+      "ville": "Loyers",
+      "slug": "dieteticienne-loyers",
+      "zone": "Grand Namur",
+      "distanceMin": 22,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Sur le plateau de la sortie Namur-Est, Loyers est à une vingtaine de minutes de mes cabinets. Que tu rentres de l'autoroute ou que tu télétravailles, la visio s'intercale facilement dans ta journée.",
+      "quartiers": "Loyers, Lives-sur-Meuse, Wierde, Erpent, et l'est de la commune de Namur",
+      "acces": "Depuis Loyers, compte une vingtaine de minutes vers le cabinet de Namur (rue Martine Bourtonbourt 2) ou celui de Malonne. En visio, tu consultes sans quitter la maison.",
+      "faqLocale": [
+        {
+          "q": "Où consulter une diététicienne quand on habite Loyers ?",
+          "r": "Au cabinet de Namur ou de Malonne, à une vingtaine de minutes, ou en visio depuis chez toi. Tu choisis ce qui t'arrange au moment de réserver en ligne."
+        },
+        {
+          "q": "Que faut-il préparer avant le premier rendez-vous ?",
+          "r": "Rien d'obligatoire. Si tu as des analyses récentes ou un traitement en cours, garde-les sous la main : ça enrichit le bilan. Le reste, on le construit ensemble."
+        }
+      ],
+      "metaTitle": "Diététicienne à Loyers | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Loyers (Namur-Est) : maux de ventre, SII, santé féminine, rééquilibrage durable. Visio ou cabinets Namur/Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Daussoulx",
+      "slug": "dieteticienne-daussoulx",
+      "zone": "Grand Namur",
+      "distanceMin": 22,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Connu pour son échangeur, Daussoulx a un avantage caché : tu es sur la route de tout. Cabinet de Namur, cabinet de Malonne ou visio depuis ton salon, les trois marchent très bien depuis le village.",
+      "quartiers": "Daussoulx, Vedrin, Cognelée, Saint-Marc, et le nord de la commune de Namur",
+      "acces": "Depuis Daussoulx, une vingtaine de minutes en voiture vers le cabinet de Namur ou de Malonne. Et si tu passes déjà ta vie sur la route, la visio t'évite d'en rajouter.",
+      "faqLocale": [
+        {
+          "q": "Où consulter une diététicienne près de Daussoulx ?",
+          "r": "À Namur (rue Martine Bourtonbourt 2), à Malonne (rue Chapelle Lessire 54) ou en visio. Tu choisis au moment de réserver ton créneau en ligne."
+        },
+        {
+          "q": "Comment se passe le premier rendez-vous ?",
+          "r": "On fait le point sur ta santé, tes habitudes et tes objectifs, sans jugement. Tu repars avec une stratégie claire et adaptée à ta vie réelle."
+        }
+      ],
+      "metaTitle": "Diététicienne à Daussoulx | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Daussoulx (Namur) : troubles digestifs, santé hormonale, rééquilibrage sans régime. Visio ou cabinets Namur/Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Boninne",
+      "slug": "dieteticienne-boninne",
+      "zone": "Grand Namur",
+      "distanceMin": 22,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Boninne est sur les hauteurs du nord-est namurois : mes cabinets sont à une vingtaine de minutes, alors la plupart de mes patient·es du village démarrent en visio et gardent le cabinet pour les rendez-vous où on veut se voir en vrai.",
+      "quartiers": "Boninne, Champion, Gelbressée, et le plateau nord-est de la commune de Namur",
+      "acces": "Depuis Boninne, compte une vingtaine de minutes vers le cabinet de Namur ou de Malonne. La visio reste le chemin le plus court : tu réserves ton créneau et on se voit en vidéo.",
+      "faqLocale": [
+        {
+          "q": "Comment consulter une diététicienne depuis Boninne ?",
+          "r": "Le plus simple est la visio : même accompagnement qu'au cabinet, sans la route. Et si tu préfères te déplacer, mes cabinets de Namur et Malonne t'accueillent."
+        },
+        {
+          "q": "Quels problèmes peux-tu accompagner ?",
+          "r": "Les maux de ventre chroniques (ballonnements, intestin irritable, reflux), les déséquilibres hormonaux (SOPK, endométriose, SPM) et l'envie de mieux manger sans régime punitif."
+        }
+      ],
+      "metaTitle": "Diététicienne à Boninne | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne pour Boninne et le plateau nord-est de Namur : SII, ballonnements, santé hormonale, mieux manger. Visio ou cabinet à Namur/Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Wierde",
+      "slug": "dieteticienne-wierde",
+      "zone": "Grand Namur",
+      "distanceMin": 22,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Village du sud-est namurois, Wierde est à une vingtaine de minutes de mes cabinets. C'est souvent en visio que mes patient·es de Wierde avancent le mieux : régulier, simple, sans route.",
+      "quartiers": "Wierde, Erpent, Naninne, Dave, et le sud-est de la commune de Namur",
+      "acces": "Depuis Wierde, compte une vingtaine de minutes vers le cabinet de Namur ou de Malonne. En visio, tu réserves en ligne et on se voit en vidéo : le suivi est identique.",
+      "faqLocale": [
+        {
+          "q": "Comment consulter une diététicienne depuis Wierde ?",
+          "r": "En visio depuis chez toi (le plus simple), ou au cabinet de Namur ou de Malonne à une vingtaine de minutes. Réservation en ligne dans tous les cas."
+        },
+        {
+          "q": "Le suivi hebdomadaire, c'est contraignant ?",
+          "r": "C'est l'inverse : des points courts et réguliers évitent de tout porter seul·e entre deux rendez-vous. Et le rythme s'adapte à chacun·e."
+        },
+        {
+          "q": "Je navette tous les jours, comment tenir un suivi sérieux ?",
+          "r": "On construit un système qui survit aux trajets : préparation des repas le dimanche (batch cooking), boîtes malines pour le train ou la voiture, collations anti-coup de pompe. Les points de suivi se calent en début ou en fin de journée."
+        }
+      ],
+      "metaTitle": "Diététicienne à Wierde | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Wierde (Namur) : SII, ballonnements, SOPK, rééquilibrage durable. Surtout en visio, cabinet possible à Namur/Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Marche-les-Dames",
+      "slug": "dieteticienne-marche-les-dames",
+      "zone": "Grand Namur",
+      "distanceMin": 25,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Entre Meuse et rochers, Marche-les-Dames est à environ 25 minutes de mes cabinets. Mes patient·es du village consultent surtout en visio, et descendent à Namur quand l'envie d'un rendez-vous en vrai se fait sentir.",
+      "quartiers": "Marche-les-Dames, Gelbressée, Beez, et les bords de Meuse du nord-est namurois",
+      "acces": "Depuis Marche-les-Dames, compte environ 25 minutes vers le cabinet de Namur ou de Malonne. En visio, tu réserves ton créneau en ligne et on se voit en vidéo, sans trajet.",
+      "faqLocale": [
+        {
+          "q": "Comment se faire suivre par une diététicienne depuis Marche-les-Dames ?",
+          "r": "Principalement en visio : même bilan, même plan, même suivi qu'au cabinet. Et mes cabinets de Namur et Malonne restent ouverts quand tu préfères venir."
+        },
+        {
+          "q": "Travailles-tu avec mon médecin ?",
+          "r": "Oui, en complément : si tes symptômes le justifient, je t'oriente vers ton médecin et j'adapte l'accompagnement à ton suivi médical. Jamais à sa place."
+        }
+      ],
+      "metaTitle": "Diététicienne à Marche-les-Dames | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne pour Marche-les-Dames (Namur) : troubles digestifs, santé hormonale, mieux manger sans régime. Surtout en visio. RDV en ligne."
+    },
+    {
+      "ville": "Lives-sur-Meuse",
+      "slug": "dieteticienne-lives-sur-meuse",
+      "zone": "Grand Namur",
+      "distanceMin": 25,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Petit village mosan de la rive droite, Lives-sur-Meuse est à une vingtaine de minutes de mes cabinets. La visio y est reine : le même accompagnement, la vue sur la Meuse en prime.",
+      "quartiers": "Lives-sur-Meuse, Loyers, Beez en face, et les villages mosans à l'est de Namur",
+      "acces": "Depuis Lives-sur-Meuse, compte une vingtaine de minutes vers le cabinet de Namur ou de Malonne. La visio évite le trajet : tu réserves ton créneau en ligne et on se voit en vidéo.",
+      "faqLocale": [
+        {
+          "q": "Y a-t-il une diététicienne près de Lives-sur-Meuse ?",
+          "r": "Mes cabinets de Namur et Malonne sont à une vingtaine de minutes, et je consulte aussi en visio depuis chez toi. Réservation en ligne, confirmation immédiate."
+        },
+        {
+          "q": "La visio convient-elle pour un trouble digestif ?",
+          "r": "Oui : l'essentiel du travail passe par l'échange, le journal alimentaire et les ajustements progressifs. Tout se fait très bien à distance."
+        }
+      ],
+      "metaTitle": "Diététicienne à Lives-sur-Meuse | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne près de Lives-sur-Meuse (Namur) : troubles digestifs, SOPK, endométriose, mieux manger. Visio ou cabinet à Namur/Malonne. RDV en ligne."
+    },
+    {
+      "ville": "Gelbressée",
+      "slug": "dieteticienne-gelbressee",
+      "zone": "Grand Namur",
+      "distanceMin": 25,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Village des champs du nord-est namurois, Gelbressée est à environ 25 minutes de mes cabinets. C'est typiquement de là que mes patient·es consultent en visio : la campagne sans la route.",
+      "quartiers": "Gelbressée, Marche-les-Dames, Boninne, et la campagne du nord-est de la commune de Namur",
+      "acces": "Depuis Gelbressée, compte environ 25 minutes vers le cabinet de Namur ou de Malonne. En visio, tu réserves en ligne et on se voit en vidéo : le suivi est identique.",
+      "faqLocale": [
+        {
+          "q": "Comment consulter depuis Gelbressée ?",
+          "r": "Le plus simple est la visio : réservation en ligne, consultation en vidéo, même accompagnement qu'au cabinet. Namur et Malonne restent possibles quand tu veux te déplacer."
+        },
+        {
+          "q": "La première consultation dure combien de temps ?",
+          "r": "Prévois environ une heure : on prend le temps de comprendre ta situation, tes habitudes et tes objectifs avant de construire la suite."
+        },
+        {
+          "q": "Peux-tu construire mes menus avec les légumes du potager et des producteurs du coin ?",
+          "r": "Avec grand plaisir : cuisiner local et de saison rend l'équilibre alimentaire moins cher et plus savoureux. Courges, poireaux, pommes, œufs de la ferme voisine : on bâtit tes menus autour de ce que ta campagne t'offre déjà."
+        }
+      ],
+      "metaTitle": "Diététicienne à Gelbressée | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne pour Gelbressée et le nord-est namurois : SII, ballonnements, santé hormonale, mieux manger. Surtout en visio. RDV en ligne."
+    },
+    {
+      "ville": "Cognelée",
+      "slug": "dieteticienne-cognelee",
+      "zone": "Grand Namur",
+      "distanceMin": 25,
+      "consultation": [
+        "Cabinet Malonne",
+        "Visio"
+      ],
+      "cabinetSurPlace": false,
+      "introLocale": "Tout au nord de la commune, sur la route de Louvain, Cognelée est le genre de village d'où la visio prend tout son sens : le même accompagnement que mes patient·es du centre, sans les vingt-cinq minutes de route.",
+      "quartiers": "Cognelée, Daussoulx, Champion, et le nord de la commune de Namur",
+      "acces": "Depuis Cognelée, compte environ 25 minutes vers mes cabinets de Namur ou Malonne. La visio est souvent l'option la plus simple : réservation en ligne, consultation en vidéo, suivi identique.",
+      "faqLocale": [
+        {
+          "q": "Faut-il venir au cabinet pour être bien suivi·e ?",
+          "r": "Non. Le bilan, le plan alimentaire et le suivi sont exactement les mêmes en visio. Tu gardes le cabinet pour les fois où tu préfères te voir en vrai."
+        },
+        {
+          "q": "Faut-il une prescription du médecin ?",
+          "r": "Non, tu peux réserver directement en ligne. Certaines mutuelles demandent une prescription pour le remboursement : on en parle au premier rendez-vous si besoin."
+        }
+      ],
+      "metaTitle": "Diététicienne à Cognelée | Anne-Charlotte Jalhay",
+      "metaDescription": "Diététicienne pour Cognelée et le nord de Namur : SII, ballonnements, SOPK, mieux manger. Surtout en visio, cabinet possible à Namur/Malonne. RDV en ligne."
     },
     {
       "ville": "Gembloux",
