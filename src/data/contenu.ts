@@ -24,7 +24,7 @@ export const OFFRES = [
   },
   {
     nom: 'Pack tout compris',
-    prix: '270 €',
+    prix: '290 €',
     unite: 'par personne, avec un objectif',
     description:
       'On prend un problème ou un objectif, et on solutionne la situation ensemble.',
@@ -86,7 +86,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, la consultation « Premiers pas » est à 80 € (avec un appel de suivi une semaine après), et l’accompagnement complet à 270 € par personne. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, la consultation « Premiers pas » est à 80 € (avec un appel de suivi une semaine après), et l’accompagnement complet à 290 € par personne. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',

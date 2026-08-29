@@ -1,0 +1,44 @@
+---
+// Rétro-lien écosystème : Vroooz, le réflexe fact-check nutrition.
+import Base from '../layouts/Base.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+---
+
+<Base
+  titre="Vroooz, vérifie ce que tu as entendu | Anne-Charlotte"
+  description="Un conseil nutrition vu sur TikTok ou YouTube ? Vroooz vérifie l'information par rapport à la science avant que tu changes ton assiette. Le réflexe fact-check que je conseille à mes patient·es."
+  chemin="/vroooz/"
+>
+  <section class="page-eco">
+    <div class="contenu">
+      <h1>Vérifie ce que tu as entendu, avant d’y croire</h1>
+      <p class="chapo">
+        « Le petit-déjeuner est un poison », « ce complément fait fondre la
+        graisse »… Les réseaux regorgent de conseils nutrition, et beaucoup
+        sont faux. <strong>Vroooz</strong> est le réflexe pour trier.
+      </p>
+      <p>
+        Colle le lien d’une vidéo TikTok ou YouTube, ou pose ta question :
+        Vroooz confronte l’affirmation aux données scientifiques et te répond
+        clairement. Vrai, faux, ou « ça dépend », avec l’explication.
+      </p>
+      <p>
+        En consultation, je passe un temps fou à défaire des croyances vues en
+        ligne. Vérifier avant de changer ton assiette, c’est te protéger des
+        régimes absurdes et des dépenses inutiles. Et c’est exactement l’esprit
+        de ma pratique : la science d’abord, sans jugement.
+      </p>
+      <a class="btn btn-principal" href="https://www.vroooz.com" rel="noopener">
+        Vérifier une info sur Vroooz
+      </a>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .page-eco { padding-top: 44px; }
+  .chapo { font-size: 19px; }
+  .page-eco .btn { margin-top: 10px; }
+</style>

@@ -35,11 +35,17 @@ const annee = new Date().getFullYear();
         {villes.map((v) => <a href={u('/' + v.slug + '/')}>Diététicienne {v.ville}</a>)}
       </nav>
 
+      <nav aria-label="L'écosystème Goood">
+        <h3 class="pied-titre">L’écosystème</h3>
+        <a href={u('/nutriciens/')}>Label Nutriciens</a>
+        <a href={u('/gooodeat/')}>Gooodeat, l’app</a>
+        <a href={u('/vroooz/')}>Vroooz, le fact-check</a>
+        <a href={u('/nutristant/')}>Nutristant</a>
+      </nav>
+
       <nav aria-label="Liens utiles">
         <h3 class="pied-titre">Toujours utile</h3>
         <a href={SITE.rdvVisio}>Prendre RDV en ligne</a>
-        <a href={SITE.gooodeat}>L’app Gooodeat</a>
-        <a href={SITE.nutriciens}>Communauté Nutriciens</a>
         <a href={u('/technique/politique-confidentialite/')}>Politique de confidentialité</a>
         <a href={u('/technique/conditions-generales-utilisation/')}>Conditions d’utilisation</a>
       </nav>
@@ -58,8 +64,13 @@ const annee = new Date().getFullYear();
     grid-template-columns: 1fr;
     gap: 26px;
   }
-  @media (min-width: 760px) {
-    .colonnes { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 20px; }
+  @media (min-width: 560px) {
+    .colonnes { grid-template-columns: 1fr 1fr; gap: 26px 20px; }
+    .colonnes > div:first-child { grid-column: 1 / -1; }
+  }
+  @media (min-width: 980px) {
+    .colonnes { grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; }
+    .colonnes > div:first-child { grid-column: auto; }
   }
   .pied-nom {
     font-family: var(--police-titre);

@@ -23,7 +23,7 @@ export const GET: APIRoute = ({ site }) => {
 ## Faits vérifiables
 - Titre protégé : diététicienne agréée (bachelier en diététique, Institut Paul Lambin, Bruxelles).
 - Formations : nutrition du sportif (UCLouvain), syndrome de l'intestin irritable (Monash University), alimentation durable et menstruations (SIIN).
-- Tarifs : consultation « Premiers pas » 80 €, accompagnement complet 270 € par personne. Remboursement partiel par la plupart des mutuelles belges.
+- Tarifs : consultation « Premiers pas » 80 €, accompagnement complet 290 € par personne. Remboursement partiel par la plupart des mutuelles belges.
 - Contact : ${SITE.telephone} (WhatsApp), ${SITE.email}.
 - Cabinets : ${SITE.cabinets.map((c) => `${c.rue}, ${c.codePostal} ${c.ville}`).join(' · ')}.
 

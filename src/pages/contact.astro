@@ -22,52 +22,48 @@ const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonL
 >
   <section class="hero-contact fond-sapin">
     <div class="contenu">
-      <span class="etiquette">À l’écoute de tes besoins</span>
       <h1>Discutons, dès aujourd’hui</h1>
-      <p>Choisis ce qui est le plus simple pour toi : tout marche.</p>
+      <p class="hero-sous">Choisis ce qui est le plus simple pour toi : tout marche.</p>
     </div>
   </section>
 
   <section>
-    <div class="contenu">
-      <div class="grille-2 moyens">
-        <div class="carte moyen">
-          <h2>En ligne <span class="pastille">plus rapide</span></h2>
+    <div class="contenu" data-reveal>
+      <!-- Le geste principal, mis en scène seul -->
+      <div class="moyen-principal">
+        <div>
+          <h2>Réserver en ligne <span class="pastille">plus rapide</span></h2>
           <p>
-            Tu choisis ton créneau, la confirmation est immédiate. En visio ou
-            au cabinet.
+            Tu choisis ton créneau, la confirmation est immédiate. En visio
+            depuis chez toi, ou au cabinet.
           </p>
-          <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>Prendre RDV en visio</a>
         </div>
-
-        <div class="carte moyen">
-          <h2>Téléphone ou WhatsApp</h2>
-          <p>
-            Une question avant de réserver ? Écris-moi ou appelle-moi, je te
-            réponds directement.
-          </p>
-          <a class="btn btn-contour btn-bloc" href={SITE.whatsappMessage}>
-            WhatsApp : {SITE.telephone}
-          </a>
-        </div>
-
-        {SITE.cabinets.map((cabinet) => (
-          <div class="carte moyen">
-            <h2>{cabinet.nom}</h2>
-            <p>
-              {cabinet.rue}, {cabinet.codePostal} {cabinet.ville} (BE)<br />
-              {SITE.horaires}
-            </p>
-            <a class="btn btn-contour btn-bloc" href={cabinet.rdv}>
-              Prendre RDV à {cabinet.ville}
-            </a>
-          </div>
-        ))}
+        <a class="btn btn-rose" href={SITE.rdvVisio}>Prendre RDV en visio</a>
       </div>
 
-      <p class="email-ligne">
-        Par e-mail : <a href={'mailto:' + SITE.email}>{SITE.email}</a>
-      </p>
+      <!-- Les autres chemins, en rangées -->
+      <div class="rangs">
+        <div class="rang moyen">
+          <h3>WhatsApp ou téléphone</h3>
+          <p>Une question avant de réserver ? Je te réponds directement.</p>
+          <a class="btn btn-contour" href={SITE.whatsappMessage}>{SITE.telephone}</a>
+        </div>
+        {SITE.cabinets.map((cabinet) => (
+          <div class="rang moyen">
+            <h3>{cabinet.nom}</h3>
+            <p>
+              {cabinet.rue}, {cabinet.codePostal} {cabinet.ville} (BE) ·{' '}
+              {SITE.horaires}
+            </p>
+            <a class="btn btn-contour" href={cabinet.rdv}>RDV à {cabinet.ville}</a>
+          </div>
+        ))}
+        <div class="rang moyen">
+          <h3>Par e-mail</h3>
+          <p>Pour tout le reste, y compris les demandes professionnelles.</p>
+          <a class="btn btn-contour" href={'mailto:' + SITE.email}>{SITE.email}</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -76,17 +72,46 @@ const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonL
 </Base>
 
 <style>
-  .hero-contact { padding: 52px 0 40px; }
-  .hero-contact h1 { color: var(--ecru); }
-  .moyens { margin-top: 6px; }
-  .moyen { display: flex; flex-direction: column; }
-  .moyen h2 {
-    font-size: 21px;
+  .hero-contact { padding: 56px 0 48px; }
+  .hero-sous { font-size: 18.5px; margin: 0; }
+
+  .moyen-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+    background: var(--sapin);
+    border-radius: var(--rayon-grand);
+    padding: 30px 28px;
+    margin-bottom: 34px;
+  }
+  @media (min-width: 820px) {
+    .moyen-principal {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .moyen-principal .btn { flex: none; }
+  }
+  .moyen-principal h2 {
+    color: var(--ecru);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
+    font-size: 27px;
+    margin-bottom: 8px;
   }
-  .moyen .btn { margin-top: auto; }
-  .email-ligne { margin-top: 20px; color: var(--encre-2); }
+  .moyen-principal p { color: #DCD5C6; margin: 0; }
+
+  .rang.moyen { grid-template-columns: 1fr; }
+  @media (min-width: 760px) {
+    .rang.moyen {
+      grid-template-columns: 240px 1fr auto;
+      align-items: center;
+    }
+  }
+  .rang.moyen .btn { min-height: 48px; padding: 10px 20px; font-size: 16px; justify-self: start; }
+  @media (min-width: 760px) { .rang.moyen .btn { justify-self: end; } }
 </style>

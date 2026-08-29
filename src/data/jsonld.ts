@@ -24,7 +24,7 @@ export function cabinetJsonLd(cabinet: (typeof SITE.cabinets)[number], site: str
     url: site,
     telephone: SITE.telephone,
     email: SITE.email,
-    priceRange: '80€-270€',
+    priceRange: '80€-290€',
     address: {
       '@type': 'PostalAddress',
       streetAddress: cabinet.rue,
@@ -47,7 +47,7 @@ export function villeJsonLd(ville: string, site: string) {
     medicalSpecialty: 'https://schema.org/DietNutrition',
     url: site,
     telephone: SITE.telephone,
-    priceRange: '80€-270€',
+    priceRange: '80€-290€',
     areaServed: { '@type': 'City', name: ville },
     address: {
       '@type': 'PostalAddress',

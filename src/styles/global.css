@@ -1,15 +1,15 @@
 /* Charte annecharlotte.be, tirée de la photo d'Anne-Charlotte :
    mur vert sapin, chemise rose velours, lumière écru, collier doré.
-   Mobile d'abord : tout est conçu pour l'écran téléphone (55 %+ du trafic),
-   le desktop élargit ensuite. Public parfois peu digital : gros textes,
-   gros boutons, contrastes forts. */
+   Mobile d'abord (55 %+ du trafic), public parfois peu digital :
+   gros textes, gros boutons, contrastes forts, zéro jargon visuel. */
 
 :root {
   --sapin: #16352C;
   --sapin-2: #1E4438;
   --sapin-3: #2A5748;
   --rose: #F0C3CB;
-  --rose-fort: #D97E90;
+  --rose-2: #F7DCE1;
+  --rose-fort: #C96C80;
   --ecru: #FAF5EE;
   --ecru-2: #F1E8DA;
   --dore: #B98D45;
@@ -17,14 +17,14 @@
   --encre-2: #52625B;
   --ligne: #E3D8C7;
   --blanc: #FFFFFF;
-  --whatsapp: #25D366;
+  --whatsapp: #1DA851;
 
   --police-titre: 'Young Serif', Georgia, 'Times New Roman', serif;
   --police-texte: 'Figtree', 'Avenir Next', 'Segoe UI', Arial, sans-serif;
 
-  --rayon: 14px;
-  --rayon-grand: 22px;
-  --contenu: 1080px;
+  --rayon: 16px;
+  --rayon-grand: 26px;
+  --contenu: 1060px;
 }
 
 /* Les @font-face vivent dans Base.astro : leurs URLs dépendent de la base
@@ -53,25 +53,37 @@ body {
   body { font-size: 18px; padding-bottom: 0; }
 }
 
+/* Les surfaces que le navigateur dessine portent aussi la charte. */
+::selection { background: var(--rose); color: var(--sapin); }
+html { scrollbar-color: var(--sapin-3) var(--ecru-2); }
+input, textarea { caret-color: var(--rose-fort); }
+
 h1, h2, h3 {
   font-family: var(--police-titre);
   font-weight: 400;
-  line-height: 1.18;
+  line-height: 1.14;
   color: var(--sapin);
   text-wrap: balance;
-  margin: 0 0 14px;
+  margin: 0 0 16px;
 }
-h1 { font-size: clamp(30px, 7vw, 46px); }
-h2 { font-size: clamp(24px, 5vw, 34px); }
-h3 { font-size: clamp(19px, 4vw, 23px); }
+h1 { font-size: clamp(32px, 7.5vw, 52px); letter-spacing: -0.01em; }
+h2 { font-size: clamp(26px, 5.5vw, 38px); letter-spacing: -0.01em; }
+h3 { font-size: clamp(19px, 4vw, 24px); }
 
-p { margin: 0 0 14px; max-width: 68ch; }
+p { margin: 0 0 14px; max-width: 66ch; }
 ul { padding-left: 22px; }
 li { margin-bottom: 8px; }
 strong { color: var(--sapin); }
+em { font-style: italic; }
 
-a { color: var(--sapin-2); text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--rose-fort); }
-a:hover { color: var(--sapin); }
+a {
+  color: var(--sapin-2);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--rose-fort);
+  transition: text-decoration-color .15s ease, color .15s ease;
+}
+a:hover { color: var(--sapin); text-decoration-color: var(--dore); }
 
 :focus-visible {
   outline: 3px solid var(--dore);
@@ -84,30 +96,20 @@ img { max-width: 100%; height: auto; }
 .contenu {
   max-width: var(--contenu);
   margin: 0 auto;
-  padding: 0 18px;
+  padding: 0 20px;
 }
 
-section { padding: 44px 0; }
-@media (min-width: 860px) { section { padding: 64px 0; } }
+section { padding: 52px 0; }
+@media (min-width: 860px) { section { padding: 76px 0; } }
 
-.etiquette {
-  display: inline-block;
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--dore);
-  margin-bottom: 8px;
-}
-
-/* ---- Boutons : gros, clairs, tactiles (min 48px) ---- */
+/* ---- Boutons : gros, clairs, tactiles (min 52px) ---- */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: 52px;
-  padding: 13px 24px;
+  padding: 13px 26px;
   border-radius: 999px;
   font-family: var(--police-texte);
   font-size: 17px;
@@ -115,13 +117,14 @@ section { padding: 44px 0; }
   text-decoration: none;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: transform .12s ease, background .15s ease;
+  transition: transform .15s cubic-bezier(.2, .8, .25, 1), background .15s ease, box-shadow .15s ease;
 }
-.btn:active { transform: scale(.98); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -8px rgba(22, 53, 44, .35); }
+.btn:active { transform: scale(.98); box-shadow: none; }
 .btn-principal { background: var(--sapin); color: var(--ecru); }
 .btn-principal:hover { background: var(--sapin-2); color: var(--ecru); }
 .btn-rose { background: var(--rose); color: var(--sapin); }
-.btn-rose:hover { background: #E9B3BD; color: var(--sapin); }
+.btn-rose:hover { background: #EBB5C0; color: var(--sapin); }
 .btn-contour { background: transparent; color: var(--sapin); border-color: var(--sapin); }
 .btn-contour:hover { background: var(--sapin); color: var(--ecru); }
 .btn-bloc { width: 100%; }
@@ -138,71 +141,89 @@ section { padding: 44px 0; }
   white-space: nowrap;
 }
 
-/* ---- Cartes ---- */
-.carte {
-  background: var(--blanc);
-  border: 1px solid var(--ligne);
-  border-radius: var(--rayon);
-  padding: 22px;
-}
-
 /* ---- Sections sur fond sapin ---- */
-.fond-sapin {
-  background: var(--sapin);
-  color: var(--ecru);
-}
-.fond-sapin h2, .fond-sapin h3 { color: var(--ecru); }
-.fond-sapin .etiquette { color: var(--rose); }
-.fond-sapin p { color: #E6DFD1; }
+.fond-sapin { background: var(--sapin); color: var(--ecru); }
+.fond-sapin h1, .fond-sapin h2, .fond-sapin h3 { color: var(--ecru); }
+.fond-sapin p { color: #DCD5C6; }
 .fond-sapin strong { color: var(--rose); }
 .fond-sapin a { color: var(--rose); }
-/* Les boutons gardent leurs propres couleurs, même sur fond sapin
-   (sinon .fond-sapin a rend le texte rose sur fond rose). */
+.fond-sapin ::selection { background: var(--rose); color: var(--sapin); }
+/* Les boutons gardent leurs propres couleurs, même sur fond sapin. */
 .fond-sapin .btn-rose { color: var(--sapin); }
 .fond-sapin .btn-rose:hover { color: var(--sapin); }
 .fond-sapin .btn-principal { color: var(--ecru); }
 
-/* ---- Accordéons (FAQ) : natifs, accessibles ---- */
+/* ---- Accordéons (FAQ) : natifs, accessibles, chevron dessiné ---- */
 details {
-  background: var(--blanc);
-  border: 1px solid var(--ligne);
-  border-radius: var(--rayon);
-  padding: 0;
-  margin-bottom: 10px;
+  border-bottom: 1px solid var(--ligne);
+  margin: 0;
 }
 details summary {
   list-style: none;
   cursor: pointer;
-  padding: 16px 46px 16px 18px;
+  padding: 18px 46px 18px 2px;
   font-weight: 700;
+  font-size: 17.5px;
   color: var(--sapin);
   position: relative;
-  min-height: 48px;
+  min-height: 52px;
 }
 details summary::-webkit-details-marker { display: none; }
 details summary::after {
-  content: '+';
+  content: '';
   position: absolute;
-  right: 18px;
+  right: 12px;
   top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-  color: var(--dore);
-  font-weight: 400;
+  width: 10px;
+  height: 10px;
+  border-right: 2.5px solid var(--dore);
+  border-bottom: 2.5px solid var(--dore);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform .2s cubic-bezier(.2, .8, .25, 1);
 }
-details[open] summary::after { content: '−'; }
-details .reponse { padding: 0 18px 16px; }
+details[open] summary::after { transform: translateY(-30%) rotate(225deg); }
+details .reponse { padding: 0 2px 20px; }
 details .reponse p:last-child { margin-bottom: 0; }
+.faq-liste { border-top: 1px solid var(--ligne); max-width: 780px; }
 
-/* ---- Grilles ---- */
-.grille-2, .grille-3 { display: grid; grid-template-columns: 1fr; gap: 16px; }
-@media (min-width: 700px) {
-  .grille-2 { grid-template-columns: 1fr 1fr; }
-  .grille-3 { grid-template-columns: 1fr 1fr 1fr; }
+/* ---- Rangées éditoriales (remplacent les grilles de cartes uniformes) ---- */
+.rangs { border-top: 1px solid var(--ligne); }
+.rang {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px 32px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--ligne);
+  text-decoration: none;
 }
+@media (min-width: 760px) {
+  .rang { grid-template-columns: 260px 1fr auto; align-items: baseline; }
+}
+.rang h3 { margin: 0; }
+.rang p { margin: 0; color: var(--encre-2); font-size: 16.5px; }
 
-/* ---- Tableaux qui débordent ---- */
+/* ---- Grilles (usage ponctuel) ---- */
+.grille-2 { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 700px) { .grille-2 { grid-template-columns: 1fr 1fr; } }
+
 .defile-x { overflow-x: auto; }
-
 .centre { text-align: center; }
 .centre p { margin-left: auto; margin-right: auto; }
+
+/* ---- Liens villes (pastilles fonctionnelles, volontairement discrètes) ---- */
+.villes-liens { display: flex; flex-wrap: wrap; gap: 10px; }
+.ville-lien {
+  background: transparent;
+  border: 1.5px solid var(--ligne);
+  border-radius: 999px;
+  padding: 10px 18px;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15.5px;
+  color: var(--sapin);
+  transition: border-color .15s ease, background .15s ease;
+}
+.ville-lien:hover { border-color: var(--dore); background: var(--blanc); }

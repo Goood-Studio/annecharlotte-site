@@ -1,0 +1,44 @@
+---
+// Rétro-lien écosystème : Nutristant, les outils IA des diététicien·nes.
+import Base from '../layouts/Base.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE } from '../data/site';
+---
+
+<Base
+  titre="Nutristant, les outils IA des diététicien·nes | Anne-Charlotte"
+  description="Nutristant est la suite d'outils dopés à l'IA pensée pour les diététicien·nes : gagner du temps sur l'administratif et l'analyse pour le passer avec les patient·es."
+  chemin="/nutristant/"
+>
+  <section class="page-eco">
+    <div class="contenu">
+      <h1>Nutristant, l’assistant des diététicien·nes</h1>
+      <p class="chapo">
+        Une consultation, c’est 30 minutes avec toi… et souvent autant de
+        travail invisible autour. <strong>Nutristant</strong> est la suite
+        d’outils dopés à l’IA qui rend ce temps aux diététicien·nes.
+      </p>
+      <p>
+        Analyses, préparation de consultations, supports personnalisés :
+        Nutristant automatise ce qui peut l’être pour que le temps du ou de la
+        diététicien·ne aille là où il compte, avec les patient·es.
+      </p>
+      <p>
+        C’est un projet du studio Goood, construit main dans la main avec la
+        communauté Nutriciens. La suite est en cours de construction : les
+        diététicien·nes membres de Nutriciens y ont accès en avant-première.
+      </p>
+      <a class="btn btn-principal" href={SITE.nutriciens} rel="noopener">
+        Être prévenu·e via Nutriciens
+      </a>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .page-eco { padding-top: 44px; }
+  .chapo { font-size: 19px; }
+  .page-eco .btn { margin-top: 10px; }
+</style>

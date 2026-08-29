@@ -1,0 +1,45 @@
+---
+// Rétro-lien écosystème : Gooodeat, l'app que je recommande à mes patient·es.
+import Base from '../layouts/Base.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE } from '../data/site';
+---
+
+<Base
+  titre="Gooodeat, l'app pour manger sans culpabilité | Anne-Charlotte"
+  description="Gooodeat est l'app que je recommande à mes patient·es : scanner son repas, comprendre son assiette et mieux manger sans compter les calories ni culpabiliser. Disponible sur iOS et Android."
+  chemin="/gooodeat/"
+>
+  <section class="page-eco">
+    <div class="contenu">
+      <h1>Gooodeat, l’app pour déculpabiliser ton assiette</h1>
+      <p class="chapo">
+        Entre les consultations, il se passe des semaines. <strong>Gooodeat</strong>
+        est l’app que je recommande à mes patient·es pour garder le cap au
+        quotidien, sans compter les calories.
+      </p>
+      <p>
+        Le principe est simple : tu scannes ton repas, l’app t’aide à
+        comprendre ce qu’il y a dans ton assiette et te propose des pistes
+        concrètes pour l’équilibrer. Pas de score culpabilisant, pas de
+        régime caché : de la compréhension et du plaisir.
+      </p>
+      <p>
+        C’est une app du studio Goood, construite avec la même philosophie que
+        mes consultations : mieux manger doit rester simple, positif et humain.
+        Elle est disponible gratuitement sur iOS et Android.
+      </p>
+      <a class="btn btn-principal" href={SITE.gooodeat} rel="noopener">
+        Télécharger Gooodeat
+      </a>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .page-eco { padding-top: 44px; }
+  .chapo { font-size: 19px; }
+  .page-eco .btn { margin-top: 10px; }
+</style>

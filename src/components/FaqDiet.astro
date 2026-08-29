@@ -10,12 +10,11 @@ const { titre = 'Tes questions sur les diététicien·nes' } = Astro.props;
 ---
 
 <section aria-labelledby="titre-faq-diet">
-  <div class="contenu">
-    <span class="etiquette">FAQ diététique</span>
+  <div class="contenu" data-reveal>
     <h2 id="titre-faq-diet">{titre}</h2>
-    <p>
+    <p class="faq-chapo">
       Un·e diététicien·ne est un·e professionnel·le de santé spécialisé·e en
-      nutrition humaine. Voici les questions qu’on me pose le plus souvent.
+      nutrition humaine. Voici ce qu’on me demande le plus souvent.
     </p>
     <div class="faq-liste">
       {FAQ_DIET.map((item) => (
@@ -29,5 +28,5 @@ const { titre = 'Tes questions sur les diététicien·nes' } = Astro.props;
 </section>
 
 <style>
-  .faq-liste { margin-top: 18px; max-width: 780px; }
+  .faq-chapo { color: var(--encre-2); margin-bottom: 22px; }
 </style>

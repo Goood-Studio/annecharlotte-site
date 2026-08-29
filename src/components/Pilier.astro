@@ -1,7 +1,7 @@
 ---
 // Gabarit commun des 3 pages piliers (troubles digestifs, santé féminine,
 // mieux manger) : définition « dictionnaire » en hero, réponse citable
-// (GEO), approche, services, tarifs, FAQ.
+// (GEO), situations accompagnées, façon de travailler, tarifs, FAQ.
 import Base from '../layouts/Base.astro';
 import Tarifs from '../components/Tarifs.astro';
 import FaqDiet from '../components/FaqDiet.astro';
@@ -45,12 +45,14 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
 ---
 
 <Base titre={metaTitle} description={metaDescription} chemin={chemin} jsonLd={jsonLd}>
-  <!-- Hero définition -->
+  <!-- Hero définition, façon entrée de dictionnaire -->
   <section class="hero-pilier fond-sapin">
     <div class="contenu">
-      <span class="etiquette">{terme} <em>({nature})</em></span>
       <h1>{titre}</h1>
-      <p class="definition">{definition}</p>
+      <p class="definition">
+        <span class="def-terme">{terme}</span>
+        <span class="def-nature">{nature}</span> · {definition}
+      </p>
       <div class="hero-boutons">
         <a class="btn btn-rose" href={SITE.rdvVisio}>
           Prendre RDV en ligne <span class="pastille">plus rapide</span>
@@ -60,34 +62,32 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
     </div>
   </section>
 
-  <!-- Réponse citable : la question posée à Google et aux IA, répondue en 2 phrases -->
-  <section aria-labelledby="titre-question-cle">
-    <div class="contenu">
-      <h2 id="titre-question-cle">{questionCle}</h2>
+  <!-- Réponse citable : la question posée à Google et aux IA, répondue net -->
+  <section class="question-cle">
+    <div class="contenu" data-reveal>
+      <h2>{questionCle}</h2>
       <p class="reponse-cle">{reponseCle}</p>
     </div>
   </section>
 
-  <!-- Symptômes / situations -->
+  <!-- Situations accompagnées -->
   <section aria-labelledby="titre-symptomes">
-    <div class="contenu">
-      <span class="etiquette">Tu te reconnais ?</span>
+    <div class="contenu" data-reveal>
       <h2 id="titre-symptomes">Les situations que j’accompagne</h2>
       <ul class="symptomes">
         {symptomes.map((s) => <li>{s}</li>)}
       </ul>
-      <p>{approche}</p>
+      <p class="approche-texte">{approche}</p>
     </div>
   </section>
 
-  <!-- Ce que je propose -->
-  <section aria-labelledby="titre-services-pilier">
-    <div class="contenu">
-      <span class="etiquette">Ce que je te propose</span>
-      <h2 id="titre-services-pilier">Un accompagnement complet, à ton rythme</h2>
-      <div class="grille-3">
+  <!-- Ce que je propose : une liste éditoriale, pas des cartes -->
+  <section aria-labelledby="titre-services-pilier" class="fond-ecru2">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-services-pilier">Ce que je te propose, concrètement</h2>
+      <div class="rangs">
         {SERVICES.map((service) => (
-          <div class="carte">
+          <div class="rang">
             <h3>{service.titre}</h3>
             <p>{service.texte}</p>
           </div>
@@ -98,8 +98,7 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
 
   <!-- FAQ du pilier -->
   <section aria-labelledby="titre-faq-pilier">
-    <div class="contenu">
-      <span class="etiquette">Questions fréquentes</span>
+    <div class="contenu" data-reveal>
       <h2 id="titre-faq-pilier">On me demande souvent</h2>
       <div class="faq-liste">
         {faqPilier.map((item) => (
@@ -119,35 +118,46 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
 </Base>
 
 <style>
-  .hero-pilier { padding: 52px 0; }
-  .hero-pilier h1 { color: var(--ecru); }
+  .hero-pilier { padding: 56px 0; }
   .definition {
     font-size: 18px;
-    border-left: 4px solid var(--rose);
-    padding-left: 16px;
-    max-width: 62ch;
+    max-width: 64ch;
+    color: #DCD5C6;
   }
-  .hero-boutons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+  .def-terme {
+    font-family: var(--police-titre);
+    font-size: 21px;
+    color: var(--rose);
+  }
+  .def-nature { font-style: italic; color: #B9C4BC; }
+  .hero-boutons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
   .btn-contour-clair {
     background: transparent;
     color: var(--ecru);
     border-color: var(--ecru);
   }
   .btn-contour-clair:hover { background: var(--ecru); color: var(--sapin); }
+
+  .question-cle { padding-bottom: 0; }
   .reponse-cle {
     font-size: 19px;
+    line-height: 1.6;
     color: var(--sapin);
-    background: var(--blanc);
-    border: 1px solid var(--ligne);
-    border-left: 5px solid var(--dore);
-    border-radius: var(--rayon);
-    padding: 18px 20px;
+    background: var(--rose-2);
+    border-radius: var(--rayon-grand);
+    padding: 24px 28px;
     max-width: 72ch;
   }
+
   .symptomes {
     columns: 1;
-    margin: 10px 0 18px;
+    margin: 6px 0 20px;
+    padding-left: 20px;
   }
-  @media (min-width: 700px) { .symptomes { columns: 2; column-gap: 40px; } }
-  .faq-liste { margin-top: 16px; max-width: 780px; }
+  @media (min-width: 700px) { .symptomes { columns: 2; column-gap: 48px; } }
+  .symptomes li { margin-bottom: 9px; break-inside: avoid; }
+  .symptomes li::marker { color: var(--rose-fort); }
+  .approche-texte { max-width: 66ch; }
+
+  .fond-ecru2 { background: var(--ecru-2); }
 </style>

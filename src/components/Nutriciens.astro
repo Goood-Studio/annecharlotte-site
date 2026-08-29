@@ -1,16 +1,42 @@
 ---
-import { SITE } from '../data/site';
+// Le label qualité Nutriciens : la garantie que la pratique reste à jour.
+// Pointe vers la page interne /nutriciens/ (rétro-lien vers la communauté).
+import { u } from '../data/site';
 ---
 
-<section class="fond-sapin" aria-labelledby="titre-nutriciens">
-  <div class="contenu">
-    <span class="etiquette">Entourée d’expert·es, membre Nutriciens</span>
-    <h2 id="titre-nutriciens">Je me tiens à jour en continu auprès d’une communauté d’expert·es de la nutrition</h2>
-    <p>
-      Nutriciens fournit aux professionnel·les de l’alimentation des formations
-      pratiques, des outils prêts à l’emploi et des expertises ciblées pour
-      optimiser chaque consultation. J’y ai déjà formé plus de 250 diététicien·nes.
-    </p>
-    <a class="btn btn-rose" href={SITE.nutriciens}>Découvrir la communauté Nutriciens</a>
+<section class="nutriciens" aria-labelledby="titre-nutriciens">
+  <div class="contenu" data-reveal>
+    <div class="nutriciens-ligne">
+      <div>
+        <h2 id="titre-nutriciens">Une pratique qui reste à jour</h2>
+        <p>
+          Je me forme en continu au sein de <strong>Nutriciens</strong>, la
+          communauté d’expert·es de la nutrition où j’ai déjà formé plus de
+          250 diététicien·nes. C’est ta garantie : des conseils basés sur la
+          science, jamais sur la mode du moment.
+        </p>
+      </div>
+      <a class="btn btn-contour" href={u('/nutriciens/')}>Le label Nutriciens</a>
+    </div>
   </div>
 </section>
+
+<style>
+  .nutriciens { background: var(--ecru-2); }
+  .nutriciens-ligne {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  @media (min-width: 860px) {
+    .nutriciens-ligne {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .nutriciens-ligne .btn { flex: none; }
+  }
+  .nutriciens p { margin-bottom: 0; }
+</style>

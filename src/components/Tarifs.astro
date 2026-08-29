@@ -1,47 +1,90 @@
 ---
-// Les offres, réutilisées sur l'accueil, les piliers et les pages villes.
+// Les offres : deux panneaux assumés et différents (pas de cartes jumelles).
+// Le pack, meilleur choix, prend la scène sur fond sapin.
 import { OFFRES } from '../data/contenu';
 import { SITE } from '../data/site';
+
+const premiersPas = OFFRES[0];
+const pack = OFFRES[1];
 ---
 
 <section class="tarifs" aria-labelledby="titre-tarifs">
-  <div class="contenu">
-    <span class="etiquette">Deux façons de t’aider</span>
+  <div class="contenu" data-reveal>
     <h2 id="titre-tarifs">Tu es à un clic de la solution</h2>
-    <p>Disponibilités : {SITE.horaires}. En visio ou en cabinet, c’est toi qui choisis.</p>
+    <p class="tarifs-chapo">
+      Disponibilités : {SITE.horaires}. En visio ou en cabinet, c’est toi qui choisis,
+      et la mutuelle rembourse une partie.
+    </p>
 
-    <div class="grille-2 cartes-offres">
-      {OFFRES.map((offre) => (
-        <article class={'carte offre' + (offre.meilleurChoix ? ' meilleure' : '')}>
-          {offre.meilleurChoix && <span class="pastille">Meilleur choix</span>}
-          <h3>{offre.nom}</h3>
-          <p class="offre-prix">
-            <span class="prix">{offre.prix}</span>
-            <span class="unite">{offre.unite}</span>
-          </p>
-          <p>{offre.description}</p>
-          <ul>
-            {offre.inclus.map((item) => <li>{item}</li>)}
-          </ul>
-          <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>{offre.ctaTexte}</a>
-        </article>
-      ))}
+    <div class="offres">
+      <article class="offre offre-pack">
+        <span class="pastille">Meilleur choix</span>
+        <h3>{pack.nom}</h3>
+        <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
+        <p class="offre-desc">{pack.description}</p>
+        <ul>
+          {pack.inclus.map((item) => <li>{item}</li>)}
+        </ul>
+        <a class="btn btn-rose btn-bloc" href={SITE.rdvVisio}>{pack.ctaTexte}</a>
+      </article>
+
+      <article class="offre offre-simple">
+        <h3>{premiersPas.nom}</h3>
+        <p class="offre-prix"><span class="prix">{premiersPas.prix}</span> <span class="unite">{premiersPas.unite}</span></p>
+        <p class="offre-desc">{premiersPas.description}</p>
+        <ul>
+          {premiersPas.inclus.map((item) => <li>{item}</li>)}
+        </ul>
+        <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{premiersPas.ctaTexte}</a>
+      </article>
     </div>
   </div>
 </section>
 
 <style>
-  .cartes-offres { margin-top: 22px; align-items: start; }
-  .offre { position: relative; display: flex; flex-direction: column; gap: 4px; }
-  .offre .pastille { position: absolute; top: -12px; right: 18px; }
-  .offre.meilleure { border: 2px solid var(--dore); }
-  .offre-prix { display: flex; align-items: baseline; gap: 10px; margin: 0; }
+  .tarifs-chapo { color: var(--encre-2); margin-bottom: 28px; }
+  .offres {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+  @media (min-width: 780px) {
+    .offres { grid-template-columns: 1.15fr 1fr; }
+  }
+  .offre {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-radius: var(--rayon-grand);
+    padding: 30px 26px 26px;
+  }
+  .offre-pack {
+    background: var(--sapin);
+    color: #DCD5C6;
+  }
+  .offre-pack h3 { color: var(--ecru); font-size: 26px; }
+  .offre-pack .prix { color: var(--rose); }
+  .offre-pack .unite { color: #B9C4BC; }
+  .offre-pack .offre-desc { color: #DCD5C6; }
+  .offre-pack li { color: #DCD5C6; }
+  .offre-pack li::marker { color: var(--rose); }
+  .offre-simple {
+    background: var(--blanc);
+    border: 1.5px solid var(--ligne);
+  }
+  .offre-simple li::marker { color: var(--dore); }
+  .offre .pastille { position: absolute; top: -12px; right: 22px; }
+  .offre-prix { display: flex; align-items: baseline; gap: 10px; margin: 0 0 4px; }
   .prix {
     font-family: var(--police-titre);
-    font-size: 38px;
+    font-size: 42px;
     color: var(--sapin);
+    letter-spacing: -0.01em;
   }
   .unite { color: var(--encre-2); font-size: 15px; }
-  .offre ul { margin: 8px 0 16px; }
+  .offre ul { margin: 10px 0 20px; padding-left: 20px; }
+  .offre li { margin-bottom: 7px; font-size: 16px; }
   .offre .btn { margin-top: auto; }
 </style>

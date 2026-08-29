@@ -11,7 +11,7 @@
 import { writeFileSync } from 'node:fs';
 
 const TOKEN = process.env.NOTION_TOKEN;
-const VILLES_DB = '8fde4b55-7c73-4e3e-9d74-dada5a450ca1';
+const VILLES_DB = 'f502a218-6a01-485b-a16c-2bb40a2f7983';
 
 if (!TOKEN) {
   console.error('NOTION_TOKEN manquant. Lance via doppler ou définis le secret CI.');
@@ -72,6 +72,7 @@ for (const ligne of lignes) {
     slug: texte(p['Slug']),
     zone: p['Zone']?.select?.name ?? 'Autre',
     distanceMin: p['Distance cabinet (min)']?.number ?? null,
+    consultation: (p['Consultation']?.multi_select ?? []).map((o) => o.name),
     cabinetSurPlace: ['Namur', 'Malonne'].includes(ville),
     introLocale: texte(p['Intro locale']),
     quartiers: texte(p['Quartiers / communes']),

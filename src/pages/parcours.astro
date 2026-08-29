@@ -3,7 +3,7 @@
 import Base from '../layouts/Base.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
-import { SITE, u } from '../data/site';
+import { u } from '../data/site';
 ---
 
 <Base
@@ -13,13 +13,17 @@ import { SITE, u } from '../data/site';
 >
   <section class="hero-parcours fond-sapin">
     <div class="contenu">
-      <span class="etiquette">La passion</span>
       <h1>Écouter, comprendre, accompagner</h1>
+      <p class="hero-sous">
+        Diététicienne agréée, plus de 1 500 patient·es accompagné·es et
+        250 diététicien·nes formées. Et une passion qui a commencé… loin des
+        légumes.
+      </p>
     </div>
   </section>
 
   <section>
-    <div class="contenu recit">
+    <div class="contenu recit" data-reveal>
       <img
         class="portrait"
         src={u('/img/hero-900.jpg')}
@@ -58,32 +62,30 @@ import { SITE, u } from '../data/site';
     </div>
   </section>
 
-  <section aria-labelledby="titre-formations">
-    <div class="contenu">
-      <span class="etiquette">Diététicienne agréée</span>
+  <section aria-labelledby="titre-formations" class="fond-ecru2">
+    <div class="contenu" data-reveal>
       <h2 id="titre-formations">Mes formations</h2>
-      <div class="grille-2">
-        <div class="carte">
+      <div class="rangs">
+        <div class="rang">
           <h3>Bachelier en diététique</h3>
           <p>Institut Paul Lambin, Bruxelles. Le diplôme reconnu qui protège le titre de diététicienne en Belgique.</p>
         </div>
-        <div class="carte">
+        <div class="rang">
           <h3>Nutrition du sportif</h3>
           <p>UCLouvain. Comprendre les besoins spécifiques des corps qui bougent.</p>
         </div>
-        <div class="carte">
+        <div class="rang">
           <h3>Syndrome de l’intestin irritable</h3>
           <p>Monash University, la référence mondiale du protocole FODMAP pour le SII.</p>
         </div>
-        <div class="carte">
+        <div class="rang">
           <h3>Alimentation durable et menstruations</h3>
           <p>SIIN. Alimentation durable et prise en charge nutritionnelle du cycle menstruel.</p>
         </div>
       </div>
-      <p class="stats-parcours">
-        <span><strong>{SITE.statsPatients}</strong> patient·es accompagné·es</span>
-        <span><strong>{SITE.statsDiet}</strong> diététicien·nes formées</span>
-        <span><strong>+3 h</strong> de formation chaque semaine</span>
+      <p class="formation-note">
+        Et plus de 3 heures de formation continue chaque semaine, au sein de la
+        communauté Nutriciens.
       </p>
     </div>
   </section>
@@ -93,32 +95,27 @@ import { SITE, u } from '../data/site';
 </Base>
 
 <style>
-  .hero-parcours { padding: 52px 0 44px; }
-  .hero-parcours h1 { color: var(--ecru); }
+  .hero-parcours { padding: 56px 0; }
+  .hero-sous { font-size: 18.5px; max-width: 58ch; margin: 0; }
   .recit {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 26px;
+    gap: 28px;
     align-items: start;
   }
-  @media (min-width: 800px) { .recit { grid-template-columns: 320px 1fr; } }
+  @media (min-width: 800px) { .recit { grid-template-columns: 320px 1fr; gap: 48px; } }
   .portrait {
-    border-radius: var(--rayon-grand);
+    border-radius: 160px 160px var(--rayon-grand) var(--rayon-grand);
     object-fit: cover;
+    object-position: center 22%;
     width: 100%;
-    max-width: 360px;
+    max-width: 340px;
     aspect-ratio: 3 / 4;
+    justify-self: center;
+    box-shadow: 0 24px 48px -24px rgba(22, 53, 44, .4);
   }
-  .stats-parcours {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 30px;
-    margin-top: 24px;
-    color: var(--encre-2);
-  }
-  .stats-parcours strong {
-    font-family: var(--police-titre);
-    font-size: 26px;
-    color: var(--sapin);
-  }
+  .fond-ecru2 { background: var(--ecru-2); }
+  .fond-ecru2 .rang { border-color: #D8CCB8; }
+  .fond-ecru2 .rangs { border-color: #D8CCB8; }
+  .formation-note { margin-top: 20px; color: var(--encre-2); }
 </style>

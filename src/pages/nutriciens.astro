@@ -1,0 +1,51 @@
+---
+// Page « label qualité » : ce que l'appartenance à Nutriciens garantit
+// aux patient·es, et un rétro-lien propre vers la communauté.
+import Base from '../layouts/Base.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { SITE } from '../data/site';
+---
+
+<Base
+  titre="Le label Nutriciens | Anne-Charlotte Diététicienne"
+  description="Anne-Charlotte est membre et formatrice de Nutriciens, la communauté de formation continue des diététicien·nes. Ce que ce label garantit à ses patient·es : une pratique à jour, basée sur la science."
+  chemin="/nutriciens/"
+>
+  <section class="page-eco">
+    <div class="contenu">
+      <h1>Le label Nutriciens, ta garantie qualité</h1>
+      <p class="chapo">
+        La nutrition évolue vite, et les modes encore plus vite. Pour te donner
+        des conseils fiables, il faut se former en continu. C’est exactement le
+        rôle de <strong>Nutriciens</strong>.
+      </p>
+      <p>
+        Nutriciens est une communauté belge de diététicien·nes : formations
+        pratiques, cas cliniques, outils prêts à l’emploi et entraide entre
+        professionnel·les de la nutrition. On y confronte sa pratique à la
+        science la plus récente, pas aux tendances des réseaux sociaux.
+      </p>
+      <p>
+        J’y suis membre active et formatrice : j’y ai déjà formé plus de
+        <strong>250 diététicien·nes</strong>, notamment sur les troubles
+        digestifs et la santé féminine. Concrètement, pour toi, ça veut dire
+        des consultations nourries par une veille scientifique permanente et
+        des méthodes validées par des pairs.
+      </p>
+      <p>
+        Tu es diététicien·ne et tu veux progresser entouré·e ?
+      </p>
+      <a class="btn btn-principal" href={SITE.nutriciens} rel="noopener">
+        Découvrir la communauté Nutriciens
+      </a>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .page-eco { padding-top: 44px; }
+  .chapo { font-size: 19px; }
+  .page-eco .btn { margin-top: 10px; }
+</style>
