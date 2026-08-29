@@ -66,6 +66,7 @@ import { SITE, u } from '../data/site';
     line-height: 1.05;
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
   }
   .logo-sous {
     font-family: var(--police-texte);
@@ -119,21 +120,24 @@ import { SITE, u } from '../data/site';
   }
   .entete.ouvert .nav .nav-cta { margin-top: 12px; }
 
-  @media (min-width: 960px) {
+  /* Le menu complet ne s'affiche que quand il tient vraiment sur une ligne.
+     En dessous, on garde le burger, propre. */
+  @media (min-width: 1140px) {
     .burger { display: none; }
     .nav {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 18px;
     }
     .nav a:not(.nav-cta) {
       text-decoration: none;
       font-weight: 600;
       color: var(--encre);
-      font-size: 16px;
+      font-size: 15.5px;
+      white-space: nowrap;
     }
     .nav a:not(.nav-cta):hover { color: var(--sapin); text-decoration: underline; text-decoration-color: var(--rose-fort); }
-    .nav-cta { min-height: 44px; padding: 9px 20px; font-size: 16px; }
+    .nav-cta { min-height: 44px; padding: 9px 18px; font-size: 15.5px; white-space: nowrap; }
   }
 </style>
 
