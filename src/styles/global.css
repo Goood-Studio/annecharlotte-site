@@ -156,6 +156,11 @@ section { padding: 44px 0; }
 .fond-sapin p { color: #E6DFD1; }
 .fond-sapin strong { color: var(--rose); }
 .fond-sapin a { color: var(--rose); }
+/* Les boutons gardent leurs propres couleurs, même sur fond sapin
+   (sinon .fond-sapin a rend le texte rose sur fond rose). */
+.fond-sapin .btn-rose { color: var(--sapin); }
+.fond-sapin .btn-rose:hover { color: var(--sapin); }
+.fond-sapin .btn-principal { color: var(--ecru); }
 
 /* ---- Accordéons (FAQ) : natifs, accessibles ---- */
 details {
