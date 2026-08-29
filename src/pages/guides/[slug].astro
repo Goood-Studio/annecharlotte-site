@@ -1,0 +1,74 @@
+---
+// La page d'un guide publié : présentation + captation. Le contenu du
+// guide lui-même n'est PAS affiché (c'est le lead magnet) : la page vend,
+// le formulaire capte, la livraison se fait par WhatsApp ou e-mail.
+import Base from '../../layouts/Base.astro';
+import CaptureGuide from '../../components/CaptureGuide.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import guidesData from '../../data/guides.json';
+
+export function getStaticPaths() {
+  return guidesData.guides
+    .filter((g) => g.statut === 'Publié' && g.slug)
+    .map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+}
+
+const { guide } = Astro.props;
+---
+
+<Base
+  titre={guide.titre + ' (guide gratuit) | Anne-Charlotte Diététicienne'}
+  description={guide.metaDescription || guide.accroche}
+  chemin={'/guides/' + guide.slug + '/'}
+>
+  <section class="hero-guide fond-sapin">
+    <div class="contenu">
+      <p class="guide-pilier">{guide.pilier} · guide gratuit</p>
+      <h1>{guide.titre}</h1>
+      <p class="hero-sous">{guide.accroche}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu guide-2col" data-reveal>
+      <div>
+        <h2>Ce que tu reçois</h2>
+        <ul class="recu">
+          {guide.contenuListe.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="gratuit">
+          C’est gratuit, et c’est le condensé de ce que je construis en
+          consultation. Si tu veux ensuite aller plus loin, tu sauras où me
+          trouver.
+        </p>
+      </div>
+      <CaptureGuide guide={guide.titre} />
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-guide { padding: 56px 0 48px; }
+  .guide-pilier {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 10px;
+  }
+  .hero-sous { font-size: 18.5px; max-width: 56ch; margin: 0; }
+  .guide-2col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (min-width: 900px) { .guide-2col { grid-template-columns: 1fr 1.1fr; gap: 56px; } }
+  .recu { padding-left: 20px; }
+  .recu li { margin-bottom: 10px; font-size: 17.5px; }
+  .recu li::marker { color: var(--rose-fort); }
+  .gratuit { color: var(--encre-2); margin-top: 16px; }
+</style>

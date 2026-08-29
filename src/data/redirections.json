@@ -1,0 +1,25 @@
+{
+  "_commentaire": "Les 20 articles démo du template Framer (contenu anglais, ~300 mots) : chaque ancienne URL devient une page relais (meta refresh + canonique + noindex) vers la page utile la plus proche. GitHub Pages ne fait pas de redirection serveur.",
+  "articles": {
+    "cuisine-partage-vivre-ensemble": "/mieux-manger/",
+    "regime-vegan": "/mieux-manger/",
+    "rester-organise": "/articles/manger-equilibre-sans-temps/",
+    "prendre-soin-de-soi": "/mieux-manger/",
+    "pratiquer-alimentation-consciente": "/mieux-manger/",
+    "cuisine-partage-positivite": "/mieux-manger/",
+    "collations-saines": "/articles/manger-equilibre-sans-temps/",
+    "methodes-cuisson-saines": "/mieux-manger/",
+    "importance-graisses-saines": "/mieux-manger/",
+    "bienfaits-hydratation": "/mieux-manger/",
+    "importance-sommeil": "/mieux-manger/",
+    "role-vitamines-et-mineraux": "/mieux-manger/",
+    "role-des-proteines-alimentation": "/mieux-manger/",
+    "role-des-fibres-alimentation": "/troubles-digestifs/",
+    "equilibrer-assiette": "/mieux-manger/",
+    "importance-petit-dejeuner": "/mieux-manger/",
+    "idees-repas-pour-personnes-occupees": "/articles/manger-equilibre-sans-temps/",
+    "conseils-alimentation-saine-1": "/mieux-manger/",
+    "comprendre-les-etiquettes-nutritionnelles": "/mieux-manger/",
+    "activites-physiques-regulieres": "/mieux-manger/"
+  }
+}

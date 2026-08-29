@@ -1,0 +1,83 @@
+---
+// La page « Apps & outils » : la porte d'entrée vers les apps de
+// l'écosystème (Gooodeat, Vroooz, Nutristant), chacune ayant sa page.
+import Base from '../layouts/Base.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import { u } from '../data/site';
+---
+
+<Base
+  titre="Apps & outils pour mieux manger | Anne-Charlotte Diététicienne"
+  description="Les apps que je recommande à mes patient·es et aux diététicien·nes : Gooodeat pour manger sans culpabilité, Vroooz pour vérifier les infos nutrition, Nutristant pour les pros."
+  chemin="/apps/"
+>
+  <section class="hero-apps fond-sapin">
+    <div class="contenu">
+      <h1>Les outils qui prolongent la consultation</h1>
+      <p class="hero-sous">
+        Entre deux rendez-vous, la vraie vie continue. Voici les apps que je
+        recommande, construites avec la même philosophie que mes consultations :
+        simples, positives, basées sur la science.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu" data-reveal>
+      <div class="rangs">
+        <a class="rang rang-app" href={u('/gooodeat/')}>
+          <h3>Gooodeat</h3>
+          <p>
+            L’app pour déculpabiliser ton assiette : scanne ton repas, comprends
+            ce qu’il contient, équilibre sans compter les calories. Pour toutes
+            et tous, gratuite sur iOS et Android.
+          </p>
+          <span class="rang-fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="rang rang-app" href={u('/vroooz/')}>
+          <h3>Vroooz</h3>
+          <p>
+            Le réflexe fact-check : colle un lien TikTok ou YouTube et vérifie
+            un conseil nutrition par rapport à la science, avant de changer
+            ton assiette.
+          </p>
+          <span class="rang-fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="rang rang-app" href={u('/nutristant/')}>
+          <h3>Nutristant</h3>
+          <p>
+            Pour les diététicien·nes : la suite d’outils dopés à l’IA qui rend
+            du temps de consultation. En cours de construction, en
+            avant-première via Nutriciens.
+          </p>
+          <span class="rang-fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <p class="apps-note">
+        Aucune de ces apps ne remplace un accompagnement : elles le prolongent.
+        Le sur-mesure, c’est en consultation que ça se passe.
+      </p>
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-apps { padding: 56px 0 48px; }
+  .hero-sous { font-size: 18.5px; max-width: 58ch; margin: 0; }
+  .rang-app { position: relative; padding-right: 44px; }
+  .rang-app h3 { transition: color .15s ease; }
+  .rang-app:hover h3 { color: var(--rose-fort); }
+  .rang-fleche {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--dore);
+    transition: transform .15s cubic-bezier(.2, .8, .25, 1);
+  }
+  .rang-app:hover .rang-fleche { transform: translateY(-50%) translateX(6px); }
+  .apps-note { margin-top: 20px; color: var(--encre-2); font-size: 15.5px; }
+</style>

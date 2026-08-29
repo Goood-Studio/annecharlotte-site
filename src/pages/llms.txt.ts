@@ -2,6 +2,8 @@
 // depuis les mêmes données que les pages, donc jamais désynchronisé.
 import type { APIRoute } from 'astro';
 import villesData from '../data/villes.json';
+import articlesData from '../data/articles.json';
+import guidesData from '../data/guides.json';
 import { SITE } from '../data/site';
 
 export const GET: APIRoute = ({ site }) => {
@@ -37,6 +39,13 @@ export const GET: APIRoute = ({ site }) => {
 
 ## Consultations par ville
 ${villes}
+
+## Articles (réponses détaillées)
+${articlesData.articles.map((a) => `- [${a.titre}](${racine}/articles/${a.slug}/) : ${a.metaDescription}`).join('\n')}
+
+## Guides gratuits
+- [Tous les guides](${racine}/guides/) : guides pratiques envoyés par WhatsApp ou e-mail.
+${guidesData.guides.map((g) => `- ${g.titre} (${g.statut === 'Publié' ? racine + '/guides/' + g.slug + '/' : 'bientôt'}) : ${g.accroche}`).join('\n')}
 
 ## Écosystème
 - [Gooodeat](${SITE.gooodeat}) : l'app pour déculpabiliser son alimentation.

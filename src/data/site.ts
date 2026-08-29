@@ -26,9 +26,20 @@ export const SITE = {
   statsDiet: '+250',
 
   gooodeat: 'https://www.gooodeat.com',
+  vroooz: 'https://www.vroooz.com',
   nutriciens: 'https://www.nutriciens.com',
   instagram: 'https://www.instagram.com/annecharlotte.diet/',
   linkedin: 'https://www.linkedin.com/in/annecharlottejalhay/',
+
+  // La chaîne WhatsApp d'Anne-Charlotte : coller ici le lien d'invitation
+  // (whatsapp.com/channel/…) dès que la chaîne est créée. Tant que c'est
+  // vide, les blocs « chaîne » ne s'affichent pas.
+  whatsappChaine: '',
+
+  // Captation des guides : URL du webhook (n8n) qui reçoit
+  // {guide, prenom, email, telephone, consentement}. Tant que c'est vide,
+  // le formulaire bascule sur WhatsApp (message prérempli).
+  captureEndpoint: '',
 
   // Cabinets de consultation (adresses publiques, nécessaires au SEO local).
   cabinets: [

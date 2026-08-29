@@ -1,0 +1,166 @@
+---
+// La captation des guides : WhatsApp d'abord (le public est débordé
+// d'e-mails), e-mail en option. Deux modes de fonctionnement :
+//   - SITE.captureEndpoint configuré (webhook n8n) : envoi silencieux + confirmation.
+//   - sinon : bascule WhatsApp, le guide est demandé par message prérempli.
+// Dans les deux cas, ça marche dès aujourd'hui, sans serveur.
+import { SITE } from '../data/site';
+
+interface Props {
+  guide: string;
+}
+const { guide } = Astro.props;
+---
+
+<form
+  class="capture"
+  data-endpoint={SITE.captureEndpoint}
+  data-guide={guide}
+  data-whatsapp={SITE.whatsapp}
+  method="post"
+>
+  <h3>Recevoir « {guide} »</h3>
+  <p class="capture-intro">
+    Dis-moi où te l’envoyer. WhatsApp est le plus simple : pas de dossier spam,
+    pas de boîte mail qui déborde.
+  </p>
+
+  <div class="champs">
+    <label>
+      Ton prénom
+      <input type="text" name="prenom" autocomplete="given-name" placeholder="Prénom" />
+    </label>
+    <label>
+      Ton numéro WhatsApp <span class="reco">recommandé</span>
+      <input type="tel" name="telephone" autocomplete="tel" inputmode="tel" placeholder="+32 4XX XX XX XX" />
+    </label>
+    <label>
+      Ou ton e-mail
+      <input type="email" name="email" autocomplete="email" placeholder="prenom@exemple.be" />
+    </label>
+  </div>
+
+  <label class="consentement">
+    <input type="checkbox" name="consentement" required />
+    <span>
+      J’accepte de recevoir ce guide et quelques conseils d’Anne-Charlotte
+      (jamais de spam, désinscription en un message).
+    </span>
+  </label>
+
+  <button class="btn btn-principal btn-bloc" type="submit">Recevoir mon guide</button>
+
+  <p class="capture-etat" role="status" aria-live="polite" hidden></p>
+</form>
+
+<style>
+  .capture {
+    background: var(--sapin);
+    border-radius: var(--rayon-grand);
+    padding: 28px 26px;
+    max-width: 560px;
+  }
+  .capture h3 { color: var(--ecru); font-size: 24px; margin-bottom: 8px; }
+  .capture-intro { color: #DCD5C6; font-size: 15.5px; margin-bottom: 18px; }
+  .champs { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--rose);
+    font-weight: 700;
+    font-size: 14.5px;
+  }
+  .reco {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    background: var(--dore);
+    color: #fff;
+    border-radius: 999px;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+  input[type='text'], input[type='tel'], input[type='email'] {
+    min-height: 52px;
+    border-radius: 12px;
+    border: 2px solid var(--sapin-3);
+    background: var(--ecru);
+    color: var(--encre);
+    font-family: var(--police-texte);
+    font-size: 16.5px;
+    padding: 12px 16px;
+  }
+  input:focus-visible { outline: 3px solid var(--dore); outline-offset: 1px; }
+  .consentement {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    color: #DCD5C6;
+    font-size: 13.5px;
+    margin-bottom: 18px;
+  }
+  .consentement input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--rose); flex: none; }
+  .capture-etat {
+    margin: 14px 0 0;
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--rose);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('form.capture').forEach((form) => {
+    form.addEventListener('submit', async (evenement) => {
+      evenement.preventDefault();
+      const f = form as HTMLFormElement;
+      const donnees = {
+        guide: f.dataset.guide,
+        prenom: (f.querySelector('[name="prenom"]') as HTMLInputElement).value.trim(),
+        telephone: (f.querySelector('[name="telephone"]') as HTMLInputElement).value.trim(),
+        email: (f.querySelector('[name="email"]') as HTMLInputElement).value.trim(),
+        consentement: true,
+        page: window.location.pathname,
+      };
+      const etat = f.querySelector('.capture-etat') as HTMLElement;
+
+      if (!donnees.telephone && !donnees.email) {
+        etat.hidden = false;
+        etat.textContent = 'Indique ton numéro WhatsApp ou ton e-mail pour recevoir le guide.';
+        return;
+      }
+
+      const endpoint = f.dataset.endpoint;
+      if (endpoint) {
+        try {
+          const reponse = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(donnees),
+          });
+          if (!reponse.ok) throw new Error(String(reponse.status));
+          etat.hidden = false;
+          etat.textContent = donnees.telephone
+            ? 'C’est noté ! Tu reçois le guide sur WhatsApp très vite.'
+            : 'C’est noté ! Le guide arrive dans ta boîte mail.';
+          f.querySelectorAll('input, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+        } catch {
+          etat.hidden = false;
+          etat.textContent = 'Oups, l’envoi a échoué. Réessaie, ou écris directement sur WhatsApp.';
+        }
+        return;
+      }
+
+      // Pas de webhook configuré : la demande part par WhatsApp, prête à envoyer.
+      const message =
+        `Bonjour ! Je veux recevoir le guide « ${donnees.guide} ».` +
+        (donnees.prenom ? ` Je m’appelle ${donnees.prenom}.` : '') +
+        (donnees.email ? ` Mon e-mail si besoin : ${donnees.email}.` : '');
+      window.open(f.dataset.whatsapp + '?text=' + encodeURIComponent(message), '_blank');
+      etat.hidden = false;
+      etat.textContent = 'WhatsApp s’ouvre avec ta demande prête : envoie le message et le guide arrive.';
+    });
+  });
+</script>

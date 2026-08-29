@@ -20,14 +20,18 @@ function pagesHtml(dossier) {
 const pages = pagesHtml(DIST);
 if (pages.length < 10) erreurs.push(`Seulement ${pages.length} pages HTML générées : build suspect.`);
 
-// Les pages relais et la 404 échappent aux règles de contenu.
+// Les pages relais (meta refresh) et la 404 échappent aux règles de contenu.
+const estRelais = (html) => html.includes('http-equiv="refresh"');
 const exemptes = (chemin) => chemin.includes('404') || chemin.includes('santé-feminine');
 
 const textesVilles = {};
 
+let articlesReels = 0;
 for (const chemin of pages) {
   const html = readFileSync(chemin, 'utf-8');
   const nom = chemin.replace(DIST + '/', '');
+  if (estRelais(html)) continue;
+  if (/^articles\/[a-z0-9-]+\/index\.html$/.test(nom)) articlesReels++;
 
   if (html.includes('undefined') && !exemptes(chemin)) {
     // Un « undefined » rendu dans la page = une donnée manquante passée inaperçue.
@@ -98,9 +102,25 @@ const cheminsHistoriques = [
   'dieteticienne-malonne/index.html',
   'technique/politique-confidentialite/index.html',
   'technique/conditions-generales-utilisation/index.html',
+  'articles/index.html',
+  'guides/index.html',
+  'formation-dieteticiennes/index.html',
+  'apps/index.html',
+  'gooodeat/index.html',
+  'vroooz/index.html',
+  'nutristant/index.html',
+  'nutriciens/index.html',
+  'articles/importance-petit-dejeuner/index.html',
 ];
+
+// Le blog doit servir au moins les 10 articles fondateurs.
+
 for (const chemin of cheminsHistoriques) {
   if (!existsSync(join(DIST, chemin))) erreurs.push(`Chemin historique manquant : ${chemin}`);
+}
+
+if (typeof articlesReels !== 'undefined' && articlesReels < 10) {
+  erreurs.push(`Seulement ${articlesReels} vrais articles générés, 10 minimum attendus.`);
 }
 
 if (erreurs.length) {

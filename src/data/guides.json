@@ -1,0 +1,50 @@
+{
+  "_commentaire": "Généré par scripts/sync-notion.mjs depuis la base Notion « Guides — lead magnets ». Ne pas éditer à la main.",
+  "guides": [
+    {
+      "titre": "Le kit anti-ballonnements",
+      "slug": "kit-anti-ballonnements",
+      "statut": "En préparation",
+      "pilier": "Troubles digestifs",
+      "accroche": "7 jours pour comprendre ton ventre : journal alimentaire prêt à remplir, les 10 réflexes qui soulagent, et la méthode pour repérer tes déclencheurs.",
+      "contenuListe": [
+        "Un journal alimentaire 7 jours prêt à remplir",
+        "Les 10 réflexes anti-ballonnements",
+        "La méthode pas à pas pour identifier tes déclencheurs",
+        "Les signes qui méritent une consultation"
+      ],
+      "metaDescription": "Guide gratuit : 7 jours pour comprendre tes ballonnements, avec journal alimentaire, réflexes qui soulagent et méthode pour trouver tes déclencheurs.",
+      "html": ""
+    },
+    {
+      "titre": "SOPK : la semaine de menus qui stabilise",
+      "slug": "sopk-semaine-menus",
+      "statut": "En préparation",
+      "pilier": "Santé féminine",
+      "accroche": "Une semaine complète de menus pensés pour la glycémie stable, avec liste de courses et alternatives, par une diététicienne spécialisée.",
+      "contenuListe": [
+        "7 jours de menus complets orientés glycémie stable",
+        "La liste de courses correspondante",
+        "Des alternatives par repas selon tes goûts",
+        "Les 5 principes à retenir pour improviser ensuite"
+      ],
+      "metaDescription": "Guide gratuit SOPK : une semaine de menus pour stabiliser la glycémie et calmer les fringales, avec liste de courses et alternatives.",
+      "html": ""
+    },
+    {
+      "titre": "La méthode assiette pour les débordé·es",
+      "slug": "methode-assiette-debordees",
+      "statut": "En préparation",
+      "pilier": "Mieux manger",
+      "accroche": "Manger équilibré sans cuisiner des heures : l'assiette en 3 zones, le batch cooking de 45 minutes et les raccourcis qui sauvent les soirées.",
+      "contenuListe": [
+        "La méthode de l'assiette en 3 zones illustrée",
+        "Le plan de batch cooking en 45 minutes",
+        "15 assemblages de repas en 10 minutes",
+        "La liste des raccourcis malins (surgelés, conserves) validés"
+      ],
+      "metaDescription": "Guide gratuit : manger équilibré sans temps, avec la méthode de l'assiette en 3 zones, un batch cooking express et 15 idées de repas en 10 minutes.",
+      "html": ""
+    }
+  ]
+}

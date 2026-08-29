@@ -1,0 +1,139 @@
+---
+// La section Guides : les lead magnets. Les guides viennent du CMS Notion.
+// Un guide « Publié » a sa page et son formulaire ; un guide « En
+// préparation » s'affiche en teaser avec captation « préviens-moi ».
+import Base from '../../layouts/Base.astro';
+import CaptureGuide from '../../components/CaptureGuide.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import guidesData from '../../data/guides.json';
+import { SITE, u } from '../../data/site';
+
+const guides = guidesData.guides;
+const publies = guides.filter((g) => g.statut === 'Publié');
+const enPreparation = guides.filter((g) => g.statut === 'En préparation');
+---
+
+<Base
+  titre="Les guides gratuits | Anne-Charlotte Diététicienne"
+  description="Les guides pratiques et gratuits d'Anne-Charlotte, diététicienne : ballonnements, SOPK, repas équilibrés sans temps. Reçois-les par WhatsApp ou par e-mail."
+  chemin="/guides/"
+>
+  <section class="hero-guides fond-sapin">
+    <div class="contenu">
+      <h1>Des guides gratuits, concrets, à garder</h1>
+      <p class="hero-sous">
+        Le condensé de ce que je répète en consultation, mis en forme pour que
+        tu puisses agir dès ce soir. Reçois-les par WhatsApp (recommandé) ou
+        par e-mail.
+      </p>
+    </div>
+  </section>
+
+  {publies.length > 0 && (
+    <section aria-label="Guides disponibles">
+      <div class="contenu" data-reveal>
+        <h2>Disponibles maintenant</h2>
+        <div class="rangs">
+          {publies.map((g) => (
+            <a class="rang rang-guide" href={u('/guides/' + g.slug + '/')}>
+              <h3>{g.titre}</h3>
+              <p>{g.accroche}</p>
+              <span class="rang-fleche" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section aria-label="Guides en préparation">
+    <div class="contenu" data-reveal>
+      <h2>{publies.length > 0 ? 'Bientôt disponibles' : 'Les premiers guides arrivent'}</h2>
+      <div class="teasers">
+        {enPreparation.map((g) => (
+          <div class="teaser">
+            <p class="teaser-pilier">{g.pilier}</p>
+            <h3>{g.titre}</h3>
+            <p class="teaser-accroche">{g.accroche}</p>
+            <ul>
+              {g.contenuListe.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-capture" aria-label="Être prévenu·e">
+    <div class="contenu capture-2col" data-reveal>
+      <div>
+        <h2>Sois prévenu·e à la sortie</h2>
+        <p>
+          Laisse ton WhatsApp ou ton e-mail : tu reçois chaque guide dès qu’il
+          sort, et rien d’autre. Pas de newsletter qui déborde, promis.
+        </p>
+        <p>
+          Pressé·e ? Pose directement ta question à Anne-Charlotte sur
+          <a href={SITE.whatsappMessage}>WhatsApp</a>.
+        </p>
+      </div>
+      <CaptureGuide guide="les prochains guides" />
+    </div>
+  </section>
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-guides { padding: 56px 0 48px; }
+  .hero-sous { font-size: 18.5px; max-width: 58ch; margin: 0; }
+
+  .rang-guide { position: relative; padding-right: 44px; }
+  .rang-guide h3 { transition: color .15s ease; }
+  .rang-guide:hover h3 { color: var(--rose-fort); }
+  .rang-fleche {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--dore);
+  }
+
+  .teasers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  @media (min-width: 860px) { .teasers { grid-template-columns: 1fr 1fr 1fr; } }
+  .teaser {
+    background: var(--blanc);
+    border: 1.5px solid var(--ligne);
+    border-radius: var(--rayon-grand);
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .teaser-pilier {
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--dore);
+    margin-bottom: 8px;
+  }
+  .teaser h3 { margin-bottom: 8px; }
+  .teaser-accroche { color: var(--encre-2); font-size: 15.5px; }
+  .teaser ul { margin: 6px 0 0; padding-left: 18px; }
+  .teaser li { font-size: 14.5px; color: var(--encre-2); margin-bottom: 5px; }
+  .teaser li::marker { color: var(--rose-fort); }
+
+  .section-capture { background: var(--ecru-2); }
+  .capture-2col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+  @media (min-width: 900px) { .capture-2col { grid-template-columns: 1fr 1.1fr; gap: 56px; } }
+</style>

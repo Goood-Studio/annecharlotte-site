@@ -1,0 +1,169 @@
+---
+// Une route pour deux réalités : les vrais articles (depuis le CMS Notion)
+// et les 20 anciennes URLs du template Framer, servies en pages relais
+// (meta refresh + canonique + noindex) vers la page utile la plus proche.
+import Base from '../../layouts/Base.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import articlesData from '../../data/articles.json';
+import redirections from '../../data/redirections.json';
+import { SITE, u } from '../../data/site';
+import { faqJsonLd } from '../../data/jsonld';
+
+export function getStaticPaths() {
+  const articles = articlesData.articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { type: 'article', article, cible: null },
+  }));
+  const relais = Object.entries(redirections.articles).map(([slug, cible]) => ({
+    params: { slug },
+    props: { type: 'relais', article: null, cible },
+  }));
+  return [...articles, ...relais];
+}
+
+const { type, article, cible } = Astro.props;
+
+const site = (import.meta.env.SITE ?? '').replace(/\/$/, '');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+let jsonLd: object[] = [];
+if (type === 'article') {
+  jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.titre,
+      description: article.metaDescription,
+      inLanguage: 'fr-BE',
+      datePublished: article.publieLe,
+      dateModified: article.misAJour ?? article.publieLe,
+      author: { '@id': site + base + '/#anne-charlotte' },
+      mainEntityOfPage: site + base + '/articles/' + article.slug + '/',
+    },
+  ];
+}
+
+const lienPilier: Record<string, { chemin: string; texte: string }> = {
+  'Troubles digestifs': { chemin: '/troubles-digestifs/', texte: 'Voir comment j’accompagne les troubles digestifs' },
+  'Santé féminine': { chemin: '/sante-feminine/', texte: 'Voir comment j’accompagne la santé féminine' },
+  'Mieux manger': { chemin: '/mieux-manger/', texte: 'Voir comment je t’aide à mieux manger' },
+};
+
+const autres = type === 'article'
+  ? articlesData.articles.filter((a) => a.slug !== article.slug && a.pilier === article.pilier).slice(0, 3)
+  : [];
+
+function dateFr(iso: string | null) {
+  if (!iso) return '';
+  return new Date(iso + 'T12:00:00').toLocaleDateString('fr-BE', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+{type === 'relais' ? (
+  <html lang="fr">
+    <head>
+      <meta charset="utf-8" />
+      <title>Cette page a déménagé | Anne-Charlotte Diététicienne</title>
+      <meta http-equiv="refresh" content={`0; url=${u(cible)}`} />
+      <link rel="canonical" href={site + base + cible} />
+      <meta name="robots" content="noindex" />
+    </head>
+    <body>
+      <p>Cet article n’existe plus : <a href={u(cible)}>continue vers la page qui le remplace</a>.</p>
+    </body>
+  </html>
+) : (
+  <Base
+    titre={article.metaTitle}
+    description={article.metaDescription}
+    chemin={'/articles/' + article.slug + '/'}
+    jsonLd={jsonLd}
+  >
+    <article class="article">
+      <header class="article-entete fond-sapin">
+        <div class="contenu">
+          <p class="article-meta">
+            {article.pilier && (
+              <a href={u(lienPilier[article.pilier]?.chemin ?? '/articles/')}>{article.pilier}</a>
+            )}
+            <span>·</span>
+            <time datetime={article.publieLe}>{dateFr(article.publieLe)}</time>
+          </p>
+          <h1>{article.titre}</h1>
+          <p class="article-signature">
+            Par Anne-Charlotte Jalhay, diététicienne agréée, spécialisée en
+            troubles digestifs et santé féminine.
+          </p>
+        </div>
+      </header>
+
+      <div class="contenu article-corps" set:html={article.html} />
+
+      <div class="contenu article-fin">
+        <p class="avertissement">
+          Cet article informe, il ne remplace ni une consultation médicale ni
+          un accompagnement personnalisé.
+        </p>
+        {article.pilier && lienPilier[article.pilier] && (
+          <a class="btn btn-principal" href={u(lienPilier[article.pilier].chemin)}>
+            {lienPilier[article.pilier].texte}
+          </a>
+        )}
+      </div>
+
+      {autres.length > 0 && (
+        <div class="contenu article-suite">
+          <h2>À lire ensuite</h2>
+          <div class="rangs">
+            {autres.map((a) => (
+              <a class="rang rang-suite" href={u('/articles/' + a.slug + '/')}>
+                <h3>{a.titre}</h3>
+                <p>{a.metaDescription}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </article>
+
+    <CtaFinal />
+  </Base>
+)}
+
+<style>
+  .article-entete { padding: 52px 0 44px; }
+  .article-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--rose);
+    margin-bottom: 14px;
+  }
+  .article-meta a { color: var(--rose); }
+  .article-entete h1 { max-width: 22ch; }
+  .article-signature { font-size: 15.5px; color: #B9C4BC; margin: 0; }
+
+  .article-corps { padding: 44px 20px 8px; max-width: 780px; }
+  .article-corps :global(h2) { margin-top: 36px; }
+  .article-corps :global(h3) { margin-top: 26px; }
+  .article-corps :global(p) { max-width: 68ch; }
+  .article-corps :global(li) { max-width: 62ch; }
+  .article-corps :global(li)::marker { color: var(--rose-fort); }
+  .article-corps :global(blockquote) {
+    margin: 24px 0;
+    padding: 18px 22px;
+    background: var(--rose-2);
+    border-radius: var(--rayon);
+    color: var(--sapin);
+  }
+
+  .article-fin { max-width: 780px; padding-top: 26px; padding-bottom: 20px; }
+  .avertissement { font-size: 14.5px; color: var(--encre-2); font-style: italic; }
+  .article-suite { max-width: 780px; padding: 26px 20px 50px; }
+  .article-suite h2 { font-size: 24px; }
+  .rang-suite { grid-template-columns: 1fr; }
+  .rang-suite h3 { transition: color .15s ease; }
+  .rang-suite:hover h3 { color: var(--rose-fort); }
+</style>

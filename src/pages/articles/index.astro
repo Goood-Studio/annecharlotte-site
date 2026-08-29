@@ -1,0 +1,88 @@
+---
+// L'index du blog. Les articles viennent du CMS Notion (articles.json).
+import Base from '../../layouts/Base.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+import articlesData from '../../data/articles.json';
+import { u } from '../../data/site';
+
+const articles = articlesData.articles;
+const parPilier: Record<string, typeof articles> = {};
+for (const a of articles) {
+  const cle = a.pilier ?? 'Autres';
+  (parPilier[cle] ??= []).push(a);
+}
+const ordre = ['Troubles digestifs', 'Santé féminine', 'Mieux manger'];
+const piliers = [...ordre.filter((p) => parPilier[p]), ...Object.keys(parPilier).filter((p) => !ordre.includes(p))];
+
+function dateFr(iso: string | null) {
+  if (!iso) return '';
+  return new Date(iso + 'T12:00:00').toLocaleDateString('fr-BE', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+<Base
+  titre="Le blog : digestion, hormones et vraie vie | Anne-Charlotte Diététicienne"
+  description="Les articles d'Anne-Charlotte, diététicienne : troubles digestifs (SII, ballonnements, reflux), santé féminine (SOPK, endométriose, SPM) et mieux manger sans culpabilité. Clair, sourcé, sans jargon."
+  chemin="/articles/"
+>
+  <section class="hero-blog fond-sapin">
+    <div class="contenu">
+      <h1>Digestion, hormones et vraie vie</h1>
+      <p class="hero-sous">
+        Des réponses claires aux questions que tu te poses vraiment, écrites
+        par une diététicienne qui se forme chaque semaine. Sans jargon, sans
+        régime miracle.
+      </p>
+    </div>
+  </section>
+
+  {piliers.map((pilier) => (
+    <section aria-label={pilier}>
+      <div class="contenu" data-reveal>
+        <h2>{pilier}</h2>
+        <div class="rangs">
+          {parPilier[pilier].map((a) => (
+            <a class="rang rang-article" href={u('/articles/' + a.slug + '/')}>
+              <p class="article-date">{dateFr(a.publieLe)}</p>
+              <div>
+                <h3>{a.titre}</h3>
+                <p>{a.metaDescription}</p>
+              </div>
+              <span class="rang-fleche" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <CtaFinal />
+</Base>
+
+<style>
+  .hero-blog { padding: 56px 0 48px; }
+  .hero-sous { font-size: 18.5px; max-width: 58ch; margin: 0; }
+  section { padding: 40px 0; }
+  .rang-article { position: relative; padding-right: 44px; }
+  @media (min-width: 760px) {
+    .rang-article { grid-template-columns: 130px 1fr auto; align-items: start; }
+  }
+  .article-date {
+    font-size: 13.5px;
+    color: var(--dore);
+    font-weight: 700;
+    margin: 4px 0 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .rang-article h3 { margin-bottom: 6px; transition: color .15s ease; }
+  .rang-article:hover h3 { color: var(--rose-fort); }
+  .rang-fleche {
+    position: absolute;
+    right: 6px;
+    top: 28px;
+    font-size: 22px;
+    color: var(--dore);
+    transition: transform .15s cubic-bezier(.2, .8, .25, 1);
+  }
+  .rang-article:hover .rang-fleche { transform: translateX(6px); }
+</style>

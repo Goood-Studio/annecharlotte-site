@@ -1,0 +1,112 @@
+---
+// Le pilier « pro » : la formation continue des diététicien·nes.
+// Public différent (les pairs), CTA différent (Nutriciens), même charte.
+import Base from '../layouts/Base.astro';
+import { SITE, u } from '../data/site';
+import { faqJsonLd } from '../data/jsonld';
+
+const faqPro = [
+  {
+    q: 'Quelles formations donnes-tu aux diététicien·nes ?',
+    r: 'Principalement mes deux spécialités : la prise en charge des troubles digestifs (dont la méthode FODMAP, sur laquelle je suis formée à la Monash University) et la santé féminine (SOPK, endométriose, SPM). Formats pratiques, orientés cas cliniques et outils directement utilisables en consultation.',
+  },
+  {
+    q: 'Où se donnent ces formations ?',
+    r: 'Au sein de Nutriciens, la communauté belge de formation continue des diététicien·nes : formations en ligne, cas cliniques commentés, outils prêts à l’emploi et entraide entre pairs.',
+  },
+  {
+    q: 'Je débute, est-ce pour moi ?',
+    r: 'Oui. La communauté rassemble des profils du tout début de carrière aux expert·es : c’est précisément l’intérêt. Tu poses tes questions de terrain et tu progresses sur des cas réels, sans jugement.',
+  },
+  {
+    q: 'Proposes-tu de la supervision individuelle ?',
+    r: 'Ponctuellement, oui, notamment sur les cas de troubles digestifs complexes. Le plus simple est de me contacter pour en parler.',
+  },
+];
+
+const jsonLd = [faqJsonLd(faqPro)];
+---
+
+<Base
+  titre="Formation continue des diététicien·nes | Anne-Charlotte Jalhay"
+  description="Anne-Charlotte a formé plus de 250 diététicien·nes en troubles digestifs (méthode FODMAP) et santé féminine, au sein de la communauté Nutriciens. Formations pratiques, cas cliniques, outils prêts à l'emploi."
+  chemin="/formation-dieteticiennes/"
+  jsonLd={jsonLd}
+>
+  <section class="hero-pro fond-sapin">
+    <div class="contenu">
+      <h1>Je forme les diététicien·nes qui veulent exceller</h1>
+      <p class="hero-sous">
+        Plus de <strong>250 diététicien·nes formées</strong> en troubles
+        digestifs et santé féminine. Des formations pratiques, des cas
+        cliniques réels et des outils qui servent dès la consultation suivante.
+      </p>
+      <div class="hero-boutons">
+        <a class="btn btn-rose" href={SITE.nutriciens}>Rejoindre Nutriciens</a>
+        <a class="btn btn-contour-clair" href={SITE.whatsappMessage}>Me contacter</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu" data-reveal>
+      <h2>Ce que tu viens chercher</h2>
+      <div class="rangs">
+        <div class="rang">
+          <h3>Troubles digestifs</h3>
+          <p>SII, ballonnements, reflux : la démarche complète, du bilan aux réintroductions FODMAP (méthode Monash), avec les pièges du terrain.</p>
+        </div>
+        <div class="rang">
+          <h3>Santé féminine</h3>
+          <p>SOPK, endométriose, SPM : ce que la science soutient vraiment, et comment le traduire en consultations qui aident.</p>
+        </div>
+        <div class="rang">
+          <h3>Outils de consultation</h3>
+          <p>Journaux alimentaires, protocoles de réintroduction, supports patient·es : des documents prêts à l’emploi, testés sur plus de 1 500 patient·es.</p>
+        </div>
+        <div class="rang">
+          <h3>Une communauté de pairs</h3>
+          <p>Nutriciens : des diététicien·nes qui confrontent leurs cas, se répondent et se tirent vers le haut, chaque semaine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fond-ecru2" aria-labelledby="titre-faq-pro">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-faq-pro">Questions des consœurs et confrères</h2>
+      <div class="faq-liste">
+        {faqPro.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <div class="reponse"><p>{item.r}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-pro">
+    <div class="contenu" data-reveal>
+      <h2>Prêt·e à progresser entouré·e ?</h2>
+      <p>
+        La formation continue se passe dans <a href={u('/nutriciens/')}>la communauté Nutriciens</a>.
+        Et si tu cherches des outils dopés à l’IA pour ta pratique, jette un œil
+        à <a href={u('/nutristant/')}>Nutristant</a>.
+      </p>
+      <a class="btn btn-principal" href={SITE.nutriciens}>Découvrir Nutriciens</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-pro { padding: 56px 0; }
+  .hero-sous { font-size: 18.5px; max-width: 58ch; }
+  .hero-boutons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+  .btn-contour-clair { background: transparent; color: var(--ecru); border-color: var(--ecru); }
+  .btn-contour-clair:hover { background: var(--ecru); color: var(--sapin); }
+  .fond-ecru2 { background: var(--ecru-2); }
+  .fond-ecru2 details { border-color: #D8CCB8; }
+  .cta-pro { padding-bottom: 84px; }
+  .cta-pro .btn { margin-top: 8px; }
+</style>

@@ -7,10 +7,12 @@ import Tarifs from '../components/Tarifs.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import villesData from '../data/villes.json';
+import articlesData from '../data/articles.json';
 import { SITE, u } from '../data/site';
 import { cabinetJsonLd } from '../data/jsonld';
 
 const villes = villesData.villes;
+const derniersArticles = articlesData.articles.slice(0, 3);
 const siteUrl =
   (import.meta.env.SITE ?? '').replace(/\/$/, '') +
   import.meta.env.BASE_URL.replace(/\/$/, '') +
@@ -134,6 +136,26 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
   <Tarifs />
   <Nutriciens />
+
+  <!-- Le blog et les guides : contenu frais pour les humains et les moteurs -->
+  <section aria-labelledby="titre-lire">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-lire">À lire, pour commencer ce soir</h2>
+      <div class="rangs">
+        {derniersArticles.map((a) => (
+          <a class="rang rang-lien" href={u('/articles/' + a.slug + '/')}>
+            <h3>{a.titre}</h3>
+            <p>{a.metaDescription}</p>
+            <span class="rang-fleche" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+      <div class="lire-liens">
+        <a class="btn btn-contour" href={u('/articles/')}>Tous les articles</a>
+        <a class="btn btn-contour" href={u('/guides/')}>Les guides gratuits</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Villes : distribution du jus SEO vers les pages locales -->
   <section>
