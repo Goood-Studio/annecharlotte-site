@@ -1,6 +1,7 @@
 ---
 // Mon parcours : le copy du site actuel, repris et aéré, avec un vrai H1.
 import Base from '../layouts/Base.astro';
+import Deroule from '../components/Deroule.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import { u } from '../data/site';
@@ -8,7 +9,7 @@ import { u } from '../data/site';
 
 <Base
   titre="Mon parcours | Anne-Charlotte Diététicienne"
-  description="Diététicienne troubles digestifs et santé féminine. Ma formation : Institut Paul Lambin à Bruxelles, nutrition du sportif à l'UCL, syndrome de l'intestin irritable (Monash University), alimentation durable et prise en charge des menstruations au SIIN."
+  description="Diététicienne troubles digestifs et santé féminine, et tabacologue. Ma formation : Institut Paul Lambin à Bruxelles, nutrition du sportif à l'UCL, syndrome de l'intestin irritable (Monash University), alimentation durable et prise en charge des menstruations au SIIN, tabacologie, aide pédagogique. Cofondatrice de Nutriciens."
   chemin="/parcours/"
 >
   <section class="hero-parcours fond-sapin">
@@ -64,7 +65,7 @@ import { u } from '../data/site';
 
   <section aria-labelledby="titre-formations" class="fond-ecru2">
     <div class="contenu" data-reveal>
-      <h2 id="titre-formations">Mes formations</h2>
+      <h2 id="titre-formations">Plusieurs cordes à mon arc</h2>
       <div class="rangs">
         <div class="rang">
           <h3>Bachelier en diététique</h3>
@@ -82,14 +83,24 @@ import { u } from '../data/site';
           <h3>Alimentation durable et menstruations</h3>
           <p>SIIN. Alimentation durable et prise en charge nutritionnelle du cycle menstruel.</p>
         </div>
+        <div class="rang">
+          <h3>Tabacologue</h3>
+          <p>Diplôme en tabacologie. J’accompagne l’arrêt du tabac, en particulier quand la peur de grossir est le frein qui bloque tout.</p>
+        </div>
+        <div class="rang">
+          <h3>Aide pédagogique</h3>
+          <p>Diplôme complémentaire. Expliquer clairement, c’est la moitié du travail : tu dois comprendre ce qu’on fait, et pourquoi.</p>
+        </div>
       </div>
       <p class="formation-note">
-        Et plus de 3 heures de formation continue chaque semaine, au sein de la
-        communauté Nutriciens.
+        Et plus de 3 heures de formation continue chaque semaine, au sein de
+        Nutriciens, la communauté de diététicien·nes francophones que j’ai
+        cofondée.
       </p>
     </div>
   </section>
 
+  <Deroule />
   <Nutriciens />
   <CtaFinal />
 </Base>

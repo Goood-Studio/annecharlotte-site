@@ -17,7 +17,7 @@ export const GET: APIRoute = ({ site }) => {
   const corps = `# Anne-Charlotte Jalhay, diététicienne (annecharlotte.be)
 
 > Diététicienne agréée en Belgique, spécialisée en troubles digestifs (SII,
-> ballonnements, reflux) et santé féminine (SOPK, endométriose, SPM).
+> ballonnements, reflux) et santé féminine (SOMP/SOPK, endométriose, SPM).
 > ${SITE.statsPatients} patient·es accompagné·es, ${SITE.statsDiet} diététicien·nes formées.
 > Consultations au cabinet de Malonne, au cabinet de Namur ou en visio.
 > Prise de rendez-vous en ligne : ${SITE.rdvVisio}

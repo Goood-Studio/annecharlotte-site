@@ -34,7 +34,8 @@ export const SITE = {
   // La chaîne WhatsApp d'Anne-Charlotte : coller ici le lien d'invitation
   // (whatsapp.com/channel/…) dès que la chaîne est créée. Tant que c'est
   // vide, les blocs « chaîne » ne s'affichent pas.
-  whatsappChaine: '',
+  whatsappChaine: 'https://whatsapp.com/channel/0029VazQG6jGJP8QTAedeo2V',
+  whatsappChaineNom: 'La minute MieuxManger',
 
   // Captation des guides : URL du webhook (n8n) qui reçoit
   // {guide, prenom, email, telephone, consentement}. Tant que c'est vide,

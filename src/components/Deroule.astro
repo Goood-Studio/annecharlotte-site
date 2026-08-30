@@ -1,0 +1,29 @@
+---
+// « Comment ça se passe » : le déroulé raconté par Anne-Charlotte, du message
+// WhatsApp d'avant-rendez-vous à la première rencontre. Même gabarit éditorial
+// que les autres sections (rangées, pas de cartes).
+import { DEROULE } from '../data/contenu';
+import { SITE } from '../data/site';
+---
+
+<section aria-labelledby="titre-deroule" class="deroule">
+  <div class="contenu" data-reveal>
+    <h2 id="titre-deroule">Comment ça se passe</h2>
+    <div class="rangs">
+      {DEROULE.map((etape) => (
+        <div class="rang">
+          <h3>{etape.titre}</h3>
+          <p>{etape.texte}</p>
+        </div>
+      ))}
+    </div>
+    <a class="btn btn-rose deroule-cta" href={SITE.rdvVisio}>
+      Prendre RDV en ligne <span class="pastille">plus rapide</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .deroule .rang p { max-width: 68ch; }
+  .deroule-cta { margin-top: 24px; }
+</style>

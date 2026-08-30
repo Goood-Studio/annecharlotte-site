@@ -24,6 +24,14 @@ interface Props {
   symptomes: string[];
   approche: string;
   faqPilier: { q: string; r: string }[];
+  /** Pilier proposé uniquement en visio : masque le bouton « cabinet ». */
+  visioSeule?: boolean;
+  /**
+   * Les leviers de travail du pilier : on montre qu'il y en a plusieurs et
+   * sur quoi chacun agit, sans donner le protocole. Section masquée si vide.
+   */
+  leviers?: { titre: string; texte: string }[];
+  leviersTitre?: string;
 }
 
 const {
@@ -39,6 +47,9 @@ const {
   symptomes,
   approche,
   faqPilier,
+  visioSeule = false,
+  leviers = [],
+  leviersTitre = 'Les leviers qu’on actionne ensemble',
 } = Astro.props;
 
 const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...FAQ_DIET])];
@@ -57,7 +68,9 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
         <a class="btn btn-rose" href={SITE.rdvVisio}>
           Prendre RDV en ligne <span class="pastille">plus rapide</span>
         </a>
-        <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
+        {!visioSeule && (
+          <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
+        )}
       </div>
     </div>
   </section>
@@ -80,6 +93,23 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
       <p class="approche-texte">{approche}</p>
     </div>
   </section>
+
+  <!-- Les leviers du pilier : la profondeur de méthode, pas la recette -->
+  {leviers.length > 0 && (
+    <section aria-labelledby="titre-leviers">
+      <div class="contenu" data-reveal>
+        <h2 id="titre-leviers">{leviersTitre}</h2>
+        <div class="rangs">
+          {leviers.map((levier) => (
+            <div class="rang">
+              <h3>{levier.titre}</h3>
+              <p>{levier.texte}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Ce que je propose : une liste éditoriale, pas des cartes -->
   <section aria-labelledby="titre-services-pilier" class="fond-ecru2">

@@ -4,7 +4,7 @@ import { SITE, u } from '../data/site';
 
 <header class="entete">
   <div class="contenu barre">
-    <a class="logo" href={u('/')} aria-label="Anne-Charlotte, diététicienne — accueil">
+    <a class="logo" href={u('/')} aria-label="Anne-Charlotte, diététicienne, accueil">
       <svg class="logo-fruit" viewBox="0 0 100 100" width="40" height="40" aria-hidden="true" focusable="false">
         <ellipse cx="39" cy="26" rx="7.5" ry="12" fill="#16352C" transform="rotate(-32 39 26)"/>
         <ellipse cx="58" cy="22" rx="6.5" ry="11" fill="#B98D45" transform="rotate(18 58 22)"/>
@@ -19,6 +19,7 @@ import { SITE, u } from '../data/site';
       <a href={u('/troubles-digestifs/')}>Troubles digestifs</a>
       <a href={u('/sante-feminine/')}>Santé féminine</a>
       <a href={u('/mieux-manger/')}>Mieux manger</a>
+      <a href={u('/arreter-de-fumer/')}>Arrêt du tabac</a>
       <a href={u('/articles/')}>Blog</a>
       <a href={u('/faq/')}>FAQ</a>
       <a href={u('/parcours/')}>Mon parcours</a>
@@ -122,7 +123,7 @@ import { SITE, u } from '../data/site';
 
   /* Le menu complet ne s'affiche que quand il tient vraiment sur une ligne.
      En dessous, on garde le burger, propre. */
-  @media (min-width: 1140px) {
+  @media (min-width: 1320px) {
     .burger { display: none; }
     .nav {
       display: flex;
