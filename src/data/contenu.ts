@@ -37,6 +37,22 @@ export const OFFRES = [
     ctaTexte: 'Solutionne ce tracas, enfin !',
     meilleurChoix: true,
   },
+  {
+    nom: 'Pack tabac',
+    prix: '290 €',
+    unite: 'uniquement en visio',
+    description:
+      'Envie d’arrêter de fumer, mais la peur de grossir te freine ? On travaille les deux en même temps.',
+    inclus: [
+      'Accompagnement à l’arrêt par une tabacologue',
+      'Stratégie pour éviter la prise de poids',
+      'Suivi hebdomadaire jusqu’à 10 semaines*',
+      'Remboursement mutuelle possible',
+      'Canal direct de discussion',
+    ],
+    ctaTexte: 'Arrêter, sans la peur de grossir',
+    meilleurChoix: false,
+  },
 ] as const;
 
 export const SERVICES = [
@@ -48,7 +64,7 @@ export const SERVICES = [
   {
     titre: 'Objectif personnalisé',
     texte:
-      'Un plan alimentaire pensé pour ta vie réelle : tes besoins, ton rythme, tes goûts. Pas de régime punitif, une approche durable et bienveillante.',
+      'Un contact reste possible même entre les rendez-vous, pour éviter le sentiment de « ça ne marche pas », « j’ai toujours mal », « pff… ». Ce que je vise, c’est un ajustement continu : moins de douleurs, plus d’énergie, et se sentir mieux dans son corps.',
   },
   {
     titre: 'Soutien et suivi',
@@ -69,6 +85,26 @@ export const SERVICES = [
     titre: 'Roue des émotions',
     texte:
       'Un outil simple pour mettre des mots sur ce que tu ressens, mieux décoder tes sensations alimentaires et avancer vers un équilibre global.',
+  },
+  {
+    titre: 'Et mon poids ?',
+    texte:
+      'Je n’ai pas de balance au cabinet, et c’est aussi pour ça que la visio est tout aussi simple. Un chiffre seul ne veut rien dire : on ne se définit pas par un nombre trop haut ou trop bas. On est une personne, avec des besoins, des ressentis, une image de soi qui peut être altérée pour énormément de raisons. Mon objectif, c’est que tu te sentes mieux dans ton corps, au quotidien.',
+  },
+] as const;
+
+// Le déroulé d'un accompagnement, raconté par Anne-Charlotte. Affiché sur
+// l'accueil et sur la page parcours.
+export const DEROULE = [
+  {
+    titre: 'Avant la consultation',
+    texte:
+      'Une semaine avant la consultation, je te contacte via WhatsApp. Selon ton besoin, je vais peut-être te demander de prendre tes repas en photo, et quand on se voit, on les regarde ensemble, sans jugement, à partir de ton propre point de départ. Ça permet d’avoir une vision claire d’où peuvent venir les symptômes, ou de comment se compose ton assiette, sans être dans la récitation ! Aucun jugement, au contraire : on y verra déjà tout le positif 🙂',
+  },
+  {
+    titre: 'La première rencontre',
+    texte:
+      '« Comment puis-je vous aider ? » On prend le temps ensemble de comprendre ton besoin. On a la base de tes repas, on regarde autour de l’assiette pour une vue complète, et on définit ensemble nos premiers ajustements. En visio, tu peux facilement aller chercher dans tes armoires un produit qui te pose question. Et si tu préfères rester en silencieux, cela ne me dérange pas du tout.',
   },
 ] as const;
 

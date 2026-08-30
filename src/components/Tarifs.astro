@@ -6,6 +6,7 @@ import { SITE } from '../data/site';
 
 const premiersPas = OFFRES[0];
 const pack = OFFRES[1];
+const packTabac = OFFRES[2];
 ---
 
 <section class="tarifs" aria-labelledby="titre-tarifs">
@@ -37,8 +38,24 @@ const pack = OFFRES[1];
         </ul>
         <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{premiersPas.ctaTexte}</a>
       </article>
+
+      <article class="offre offre-simple offre-tabac">
+        <h3>{packTabac.nom}</h3>
+        <p class="offre-prix"><span class="prix">{packTabac.prix}</span> <span class="unite">{packTabac.unite}</span></p>
+        <p class="offre-desc">{packTabac.description}</p>
+        <ul>
+          {packTabac.inclus.map((item) => <li>{item}</li>)}
+        </ul>
+        <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{packTabac.ctaTexte}</a>
+      </article>
     </div>
-    <p class="note-etoile">* Adapté à chacun·e : la durée du suivi s’ajuste à ta situation.</p>
+    <p class="note-etoile">
+      * Adapté à chacun·e : la durée du suivi s’ajuste à ta situation.
+    </p>
+    <p class="note-etoile">
+      Suivi en visio : tu réserves, je te contacte sur WhatsApp une semaine
+      avant, on se voit en visio, et tu as accès à l’application.
+    </p>
   </div>
 </section>
 
@@ -52,6 +69,9 @@ const pack = OFFRES[1];
   }
   @media (min-width: 780px) {
     .offres { grid-template-columns: 1.15fr 1fr; }
+  }
+  @media (min-width: 1060px) {
+    .offres { grid-template-columns: 1.15fr 1fr 1fr; }
   }
   .offre {
     position: relative;
@@ -77,12 +97,13 @@ const pack = OFFRES[1];
   }
   .offre-simple li::marker { color: var(--dore); }
   .offre .pastille { position: absolute; top: -12px; right: 22px; }
-  .offre-prix { display: flex; align-items: baseline; gap: 10px; margin: 0 0 4px; }
+  .offre-prix { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 4px; }
   .prix {
     font-family: var(--police-titre);
     font-size: 42px;
     color: var(--sapin);
     letter-spacing: -0.01em;
+    white-space: nowrap;
   }
   .unite { color: var(--encre-2); font-size: 15px; }
   .offre ul { margin: 10px 0 20px; padding-left: 20px; }

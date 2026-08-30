@@ -1,0 +1,23 @@
+---
+// La chaîne WhatsApp d'Anne-Charlotte. Tant que le lien d'invitation n'est pas
+// collé dans site.ts (whatsappChaine), la section ne s'affiche pas du tout.
+import { SITE } from '../data/site';
+---
+
+{SITE.whatsappChaine && (
+  <section aria-labelledby="titre-chaine" class="chaine">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-chaine">« {SITE.whatsappChaineNom} »</h2>
+      <p class="chaine-texte">
+        Pour des idées et des petits conseils, tu peux suivre ma chaîne
+        WhatsApp : quelques minutes de lecture chaque semaine, rien de plus.
+      </p>
+      <a class="btn btn-rose" href={SITE.whatsappChaine}>Rejoindre la chaîne</a>
+    </div>
+  </section>
+)}
+
+<style>
+  .chaine-texte { max-width: 60ch; color: var(--encre-2); }
+  .chaine .btn { margin-top: 8px; }
+</style>

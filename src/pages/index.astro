@@ -4,6 +4,8 @@
 // d'action nets. Contenu dans la largeur lisible, jamais pleine page.
 import Base from '../layouts/Base.astro';
 import Tarifs from '../components/Tarifs.astro';
+import Deroule from '../components/Deroule.astro';
+import ChaineWhatsApp from '../components/ChaineWhatsApp.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import ChatFaq from '../components/ChatFaq.astro';
@@ -87,18 +89,19 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
     <div class="contenu" data-reveal>
       <h2>Comment te sens-tu&nbsp;?</h2>
       <p class="section-chapo">
-        Estomac en galère, hormones en folie, vie à 100 à l’heure ? Il y a
-        sûrement une solution du côté de ton assiette.
+        Estomac en galère, semaine de l’enfer avant les règles, vie à 100 à
+        l’heure et repas qui passent à la trappe ? Il y a sûrement une solution
+        du côté de ton assiette, ou juste à côté.
       </p>
       <div class="rangs">
         <a class="rang rang-lien" href={u('/troubles-digestifs/')}>
           <h3>Troubles digestifs</h3>
-          <p>Maux de ventre, ballonnements, reflux, intestin irritable (SII), SIBO… Chaque ajustement compte.</p>
+          <p>Nausées, ballonnements, reflux, urgences aux toilettes, constipation, SII, SIBO. Qu’ils soient fonctionnels (axe cerveau-intestin) ou liés à une maladie, chaque ajustement compte, sans restriction inutile.</p>
           <span class="rang-fleche" aria-hidden="true">→</span>
         </a>
         <a class="rang rang-lien" href={u('/sante-feminine/')}>
           <h3>Santé féminine</h3>
-          <p>SOPK, endométriose, syndrome prémenstruel, cycles difficiles… L’alimentation joue un vrai rôle.</p>
+          <p>Endométriose, syndrome prémenstruel, périménopause, SOPK. Comment l’alimentation peut-elle avoir un impact ? On en parle.</p>
           <span class="rang-fleche" aria-hidden="true">→</span>
         </a>
         <a class="rang rang-lien" href={u('/mieux-manger/')}>
@@ -135,7 +138,9 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
     </div>
   </section>
 
+  <Deroule />
   <Tarifs />
+  <ChaineWhatsApp />
   <Nutriciens />
 
   <!-- Le blog et les guides : contenu frais pour les humains et les moteurs -->
