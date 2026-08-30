@@ -16,7 +16,7 @@ import Pilier from '../components/Pilier.astro';
   definition="Accompagnement spécialisé de l’arrêt du tabac : dépendance physique à la nicotine, automatismes du geste, oralité, gestion des émotions, sommeil et appétit. En Belgique, le ou la tabacologue suit une formation reconnue et travaille en lien avec le médecin."
   titre="Arrêter de fumer, sans la peur de grossir"
   questionCle="Est-ce qu’on grossit forcément quand on arrête de fumer ?"
-  reponseCle="Non, ce n’est pas une fatalité. Une prise de poids est fréquente après l’arrêt : la nicotine coupe l’appétit et augmente légèrement la dépense d’énergie, et le geste, lui, laisse un vide. Ce sont trois choses sur lesquelles on peut agir, à condition de s’y prendre avant. Diététicienne et tabacologue, je travaille l’arrêt et l’assiette en même temps, au lieu de te demander de régler un problème puis l’autre."
+  reponseCle="Non, ce n’est pas une fatalité. La nicotine coupe l’appétit et augmente légèrement la dépense d’énergie, et surtout le geste laisse un vide que beaucoup remplissent par la nourriture. C’est un réflexe normal, et c’est exactement ce qu’on travaille — avec un second objectif tout aussi important : retrouver de l’énergie. Diététicienne et tabacologue, je prends l’arrêt et l’assiette en même temps, au lieu de te demander de régler un problème puis l’autre."
   symptomes={[
     'Tu veux arrêter, mais la peur de grossir te bloque',
     'Tu as déjà arrêté, et repris du poids',
@@ -27,11 +27,54 @@ import Pilier from '../components/Pilier.astro';
     'Ton médecin te l’a demandé et tu ne sais pas par où commencer',
     'Tu cumules l’arrêt du tabac avec des troubles digestifs ou hormonaux',
   ]}
-  approche="On ne traite pas l’arrêt d’un côté et l’assiette de l’autre. On prépare la date d’arrêt ensemble, on met en place ce qu’il faut pour que les fringales ne te prennent pas de court, on trouve quoi faire du geste qui manque, et on ajuste semaine après semaine. Tout se fait en visio, pour que ce soit simple à tenir dans la durée. Je travaille en complément de ton médecin, jamais à sa place : les substituts nicotiniques ou un traitement se décident avec lui."
+  approche="On ne traite pas l’arrêt d’un côté et l’assiette de l’autre. Deux axes avancent en parallèle : compenser le réflexe qui pousse à remplacer la cigarette par de la nourriture, et retrouver de l’énergie, parce que c’est elle qui tient la décision dans la durée. Pour ça j’ai plusieurs leviers, et on choisit ensemble ceux qui collent à ta situation. Tout se fait en visio, pour que ce soit simple à tenir. Je travaille en complément de ton médecin, jamais à sa place : les substituts nicotiniques ou un traitement se décident avec lui."
+  leviersTitre="Les leviers qu’on actionne ensemble"
+  leviers={[
+    {
+      titre: 'Comprendre ton manque',
+      texte:
+        'Chez une personne qui fume, la dopamine de base s’installe sous le seuil du bien-être : la cigarette n’ajoute pas du plaisir, elle rebouche un trou qu’elle a elle-même creusé. Voir ce mécanisme en face change déjà la façon de vivre l’arrêt.',
+    },
+    {
+      titre: 'Le réflexe main-bouche',
+      texte:
+        'Remplacer la cigarette par de la nourriture est le réflexe le plus fréquent, et le plus normal du monde. On ne fait pas comme s’il n’existait pas : on lui donne autre chose à faire.',
+    },
+    {
+      titre: 'Retrouver de l’énergie',
+      texte:
+        'Arrêter, c’est aussi une fatigue et un cerveau au ralenti pendant quelques semaines. On travaille l’assiette pour que l’énergie revienne, parce que c’est elle qui tient la décision quand la motivation, elle, fait le yoyo.',
+    },
+    {
+      titre: 'Le cap du soir',
+      texte:
+        'En fin de journée, la nicotine est retombée, le cortisol de la journée est encore haut et la mélatonine tarde à venir : c’est le moment le plus fragile. Le repas du soir agit sur les trois en même temps, et ça se construit.',
+    },
+    {
+      titre: 'Le rythme de la journée',
+      texte:
+        'Le cerveau suit une horloge. Ce que tu manges le matin, à midi et au goûter ne soutient pas les mêmes neurotransmetteurs : le moment compte autant que le contenu. On cale tes repas sur cette horloge plutôt que contre elle.',
+    },
+    {
+      titre: 'Le sommeil',
+      texte:
+        'Chaque nuit bien dormie, c’est moins de vulnérabilité le lendemain. On regarde ce qui, dans tes journées et tes repas, empêche ton sommeil de faire son travail de récupération.',
+    },
+    {
+      titre: 'Le stress et les émotions',
+      texte:
+        'Le stress chronique entretient l’envie de fumer, et la cigarette a longtemps servi de soupape. On installe d’autres outils, simples et à ta main, pour que la soupape ne manque pas au pire moment.',
+    },
+    {
+      titre: 'Protéger ton cerveau sur la durée',
+      texte:
+        'L’arrêt du tabac est l’un des piliers d’un mode de vie qui protège le cerveau, avec l’alimentation, l’activité physique, le sommeil et le lien social. On profite de l’élan de l’arrêt pour poser les autres.',
+    },
+  ]}
   faqPilier={[
     {
       q: 'Combien de kilos prend-on en arrêtant de fumer ?',
-      r: 'Ça varie énormément d’une personne à l’autre, et certaines ne prennent rien. Quand il y a une prise de poids, elle se joue surtout dans les premiers mois et reste sans commune mesure avec le bénéfice santé de l’arrêt. Surtout : ce n’est pas un effet mécanique et inévitable, c’est sur cette part-là qu’un accompagnement change les choses.',
+      r: 'Ça varie énormément d’une personne à l’autre, et certaines ne prennent rien. Quand il y a une prise de poids, elle se joue surtout dans les premiers mois et reste sans commune mesure avec le bénéfice santé de l’arrêt. Surtout, la part la plus évitable ne vient pas du métabolisme mais du réflexe de remplacer la cigarette par de la nourriture. C’est là qu’un accompagnement change les choses.',
     },
     {
       q: 'Pourquoi le Pack tabac est-il uniquement en visio ?',
