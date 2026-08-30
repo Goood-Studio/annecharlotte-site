@@ -1,6 +1,6 @@
 ---
 // L'accueil : la photo d'Anne-Charlotte en arche (clin d'œil aux cadres de
-// son cabinet), le geste principal « Prendre RDV en ligne », et des blocs
+// son cabinet), le geste principal « Prendre RDV en visio », et des blocs
 // d'action nets. Contenu dans la largeur lisible, jamais pleine page.
 import Base from '../layouts/Base.astro';
 import Tarifs from '../components/Tarifs.astro';
@@ -26,7 +26,7 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
 <Base
   titre="Diététicienne à Namur, troubles digestifs & santé féminine | Anne-Charlotte Jalhay"
-  description="Anne-Charlotte, diététicienne agréée à Namur et Malonne : troubles digestifs (SII, ballonnements), santé féminine (SOMP/SOPK, endométriose), mieux manger sans culpabilité. Prends RDV en ligne, en visio ou au cabinet."
+  description="Anne-Charlotte, diététicienne agréée à Namur et Malonne : troubles digestifs (SII, ballonnements), santé féminine (SOMP/SOPK, endométriose), mieux manger sans culpabilité. Prends rendez-vous en visio ou au cabinet."
   chemin="/"
   jsonLd={jsonLd}
   animer={true}
@@ -55,8 +55,8 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
         <div class="hero-actions">
           <a class="bloc-action principal" href={SITE.rdvVisio} data-anim="bloc">
-            <span class="bloc-titre">Prendre RDV en ligne <span class="pastille">plus rapide</span></span>
-            <span class="bloc-sous">En visio, depuis chez toi. Confirmation immédiate.</span>
+            <span class="bloc-titre">Prendre RDV en visio <span class="pastille">plus rapide</span></span>
+            <span class="bloc-sous">Par vidéo, depuis chez toi. Un lien arrive par mail, rien à installer.</span>
             <span class="bloc-fleche" aria-hidden="true">→</span>
           </a>
           <a class="bloc-action" href={SITE.rdvMalonne} data-anim="bloc">
