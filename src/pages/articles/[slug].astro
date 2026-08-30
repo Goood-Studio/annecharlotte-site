@@ -5,6 +5,7 @@
 import Base from '../../layouts/Base.astro';
 import CtaFinal from '../../components/CtaFinal.astro';
 import articlesData from '../../data/articles.json';
+import guidesData from '../../data/guides.json';
 import redirections from '../../data/redirections.json';
 import { SITE, u } from '../../data/site';
 import { faqJsonLd } from '../../data/jsonld';
@@ -49,6 +50,13 @@ const lienPilier: Record<string, { chemin: string; texte: string }> = {
   'Mieux manger': { chemin: '/mieux-manger/', texte: 'Voir comment je t’aide à mieux manger' },
   'Arrêt du tabac': { chemin: '/arreter-de-fumer/', texte: 'Voir comment j’accompagne l’arrêt du tabac' },
 };
+
+// Le guide du même pilier, quand il est publié : c'est lui le vrai appel à
+// l'action de fin d'article (on capte un contact, pas juste une visite). Tant
+// qu'aucun guide n'est publié pour ce pilier, on retombe sur la page pilier.
+const guidePilier = type === 'article' && article?.pilier
+  ? guidesData.guides.find((g) => g.pilier === article.pilier && g.statut === 'Publié' && g.slug)
+  : undefined;
 
 const autres = type === 'article'
   ? articlesData.articles.filter((a) => a.slug !== article.slug && a.pilier === article.pilier).slice(0, 3)
@@ -105,10 +113,16 @@ function dateFr(iso: string | null) {
           Cet article informe, il ne remplace ni une consultation médicale ni
           un accompagnement personnalisé.
         </p>
-        {article.pilier && lienPilier[article.pilier] && (
-          <a class="btn btn-principal" href={u(lienPilier[article.pilier].chemin)}>
-            {lienPilier[article.pilier].texte}
+        {guidePilier ? (
+          <a class="btn btn-principal" href={u('/guides/' + guidePilier.slug + '/')}>
+            Recevoir le guide gratuit : {guidePilier.titre}
           </a>
+        ) : (
+          article.pilier && lienPilier[article.pilier] && (
+            <a class="btn btn-principal" href={u(lienPilier[article.pilier].chemin)}>
+              {lienPilier[article.pilier].texte}
+            </a>
+          )
         )}
       </div>
 
