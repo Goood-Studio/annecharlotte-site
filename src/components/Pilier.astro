@@ -32,6 +32,8 @@ interface Props {
    */
   leviers?: { titre: string; texte: string }[];
   leviersTitre?: string;
+  /** Quelles formules montrer en bas de page. Voir Tarifs.astro. */
+  varianteTarifs?: 'classique' | 'tabac';
 }
 
 const {
@@ -50,6 +52,7 @@ const {
   visioSeule = false,
   leviers = [],
   leviersTitre = 'Les leviers qu’on actionne ensemble',
+  varianteTarifs = 'classique',
 } = Astro.props;
 
 const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...FAQ_DIET])];
@@ -66,7 +69,7 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
       </p>
       <div class="hero-boutons">
         <a class="btn btn-rose" href={SITE.rdvVisio}>
-          Prendre RDV en ligne <span class="pastille">plus rapide</span>
+          Prendre RDV en visio <span class="pastille">plus rapide</span>
         </a>
         {!visioSeule && (
           <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
@@ -141,7 +144,7 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
     </div>
   </section>
 
-  <Tarifs />
+  <Tarifs variante={varianteTarifs} />
   <FaqDiet />
   <Nutriciens />
   <CtaFinal />
