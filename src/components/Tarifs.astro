@@ -1,53 +1,69 @@
 ---
 // Les offres : deux panneaux assumés et différents (pas de cartes jumelles).
 // Le pack, meilleur choix, prend la scène sur fond sapin.
+//
+// Deux variantes, parce que trois formules côte à côte alourdissent la page :
+//   « classique » (par défaut) → Pack tout compris + Premiers pas
+//   « tabac »                  → le Pack tabac seul, sur la page arrêt du tabac
 import { OFFRES } from '../data/contenu';
 import { SITE } from '../data/site';
+
+interface Props {
+  variante?: 'classique' | 'tabac';
+}
+
+const { variante = 'classique' } = Astro.props;
 
 const premiersPas = OFFRES[0];
 const pack = OFFRES[1];
 const packTabac = OFFRES[2];
+const tabac = variante === 'tabac';
 ---
 
 <section class="tarifs" aria-labelledby="titre-tarifs">
   <div class="contenu" data-reveal>
     <h2 id="titre-tarifs">Tu es à un clic de la solution</h2>
     <p class="tarifs-chapo">
-      Disponibilités : {SITE.horaires}. En visio ou en cabinet, c’est toi qui choisis,
-      et la mutuelle rembourse une partie.
+      {tabac
+        ? `Disponibilités : ${SITE.horaires}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`
+        : `Disponibilités : ${SITE.horaires}. En visio ou en cabinet, c’est toi qui choisis, et la mutuelle rembourse une partie.`}
     </p>
 
-    <div class="offres">
-      <article class="offre offre-pack">
-        <span class="pastille">Meilleur choix</span>
-        <h3>{pack.nom}</h3>
-        <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
-        <p class="offre-desc">{pack.description}</p>
-        <ul>
-          {pack.inclus.map((item) => <li>{item}</li>)}
-        </ul>
-        <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
-      </article>
+    <div class:list={['offres', tabac && 'offres-seule']}>
+      {tabac ? (
+        <article class="offre offre-pack">
+          <h3>{packTabac.nom}</h3>
+          <p class="offre-prix"><span class="prix">{packTabac.prix}</span> <span class="unite">{packTabac.unite}</span></p>
+          <p class="offre-desc">{packTabac.description}</p>
+          <ul>
+            {packTabac.inclus.map((item) => <li>{item}</li>)}
+          </ul>
+          <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{packTabac.ctaTexte}</a>
+        </article>
+      ) : (
+        <>
+          <article class="offre offre-pack">
+            <span class="pastille">Meilleur choix</span>
+            <h3>{pack.nom}</h3>
+            <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
+            <p class="offre-desc">{pack.description}</p>
+            <ul>
+              {pack.inclus.map((item) => <li>{item}</li>)}
+            </ul>
+            <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
+          </article>
 
-      <article class="offre offre-simple">
-        <h3>{premiersPas.nom}</h3>
-        <p class="offre-prix"><span class="prix">{premiersPas.prix}</span> <span class="unite">{premiersPas.unite}</span></p>
-        <p class="offre-desc">{premiersPas.description}</p>
-        <ul>
-          {premiersPas.inclus.map((item) => <li>{item}</li>)}
-        </ul>
-        <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{premiersPas.ctaTexte}</a>
-      </article>
-
-      <article class="offre offre-simple offre-tabac">
-        <h3>{packTabac.nom}</h3>
-        <p class="offre-prix"><span class="prix">{packTabac.prix}</span> <span class="unite">{packTabac.unite}</span></p>
-        <p class="offre-desc">{packTabac.description}</p>
-        <ul>
-          {packTabac.inclus.map((item) => <li>{item}</li>)}
-        </ul>
-        <a class="btn btn-contour btn-bloc" href={SITE.rdvPack}>{packTabac.ctaTexte}</a>
-      </article>
+          <article class="offre offre-simple">
+            <h3>{premiersPas.nom}</h3>
+            <p class="offre-prix"><span class="prix">{premiersPas.prix}</span> <span class="unite">{premiersPas.unite}</span></p>
+            <p class="offre-desc">{premiersPas.description}</p>
+            <ul>
+              {premiersPas.inclus.map((item) => <li>{item}</li>)}
+            </ul>
+            <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{premiersPas.ctaTexte}</a>
+          </article>
+        </>
+      )}
     </div>
     <p class="note-etoile">
       * Adapté à chacun·e : la durée du suivi s’ajuste à ta situation.
@@ -70,8 +86,10 @@ const packTabac = OFFRES[2];
   @media (min-width: 780px) {
     .offres { grid-template-columns: 1.15fr 1fr; }
   }
-  @media (min-width: 1060px) {
-    .offres { grid-template-columns: 1.15fr 1fr 1fr; }
+  /* Un seul panneau : il ne s'étale pas sur toute la largeur. */
+  .offres-seule { max-width: 620px; }
+  @media (min-width: 780px) {
+    .offres-seule { grid-template-columns: 1fr; }
   }
   .offre {
     position: relative;
