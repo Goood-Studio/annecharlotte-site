@@ -11,7 +11,7 @@ export const OFFRES = [
     prix: '80 €',
     unite: 'la consultation',
     description:
-      'Consultation individuelle (ou à deux) : on fait le point et tu repars avec un plan clair.',
+      'Consultation individuelle (ou à deux) : on fait le point et tu repars avec des ajustements concrets, adaptés à ta vie.',
     inclus: [
       'Bilan initial complet',
       'Remboursement mutuelle possible',
@@ -29,7 +29,7 @@ export const OFFRES = [
       'On prend un problème ou un objectif, et on solutionne la situation ensemble.',
     inclus: [
       'Suivi hebdomadaire jusqu’à 10 semaines*',
-      'Plan alimentaire personnalisé',
+      'Des améliorations construites pour ta vie réelle',
       'Remboursement mutuelle possible',
       'Canal direct de discussion',
       'Planificateur de recettes et analyses',
@@ -64,12 +64,12 @@ export const SERVICES = [
   {
     titre: 'Objectif personnalisé',
     texte:
-      'Un contact reste possible même entre les rendez-vous, pour éviter le sentiment de « ça ne marche pas », « j’ai toujours mal », « pff… ». Ce que je vise, c’est un ajustement continu : moins de douleurs, plus d’énergie, et se sentir mieux dans son corps.',
+      'Zéro plan alimentaire, zéro tout-fait. On part de ton besoin et de ta vie réelle, et on construit ensemble des pistes de solutions pour y répondre vraiment. Mon objectif, c’est que tu deviennes autonome, avec une vraie réponse et une vraie solution.',
   },
   {
     titre: 'Soutien et suivi',
     texte:
-      'Tu n’avances pas seul·e : suivi régulier, conseils adaptés et un vrai soutien à chaque étape, à ton rythme.',
+      'Tu n’avances pas seul·e : suivi régulier, conseils adaptés et un vrai soutien à chaque étape, à ton rythme. Un contact reste possible même entre les rendez-vous, pour éviter le sentiment de « ça ne marche pas », « j’ai toujours mal », « pff… ». Ce que je vise, c’est un ajustement continu : moins de douleurs, plus d’énergie, et se sentir mieux dans son corps.',
   },
   {
     titre: 'Éducation alimentaire',
@@ -118,7 +118,7 @@ export const DEROULE = [
 export const FAQ_DIET = [
   {
     q: 'Quel est le travail d’un diététicien ou d’une diététicienne ?',
-    r: 'Un·e diététicien·ne est un·e professionnel·le de santé spécialisé·e en nutrition, avec un diplôme reconnu (bachelier en diététique en Belgique). Concrètement : on évalue tes besoins, on construit un plan alimentaire adapté à ta vie, et on t’accompagne pour les troubles digestifs, hormonaux ou métaboliques. En Belgique, le titre est protégé par la loi.',
+    r: 'Un·e diététicien·ne est un·e professionnel·le de santé spécialisé·e en nutrition, avec un diplôme reconnu (bachelier en diététique en Belgique). Concrètement : on évalue tes besoins, on construit à partir de ta vie réelle des améliorations concrètes dans ton quotidien, et on t’accompagne pour les troubles digestifs, hormonaux ou métaboliques. En Belgique, le titre est protégé par la loi.',
   },
   {
     q: 'Quand consulter un diététicien ou une diététicienne ?',
