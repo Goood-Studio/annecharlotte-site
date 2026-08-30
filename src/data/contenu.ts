@@ -104,7 +104,12 @@ export const DEROULE = [
   {
     titre: 'La première rencontre',
     texte:
-      '« Comment puis-je vous aider ? » On prend le temps ensemble de comprendre ton besoin. On a la base de tes repas, on regarde autour de l’assiette pour une vue complète, et on définit ensemble nos premiers ajustements. En visio, tu peux facilement aller chercher dans tes armoires un produit qui te pose question. Et si tu préfères rester en silencieux, cela ne me dérange pas du tout.',
+      '« Comment puis-je vous aider ? » On prend le temps ensemble de comprendre ton besoin. On a la base de tes repas, on regarde autour de l’assiette pour une vue complète, et on définit ensemble nos premiers ajustements. En visio, tu peux facilement aller chercher dans tes armoires un produit qui te pose question.',
+  },
+  {
+    titre: 'Entre les rendez-vous',
+    texte:
+      'Tu m’écris sur WhatsApp quand ça t’arrange. Toutes mes conversations patient·es sont en silencieux : une photo de ton assiette à 21h30 ne me dérange jamais, ça ne sonne pas chez moi. C’est pensé pour que nos échanges restent simples, sans que tu aies à te demander si c’est le bon moment.',
   },
 ] as const;
 
@@ -117,7 +122,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Quand consulter un diététicien ou une diététicienne ?',
-    r: 'Dès que l’alimentation te pose question ou te pèse : maux de ventre qui reviennent, ballonnements, intestin irritable, SOPK, endométriose, fatigue, envie de mieux manger sans savoir par où commencer. Pas besoin d’attendre que ce soit « grave » : plus tôt on s’y met, plus vite tu vas mieux.',
+    r: 'Dès que l’alimentation te pose question ou te pèse : maux de ventre qui reviennent, ballonnements, intestin irritable, SOMP (SOPK), endométriose, fatigue, envie de mieux manger sans savoir par où commencer. Pas besoin d’attendre que ce soit « grave » : plus tôt on s’y met, plus vite tu vas mieux.',
   },
   {
     q: 'Combien coûte une consultation ?',

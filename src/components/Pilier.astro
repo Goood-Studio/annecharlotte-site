@@ -24,6 +24,8 @@ interface Props {
   symptomes: string[];
   approche: string;
   faqPilier: { q: string; r: string }[];
+  /** Pilier proposé uniquement en visio : masque le bouton « cabinet ». */
+  visioSeule?: boolean;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
   symptomes,
   approche,
   faqPilier,
+  visioSeule = false,
 } = Astro.props;
 
 const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...FAQ_DIET])];
@@ -57,7 +60,9 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
         <a class="btn btn-rose" href={SITE.rdvVisio}>
           Prendre RDV en ligne <span class="pastille">plus rapide</span>
         </a>
-        <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
+        {!visioSeule && (
+          <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
+        )}
       </div>
     </div>
   </section>

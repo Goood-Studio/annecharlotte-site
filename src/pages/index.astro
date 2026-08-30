@@ -26,7 +26,7 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
 <Base
   titre="Diététicienne à Namur, troubles digestifs & santé féminine | Anne-Charlotte Jalhay"
-  description="Anne-Charlotte, diététicienne agréée à Namur et Malonne : troubles digestifs (SII, ballonnements), santé féminine (SOPK, endométriose), mieux manger sans culpabilité. Prends RDV en ligne, en visio ou au cabinet."
+  description="Anne-Charlotte, diététicienne agréée à Namur et Malonne : troubles digestifs (SII, ballonnements), santé féminine (SOMP/SOPK, endométriose), mieux manger sans culpabilité. Prends RDV en ligne, en visio ou au cabinet."
   chemin="/"
   jsonLd={jsonLd}
   animer={true}
@@ -101,12 +101,17 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
         </a>
         <a class="rang rang-lien" href={u('/sante-feminine/')}>
           <h3>Santé féminine</h3>
-          <p>Endométriose, syndrome prémenstruel, périménopause, SOPK. Comment l’alimentation peut-elle avoir un impact ? On en parle.</p>
+          <p>Endométriose, syndrome prémenstruel, périménopause, SOMP (SOPK). Comment l’alimentation peut-elle avoir un impact ? On en parle.</p>
           <span class="rang-fleche" aria-hidden="true">→</span>
         </a>
         <a class="rang rang-lien" href={u('/mieux-manger/')}>
           <h3>Mieux manger</h3>
           <p>Mal dans ton corps, envie de mieux manger sans régime punitif ? Retrouvons ta confiance.</p>
+          <span class="rang-fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="rang rang-lien" href={u('/arreter-de-fumer/')}>
+          <h3>Arrêter de fumer</h3>
+          <p>Envie d’arrêter, mais la peur de grossir te freine ? Diététicienne et tabacologue : on travaille les deux en même temps.</p>
           <span class="rang-fleche" aria-hidden="true">→</span>
         </a>
       </div>
