@@ -28,7 +28,7 @@ export const OFFRES = [
     description:
       'On prend un problème ou un objectif, et on solutionne la situation ensemble.',
     inclus: [
-      'Suivi hebdomadaire jusqu’à 10 semaines*',
+      'Ton bilan + 5 séances de suivi*',
       'Des améliorations construites pour ta vie réelle',
       'Remboursement mutuelle possible',
       'Canal direct de discussion',
@@ -39,7 +39,7 @@ export const OFFRES = [
   },
   {
     nom: 'Pack tabac',
-    prix: '290 €',
+    prix: '390 €',
     unite: 'uniquement en visio',
     description:
       'Envie d’arrêter de fumer, mais la peur de grossir te freine ? On travaille les deux en même temps.',
