@@ -1,65 +1,54 @@
 ---
-// Le questionnaire pré-consultation. La patiente arrive ici après avoir
-// réservé sur cal.com. Ses réponses partent vers le relais Netlify, qui
-// écrit la fiche dans la base Notion « Pré-consultations » d'Anne-Charlotte.
-// Page technique : noindex, hors sitemap, aucune donnée dans l'URL, aucun
-// brouillon gardé dans le navigateur.
+// Le miroir avant réservation. Quelques questions courtes, puis la
+// personne choisit son créneau sur cal.com. Ses réponses partent vers le
+// relais Netlify, qui écrit une fiche dans la base Notion « Demandes avant
+// RDV ». Un code au hasard (BIL-XXXX) est ajouté au lien cal.com pour
+// relier la fiche à la réservation : aucune donnée personnelle dans l'URL.
+// Page technique : noindex, hors sitemap, rien gardé dans le navigateur.
 import Base from '../layouts/Base.astro';
 import { SITE, u } from '../data/site';
-import { MOTIFS, VEGETAUX } from '../data/bilan';
+import { MOTIFS } from '../data/miroir';
 
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
-
-const repas = ['Matin', 'Midi', 'Après-midi', 'Soir'];
-const situations: [string, string][] = [
-  ['sang', 'Du sang dans les selles'],
-  ['poids', 'Une perte de poids sans le vouloir'],
-  ['nuit', 'Des symptômes qui me réveillent la nuit'],
-  ['regles', 'Plus de règles depuis 3 mois (sans grossesse ni ménopause)'],
-  ['meno', 'Des saignements après la ménopause'],
+const lieux: [id: string, label: string, lien: string][] = [
+  ['visio', 'En visio', SITE.rdvVisio],
+  ['malonne', 'Au cabinet de Malonne', SITE.rdvMalonne],
+  ['namur', 'Au cabinet de Namur', SITE.rdvNamur],
 ];
 ---
 
 <Base
-  titre="Préparer ton rendez-vous | Anne-Charlotte Diététicienne"
-  description="Le questionnaire à remplir avant ta première consultation avec Anne-Charlotte : 8 minutes pour qu'on parte de ton quotidien tel qu'il est."
+  titre="Avant ton rendez-vous | Anne-Charlotte Diététicienne"
+  description="Trois minutes pour me dire ce que tu vis, avant de choisir ton créneau avec Anne-Charlotte, diététicienne à Namur, Malonne et en visio."
   chemin="/bilan/"
   noindex
 >
   <section class="bilan">
     <div class="contenu etroit">
       <p class="surtitre">Avant ton rendez-vous</p>
-      <h1>Préparer ton rendez-vous</h1>
+      <h1>Dis-moi ce que tu vis</h1>
 
       <noscript>
         <p class="alerte">
-          Ce questionnaire a besoin de JavaScript. Si ça ne marche pas chez toi, pas de souci :
-          on fera tout ensemble au rendez-vous.
+          Cette page a besoin de JavaScript. Pas de souci :
+          <a href={SITE.rdvVisio}>réserve directement ton rendez-vous ici</a>.
         </p>
       </noscript>
 
-      <div class="progression" aria-hidden="true" hidden>
-        <div class="progres-barre"><span></span></div>
-      </div>
+      <div class="progression" aria-hidden="true" hidden><div class="progres-barre"><span></span></div></div>
       <p class="etape-num" aria-live="polite" hidden></p>
 
-      <form id="bilan" data-endpoint={endpoint} data-whatsapp={SITE.whatsapp} novalidate hidden>
-        <!-- Piège à robots : invisible pour une humaine, laissé vide. -->
+      <form id="miroir" data-endpoint={endpoint} novalidate hidden>
         <div class="piege" aria-hidden="true">
           <label>Ton site web <input type="text" name="site_web" tabindex="-1" autocomplete="off" /></label>
         </div>
 
-        <!-- 0. Accueil -->
-        <fieldset class="etape" data-etape="accueil">
-          <legend class="h2">Bienvenue !</legend>
+        <!-- 1. Qui -->
+        <fieldset class="etape" data-etape="qui">
+          <legend class="h2">On fait connaissance ?</legend>
           <p class="chapo">
-            Ça prend 8 minutes. Il n’y a pas de bonne réponse, je veux juste voir ton quotidien
-            tel qu’il est.
-          </p>
-          <p class="discret">
-            Tes réponses ne sont pas gardées si tu fermes la page : prends ces 8 minutes d’une traite
-            si tu peux.
+            Trois minutes pour que je comprenne ce que tu vis. Ensuite, tu choisis ton créneau.
           </p>
           <div class="champs deux">
             <label>Ton prénom <input type="text" name="prenom" autocomplete="given-name" required /></label>
@@ -68,263 +57,76 @@ const situations: [string, string][] = [
               <input type="text" name="initiale" maxlength="2" autocomplete="off" required placeholder="Ex. D" />
             </label>
           </div>
-          <div class="champs deux">
-            <label>
-              Ton e-mail
-              <span class="aide">Le même que pour ta réservation.</span>
-              <input type="email" name="email" autocomplete="email" inputmode="email" required />
-            </label>
-            <label>
-              La date de ton rendez-vous
-              <input type="date" name="dateRdv" required />
-            </label>
-          </div>
         </fieldset>
 
-        <!-- 1. Le motif -->
+        <!-- 2. Motif + demande -->
         <fieldset class="etape" data-etape="motif" hidden>
-          <legend class="h2">Tu viens surtout pour…</legend>
-          <div class="choix" role="radiogroup">
+          <legend class="h2">Tu viens pour…</legend>
+          <p class="discret">Coche tout ce qui te concerne.</p>
+          <div class="choix">
             {MOTIFS.map(([id, label]) => (
-              <label class="option"><input type="radio" name="motif" value={id} /> <span>{label}</span></label>
+              <label class="option"><input type="checkbox" name="motifs" value={id} /> <span>{label}</span></label>
             ))}
           </div>
-          <label class="si-autre" hidden>
-            Dis-m’en un peu plus
-            <input type="text" name="motifAutre" />
-          </label>
-          <p class="sous-question">Autre chose en plus ?</p>
-          <div class="choix petits">
-            {MOTIFS.filter(([id]) => id !== 'autre').map(([id, label]) => (
-              <label class="option"><input type="checkbox" name="secondaires" value={id} /> <span>{label}</span></label>
-            ))}
-          </div>
-          <label>
-            Ou avec tes mots
-            <input type="text" name="enPlus" />
+          <label class="question">
+            Comment est-ce que je peux t’aider ?
+            <span class="aide">Avec tes mots, même en vrac.</span>
+            <textarea name="demande" rows="5"></textarea>
           </label>
         </fieldset>
 
-        <!-- 2. La demande -->
-        <fieldset class="etape" data-etape="demande" hidden>
-          <legend class="h2">Comment est-ce que je peux t’aider ?</legend>
-          <p class="discret">Avec tes mots, même en vrac.</p>
-          <textarea name="demande" rows="6" aria-label="Comment est-ce que je peux t’aider ?"></textarea>
-        </fieldset>
-
-        <!-- 3. Le point B -->
+        <!-- 3. Point B -->
         <fieldset class="etape" data-etape="pointb" hidden>
           <legend class="h2">Si dans 3 mois ça allait mieux, qu’est-ce qui aurait changé ?</legend>
           <p class="discret">Dans ta journée, ton corps, ta tête… ce qui te vient.</p>
-          <textarea name="pointB" rows="6" aria-label="Qu’est-ce qui aurait changé dans 3 mois ?"></textarea>
+          <textarea name="pointB" rows="5" aria-label="Qu’est-ce qui aurait changé dans 3 mois ?"></textarea>
         </fieldset>
 
-        <!-- 4. La roue -->
-        <fieldset class="etape" data-etape="roue" hidden>
-          <legend class="h2">Ta roue</legend>
-          <p class="discret">
-            Pour chaque bulle : <strong>0</strong> = ça va, <strong>10</strong> = ça prend toute la place.
-            Tu peux glisser les curseurs ou toucher la roue.
+        <!-- 4. Le miroir -->
+        <fieldset class="etape" data-etape="miroir" hidden>
+          <legend class="h2">Est-ce que tu te reconnais ?</legend>
+          <p class="discret">Ce sont des phrases que j’entends souvent en consultation.</p>
+          <div class="roue-scene"><div class="roue" data-roue></div></div>
+          <div class="phrases"></div>
+          <p class="entendu" hidden>
+            Ce que tu vis, je l’entends très souvent. Et ça se travaille : on part de ton quotidien,
+            et on teste une seule chose à la fois.
           </p>
-          <div class="roue-scene"><div class="roue" data-roue="principale"></div></div>
-          <div class="curseurs" data-curseurs="principale"></div>
         </fieldset>
 
-        <!-- 5. Le zoom (seulement si un axe est à 6 ou plus) -->
-        <fieldset class="etape" data-etape="zoom" hidden>
-          <legend class="h2">On zoome un peu</legend>
-          <p class="discret">Pour ce qui prend le plus de place : c’est quoi exactement ?</p>
-          <div class="zooms"></div>
+        <!-- 5. Déjà essayé -->
+        <fieldset class="etape" data-etape="essaye" hidden>
+          <legend class="h2">Qu’est-ce que tu as déjà essayé ?</legend>
+          <p class="discret">Régimes, médecins, applis, conseils d’amies… et ce que ça a donné.</p>
+          <textarea name="dejaEssaye" rows="5" aria-label="Ce que tu as déjà essayé"></textarea>
         </fieldset>
 
-        <!-- 6. Importance et capacité -->
-        <fieldset class="etape" data-etape="elan" hidden>
-          <legend class="h2">Et maintenant ?</legend>
-          <label class="echelle">
-            <span>C’est important pour toi d’avancer là-dessus maintenant ?</span>
-            <span class="curseur"><input type="range" name="importance" min="0" max="10" value="5" /><output>5</output></span>
-            <span class="bornes"><span>pas du tout</span><span>énormément</span></span>
-          </label>
-          <label class="echelle">
-            <span>Et tu te sens capable de le faire, en ce moment ?</span>
-            <span class="curseur"><input type="range" name="capacite" min="0" max="10" value="5" /><output>5</output></span>
-            <span class="bornes"><span>pas du tout</span><span>complètement</span></span>
-          </label>
-        </fieldset>
-
-        <!-- 7. Déjà testé -->
-        <fieldset class="etape" data-etape="teste" hidden>
-          <legend class="h2">Ce que tu as déjà essayé</legend>
-          <label>
-            Qu’est-ce que tu as déjà testé ? Qu’est-ce que ça a donné ?
-            <textarea name="dejaTeste" rows="4"></textarea>
-          </label>
-          <label>
-            Un moment où ça allait un peu mieux : qu’est-ce qui était différent ?
-            <textarea name="mieuxMoment" rows="4"></textarea>
-          </label>
-        </fieldset>
-
-        <!-- 8. La journée d'hier -->
-        <fieldset class="etape" data-etape="journee" hidden>
-          <legend class="h2">Raconte-moi ta journée d’hier</legend>
-          <p class="discret">Pas celle d’une journée idéale : celle d’hier, telle qu’elle a été.</p>
-          <label class="heure">Réveil vers <input type="time" name="reveil" /></label>
-          {repas.map((moment) => (
-            <div class="repas" data-moment={moment}>
-              <p class="repas-titre">{moment}</p>
-              <label class="heure">Vers <input type="time" name={'heure-' + moment} /></label>
-              <label class="sr">Ce que tu as mangé et bu ({moment})
-                <textarea rows="2" name={'contenu-' + moment} placeholder="Ce que tu as mangé et bu, même un café"></textarea>
-              </label>
-            </div>
-          ))}
-          <label class="heure">Coucher vers <input type="time" name="coucher" /></label>
-
-          <p class="sous-question">Et à boire ?</p>
-          <div class="champs deux">
-            <label>Eau, à peu près <input type="text" name="eau" placeholder="Ex. 1 litre" /></label>
-            <label>Cafés <input type="text" name="cafe" placeholder="Ex. 3" /></label>
-          </div>
-          <label class="heure">Le dernier café vers <input type="time" name="dernierCafe" /></label>
-          <p class="question-courte">Des boissons pétillantes (eau gazeuse, soda…) ?</p>
-          <div class="choix ligne">
-            <label class="option"><input type="radio" name="petillant" value="non" /> <span>Non</span></label>
-            <label class="option"><input type="radio" name="petillant" value="un peu" /> <span>Un peu</span></label>
-            <label class="option"><input type="radio" name="petillant" value="oui" /> <span>Oui</span></label>
-          </div>
-          <label>De l’alcool ? <input type="text" name="alcool" placeholder="Ex. non, ou 1 verre de vin" /></label>
-
-          <p class="question-courte">C’était une journée habituelle ?</p>
-          <div class="choix ligne">
-            <label class="option"><input type="radio" name="habituelle" value="oui" /> <span>Oui</span></label>
-            <label class="option"><input type="radio" name="habituelle" value="plutot" /> <span>Plutôt</span></label>
-            <label class="option"><input type="radio" name="habituelle" value="non" /> <span>Non</span></label>
-          </div>
-          <label class="si-non" hidden>Qu’est-ce qui était différent ? <input type="text" name="habituelleNote" /></label>
-        </fieldset>
-
-        <!-- 9. Les végétaux -->
-        <fieldset class="etape" data-etape="vegetaux" hidden>
-          <legend class="h2">Tes végétaux cette semaine</legend>
-          <p class="discret">
-            Coche tout ce que tu as mangé depuis 7 jours, même un peu. On compte les plantes, pas les calories.
+        <!-- 6. Le rendez-vous -->
+        <fieldset class="etape" data-etape="rdv" hidden>
+          <legend class="h2">Choisis ton rendez-vous</legend>
+          <p class="photos" hidden>
+            <strong>Un petit service avant qu’on se voie :</strong> si tu es à l’aise, prends en photo ce
+            que tu manges pendant 2 ou 3 jours. Sinon, pas de souci, on en parle ensemble.
           </p>
-          <p class="compteur" aria-live="polite"><strong data-compte>0</strong> / 30</p>
-          {VEGETAUX.map(([famille, plantes]) => (
-            <div class="famille">
-              <p class="famille-titre">{famille}</p>
-              <div class="puces">
-                {plantes.map((p) => (
-                  <label class="puce"><input type="checkbox" name="vegetaux" value={p} /> <span>{p}</span></label>
-                ))}
-              </div>
-            </div>
-          ))}
-          <label>
-            D’autres encore ? Sépare-les par des virgules.
-            <input type="text" name="vegetauxAutres" placeholder="Ex. fenouil, mangue, menthe" />
-          </label>
-        </fieldset>
-
-        <!-- 10. Les goûts -->
-        <fieldset class="etape" data-etape="gouts" hidden>
-          <legend class="h2">Ce qui te fait plaisir</legend>
-          <p class="question-courte">Les 3 plats qui te font plaisir</p>
-          <div class="champs">
-            <input type="text" name="plat1" aria-label="Plat 1" />
-            <input type="text" name="plat2" aria-label="Plat 2" />
-            <input type="text" name="plat3" aria-label="Plat 3" />
-          </div>
-          <label>
-            Ce que tu ne manges pas (goût, allergie, choix…)
-            <textarea name="neMangePas" rows="3"></textarea>
-          </label>
-        </fieldset>
-
-        <!-- 11. Le quotidien -->
-        <fieldset class="etape" data-etape="quotidien" hidden>
-          <legend class="h2">Ton quotidien</legend>
-          <div class="champs deux">
-            <label>Qui cuisine chez toi ? <input type="text" name="quiCuisine" /></label>
-            <label>Le temps que tu as pour cuisiner <input type="text" name="temps" placeholder="Ex. 20 min le soir" /></label>
-            <label>Tes horaires <input type="text" name="horaires" placeholder="Ex. 8 h-17 h, pauses courtes" /></label>
-            <label>Des enfants à la maison ? <input type="text" name="enfants" placeholder="Ex. 2, 4 et 9 ans" /></label>
-            <label>Du sport, du mouvement ? <input type="text" name="sport" /></label>
-            <label>Combien d’heures de sommeil ? <input type="text" name="sommeil" placeholder="Ex. 6 h 30" /></label>
-          </div>
-        </fieldset>
-
-        <!-- 12. La relation à la nourriture -->
-        <fieldset class="etape" data-etape="relation" hidden>
-          <legend class="h2">Toi et la nourriture</legend>
-          <p class="question-courte">Tu as déjà fait des régimes ?</p>
-          <div class="choix ligne">
-            <label class="option"><input type="radio" name="regimes" value="aucun" /> <span>Non</span></label>
-            <label class="option"><input type="radio" name="regimes" value="quelques" /> <span>Un ou deux</span></label>
-            <label class="option"><input type="radio" name="regimes" value="beaucoup" /> <span>Trois ou plus</span></label>
-          </div>
-          <label class="si-regimes" hidden>
-            Raconte-moi comment ça s’est passé.
-            <textarea name="regimesRecit" rows="4"></textarea>
-          </label>
-          <p class="question-courte">Il y a des aliments que tu évites par peur ? Peur des symptômes, ou de grossir.</p>
-          <div class="choix ligne">
-            <label class="option"><input type="radio" name="evitePeur" value="non" /> <span>Non</span></label>
-            <label class="option"><input type="radio" name="evitePeur" value="oui" /> <span>Oui</span></label>
-          </div>
-          <label class="si-peur" hidden>Lesquels ? <input type="text" name="eviteQuoi" /></label>
-          <p class="question-courte">Tu te pèses ?</p>
-          <div class="choix">
-            <label class="option"><input type="radio" name="pesee" value="jamais" /> <span>Jamais</span></label>
-            <label class="option"><input type="radio" name="pesee" value="rarement" /> <span>Rarement</span></label>
-            <label class="option"><input type="radio" name="pesee" value="semaine" /> <span>Une fois par semaine</span></label>
-            <label class="option"><input type="radio" name="pesee" value="plusieurs" /> <span>Plusieurs fois par semaine</span></label>
-            <label class="option"><input type="radio" name="pesee" value="jour" /> <span>Tous les jours ou presque</span></label>
-          </div>
-        </fieldset>
-
-        <!-- 13. La santé -->
-        <fieldset class="etape" data-etape="sante" hidden>
-          <legend class="h2">Ta santé</legend>
-          <label>
-            Un diagnostic a été posé ? Lequel ?
-            <input type="text" name="diagnostic" placeholder="Ex. SII, endométriose… ou rien" />
-          </label>
-          <label>Par qui ? <input type="text" name="parQui" placeholder="Ex. gastro-entérologue, médecin traitant" /></label>
-          <label>
-            Tes médicaments et compléments
-            <textarea name="medicaments" rows="3"></textarea>
-          </label>
-          <label>
-            Si ça te concerne : ton cycle (régulier ou pas, douloureux ou pas…)
-            <textarea name="cycle" rows="2"></textarea>
-          </label>
-          <label>Et ta contraception <input type="text" name="contraception" /></label>
-
-          <p class="question-courte">Est-ce que tu as en ce moment…</p>
-          <div class="choix">
-            {situations.map(([id, label]) => (
-              <label class="option"><input type="checkbox" name="situations" value={id} /> <span>{label}</span></label>
-            ))}
-            <label class="option"><input type="checkbox" name="aucuneSituation" value="1" /> <span>Rien de tout ça</span></label>
-          </div>
-        </fieldset>
-
-        <!-- 14. Consentement et envoi -->
-        <fieldset class="etape" data-etape="envoi" hidden>
-          <legend class="h2">C’est tout bon !</legend>
-          <p>
-            Tes réponses sont pour moi, Anne-Charlotte Jalhay, et restent privées : personne
-            d’autre ne les voit. Elles servent seulement à préparer ton rendez-vous et ton suivi,
-            et je les garde le temps de ton suivi. Pour les voir, les corriger ou les faire
-            supprimer, écris-moi à <a href="mailto:annecharlotte@gooodeat.com">annecharlotte@gooodeat.com</a>.
-            Plus de détails dans la <a href={u('/technique/politique-confidentialite/')}>politique de confidentialité</a>.
+          <p class="discret">
+            Tes réponses sont pour moi, Anne-Charlotte Jalhay, et restent privées : personne d’autre ne
+            les voit. Elles servent seulement à préparer notre rendez-vous. Si tu ne réserves pas, elles
+            sont effacées après 3 mois. Pour les voir ou les faire supprimer, écris-moi à
+            <a href="mailto:annecharlotte@gooodeat.com">annecharlotte@gooodeat.com</a>
+            (<a href={u('/technique/politique-confidentialite/')}>confidentialité</a>).
           </p>
           <label class="consentement">
             <input type="checkbox" name="consentement" required />
-            <span>J’accepte qu’Anne-Charlotte reçoive et garde ces réponses pour préparer mon rendez-vous.</span>
+            <span>J’accepte qu’Anne-Charlotte reçoive ces réponses pour préparer mon rendez-vous.</span>
           </label>
+          <div class="lieux">
+            {lieux.map(([id, label, lien]) => (
+              <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien}>
+                {label}
+                {id === 'visio' && <span class="pastille">plus rapide</span>}
+              </button>
+            ))}
+          </div>
         </fieldset>
 
         <p class="erreur" role="alert" hidden></p>
@@ -334,47 +136,30 @@ const situations: [string, string][] = [
           <button type="button" class="btn btn-principal" data-suite>Commencer</button>
         </div>
       </form>
-
-      <!-- Écran de fin -->
-      <div class="fin" hidden>
-        <h2 tabindex="-1">Merci <span data-prenom></span> !</h2>
-        <p class="chapo">Voici ta roue. On la regarde ensemble au rendez-vous.</p>
-        <div class="roue-scene"><div class="roue" data-roue="fin"></div></div>
-        <p class="score-fin">Tes végétaux cette semaine : <strong data-score></strong> / 30</p>
-        <p>À très vite,<br />Anne-Charlotte</p>
-        <a class="btn btn-contour" href={u('/')}>Revenir au site</a>
-      </div>
     </div>
   </section>
 </Base>
 
 <style>
-  /* Pendant le questionnaire, pas de barre « Prendre RDV » : le RDV est pris. */
   :global(.barre-rdv) { display: none; }
   :global(body) { padding-bottom: 0; }
 
   .bilan {
-    --z-corps: #C96C80;
-    --z-energie: #B98D45;
-    --z-tete: #16352C;
+    --z-1: #C96C80;
+    --z-2: #B98D45;
+    --z-3: #16352C;
     --anneau: #E9DFD0;
-    --anneau-texte: #8B8579;
     --scene: #F3ECE1;
     padding: 40px 0 72px;
   }
-  .etroit { max-width: 720px; }
-  .surtitre {
-    font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--rose-fort); margin-bottom: 6px;
-  }
+  .etroit { max-width: 680px; }
+  .surtitre { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--rose-fort); margin-bottom: 6px; }
   h1 { font-size: clamp(28px, 6vw, 40px); margin-bottom: 22px; }
-  .h2, .fin h2 {
-    font-family: var(--police-titre); font-weight: 400; line-height: 1.18; color: var(--sapin);
-    font-size: clamp(24px, 5vw, 32px); padding: 0; margin: 0 0 14px; text-wrap: balance;
-  }
-  .chapo { font-size: 19px; color: var(--encre); }
+  .h2 { font-family: var(--police-titre); font-weight: 400; line-height: 1.18; color: var(--sapin); font-size: clamp(24px, 5vw, 32px); padding: 0; margin: 0 0 14px; text-wrap: balance; }
+  legend:focus { outline: none; }
+  .chapo { font-size: 19px; }
   .discret { color: var(--encre-2); font-size: 16px; }
-  .aide { font-weight: 400; color: var(--encre-2); font-size: 14px; }
+  .aide { font-weight: 400; color: var(--encre-2); font-size: 14.5px; }
   .alerte { background: var(--rose-2); border-radius: var(--rayon); padding: 16px 18px; }
 
   .progression { margin-bottom: 8px; }
@@ -387,244 +172,122 @@ const situations: [string, string][] = [
   .etape[hidden] { display: none; }
 
   label { display: flex; flex-direction: column; gap: 6px; font-weight: 700; color: var(--sapin); font-size: 16px; }
-  input[type='text'], input[type='email'], input[type='date'], input[type='time'], textarea {
-    width: 100%; min-height: 52px; border-radius: 12px; border: 2px solid var(--ligne);
-    background: var(--blanc); color: var(--encre); font-family: var(--police-texte);
-    font-size: 16.5px; font-weight: 400; padding: 12px 14px;
+  .question { font-family: var(--police-titre); font-weight: 400; font-size: 22px; margin-top: 10px; }
+  .question textarea, .question .aide { font-family: var(--police-texte); }
+  input[type='text'], textarea {
+    width: 100%; min-height: 52px; border-radius: 12px; border: 2px solid var(--ligne); background: var(--blanc);
+    color: var(--encre); font-family: var(--police-texte); font-size: 16.5px; font-weight: 400; padding: 12px 14px;
   }
   textarea { resize: vertical; line-height: 1.5; }
   input:focus-visible, textarea:focus-visible { outline: 3px solid var(--dore); outline-offset: 1px; border-color: var(--dore); }
   .champs { display: grid; gap: 14px; }
   @media (min-width: 640px) { .champs.deux { grid-template-columns: 1fr 1fr; } }
 
-  .sous-question { font-family: var(--police-titre); color: var(--sapin); font-size: 21px; margin: 12px 0 0; }
-  .question-courte { font-weight: 700; color: var(--sapin); margin: 8px 0 0; }
-
   .choix { display: grid; gap: 10px; }
-  .choix.ligne { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
   .option {
-    flex-direction: row; align-items: center; gap: 12px; min-height: 54px; padding: 12px 16px;
-    background: var(--blanc); border: 2px solid var(--ligne); border-radius: 14px; cursor: pointer;
-    font-weight: 600; transition: border-color .15s ease, background .15s ease;
+    flex-direction: row; align-items: center; gap: 12px; min-height: 54px; padding: 12px 16px; background: var(--blanc);
+    border: 2px solid var(--ligne); border-radius: 14px; cursor: pointer; font-weight: 600;
   }
   .option input { width: 20px; height: 20px; accent-color: var(--sapin); flex: none; margin: 0; }
   .option:has(input:checked) { border-color: var(--sapin); background: var(--rose-2); }
-  .choix.petits .option { min-height: 48px; padding: 10px 14px; font-size: 15.5px; }
 
-  .heure { flex-direction: row; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .heure input { width: auto; min-width: 128px; }
-  .repas { background: var(--blanc); border: 2px solid var(--ligne); border-radius: 16px; padding: 14px 16px; display: grid; gap: 10px; }
-  .repas-titre { font-family: var(--police-titre); color: var(--sapin); font-size: 20px; margin: 0; }
-  .sr > :not(textarea) { display: none; }
-  .sr { font-size: 0; }
+  .roue-scene { background: var(--scene); border-radius: var(--rayon-grand); padding: 10px; }
+  .roue { max-width: 170px; margin: 0 auto; }
+  .roue :global(svg) { width: 100%; height: auto; display: block; }
 
-  .echelle { gap: 10px; font-size: 17px; }
-  .curseur { display: flex; align-items: center; gap: 14px; }
-  .curseur input { flex: 1; }
-  .curseur output { font-weight: 800; font-size: 20px; min-width: 2ch; text-align: right; color: var(--sapin); }
-  .bornes { display: flex; justify-content: space-between; font-weight: 400; font-size: 13.5px; color: var(--encre-2); }
-  input[type='range'] { accent-color: var(--rose-fort); height: 32px; }
-
-  .roue-scene { background: var(--scene); border-radius: var(--rayon-grand); padding: 14px; }
-  .roue { max-width: 520px; margin: 0 auto; }
-  .roue :global(svg) { width: 100%; height: auto; display: block; touch-action: none; user-select: none; }
-  .fin .roue :global(svg) { touch-action: auto; }
-  .curseurs { display: grid; gap: 12px; }
-  .curseurs :global(.ligne-curseur), .zooms :global(.ligne-curseur) {
-    display: grid; grid-template-columns: 1fr; gap: 2px; font-weight: 600; color: var(--sapin); font-size: 15.5px;
+  .phrases { display: grid; gap: 14px; }
+  .bilan :global(.phrase) { background: var(--blanc); border: 2px solid var(--ligne); border-radius: 18px; padding: 14px 14px 12px; display: grid; gap: 10px; }
+  .bilan :global(.phrase-texte) { font-family: var(--police-titre); color: var(--sapin); font-size: 19px; line-height: 1.3; margin: 0; }
+  .bilan :global(.niveaux) { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .bilan :global(.niveau) {
+    display: flex; align-items: center; justify-content: center; min-height: 46px; border-radius: 999px; cursor: pointer;
+    border: 2px solid var(--ligne); font-weight: 700; font-size: 14.5px; color: var(--sapin); text-align: center; padding: 6px 8px;
   }
-  .curseurs :global(.ligne-curseur span.nom), .zooms :global(.ligne-curseur span.nom) { display: flex; align-items: center; gap: 8px; }
-  .curseurs :global(.pastille-zone), .zooms :global(.pastille-zone) { width: 12px; height: 12px; border-radius: 50%; flex: none; }
-  /* Les curseurs de la roue sont créés par le script : styles non scopés. */
-  .bilan :global(.curseur) { display: flex; align-items: center; gap: 14px; }
-  .bilan :global(.curseur input) { flex: 1; min-width: 0; accent-color: var(--rose-fort); height: 32px; }
-  .bilan :global(.curseur output) { font-weight: 800; font-size: 20px; min-width: 2ch; text-align: right; color: var(--sapin); }
-  .zooms { display: grid; gap: 22px; }
-  .zooms :global(article) { background: var(--blanc); border: 2px solid var(--ligne); border-radius: var(--rayon-grand); padding: 18px 16px; display: grid; gap: 12px; }
-  .zooms :global(h3) { font-size: 21px; margin: 0; }
-  .zooms :global(.roue) { max-width: 440px; }
+  .bilan :global(.niveau input) { position: absolute; opacity: 0; pointer-events: none; }
+  .bilan :global(.niveau:has(input:checked)) { background: var(--sapin); border-color: var(--sapin); color: var(--ecru); }
+  .bilan :global(.niveau:has(input:focus-visible)) { outline: 3px solid var(--dore); outline-offset: 2px; }
+  .entendu { background: var(--rose-2); border-radius: var(--rayon); padding: 16px 18px; font-size: 17px; color: var(--sapin); margin: 0; }
 
-  .compteur { font-size: 20px; color: var(--sapin); margin: 0; position: sticky; top: 8px; z-index: 2; align-self: flex-start; background: var(--rose-2); border-radius: 999px; padding: 6px 16px; }
-  .compteur strong { font-size: 26px; }
-  .famille-titre { font-weight: 800; color: var(--sapin); margin: 6px 0 8px; }
-  .puces { display: flex; flex-wrap: wrap; gap: 8px; }
-  .puce {
-    flex-direction: row; align-items: center; gap: 8px; min-height: 46px; padding: 8px 14px;
-    background: var(--blanc); border: 2px solid var(--ligne); border-radius: 999px; font-weight: 600; font-size: 15.5px; cursor: pointer;
-  }
-  .puce input { width: 18px; height: 18px; accent-color: var(--sapin); margin: 0; }
-  .puce:has(input:checked) { border-color: var(--sapin); background: var(--rose-2); }
-
+  .photos { background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px; margin: 0; }
   .consentement { flex-direction: row; align-items: flex-start; gap: 12px; font-weight: 600; }
   .consentement input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--sapin); flex: none; }
+  .lieux { display: grid; gap: 12px; margin-top: 6px; }
 
   .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-
   .erreur { color: #A8452F; font-weight: 700; margin: 18px 0 0; }
   .nav { display: flex; gap: 12px; justify-content: space-between; margin-top: 30px; flex-wrap: wrap-reverse; }
   .nav [data-suite] { margin-left: auto; min-width: 180px; }
+  .nav [data-suite][hidden] { display: none; }
   @media (max-width: 480px) { .nav .btn { flex: 1; } }
-
-  .fin { display: grid; gap: 16px; }
-  /* Focus posé par le script pour les lecteurs d'écran : pas de cadre visible. */
-  .fin h2:focus, legend:focus { outline: none; }
-  .fin[hidden] { display: none; }
-  .score-fin { font-size: 19px; }
-  .fin .btn { justify-self: start; }
 </style>
 
 <script>
-  import { PROFILS, DETAILS, ROUE_DU_MOTIF } from '../data/bilan';
+  import { phrasesPour } from '../data/miroir';
 
-  const form = document.getElementById('bilan') as HTMLFormElement;
+  const form = document.getElementById('miroir') as HTMLFormElement;
   const debut = Date.now();
-  let envoye = false;
-  let commence = false;
-
-  const ZONE: Record<string, string> = { corps: 'var(--z-corps)', energie: 'var(--z-energie)', tete: 'var(--z-tete)' };
   const q = <T extends Element = HTMLInputElement>(sel: string, racine: ParentNode = form) => racine.querySelector(sel) as T;
   const qa = <T extends Element = HTMLInputElement>(sel: string, racine: ParentNode = form) => [...racine.querySelectorAll(sel)] as T[];
   const val = (nom: string) => (q(`[name="${nom}"]`) as HTMLInputElement | null)?.value.trim() ?? '';
-  const radio = (nom: string) => (q(`[name="${nom}"]:checked`) as HTMLInputElement | null)?.value ?? '';
   const coches = (nom: string) => qa(`[name="${nom}"]:checked`).map((i) => i.value);
   const esc = (s: string) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
-  // ---------- l'état de la roue (en mémoire seulement) ----------
-  const notes: Record<string, number> = {};
-  const details: Record<string, number[]> = {};
-  const profil = () => PROFILS[ROUE_DU_MOTIF[radio('motif')] ?? 'sii'];
-  const detailsDe = (id: string) => (details[id] ??= (DETAILS[id] ?? []).map(() => 0));
+  // Le code qui relie la fiche à la réservation cal.com (pas de donnée perso).
+  const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const ref = 'BIL-' + [...crypto.getRandomValues(new Uint8Array(5))].map((n) => ALPHABET[n % ALPHABET.length]).join('');
 
-  // ---------- la roue dessinée (reprise de La Roue ACJ) ----------
+  // ---------- le miroir ----------
+  const niveaux: Record<string, number> = {};
+  const phrases = () => phrasesPour(coches('motifs'));
+  const couleurs = ['var(--z-1)', 'var(--z-2)', 'var(--z-3)'];
+
   const TAU = Math.PI * 2;
   const pt = (cx: number, cy: number, r: number, a: number) => [cx + r * Math.sin(a), cy - r * Math.cos(a)];
   function part(cx: number, cy: number, r0: number, r1: number, a0: number, a1: number) {
     if (r1 <= r0 + 0.01) r1 = r0 + 0.01;
     const [x0, y0] = pt(cx, cy, r1, a0), [x1, y1] = pt(cx, cy, r1, a1), [x2, y2] = pt(cx, cy, r0, a1), [x3, y3] = pt(cx, cy, r0, a0);
-    const grand = a1 - a0 > Math.PI ? 1 : 0;
-    return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r1} ${r1} 0 ${grand} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} L${x2.toFixed(2)} ${y2.toFixed(2)} A${r0} ${r0} 0 ${grand} 0 ${x3.toFixed(2)} ${y3.toFixed(2)} Z`;
+    const g = a1 - a0 > Math.PI ? 1 : 0;
+    return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${r1} ${r1} 0 ${g} 1 ${x1.toFixed(2)} ${y1.toFixed(2)} L${x2.toFixed(2)} ${y2.toFixed(2)} A${r0} ${r0} 0 ${g} 0 ${x3.toFixed(2)} ${y3.toFixed(2)} Z`;
   }
-  function couper(txt: string, max: number) {
-    const mots = txt.split(' '), lignes: string[] = [];
-    let cur = '';
-    mots.forEach((m) => { if ((cur + ' ' + m).trim().length > max && cur) { lignes.push(cur); cur = m; } else cur = (cur + ' ' + m).trim(); });
-    if (cur) lignes.push(cur);
-    return lignes.slice(0, 4);
-  }
-  function silhouette(cx: number, cy: number, r0: number) {
-    const k = r0 / 62, h = (x: number, y: number) => `${(cx + x * k).toFixed(1)} ${(cy + y * k).toFixed(1)}`;
-    return `<g fill="none" stroke="var(--encre)" stroke-width="${(2.2 * k).toFixed(2)}" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="${cx}" cy="${(cy - 24 * k).toFixed(1)}" r="${(11 * k).toFixed(1)}"/>
-      <path d="M${h(-22, 34)} C${h(-22, 6)} ${h(-14, -6)} ${h(0, -7)} C${h(14, -6)} ${h(22, 6)} ${h(22, 34)}"/>
-      <path d="M${h(-7, 14)} C${h(-7, 22)} ${h(7, 22)} ${h(7, 14)}" stroke="var(--z-corps)"/></g>`;
-  }
-  type Morceau = { label: string; couleur: string; valeur: number };
-  type Options = { taille: number; r0: number; R: number; police: number; max: number; ecart: number; aria: string; centre?: boolean };
-  function dessiner(el: HTMLElement, items: Morceau[], o: Options, poser?: (i: number, v: number) => void) {
-    const N = items.length, cx = o.taille / 2, cy = o.taille / 2, { r0, R } = o, jeu = 0.035;
-    let s = `<svg viewBox="0 0 ${o.taille} ${o.taille}" role="img" aria-label="${esc(o.aria)}">`;
-    for (let v = 2; v <= 10; v += 2) s += `<circle cx="${cx}" cy="${cy}" r="${r0 + ((R - r0) * v) / 10}" fill="none" stroke="var(--anneau)" stroke-width="${v === 10 ? 1.6 : 1}"/>`;
-    items.forEach((it, i) => {
-      const a0 = (i * TAU) / N + jeu, a1 = ((i + 1) * TAU) / N - jeu, r = r0 + ((R - r0) * it.valeur) / 10, am = (a0 + a1) / 2;
-      s += `<path d="${part(cx, cy, r0, R, a0, a1)}" fill="#fff" opacity=".6"/>`;
-      s += `<path d="${part(cx, cy, r0, r, a0, a1)}" fill="${it.couleur}" opacity=".92"/>`;
-      if (it.valeur > 0) {
-        const [vx, vy] = pt(cx, cy, Math.max(r0 + 13, r - 13), am);
-        s += `<text x="${vx.toFixed(1)}" y="${(vy + 4).toFixed(1)}" text-anchor="middle" font-family="Figtree, sans-serif" font-weight="700" font-size="${o.police}" fill="#FAF5EE">${it.valeur}</text>`;
-      }
-      const [lx, ly] = pt(cx, cy, R + o.ecart, am), sin = Math.sin(am), cos = Math.cos(am);
-      const ancre = Math.abs(sin) < 0.25 ? 'middle' : sin > 0 ? 'start' : 'end';
-      const lignes = couper(it.label, o.max), lh = o.police * 1.15;
-      const y0 = ly - ((lignes.length - 1) * lh) / 2 + (cos > 0.5 ? -((lignes.length - 1) * lh) / 2 : cos < -0.5 ? ((lignes.length - 1) * lh) / 2 : 0);
-      s += `<text text-anchor="${ancre}" font-family="Figtree, sans-serif" font-weight="600" font-size="${o.police}" fill="var(--encre)">` +
-        lignes.map((l, k) => `<tspan x="${lx.toFixed(1)}" y="${(y0 + k * lh + 4).toFixed(1)}">${esc(l)}</tspan>`).join('') + `</text>`;
-    });
-    s += `<circle cx="${cx}" cy="${cy}" r="${r0 - 4}" fill="var(--scene)" stroke="var(--anneau)"/>`;
-    if (o.centre) s += silhouette(cx, cy, r0);
-    s += `</svg>`;
-    el.innerHTML = s;
-    if (!poser) return;
-    const svg = el.querySelector('svg')!;
-    let appui = false, verrou = -1;
-    const toucher = (e: PointerEvent) => {
-      const rect = svg.getBoundingClientRect(), k = o.taille / rect.width;
-      const x = (e.clientX - rect.left) * k - cx, y = (e.clientY - rect.top) * k - cy, d = Math.hypot(x, y);
-      if (d > R + 18 && verrou < 0) return;
-      let a = Math.atan2(x, -y); if (a < 0) a += TAU;
-      const idx = verrou >= 0 ? verrou : Math.floor(a / (TAU / N)) % N;
-      verrou = idx;
-      poser(idx, Math.max(0, Math.min(10, Math.round(((d - r0) / (R - r0)) * 10))));
-    };
-    svg.addEventListener('pointerdown', (e) => { appui = true; verrou = -1; try { svg.setPointerCapture(e.pointerId); } catch {} toucher(e); });
-    svg.addEventListener('pointermove', (e) => { if (appui) toucher(e); });
-    const lacher = () => { appui = false; verrou = -1; };
-    svg.addEventListener('pointerup', lacher);
-    svg.addEventListener('pointercancel', lacher);
-  }
-  const GRANDE: Options = { taille: 760, r0: 58, R: 168, police: 26, max: 11, ecart: 18, aria: 'Ta roue', centre: true };
-  const PETITE: Options = { taille: 760, r0: 50, R: 168, police: 26, max: 11, ecart: 18, aria: 'Détail' };
-
-  function lignesCurseurs(el: HTMLElement, items: Morceau[], prefixe: string, poser: (i: number, v: number) => void) {
-    el.innerHTML = items.map((it, i) => `
-      <label class="ligne-curseur" for="${prefixe}${i}">
-        <span class="nom"><i class="pastille-zone" style="background:${it.couleur}"></i>${esc(it.label)}</span>
-        <span class="curseur"><input type="range" id="${prefixe}${i}" min="0" max="10" step="1" value="${it.valeur}"><output>${it.valeur}</output></span>
-      </label>`).join('');
-    qa<HTMLInputElement>('input', el).forEach((inp, i) => inp.addEventListener('input', () => poser(i, +inp.value)));
-  }
-  function synchro(el: HTMLElement, valeurs: number[]) {
-    qa<HTMLElement>('.ligne-curseur', el).forEach((l, i) => {
-      (l.querySelector('input') as HTMLInputElement).value = String(valeurs[i]);
-      (l.querySelector('output') as HTMLElement).textContent = String(valeurs[i]);
-    });
-  }
-
-  const morceauxPrincipaux = (): Morceau[] => profil().axes.map(([id, label, zone]) => ({ label, couleur: ZONE[zone], valeur: notes[id] ?? 0 }));
+  // La roue, sans étiquettes : un pétale par phrase, qui se remplit quand la
+  // personne s'y reconnaît. Au centre, une silhouette : la personne au centre.
   function roue() {
-    const el = q<HTMLElement>('[data-roue="principale"]'), curs = q<HTMLElement>('[data-curseurs="principale"]');
-    const poser = (i: number, v: number) => {
-      notes[profil().axes[i][0]] = v;
-      dessiner(el, morceauxPrincipaux(), GRANDE, poser);
-      synchro(curs, morceauxPrincipaux().map((m) => m.valeur));
-    };
-    dessiner(el, morceauxPrincipaux(), GRANDE, poser);
-    lignesCurseurs(curs, morceauxPrincipaux(), 'axe', poser);
-  }
-  const axesHauts = () => profil().axes.filter(([id]) => (notes[id] ?? 0) >= 6 && DETAILS[id]);
-  function zooms() {
-    const conteneur = q<HTMLElement>('.zooms');
-    conteneur.innerHTML = axesHauts().map(([id, label, zone]) =>
-      `<article data-id="${id}"><h3>${esc(label)}</h3><div class="roue"></div><div class="curseurs"></div></article>`).join('');
-    axesHauts().forEach(([id, , zone]) => {
-      const art = q<HTMLElement>(`article[data-id="${id}"]`, conteneur);
-      const el = q<HTMLElement>('.roue', art), curs = q<HTMLElement>('.curseurs', art);
-      const items = () => DETAILS[id].map((label, i) => ({ label, couleur: ZONE[zone], valeur: detailsDe(id)[i] }));
-      const poser = (i: number, v: number) => { detailsDe(id)[i] = v; dessiner(el, items(), PETITE, poser); synchro(curs, detailsDe(id)); };
-      dessiner(el, items(), PETITE, poser);
-      lignesCurseurs(curs, items(), 'd' + id, poser);
+    const liste = phrases(), N = liste.length, c = 150, r0 = 34, R = 138, jeu = 0.04;
+    const parMotif = N === 6 ? 6 : N === 8 ? 4 : 3;
+    let s = `<svg viewBox="0 0 300 300" role="img" aria-label="Ta roue">`;
+    [0.5, 1].forEach((k) => (s += `<circle cx="${c}" cy="${c}" r="${r0 + (R - r0) * k}" fill="none" stroke="var(--anneau)"/>`));
+    liste.forEach((p, i) => {
+      const a0 = (i * TAU) / N + jeu, a1 = ((i + 1) * TAU) / N - jeu, v = (niveaux[p.texte] ?? 0) / 2;
+      s += `<path d="${part(c, c, r0, R, a0, a1)}" fill="#fff" opacity=".7"/>`;
+      if (v > 0) s += `<path d="${part(c, c, r0, r0 + (R - r0) * v, a0, a1)}" fill="${couleurs[Math.floor(i / parMotif) % 3]}" opacity=".9"/>`;
     });
+    const k = r0 / 62, h = (x: number, y: number) => `${(c + x * k).toFixed(1)} ${(c + y * k).toFixed(1)}`;
+    s += `<circle cx="${c}" cy="${c}" r="${r0 - 3}" fill="var(--scene)" stroke="var(--anneau)"/>
+      <g fill="none" stroke="var(--encre)" stroke-width="${(2.4 * k).toFixed(2)}" stroke-linecap="round">
+      <circle cx="${c}" cy="${(c - 24 * k).toFixed(1)}" r="${(11 * k).toFixed(1)}"/>
+      <path d="M${h(-22, 34)} C${h(-22, 6)} ${h(-14, -6)} ${h(0, -7)} C${h(14, -6)} ${h(22, 6)} ${h(22, 34)}"/></g></svg>`;
+    q<HTMLElement>('[data-roue]').innerHTML = s;
+    const touchees = liste.filter((p) => (niveaux[p.texte] ?? 0) > 0).length;
+    q<HTMLElement>('.entendu').hidden = touchees === 0;
   }
-
-  // ---------- les végétaux ----------
-  const autresVegetaux = () => val('vegetauxAutres').split(/[,;\n]/).map((s) => s.trim()).filter(Boolean);
-  const listeVegetaux = () => [...new Set([...coches('vegetaux'), ...autresVegetaux()])];
-  const majCompteur = () => (q<HTMLElement>('[data-compte]').textContent = String(listeVegetaux().length));
-  form.addEventListener('input', (e) => {
-    const t = e.target as HTMLInputElement;
-    if (t.name === 'vegetaux' || t.name === 'vegetauxAutres') majCompteur();
-    if (t.type === 'range' && t.name) (t.nextElementSibling as HTMLElement).textContent = t.value;
-  });
-
-  // ---------- les champs qui apparaissent selon la réponse ----------
-  form.addEventListener('change', (e) => {
-    const t = e.target as HTMLInputElement;
-    if (t.name === 'motif') q<HTMLElement>('.si-autre').hidden = t.value !== 'autre';
-    if (t.name === 'habituelle') q<HTMLElement>('.si-non').hidden = t.value === 'oui';
-    if (t.name === 'regimes') q<HTMLElement>('.si-regimes').hidden = t.value === 'aucun';
-    if (t.name === 'evitePeur') q<HTMLElement>('.si-peur').hidden = t.value !== 'oui';
-    if (t.name === 'aucuneSituation' && t.checked) qa('[name="situations"]').forEach((c) => (c.checked = false));
-    if (t.name === 'situations' && t.checked) q('[name="aucuneSituation"]').checked = false;
-  });
+  function afficherPhrases() {
+    const noms = ['pas moi', 'un peu', 'tout à fait'];
+    q<HTMLElement>('.phrases').innerHTML = phrases().map((p, i) => `
+      <div class="phrase" role="radiogroup" aria-label="${esc(p.texte)}">
+        <p class="phrase-texte">${esc(p.texte)}</p>
+        <div class="niveaux">${noms.map((n, v) => `
+          <label class="niveau"><input type="radio" name="phrase-${i}" value="${v}" ${(niveaux[p.texte] ?? -1) === v ? 'checked' : ''}>${n}</label>`).join('')}
+        </div>
+      </div>`).join('');
+    qa<HTMLInputElement>('.phrases input').forEach((inp) =>
+      inp.addEventListener('change', () => {
+        niveaux[phrases()[+inp.name.split('-')[1]].texte] = +inp.value;
+        roue();
+      })
+    );
+    roue();
+  }
+  const aMenager = () => phrases().some((p) => p.menager && niveaux[p.texte] === 2);
 
   // ---------- la navigation ----------
   const etapes = qa<HTMLFieldSetElement>('.etape');
@@ -634,149 +297,81 @@ const situations: [string, string][] = [
   const numero = document.querySelector('.etape-num') as HTMLElement;
   let ici = 0;
 
-  const visibles = () => etapes.filter((e) => e.dataset.etape !== 'zoom' || axesHauts().length > 0);
-
-  function valider(nom: string): string {
-    if (nom === 'accueil') {
-      if (!val('prenom')) return 'Dis-moi ton prénom.';
-      if (!val('initiale')) return 'Il me manque l’initiale de ton nom.';
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) return 'Ton e-mail n’a pas l’air complet.';
-      if (!val('dateRdv')) return 'Il me manque la date de ton rendez-vous.';
-    }
-    if (nom === 'motif' && !radio('motif')) return 'Choisis ce qui te ressemble le plus, même à peu près.';
-    if (nom === 'envoi' && !q('[name="consentement"]').checked) return 'Coche la case pour que je puisse recevoir tes réponses.';
+  function valider(nom: string) {
+    if (nom === 'qui' && !val('prenom')) return 'Dis-moi ton prénom.';
+    if (nom === 'qui' && !val('initiale')) return 'Il me manque l’initiale de ton nom.';
+    if (nom === 'motif' && !coches('motifs').length) return 'Coche au moins une case, même à peu près.';
     return '';
   }
-
   function montrer(i: number) {
-    const liste = visibles();
-    ici = Math.max(0, Math.min(i, liste.length - 1));
-    etapes.forEach((e) => (e.hidden = e !== liste[ici]));
-    const nom = liste[ici].dataset.etape!;
-    if (nom === 'roue') roue();
-    if (nom === 'zoom') zooms();
+    ici = Math.max(0, Math.min(i, etapes.length - 1));
+    etapes.forEach((e, k) => (e.hidden = k !== ici));
+    const nom = etapes[ici].dataset.etape;
+    if (nom === 'miroir') afficherPhrases();
+    if (nom === 'rdv') q<HTMLElement>('.photos').hidden = aMenager();
     retour.hidden = ici === 0;
-    suite.textContent = ici === 0 ? 'Commencer' : nom === 'envoi' ? 'Envoyer mes réponses' : 'Continuer';
-    barre.style.width = `${Math.round((ici / (liste.length - 1)) * 100)}%`;
-    numero.textContent = `Étape ${ici + 1} sur ${liste.length}`;
+    suite.hidden = nom === 'rdv';
+    suite.textContent = ici === 0 ? 'Commencer' : 'Continuer';
+    barre.style.width = `${Math.round((ici / (etapes.length - 1)) * 100)}%`;
+    numero.textContent = `Étape ${ici + 1} sur ${etapes.length}`;
     erreur.hidden = true;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    (liste[ici].querySelector('legend') as HTMLElement)?.focus?.();
+    (etapes[ici].querySelector('legend') as HTMLElement).focus({ preventScroll: true });
   }
-
   suite.addEventListener('click', () => {
-    const liste = visibles(), nom = liste[ici].dataset.etape!;
-    const probleme = valider(nom);
+    const probleme = valider(etapes[ici].dataset.etape!);
     if (probleme) { erreur.textContent = probleme; erreur.hidden = false; return; }
-    commence = true;
-    if (nom === 'envoi') envoyer();
-    else montrer(ici + 1);
+    montrer(ici + 1);
   });
   retour.addEventListener('click', () => montrer(ici - 1));
 
-  window.addEventListener('beforeunload', (e) => {
-    if (commence && !envoye) { e.preventDefault(); e.returnValue = ''; }
-  });
-
-  // ---------- l'envoi ----------
-  function reponses() {
-    const axes = profil().axes;
+  // ---------- l'envoi, puis cal.com ----------
+  function reponses(lieu: string) {
     return {
       site_web: val('site_web'),
       dureeSecondes: Math.round((Date.now() - debut) / 1000),
+      ref,
       prenom: val('prenom'),
       initiale: val('initiale'),
-      email: val('email'),
-      dateRdv: val('dateRdv'),
+      motifs: coches('motifs'),
       demande: val('demande'),
       pointB: val('pointB'),
-      motif: radio('motif'),
-      motifAutre: radio('motif') === 'autre' ? val('motifAutre') : '',
-      secondaires: coches('secondaires'),
-      enPlus: val('enPlus'),
-      roue: axes.map(([id, label]) => ({
-        id,
-        label,
-        valeur: notes[id] ?? 0,
-        details: (notes[id] ?? 0) >= 6 ? (DETAILS[id] ?? []).map((l, i) => ({ label: l, valeur: detailsDe(id)[i] })) : [],
-      })),
-      importance: Number(val('importance')),
-      capacite: Number(val('capacite')),
-      dejaTeste: val('dejaTeste'),
-      mieuxMoment: val('mieuxMoment'),
-      journee: {
-        reveil: val('reveil'),
-        repas: ['Matin', 'Midi', 'Après-midi', 'Soir'].map((m) => ({ moment: m, heure: val('heure-' + m), contenu: val('contenu-' + m) })),
-        coucher: val('coucher'),
-        eau: val('eau'),
-        cafe: val('cafe'),
-        dernierCafe: val('dernierCafe'),
-        petillant: radio('petillant'),
-        alcool: val('alcool'),
-        habituelle: radio('habituelle'),
-        habituelleNote: radio('habituelle') === 'oui' ? '' : val('habituelleNote'),
-      },
-      vegetaux: listeVegetaux(),
-      platsPlaisir: [val('plat1'), val('plat2'), val('plat3')].filter(Boolean),
-      neMangePas: val('neMangePas'),
-      quotidien: {
-        quiCuisine: val('quiCuisine'), temps: val('temps'), horaires: val('horaires'),
-        enfants: val('enfants'), sport: val('sport'), sommeil: val('sommeil'),
-      },
-      relation: {
-        regimes: radio('regimes'),
-        regimesRecit: radio('regimes') === 'aucun' ? '' : val('regimesRecit'),
-        evitePeur: radio('evitePeur'),
-        eviteQuoi: radio('evitePeur') === 'oui' ? val('eviteQuoi') : '',
-        pesee: radio('pesee'),
-      },
-      sante: {
-        diagnostic: val('diagnostic'), parQui: val('parQui'), medicaments: val('medicaments'),
-        cycle: val('cycle'), contraception: val('contraception'), situations: coches('situations'),
-      },
+      miroir: phrases().map((p) => ({ phrase: p.texte, niveau: niveaux[p.texte] ?? null })),
+      dejaEssaye: val('dejaEssaye'),
+      lieu,
       consentement: q('[name="consentement"]').checked,
     };
   }
+  qa<HTMLButtonElement>('[data-lieu]').forEach((bouton) =>
+    bouton.addEventListener('click', async () => {
+      if (!q('[name="consentement"]').checked) {
+        erreur.textContent = 'Coche la case pour que je puisse recevoir tes réponses.';
+        erreur.hidden = false;
+        return;
+      }
+      qa<HTMLButtonElement>('[data-lieu]').forEach((b) => (b.disabled = true));
+      bouton.textContent = 'Un instant…';
+      // La réservation ne doit jamais dépendre de l'envoi : s'il échoue ou
+      // traîne, on part quand même sur cal.com après 4 secondes maximum.
+      const endpoint = form.dataset.endpoint;
+      if (endpoint) {
+        await Promise.race([
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reponses(bouton.dataset.lieu!)),
+            keepalive: true,
+          }).catch(() => null),
+          new Promise((r) => setTimeout(r, 4000)),
+        ]);
+      }
+      const lien = new URL(bouton.dataset.lien!);
+      lien.searchParams.set('notes', `Réf. ${ref}`);
+      lien.searchParams.set('metadata[ref]', ref);
+      window.location.href = lien.toString();
+    })
+  );
 
-  async function envoyer() {
-    const endpoint = form.dataset.endpoint;
-    if (!endpoint) {
-      erreur.textContent = 'Le questionnaire n’est pas encore branché. Garde tes réponses pour le rendez-vous !';
-      erreur.hidden = false;
-      return;
-    }
-    suite.disabled = true;
-    suite.textContent = 'Envoi en cours…';
-    try {
-      const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(reponses()) });
-      const corps = await r.json().catch(() => ({}));
-      if (!r.ok || !corps.ok) throw new Error(corps.erreur || String(r.status));
-      envoye = true;
-      fin();
-    } catch (e) {
-      suite.disabled = false;
-      suite.textContent = 'Réessayer l’envoi';
-      erreur.innerHTML =
-        'Oups, l’envoi n’a pas marché. Réessaie dans un instant. Si ça bloque encore, ' +
-        `<a href="${form.dataset.whatsapp}">écris-moi sur WhatsApp</a>.`;
-      erreur.hidden = false;
-    }
-  }
-
-  function fin() {
-    form.hidden = true;
-    (document.querySelector('.progression') as HTMLElement).hidden = true;
-    numero.hidden = true;
-    const bloc = document.querySelector('.fin') as HTMLElement;
-    bloc.hidden = false;
-    (bloc.querySelector('[data-prenom]') as HTMLElement).textContent = val('prenom');
-    (bloc.querySelector('[data-score]') as HTMLElement).textContent = String(listeVegetaux().length);
-    dessiner(bloc.querySelector('[data-roue="fin"]') as HTMLElement, morceauxPrincipaux(), { ...GRANDE, aria: 'Ta roue remplie' });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    (bloc.querySelector('h2') as HTMLElement).focus();
-  }
-
-  // Le questionnaire n'apparaît qu'avec JavaScript (sinon : message noscript).
   form.hidden = false;
   (document.querySelector('.progression') as HTMLElement).hidden = false;
   numero.hidden = false;
