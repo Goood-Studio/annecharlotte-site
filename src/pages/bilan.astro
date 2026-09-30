@@ -13,6 +13,7 @@ import { MOTIFS } from '../data/miroir';
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
 const lieux: [id: string, label: string, lien: string][] = [
   ['pack', 'Réserver mon pack tout compris', SITE.calPack],
+  ['tabac', 'Réserver mon pack tabac', SITE.calPackTabac],
   ['visio', 'En visio', SITE.calVisio],
   ['malonne', 'Au cabinet de Malonne', SITE.calMalonne],
   ['namur', 'Au cabinet de Namur', SITE.calNamur],
@@ -124,7 +125,7 @@ const lieux: [id: string, label: string, lien: string][] = [
             {lieux.map(([id, label, lien]) => (
               <>
                 {id === 'visio' && <p class="sous-lieux" hidden>Ou d’abord une première consultation :</p>}
-                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'pack'}>
+                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'pack' || id === 'tabac'}>
                   {label}
                   {id === 'visio' && <span class="pastille">plus rapide</span>}
                 </button>
@@ -378,9 +379,10 @@ const lieux: [id: string, label: string, lien: string][] = [
     })
   );
 
-  // Arrivée depuis un bouton « pack » : le pack passe en premier, en principal.
-  if (new URLSearchParams(location.search).get('formule') === 'pack') {
-    const pack = q<HTMLButtonElement>('[data-lieu="pack"]');
+  // Arrivée depuis un bouton de pack (tout compris ou tabac) : ce pack passe en premier.
+  const formule = new URLSearchParams(location.search).get('formule');
+  if (formule === 'pack' || formule === 'tabac') {
+    const pack = q<HTMLButtonElement>(`[data-lieu="${formule}"]`);
     pack.hidden = false;
     pack.classList.replace('btn-contour', 'btn-principal');
     q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');

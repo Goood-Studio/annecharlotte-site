@@ -28,6 +28,8 @@ export const SITE = {
   // Le pack passe aussi par le miroir : /bilan/ met alors le pack en premier.
   rdvPack: u('/bilan/') + '?formule=pack',
   calPack: 'https://cal.com/anne-charlotte-diet/pack-visio',
+  rdvPackTabac: u('/bilan/') + '?formule=tabac',
+  calPackTabac: 'https://cal.com/anne-charlotte-diet/pack-tabac',
 
   // Stats confirmées par Valentin le 29/08/2026.
   statsPatients: '+1 500',
