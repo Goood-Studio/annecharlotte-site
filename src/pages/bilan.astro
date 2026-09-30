@@ -12,17 +12,16 @@ import { MOTIFS } from '../data/miroir';
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
 const lieux: [id: string, label: string, lien: string][] = [
-  ['pack', 'Réserver mon pack tout compris', SITE.calPack],
   ['tabac', 'Réserver mon pack tabac', SITE.calPackTabac],
   ['visio', 'En visio', SITE.calVisio],
   ['malonne', 'Au cabinet de Malonne', SITE.calMalonne],
-  ['namur', 'Au cabinet de Namur', SITE.calNamur],
+  ['pack', 'Je veux un suivi sur plusieurs consultations avec le pack', SITE.calPack],
 ];
 ---
 
 <Base
   titre="Avant ton rendez-vous | Anne-Charlotte Diététicienne"
-  description="Trois minutes pour me dire ce que tu vis, avant de choisir ton créneau avec Anne-Charlotte, diététicienne à Namur, Malonne et en visio."
+  description="Trois minutes pour me dire ce que tu vis, avant de choisir ton créneau avec Anne-Charlotte, diététicienne à Malonne et en visio."
   chemin="/bilan/"
   noindex
 >
@@ -125,7 +124,7 @@ const lieux: [id: string, label: string, lien: string][] = [
             {lieux.map(([id, label, lien]) => (
               <>
                 {id === 'visio' && <p class="sous-lieux" hidden>Ou d’abord une première consultation :</p>}
-                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'pack' || id === 'tabac'}>
+                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'tabac'}>
                   {label}
                   {id === 'visio' && <span class="pastille">plus rapide</span>}
                 </button>
@@ -384,6 +383,8 @@ const lieux: [id: string, label: string, lien: string][] = [
   if (formule === 'pack' || formule === 'tabac') {
     const pack = q<HTMLButtonElement>(`[data-lieu="${formule}"]`);
     pack.hidden = false;
+    // Le pack choisi remonte en tête, avant « Ou d'abord une première consultation ».
+    q<HTMLElement>('.lieux').prepend(pack);
     pack.classList.replace('btn-contour', 'btn-principal');
     q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
     q<HTMLElement>('.sous-lieux').hidden = false;
