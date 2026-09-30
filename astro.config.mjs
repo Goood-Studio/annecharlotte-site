@@ -20,6 +20,7 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes('/404') &&
+        !page.includes('/bilan/') &&
         !page.includes('sant%C3%A9-feminine') &&
         !page.includes('santé-feminine') &&
         !relais.some((slug) => page.includes('/articles/' + slug + '/')),
