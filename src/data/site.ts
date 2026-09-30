@@ -25,7 +25,9 @@ export const SITE = {
   calVisio: 'https://cal.com/anne-charlotte-diet/premiers-pas-visio',
   calMalonne: 'https://cal.com/anne-charlotte-diet/premiers-pas-malonne',
   calNamur: 'https://cal.com/anne-charlotte-diet/premiers-pas-namur',
-  rdvPack: 'https://cal.com/anne-charlotte-diet/pack-visio',
+  // Le pack passe aussi par le miroir : /bilan/ met alors le pack en premier.
+  rdvPack: u('/bilan/') + '?formule=pack',
+  calPack: 'https://cal.com/anne-charlotte-diet/pack-visio',
 
   // Stats confirmées par Valentin le 29/08/2026.
   statsPatients: '+1 500',

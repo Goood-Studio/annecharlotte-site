@@ -12,6 +12,7 @@ import { MOTIFS } from '../data/miroir';
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
 const lieux: [id: string, label: string, lien: string][] = [
+  ['pack', 'Réserver mon pack tout compris', SITE.calPack],
   ['visio', 'En visio', SITE.calVisio],
   ['malonne', 'Au cabinet de Malonne', SITE.calMalonne],
   ['namur', 'Au cabinet de Namur', SITE.calNamur],
@@ -121,10 +122,13 @@ const lieux: [id: string, label: string, lien: string][] = [
           </label>
           <div class="lieux">
             {lieux.map(([id, label, lien]) => (
-              <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien}>
-                {label}
-                {id === 'visio' && <span class="pastille">plus rapide</span>}
-              </button>
+              <>
+                {id === 'visio' && <p class="sous-lieux" hidden>Ou d’abord une première consultation :</p>}
+                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'pack'}>
+                  {label}
+                  {id === 'visio' && <span class="pastille">plus rapide</span>}
+                </button>
+              </>
             ))}
           </div>
         </fieldset>
@@ -212,6 +216,8 @@ const lieux: [id: string, label: string, lien: string][] = [
   .consentement { flex-direction: row; align-items: flex-start; gap: 12px; font-weight: 600; }
   .consentement input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--sapin); flex: none; }
   .lieux { display: grid; gap: 12px; margin-top: 6px; }
+  .lieux [hidden] { display: none; }
+  .sous-lieux { margin: 8px 0 0; font-weight: 700; color: var(--sapin); }
 
   .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .erreur { color: #A8452F; font-weight: 700; margin: 18px 0 0; }
@@ -371,6 +377,15 @@ const lieux: [id: string, label: string, lien: string][] = [
       window.location.href = lien.toString();
     })
   );
+
+  // Arrivée depuis un bouton « pack » : le pack passe en premier, en principal.
+  if (new URLSearchParams(location.search).get('formule') === 'pack') {
+    const pack = q<HTMLButtonElement>('[data-lieu="pack"]');
+    pack.hidden = false;
+    pack.classList.replace('btn-contour', 'btn-principal');
+    q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
+    q<HTMLElement>('.sous-lieux').hidden = false;
+  }
 
   form.hidden = false;
   (document.querySelector('.progression') as HTMLElement).hidden = false;
