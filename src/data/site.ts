@@ -16,9 +16,15 @@ export const SITE = {
     encodeURIComponent('Bonjour, je suis sur votre site et j’ai une question : '),
 
   // Prise de RDV : l'objectif n°1 du site est le RDV en ligne.
-  rdvVisio: 'https://cal.com/anne-charlotte-diet/premiers-pas-visio',
-  rdvMalonne: 'https://cal.com/anne-charlotte-diet/premiers-pas-malonne',
-  rdvNamur: 'https://cal.com/anne-charlotte-diet/premiers-pas-namur',
+  // Depuis le 30/09/2026, les boutons « Prendre RDV » d'une première
+  // consultation passent d'abord par le miroir (/bilan/), qui mène ensuite
+  // à cal.com. Les liens cal.com directs (cal*) ne servent qu'à /bilan/.
+  rdvVisio: u('/bilan/'),
+  rdvMalonne: u('/bilan/'),
+  rdvNamur: u('/bilan/'),
+  calVisio: 'https://cal.com/anne-charlotte-diet/premiers-pas-visio',
+  calMalonne: 'https://cal.com/anne-charlotte-diet/premiers-pas-malonne',
+  calNamur: 'https://cal.com/anne-charlotte-diet/premiers-pas-namur',
   rdvPack: 'https://cal.com/anne-charlotte-diet/pack-visio',
 
   // Stats confirmées par Valentin le 29/08/2026.
@@ -54,14 +60,14 @@ export const SITE = {
       rue: 'Rue Chapelle Lessire 54',
       codePostal: '5020',
       ville: 'Malonne',
-      rdv: 'https://cal.com/anne-charlotte-diet/premiers-pas-malonne',
+      rdv: u('/bilan/'),
     },
     {
       nom: 'Cabinet de Namur',
       rue: 'Rue Martine Bourtonbourt 2',
       codePostal: '5000',
       ville: 'Namur',
-      rdv: 'https://cal.com/anne-charlotte-diet/premiers-pas-namur',
+      rdv: u('/bilan/'),
     },
   ],
 

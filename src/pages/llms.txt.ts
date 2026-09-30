@@ -20,7 +20,7 @@ export const GET: APIRoute = ({ site }) => {
 > ballonnements, reflux) et santé féminine (SOMP/SOPK, endométriose, SPM).
 > ${SITE.statsPatients} patient·es accompagné·es, ${SITE.statsDiet} diététicien·nes formées.
 > Consultations au cabinet de Malonne, au cabinet de Namur ou en visio.
-> Prise de rendez-vous en ligne : ${SITE.rdvVisio}
+> Prise de rendez-vous en ligne : ${SITE.calVisio}
 
 ## Faits vérifiables
 - Titre protégé : diététicienne agréée (bachelier en diététique, Institut Paul Lambin, Bruxelles).

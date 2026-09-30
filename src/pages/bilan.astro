@@ -12,9 +12,9 @@ import { MOTIFS } from '../data/miroir';
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
 const lieux: [id: string, label: string, lien: string][] = [
-  ['visio', 'En visio', SITE.rdvVisio],
-  ['malonne', 'Au cabinet de Malonne', SITE.rdvMalonne],
-  ['namur', 'Au cabinet de Namur', SITE.rdvNamur],
+  ['visio', 'En visio', SITE.calVisio],
+  ['malonne', 'Au cabinet de Malonne', SITE.calMalonne],
+  ['namur', 'Au cabinet de Namur', SITE.calNamur],
 ];
 ---
 
@@ -32,7 +32,7 @@ const lieux: [id: string, label: string, lien: string][] = [
       <noscript>
         <p class="alerte">
           Cette page a besoin de JavaScript. Pas de souci :
-          <a href={SITE.rdvVisio}>réserve directement ton rendez-vous ici</a>.
+          <a href={SITE.calVisio}>réserve directement ton rendez-vous ici</a>.
         </p>
       </noscript>
 

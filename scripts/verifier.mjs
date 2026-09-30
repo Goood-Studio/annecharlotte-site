@@ -49,7 +49,9 @@ for (const chemin of pages) {
 
   if (!html.includes('rel="canonical"')) erreurs.push(`${nom} : canonique absent.`);
   if (!html.includes('application/ld+json')) erreurs.push(`${nom} : aucun JSON-LD.`);
-  if (!html.includes('cal.com/anne-charlotte-diet')) erreurs.push(`${nom} : aucun lien de prise de RDV cal.com.`);
+  // Le RDV passe par le miroir /bilan/ (qui mène à cal.com) : l'un des deux suffit.
+  if (!html.includes('cal.com/anne-charlotte-diet') && !/href="[^"]*\/bilan\/"/.test(html))
+    erreurs.push(`${nom} : aucun lien de prise de RDV (/bilan/ ou cal.com).`);
   if (!html.includes('wa.me/32472629195')) erreurs.push(`${nom} : bouton WhatsApp absent.`);
 
   const ville = nom.match(/^dieteticienne-([a-z-]+)\/index\.html$/);
