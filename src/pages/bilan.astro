@@ -81,21 +81,7 @@ const situations: [string, string][] = [
           </div>
         </fieldset>
 
-        <!-- 1. La demande -->
-        <fieldset class="etape" data-etape="demande" hidden>
-          <legend class="h2">Comment est-ce que je peux t’aider ?</legend>
-          <p class="discret">Avec tes mots, même en vrac.</p>
-          <textarea name="demande" rows="6" aria-label="Comment est-ce que je peux t’aider ?"></textarea>
-        </fieldset>
-
-        <!-- 2. Le point B -->
-        <fieldset class="etape" data-etape="pointb" hidden>
-          <legend class="h2">Si dans 3 mois ça allait mieux, qu’est-ce qui aurait changé ?</legend>
-          <p class="discret">Dans ta journée, ton corps, ta tête… ce qui te vient.</p>
-          <textarea name="pointB" rows="6" aria-label="Qu’est-ce qui aurait changé dans 3 mois ?"></textarea>
-        </fieldset>
-
-        <!-- 3. Le motif -->
+        <!-- 1. Le motif -->
         <fieldset class="etape" data-etape="motif" hidden>
           <legend class="h2">Tu viens surtout pour…</legend>
           <div class="choix" role="radiogroup">
@@ -117,6 +103,20 @@ const situations: [string, string][] = [
             Ou avec tes mots
             <input type="text" name="enPlus" />
           </label>
+        </fieldset>
+
+        <!-- 2. La demande -->
+        <fieldset class="etape" data-etape="demande" hidden>
+          <legend class="h2">Comment est-ce que je peux t’aider ?</legend>
+          <p class="discret">Avec tes mots, même en vrac.</p>
+          <textarea name="demande" rows="6" aria-label="Comment est-ce que je peux t’aider ?"></textarea>
+        </fieldset>
+
+        <!-- 3. Le point B -->
+        <fieldset class="etape" data-etape="pointb" hidden>
+          <legend class="h2">Si dans 3 mois ça allait mieux, qu’est-ce qui aurait changé ?</legend>
+          <p class="discret">Dans ta journée, ton corps, ta tête… ce qui te vient.</p>
+          <textarea name="pointB" rows="6" aria-label="Qu’est-ce qui aurait changé dans 3 mois ?"></textarea>
         </fieldset>
 
         <!-- 4. La roue -->
