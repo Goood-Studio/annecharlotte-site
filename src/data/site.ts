@@ -55,7 +55,7 @@ export const SITE = {
   // Questionnaire pré-consultation (/bilan) : URL du relais Netlify qui
   // écrit dans la base Notion « Pré-consultations ». Tant que c'est vide,
   // le questionnaire s'affiche mais ne peut pas être envoyé.
-  bilanEndpoint: 'https://adorable-pithivier-00a652.netlify.app/api/bilan',
+  bilanEndpoint: 'https://consult-boussole-acj.netlify.app/api/bilan',
 
   // Cabinets de consultation (adresses publiques, nécessaires au SEO local).
   cabinets: [
