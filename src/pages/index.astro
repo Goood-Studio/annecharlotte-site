@@ -9,6 +9,8 @@ import ChaineWhatsApp from '../components/ChaineWhatsApp.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import ChatFaq from '../components/ChatFaq.astro';
+import Avis from '../components/Avis.astro';
+import { prochaineDispo } from '../data/dispos';
 import villesData from '../data/villes.json';
 import articlesData from '../data/articles.json';
 import { SITE, u } from '../data/site';
@@ -22,6 +24,12 @@ const siteUrl =
   '/';
 
 const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
+
+// Lues sur cal.com au build (voir src/data/dispos.ts). null = on n'affiche rien.
+const [dispoVisio, dispoMalonne] = await Promise.all([
+  prochaineDispo('premiers-pas-visio'),
+  prochaineDispo('premiers-pas-malonne'),
+]);
 ---
 
 <Base
@@ -45,7 +53,10 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
       </div>
 
       <div class="hero-texte">
-        <h1 data-anim="titre">Retrouve du plaisir à&nbsp;manger, sans culpabilité</h1>
+        <h1 data-anim="titre">Mange pour être libre</h1>
+        <p class="hero-libre" data-anim="chapo">
+          Libre de tes symptômes, de tes douleurs, de la culpabilité à table.
+        </p>
         <p class="hero-chapo" data-anim="chapo">
           Ici Anne-Charlotte, <strong>diététicienne spécialisée en troubles
           digestifs et santé féminine</strong>. Plus de
@@ -55,25 +66,22 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
         <div class="hero-actions">
           <a class="bloc-action principal" href={SITE.rdvVisio} data-anim="bloc">
-            <span class="bloc-titre">Prendre RDV en visio <span class="pastille">plus rapide</span></span>
-            <span class="bloc-sous">Par vidéo, depuis chez toi. Un lien arrive par mail, rien à installer.</span>
+            <span class="bloc-titre">Prendre RDV en visio<span class="asterisque" aria-hidden="true">*</span> <span class="pastille">plus rapide</span></span>
+            <span class="bloc-sous">Depuis chez toi ou ton bureau, aussi sur le temps de midi (12h-13h) et en soirée.</span>
+            {dispoVisio && <span class="bloc-dispo">1re dispo : {dispoVisio}</span>}
             <span class="bloc-fleche" aria-hidden="true">→</span>
           </a>
           <a class="bloc-action" href={SITE.rdvMalonne} data-anim="bloc">
-            <span class="bloc-titre">Prendre RDV à Malonne</span>
+            <span class="bloc-titre">Prendre RDV à Malonne<span class="asterisque" aria-hidden="true">*</span></span>
             <span class="bloc-sous">Au cabinet, rue Chapelle Lessire 54 (ou à Namur).</span>
+            {dispoMalonne && <span class="bloc-dispo">1re dispo : {dispoMalonne}</span>}
             <span class="bloc-fleche" aria-hidden="true">→</span>
           </a>
-          <a class="bloc-action" href={SITE.gooodeat} data-anim="bloc">
-            <span class="bloc-titre">Télécharger l’app Gooodeat</span>
-            <span class="bloc-sous">Pour déculpabiliser ton alimentation au quotidien.</span>
-            <span class="bloc-fleche" aria-hidden="true">→</span>
-          </a>
-          <a class="bloc-action" href="https://www.vroooz.com" data-anim="bloc">
-            <span class="bloc-titre">Vérifie ce que tu as entendu</span>
-            <span class="bloc-sous">Un conseil nutrition vu sur TikTok ? Passe-le dans Vroooz.</span>
-            <span class="bloc-fleche" aria-hidden="true">→</span>
-          </a>
+          <p class="hero-pourquoi" data-anim="bloc">
+            * Avant de choisir ton créneau, je te pose quelques questions
+            (3 minutes). Je lis tes réponses avant qu’on se voie : j’ai déjà un
+            peu de contexte, et on garde plus de temps pour se consacrer à toi.
+          </p>
           <a class="bloc-action" href={SITE.whatsappMessage} data-anim="bloc">
             <span class="bloc-titre">Poser une question</span>
             <span class="bloc-sous">Réponse directe sur WhatsApp.</span>
@@ -143,8 +151,29 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
     </div>
   </section>
 
+  <Avis />
   <Deroule />
   <Tarifs />
+
+  <!-- Les apps : utiles, mais pas avant la prise de RDV (descendues du hero) -->
+  <section aria-labelledby="titre-outils">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-outils">En attendant qu’on se voie</h2>
+      <div class="outils">
+        <a class="bloc-action" href={SITE.gooodeat}>
+          <span class="bloc-titre">Télécharger l’app Gooodeat</span>
+          <span class="bloc-sous">Pour déculpabiliser ton alimentation au quotidien.</span>
+          <span class="bloc-fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="bloc-action" href={SITE.vroooz}>
+          <span class="bloc-titre">Vérifie ce que tu as entendu</span>
+          <span class="bloc-sous">Une info nutrition vue sur TikTok ? Passe-la dans Vroooz.</span>
+          <span class="bloc-fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <ChaineWhatsApp />
   <Nutriciens />
 
@@ -211,7 +240,14 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
     object-fit: cover;
     object-position: center 22%;
   }
-  .hero-texte h1 { margin-bottom: 14px; }
+  .hero-texte h1 { margin-bottom: 8px; }
+  .hero-libre {
+    font-family: var(--police-titre);
+    font-size: 21px;
+    line-height: 1.35;
+    color: var(--rose-fort);
+    margin-bottom: 14px;
+  }
   .hero-chapo {
     font-size: 18.5px;
     color: var(--encre-2);
@@ -256,6 +292,23 @@ const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
     color: var(--sapin);
   }
   .bloc-sous { color: var(--encre-2); font-size: 14.5px; }
+  .asterisque { margin-left: -8px; }
+  /* Prochaine dispo : une pastille, lisible sur la carte sapin comme sur la blanche. */
+  .bloc-dispo {
+    align-self: flex-start;
+    margin-top: 8px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--ecru);
+    border: 1px solid var(--ligne);
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--sapin);
+  }
+  .bloc-action.principal .bloc-dispo { background: var(--rose); border-color: var(--rose); }
+  .hero-pourquoi { margin: 2px 4px 6px; font-size: 14.5px; color: var(--encre-2); }
+  .outils { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 760px) { .outils { grid-template-columns: 1fr 1fr; } }
   .bloc-action.principal .bloc-titre { color: var(--ecru); }
   .bloc-action.principal .bloc-sous { color: var(--rose); }
   .bloc-fleche {

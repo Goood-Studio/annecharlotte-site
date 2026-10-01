@@ -18,6 +18,7 @@ export const OFFRES = [
       'Canal direct de discussion',
       'Planificateur de recettes et analyses',
     ],
+    economie: 'Les suivis : 50 € la séance.',
     ctaTexte: 'Commence ici',
     meilleurChoix: false,
   },
@@ -34,6 +35,7 @@ export const OFFRES = [
       'Canal direct de discussion',
       'Planificateur de recettes et analyses',
     ],
+    economie: 'Tu économises 40 € : sans le pack, bilan + 5 suivis = 330 €.',
     ctaTexte: 'Solutionne ce tracas, enfin !',
     meilleurChoix: true,
   },
@@ -50,6 +52,7 @@ export const OFFRES = [
       'Remboursement mutuelle possible',
       'Canal direct de discussion',
     ],
+    economie: '',
     ctaTexte: 'Arrêter, sans la peur de grossir',
     meilleurChoix: false,
   },
@@ -99,7 +102,7 @@ export const DEROULE = [
   {
     titre: 'Avant la consultation',
     texte:
-      'Une semaine avant la consultation, je te contacte via WhatsApp. Selon ton besoin, je vais peut-être te demander de prendre tes repas en photo, et quand on se voit, on les regarde ensemble, sans jugement, à partir de ton propre point de départ. Ça permet d’avoir une vision claire d’où peuvent venir les symptômes, ou de comment se compose ton assiette, sans être dans la récitation ! Aucun jugement, au contraire : on y verra déjà tout le positif 🙂',
+      'Avant de choisir ton créneau, tu remplis un petit questionnaire (3 minutes), et je lis tes réponses avant qu’on se voie. Selon ton besoin, je vais peut-être te demander de prendre tes repas en photo, et quand on se voit, on les regarde ensemble, sans jugement, à partir de ton propre point de départ. Ça permet d’avoir une vision claire d’où peuvent venir les symptômes, ou de comment se compose ton assiette, sans être dans la récitation ! Aucun jugement, au contraire : on y verra déjà tout le positif 🙂',
   },
   {
     titre: 'La première rencontre',

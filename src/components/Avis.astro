@@ -1,0 +1,56 @@
+---
+// Les avis de patient·es : des citations courtes, un lien vers tous les avis
+// Google. Contenu statique (voir src/data/avis.ts), aucun widget tiers.
+import { AVIS, AVIS_GOOGLE } from '../data/avis';
+---
+
+<section aria-labelledby="titre-avis" class="avis">
+  <div class="contenu" data-reveal>
+    <h2 id="titre-avis">Elles et ils en parlent mieux que moi</h2>
+    <p class="avis-chapo">
+      <span class="etoiles" aria-hidden="true">★★★★★</span>
+      {AVIS_GOOGLE.note} sur Google, {AVIS_GOOGLE.nombre} avis.
+    </p>
+    <ul class="avis-liste">
+      {AVIS.map((a) => (
+        <li class="avis-carte">
+          <blockquote>« {a.texte} »</blockquote>
+          <p class="avis-nom">{a.nom} <span>· avis {a.source === 'Google' ? 'Google' : 'patient·e'}</span></p>
+        </li>
+      ))}
+    </ul>
+    <a class="btn btn-contour" href={AVIS_GOOGLE.lien} rel="noopener">Lire tous les avis Google</a>
+  </div>
+</section>
+
+<style>
+  .avis-chapo { color: var(--encre-2); margin-bottom: 24px; }
+  .etoiles { color: var(--dore); letter-spacing: 2px; margin-right: 6px; }
+  .avis-liste {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  @media (min-width: 760px) {
+    .avis-liste { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1000px) {
+    .avis-liste { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .avis-carte {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--blanc);
+    border: 1.5px solid var(--ligne);
+    border-radius: var(--rayon);
+    padding: 20px 20px 16px;
+  }
+  .avis-carte blockquote { margin: 0; font-size: 16px; color: var(--encre); }
+  .avis-nom { margin: 0; font-weight: 800; color: var(--sapin); font-size: 15px; }
+  .avis-nom span { font-weight: 400; color: var(--encre-2); }
+</style>

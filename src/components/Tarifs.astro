@@ -10,9 +10,13 @@ import { SITE } from '../data/site';
 
 interface Props {
   variante?: 'classique' | 'tabac';
+  // Pages villes : on retire les phrases économie et horaires visio, sinon
+  // les pages villes se ressemblent trop pour le détecteur anti-duplication.
+  sobre?: boolean;
 }
 
-const { variante = 'classique' } = Astro.props;
+const { variante = 'classique', sobre = false } = Astro.props;
+const horaires = sobre ? SITE.horaires : `${SITE.horaires}, et ${SITE.horairesVisio}, pour que ça colle avec ton boulot`;
 
 const premiersPas = OFFRES[0];
 const pack = OFFRES[1];
@@ -25,8 +29,8 @@ const tabac = variante === 'tabac';
     <h2 id="titre-tarifs">Tu es à un clic de la solution</h2>
     <p class="tarifs-chapo">
       {tabac
-        ? `Disponibilités : ${SITE.horaires}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`
-        : `Disponibilités : ${SITE.horaires}. En visio ou en cabinet, c’est toi qui choisis, et la mutuelle rembourse une partie.`}
+        ? `Disponibilités : ${SITE.horaires}, et ${SITE.horairesVisio}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`
+        : `Disponibilités : ${horaires}. Visio ou cabinet, c’est toi qui choisis, et la mutuelle rembourse une partie.`}
     </p>
 
     <div class:list={['offres', tabac && 'offres-seule']}>
@@ -46,6 +50,7 @@ const tabac = variante === 'tabac';
             <span class="pastille">Meilleur choix</span>
             <h3>{pack.nom}</h3>
             <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
+            {!sobre && <p class="offre-eco">{pack.economie}</p>}
             <p class="offre-desc">{pack.description}</p>
             <ul>
               {pack.inclus.map((item) => <li>{item}</li>)}
@@ -56,6 +61,7 @@ const tabac = variante === 'tabac';
           <article class="offre offre-simple">
             <h3>{premiersPas.nom}</h3>
             <p class="offre-prix"><span class="prix">{premiersPas.prix}</span> <span class="unite">{premiersPas.unite}</span></p>
+            {!sobre && <p class="offre-eco">{premiersPas.economie}</p>}
             <p class="offre-desc">{premiersPas.description}</p>
             <ul>
               {premiersPas.inclus.map((item) => <li>{item}</li>)}
@@ -67,10 +73,6 @@ const tabac = variante === 'tabac';
     </div>
     <p class="note-etoile">
       * Adapté à chacun·e : les séances s’espacent selon ta situation.
-    </p>
-    <p class="note-etoile">
-      Suivi en visio : tu réserves, je te contacte sur WhatsApp une semaine
-      avant, on se voit en visio, et tu as accès à l’application.
     </p>
   </div>
 </section>
@@ -124,6 +126,8 @@ const tabac = variante === 'tabac';
     white-space: nowrap;
   }
   .unite { color: var(--encre-2); font-size: 15px; }
+  .offre-eco { margin: 0 0 8px; font-weight: 800; font-size: 15px; color: var(--rose-fort); }
+  .offre-pack .offre-eco { color: var(--rose); }
   .offre ul { margin: 10px 0 20px; padding-left: 20px; }
   .offre li { margin-bottom: 7px; font-size: 16px; }
   .offre .btn { margin-top: auto; }

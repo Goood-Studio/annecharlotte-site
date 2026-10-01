@@ -76,6 +76,8 @@ export const SITE = {
   ],
 
   horaires: 'Lundi à vendredi, 8h30 à 17h00',
+  // La visio a aussi des plages hors bureau (vérifié sur cal.com le 01/10/2026).
+  horairesVisio: 'en visio, aussi sur le temps de midi (12h-13h) et en soirée',
 };
 
 // Préfixe toutes les URLs internes avec la base de déploiement
