@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lunch Box à 4 cases · Anne-Charlotte, diététicienne</title>
+<meta name="description" content="La méthode des 4 cases pour des lunchbox simples, gourmandes et pas chères : 30 ingrédients, 15 recettes en 3 budgets, et la version PDF à imprimer.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lunch Box à 4 cases">
+<meta property="og:description" content="30 ingrédients, 3 024 lunchbox possibles, 15 recettes en 3 budgets. Par Anne-Charlotte, diététicienne agréée.">
+<meta property="og:image" content="https://www.annecharlotte.be/lunchbox/og.jpg">
+<meta property="og:url" content="https://www.annecharlotte.be/lunchbox/">
+<link rel="canonical" href="https://www.annecharlotte.be/lunchbox/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.annecharlotte.be/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,800;1,700;1,800&family=Poppins:wght@400;500;600&display=swap">
+<style>
+html,body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+:root{
+  --navy:#24382b; --navy-soft:#3f5a47;
+  --coral:#c9786b; --orange:#8a8455; --sky:#2e4a38; --sky-pale:#e9efe8; --blush:#f2d3cd;
+  --rose:#e5b3aa; --forest:#2e4a38;
+  --bg:#f7f4ed; --surface:#efeae0; --surface-2:#e8e1d4; --line:#e3ddd0;
+  --ink:#24382b; --ink-soft:#6b7a6d; --on-accent:#ffffff;
+  --leg:#2e4a38; --leg-bg:#dfe8df;
+  --pro:#a45a4d; --pro-bg:#f2d3cd;
+  --sau:#6f6a3f; --sau-bg:#e9e6d2;
+  --cer:#3a3833; --cer-bg:#e6dfd2;
+  --card:#ffffff;
+  --shadow:0 1px 2px rgba(36,56,43,.06),0 6px 20px rgba(36,56,43,.07);
+  --display:"Archivo","Helvetica Neue",system-ui,sans-serif;
+  --body:"Poppins","Helvetica Neue",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#1b2a20; --surface:#22352a; --surface-2:#2a3f32; --line:#34503f; --card:#203127;
+    --ink:#f2efe7; --ink-soft:#b3c0b4; --navy:#f2efe7; --navy-soft:#b3c0b4;
+    --sky:#8fb39a; --sky-pale:#26382c; --blush:#4a3330; --coral:#e5b3aa; --orange:#c9c18a;
+    --leg:#a9cdb2; --leg-bg:#28402f; --pro:#efb8ad; --pro-bg:#453230;
+    --sau:#d6cf98; --sau-bg:#3a3a28; --cer:#e2dccd; --cer-bg:#35342e;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#1b2a20; --surface:#22352a; --surface-2:#2a3f32; --line:#34503f; --card:#203127;
+  --ink:#f2efe7; --ink-soft:#b3c0b4; --navy:#f2efe7; --navy-soft:#b3c0b4;
+  --sky:#8fb39a; --sky-pale:#26382c; --blush:#4a3330; --coral:#e5b3aa; --orange:#c9c18a;
+  --leg:#a9cdb2; --leg-bg:#28402f; --pro:#efb8ad; --pro-bg:#453230;
+  --sau:#d6cf98; --sau-bg:#3a3a28; --cer:#e2dccd; --cer-bg:#35342e;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{background-color:var(--bg);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.015em;color:var(--navy);text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:6px}
+
+/* header */
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px 10px;flex-wrap:wrap}
+.pill-tag{display:inline-block;background:var(--forest);color:#fff;text-transform:uppercase;letter-spacing:.14em;font-size:11px!important;font-size:12px;font-weight:600;padding:3px 12px;border-radius:999px;letter-spacing:.02em}
+.brand{display:flex;align-items:center;gap:10px}
+.mono{width:40px;height:40px;flex:none;display:block}
+.brand b{font-family:var(--display);font-size:19px;color:var(--navy);display:block;line-height:1.1}
+.brand small{color:var(--ink-soft);font-size:12px}
+.hero{padding-block:8px 18px;display:grid;gap:10px}
+.hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-.022em;line-height:1.02}
+.hero h1 em{font-style:italic;background:var(--rose);color:#24382b;padding:0 .18em;border-radius:14px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hero p{max-width:62ch;color:var(--ink-soft);font-size:16px}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding-block:10px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav.tabs button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;font-weight:500;white-space:nowrap;font-size:14px}
+nav.tabs button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:var(--bg)}
+section.panel{padding-block:26px 0}
+.lead{display:grid;gap:6px;margin-bottom:20px}
+.lead h2{font-size:clamp(26px,4vw,34px);font-weight:700}
+.lead p{color:var(--ink-soft);max-width:65ch}
+
+/* method */
+.cases{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.case{border-radius:18px;padding:18px;display:grid;gap:8px;align-content:start}
+.case h3{font-size:22px}
+.case .qty{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.case p{font-size:14px}
+.c-leg{background:var(--leg-bg)} .c-leg .qty,.c-leg h3{color:var(--leg)}
+.c-pro{background:var(--pro-bg)} .c-pro .qty,.c-pro h3{color:var(--pro)}
+.c-sau{background:var(--sau-bg)} .c-sau .qty,.c-sau h3{color:var(--sau)}
+.c-cer{background:var(--cer-bg)} .c-cer .qty,.c-cer h3{color:var(--cer)}
+.maths{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;background:#2e4a38;color:#ffffff;border-radius:20px;padding:22px 24px}
+:root[data-theme="dark"] .maths{background:var(--surface-2);color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .maths{background:var(--surface-2);color:var(--ink)}}
+.maths .n{font-family:var(--display);font-size:clamp(28px,5vw,44px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.maths .x{opacity:.6;font-size:22px}
+.maths .lab{font-size:12px;opacity:.8;display:block}
+.maths .res{color:#e5b3aa;font-style:italic}
+.maths .tot{flex-basis:100%;font-size:15px;opacity:.9}
+.tips{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tip{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:4px}
+.tip b{font-family:var(--display);font-size:17px;color:var(--navy)}
+.tip p{font-size:14px;color:var(--ink-soft)}
+.compare{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cmp{border-radius:16px;padding:18px;display:grid;gap:2px}
+.cmp .big{font-family:var(--display);font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
+.cmp.buy{background:var(--surface-2)} .cmp.buy .big{color:var(--ink-soft)}
+.cmp.home{background:var(--blush)} .cmp.home .big{color:var(--pro)}
+.cmp small{color:var(--ink-soft);font-size:13px}
+
+/* ingredients */
+.cols{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.col{border-radius:18px;background:var(--surface);padding:14px;display:grid;gap:8px;align-content:start}
+.col-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:2px 4px 6px;border-bottom:2px solid currentColor}
+.col-h h3{font-size:19px;color:inherit}
+.col-h span{font-size:12px;font-weight:600}
+.col.leg{color:var(--leg)} .col.pro{color:var(--pro)} .col.sau{color:var(--sau)} .col.cer{color:var(--cer)}
+.ing{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:8px;color:var(--ink);padding:6px 6px;border-radius:10px;background:var(--card)}
+.ing .e{font-size:20px;text-align:center}
+.ing .nm{font-size:14px;font-weight:500;line-height:1.25}
+.ing .nm small{display:block;font-weight:400;color:var(--ink-soft);font-size:12px}
+.ing .pr{font-size:12px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{font-size:13px;color:var(--ink-soft);margin-top:14px}
+.placard{margin-top:14px;border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--ink-soft)}
+.placard b{color:var(--ink)}
+h3.sub{font-size:24px;margin:34px 0 6px}
+.stations{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.st{border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start;background:var(--card)}
+.st-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.st-h b{font-family:var(--display);font-size:18px;color:var(--navy)}
+.st-h span{font-size:12px;font-weight:600;color:var(--orange);white-space:nowrap}
+.st ul{margin:0;padding-left:18px;font-size:14px;display:grid;gap:3px}
+.st .keep{font-size:12px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:8px}
+.sauces{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.sauce{background:var(--sau-bg);border-radius:14px;padding:14px;display:grid;gap:4px}
+.sauce b{color:var(--sau);font-family:var(--display);font-size:17px}
+.sauce p{font-size:13.5px}
+
+/* composer */
+.comp{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:start}
+.pickers{display:grid;gap:16px}
+.pick h3{font-size:18px;display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.pick h3 small{font-family:var(--body);font-size:12px;font-weight:500;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px 6px 9px;font-size:13.5px;display:inline-flex;gap:6px;align-items:center;transition:background .15s,border-color .15s}
+.chip:hover{border-color:var(--ink-soft)}
+.pick.leg .chip[aria-pressed="true"]{background:var(--leg-bg);border-color:var(--leg)}
+.pick.pro .chip[aria-pressed="true"]{background:var(--pro-bg);border-color:var(--pro)}
+.pick.sau .chip[aria-pressed="true"]{background:var(--sau-bg);border-color:var(--sau)}
+.pick.cer .chip[aria-pressed="true"]{background:var(--cer-bg);border-color:var(--cer)}
+.boxside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);display:grid;gap:14px}
+.lunchbox{position:relative;background:var(--card);border:3px solid var(--sky);border-radius:26px;padding:12px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;aspect-ratio:4/3;max-width:100%}
+.cell{border-radius:16px;padding:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:2px;font-size:13px;font-weight:500;min-height:0;overflow:hidden}
+.cell .e{font-size:26px;line-height:1.1}
+.cell .lab{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;opacity:.8}
+.cell.leg{grid-row:1 / span 2;background:var(--leg-bg);color:var(--leg)}
+.cell.pro{background:var(--pro-bg);color:var(--pro)}
+.cell.cer{background:var(--cer-bg);color:var(--cer)}
+.cell .v{color:var(--ink)}
+.cell.empty .v{color:var(--ink-soft);font-weight:400}
+.pot{position:absolute;right:-10px;top:-14px;width:92px;height:92px;border-radius:50%;background:var(--sau-bg);border:3px solid var(--sau);color:var(--sau);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:600;padding:8px;line-height:1.2;box-shadow:var(--shadow)}
+.pot .v{color:var(--ink);font-weight:500}
+.result{background:var(--surface);border-radius:18px;padding:16px;display:grid;gap:10px}
+.result .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.price{font-family:var(--display);font-size:32px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--navy)}
+.tier{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px}
+.t1{background:var(--leg-bg);color:var(--leg)} .t2{background:var(--sau-bg);color:var(--sau)} .t3{background:var(--pro-bg);color:var(--pro)}
+.match{font-size:14px}
+.match b{font-family:var(--display);font-size:16px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:0;border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px}
+.btn.main{background:#2e4a38;color:#fff}
+.btn.ghost{background:transparent;border:1.5px solid var(--line)}
+.linklike{background:none;border:0;padding:0;color:var(--coral);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* recipes */
+.bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:4px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--card);box-shadow:var(--shadow);font-weight:600}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:13px}
+.fchip[aria-pressed="true"]{border-color:var(--navy);background:var(--navy);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;align-content:start;box-shadow:var(--shadow)}
+.rc.hl{border-color:var(--coral);box-shadow:0 0 0 3px var(--blush),var(--shadow)}
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.rc h3{font-size:19px;font-weight:700}
+.rc .cost{font-family:var(--display);font-size:22px;font-weight:800;color:var(--navy);white-space:nowrap;font-variant-numeric:tabular-nums}
+.rc .cost small{display:block;font-family:var(--body);font-size:11px;font-weight:500;color:var(--ink-soft);text-align:right}
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.q{border-radius:10px;padding:6px 9px;font-size:12.5px;line-height:1.3}
+.q i{font-style:normal;display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.q.leg{background:var(--leg-bg)} .q.leg i{color:var(--leg)}
+.q.pro{background:var(--pro-bg)} .q.pro i{color:var(--pro)}
+.q.sau{background:var(--sau-bg)} .q.sau i{color:var(--sau)}
+.q.cer{background:var(--cer-bg)} .q.cer i{color:var(--cer)}
+.rc ol{margin:0;padding-left:18px;font-size:14px;display:grid;gap:3px}
+.up{border-radius:12px;padding:9px 11px;font-size:13.5px;background:var(--surface)}
+.up b{color:var(--orange)}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tags span{font-size:11.5px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:1px 8px}
+.empty-msg{padding:30px;text-align:center;color:var(--ink-soft);border:1px dashed var(--line);border-radius:16px}
+.goood{margin-top:40px;background:#2e4a38;color:#fff;border-radius:24px;padding:26px;display:grid;grid-template-columns:1fr 250px;gap:26px;align-items:center}
+.gtext{display:grid;gap:0;justify-items:start}
+.gfeat{margin-top:14px}
+.gphone{width:100%;height:auto;border-radius:18px;display:block}
+.goood .kick{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#e5b3aa}
+.goood h2{color:#fff;font-size:clamp(26px,4vw,36px);font-weight:800;margin-top:6px}
+.goood h2 em{font-style:italic;background:#e5b3aa;color:#24382b;padding:0 .15em;border-radius:10px}
+.goood p{color:#dfe8df;margin-top:10px;max-width:52ch;font-size:14.5px}
+.gfeat{display:grid;gap:10px}
+.gf{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px 16px;display:grid;gap:3px}
+.gf b{font-family:var(--display);font-size:17px;color:#fff}
+.gf span{font-size:13.5px;color:#dfe8df}
+.gcta{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.gbtn{display:inline-block;border-radius:999px;padding:11px 20px;font-weight:600;font-size:14.5px;text-decoration:none}
+.gbtn-rose{background:#e5b3aa;color:#24382b}
+.gbtn-clair{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+.gbtn:hover{filter:brightness(1.06)}
+@media (max-width:760px){.goood{grid-template-columns:1fr}.gphone{max-width:260px;justify-self:center}}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .cases,.cols{grid-template-columns:1fr 1fr}
+  .grid,.stations,.sauces,.tips{grid-template-columns:1fr 1fr}
+  .comp{grid-template-columns:1fr}
+  .boxside{position:static;order:-1}
+}
+@media (max-width:560px){
+  .cases,.cols,.grid,.stations,.sauces,.tips,.compare{grid-template-columns:1fr}
+  .pot{width:78px;height:78px;right:-6px;top:-10px;font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{nav.tabs,.btns,.bar .filters{display:none} section.panel[hidden]{display:block!important} .rc,.st{break-inside:avoid;box-shadow:none}}
+
+.lead-mag{margin-block:6px 8px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;grid-template-columns:1fr 1.3fr;gap:18px 24px;align-items:center;box-shadow:var(--shadow)}
+.lead-mag h2{font-size:clamp(22px,3.4vw,28px);font-weight:800}
+.lead-mag h2 em{font-style:italic;background:var(--rose);color:#24382b;padding:0 .15em;border-radius:10px}
+.lead-mag .sub{color:var(--ink-soft);font-size:14px;margin-top:6px}
+.lm-form{display:grid;gap:10px}
+.lm-row{display:grid;grid-template-columns:1fr 1.4fr auto;gap:8px}
+.lm-form input[type=text],.lm-form input[type=email]{font:inherit;font-size:15px;padding:11px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);min-width:0}
+.lm-form input:focus{border-color:var(--forest);outline:none}
+.lm-form .btn.main{padding:11px 20px}
+.lm-consent{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--ink-soft)}
+.lm-consent input{margin-top:3px;accent-color:#2e4a38}
+.lm-legal{font-size:11.5px;color:var(--ink-soft)}
+.lm-ok{display:grid;gap:10px;justify-items:start}
+.lm-ok a.btn{text-decoration:none;display:inline-block}
+.lm-err{color:var(--pro);font-size:13px}
+.hp{position:absolute;left:-9999px}
+@media (max-width:760px){.lead-mag{grid-template-columns:1fr}.lm-row{grid-template-columns:1fr}}
+.wa-flottant{position:fixed;right:14px;bottom:22px;z-index:60;display:inline-flex;align-items:center;gap:8px;background:#1DA851;color:#fff;border-radius:999px;padding:12px 16px;min-height:54px;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 6px 18px rgba(22,53,44,.3)}
+.wa-flottant:hover{background:#1EBE5A;color:#fff}
+.wa-texte{display:none}
+@media (min-width:860px){.wa-flottant{bottom:22px;right:22px}.wa-texte{display:inline}}
+@media print{.wa-flottant{display:none}}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Lunch Box à 4 cases", "url": "https://www.annecharlotte.be/lunchbox/", "inLanguage": "fr-BE", "description": "La méthode des 4 cases pour des lunchbox simples, gourmandes et pas chères : 30 ingrédients, 15 recettes en 3 budgets, et la version PDF à imprimer.", "image": "https://www.annecharlotte.be/lunchbox/og.jpg", "author": {"@type": "Person", "name": "Anne-Charlotte Jalhay", "jobTitle": "Diététicienne agréée", "url": "https://www.annecharlotte.be/"}}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="pill-tag">Idées repas · Atelier</span>
+    <div class="brand">
+      <svg class="mono" viewBox="0 0 100 100" width="40" height="40" aria-hidden="true" focusable="false"><ellipse cx="39" cy="26" rx="7.5" ry="12" fill="#16352C" transform="rotate(-32 39 26)"/><ellipse cx="58" cy="22" rx="6.5" ry="11" fill="#B98D45" transform="rotate(18 58 22)"/><circle cx="48" cy="64" r="30" fill="#DE9CAA"/><circle cx="52" cy="60" r="27" fill="#F0C3CB"/><ellipse cx="43" cy="50" rx="9" ry="7" fill="#FAF5EE" opacity="0.55" transform="rotate(-30 43 50)"/></svg>
+      <div><b>Anne-Charlotte</b><small>@annecharlotte.diet · Diététicienne agréée</small></div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>Lunch Box : <em>4 cases</em>, mille combinaisons</h1>
+    <p>Tu prépares quelques bases une fois, puis tu mélanges. Une case légumes, une case protéine, une case céréale, un petit pot de sauce. Avec 30 ingrédients pas chers, ça fait déjà plus de 3 000 lunchbox différentes.</p>
+  </div>
+
+
+  <section class="lead-mag" id="pdf" aria-labelledby="pdf-title">
+    <div>
+      <h2 id="pdf-title">La version <em>PDF</em> à imprimer</h2>
+      <p class="sub">7 pages A4 : la méthode, la liste des 30 ingrédients, la préparation en une heure, les 15 recettes en 3 budgets et une fiche « Ma box à moi » à remplir.</p>
+    </div>
+    <div>
+      <div class="lm-ok">
+        <a class="btn main" href="lunchbox-4-cases-anne-charlotte.pdf" target="_blank" rel="noopener">Télécharger le PDF</a>
+        <p class="lm-legal">Gratuit, à imprimer en A4. Tu peux le partager autour de toi.</p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="t-methode" aria-controls="methode" aria-selected="true">La méthode</button>
+    <button role="tab" id="t-ingredients" aria-controls="ingredients" aria-selected="false">Les 30 ingrédients</button>
+    <button role="tab" id="t-composer" aria-controls="composer" aria-selected="false">Composer ma box</button>
+    <button role="tab" id="t-recettes" aria-controls="recettes" aria-selected="false">15 idées recettes</button>
+  </nav>
+
+  <!-- MÉTHODE -->
+  <section class="panel" id="methode" role="tabpanel" aria-labelledby="t-methode">
+    <div class="lead">
+      <h2>Comment la composer ?</h2>
+      <p>On remplit les 4 cases, dans cet ordre. Pas besoin de peser : la boîte fait la mesure pour toi.</p>
+    </div>
+    <div class="cases">
+      <div class="case c-leg"><span class="qty">La moitié de la boîte</span><h3>Un légume</h3><p>Cru, râpé, grillé, en potage. Deux légumes, c'est encore mieux : plus de couleurs, plus de fibres, plus de mâche.</p></div>
+      <div class="case c-pro"><span class="qty">Un quart</span><h3>Une protéine</h3><p>Oeuf, pois chiches, lentilles, poisson en boîte, poulet, tofu, fromage. C'est elle qui tient jusqu'au goûter.</p></div>
+      <div class="case c-cer"><span class="qty">Un quart</span><h3>Une « céréale »</h3><p>Pain, riz, pâtes, couscous, pommes de terre, wrap. De préférence complets, et celles que tu aimes.</p></div>
+      <div class="case c-sau"><span class="qty">1 à 2 cuillères</span><h3>Une sauce</h3><p>Le bon gras et le goût. C'est la sauce qui change tout : même riz, même carotte, autre sauce, autre plat.</p></div>
+    </div>
+
+    <div class="maths" aria-label="Calcul des combinaisons">
+      <div><span class="n">8</span><span class="lab">légumes</span></div><span class="x">×</span>
+      <div><span class="n">7</span><span class="lab">protéines</span></div><span class="x">×</span>
+      <div><span class="n">6</span><span class="lab">sauces</span></div><span class="x">×</span>
+      <div><span class="n">9</span><span class="lab">céréales</span></div><span class="x">=</span>
+      <div><span class="n res">3 024</span><span class="lab">lunchbox possibles</span></div>
+      <p class="tot">Avec les 30 ingrédients de l'atelier, tu peux manger une box différente chaque midi pendant plus de 8 ans.</p>
+    </div>
+
+    <div class="compare">
+      <div class="cmp buy"><small>Sandwich + boisson achetés</small><span class="big">≈ 4 à 6 €</span><small>par midi</small></div>
+      <div class="cmp home"><small>Lunchbox « tout petit budget »</small><span class="big">≈ 0,70 à 1,50 €</span><small>par midi, voir les 15 recettes</small></div>
+    </div>
+
+    <div class="tips">
+      <div class="tip"><b>La sauce à part</b><p>Dans un petit pot. Tu la verses au moment de manger, et ta salade ne ramollit pas.</p></div>
+      <div class="tip"><b>Au frais</b><p>Un sac isotherme et un pain de glace, ou le frigo du boulot. Surtout avec oeuf, poisson, poulet, riz.</p></div>
+      <div class="tip"><b>Une touche plaisir</b><p>Un carré de chocolat, un fruit, quelques noix. Ça fait partie du repas, ça ne se négocie pas.</p></div>
+    </div>
+  </section>
+
+  <!-- INGRÉDIENTS -->
+  <section class="panel" id="ingredients" role="tabpanel" aria-labelledby="t-ingredients" hidden>
+    <div class="lead">
+      <h2>Les 30 ingrédients de l'atelier</h2>
+      <p>La liste de courses de base, rangée par case. Le prix, c'est à la grosse louche, pour une portion.</p>
+    </div>
+    <div class="cols" id="cols"></div>
+    <p class="note">Prix estimés par portion, supermarché discount en Belgique, septembre 2026. Ça bouge selon le magasin et la saison : les légumes surgelés et les conserves sont souvent les moins chers.</p>
+    <div class="placard"><b>Dans le placard (pas compté dans les 30)</b> : sel, poivre, ail, cumin, curry, paprika, herbes séchées, moutarde.</div>
+
+    <h3 class="sub">Préparer ensemble, en une heure</h3>
+    <p style="color:var(--ink-soft);max-width:65ch">Six postes en parallèle pendant l'atelier. C'est aussi ce que tu fais chez toi le dimanche, et tu as tes bases pour 3 jours.</p>
+    <div class="stations" id="stations"></div>
+
+    <h3 class="sub">Les 6 sauces maison</h3>
+    <p style="color:var(--ink-soft);max-width:65ch">Six bases dans le caddie, six sauces dans des bocaux. Une cuillère à soupe par box.</p>
+    <div class="sauces" id="sauces"></div>
+  </section>
+
+  <!-- COMPOSER -->
+  <section class="panel" id="composer" role="tabpanel" aria-labelledby="t-composer" hidden>
+    <div class="lead">
+      <h2>Compose ta box</h2>
+      <p>Choisis un ou deux légumes, puis une protéine, une céréale et une sauce. Le prix s'affiche à la louche.</p>
+    </div>
+    <div class="comp">
+      <div class="pickers" id="pickers"></div>
+      <div class="boxside">
+        <div class="lunchbox" id="box" aria-live="polite"></div>
+        <div class="result">
+          <div class="row"><span class="price" id="price">0,00 €</span><span class="tier" id="tier"></span></div>
+          <p class="match" id="match"></p>
+          <div class="btns">
+            <button class="btn main" id="rand">Au hasard</button>
+            <button class="btn ghost" id="reset">Vider la box</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECETTES -->
+  <section class="panel" id="recettes" role="tabpanel" aria-labelledby="t-recettes" hidden>
+    <div class="lead">
+      <h2>15 idées recettes, 3 budgets</h2>
+      <p>Chaque recette existe en trois versions. La base reste la même, on change un ou deux ingrédients selon ce qu'on a dans le porte-monnaie.</p>
+    </div>
+    <div class="bar">
+      <div class="seg" id="budget" role="group" aria-label="Budget">
+        <button data-b="0" aria-pressed="true">Tout petit budget</button>
+        <button data-b="1" aria-pressed="false">Budget moyen</button>
+        <button data-b="2" aria-pressed="false">Grand budget</button>
+      </div>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <aside class="goood" aria-label="Gooodeat">
+    <div class="gtext">
+      <span class="kick">L'outil de mes patients</span>
+      <h2>Au quotidien avec <em>Gooodeat</em></h2>
+      <p>L'appli que j'ai construite pour mes patients, pour les accompagner au quotidien entre deux consultations. Pas de calories à compter, pas de culpabilité : on regarde la semaine comme un tout.</p>
+      <div class="gfeat">
+        <div class="gf"><b>Générateur de recettes illimité</b><span>Tu es en panne d'idées ? Il te propose des recettes, autant que tu veux.</span></div>
+        <div class="gf"><b>Le scan de ton assiette</b><span>Une photo de ton repas, et tu comprends comment tu manges, sans jugement.</span></div>
+      </div>
+      <div class="gcta">
+        <a class="gbtn gbtn-rose" href="https://www.annecharlotte.be/bilan/">Prendre RDV en visio avec moi</a>
+        <a class="gbtn gbtn-clair" href="https://www.gooodeat.com">Découvrir Gooodeat</a>
+      </div>
+    </div>
+    <img class="gphone" src="gooodeat-floris.jpg" width="509" height="900" alt="Floris, la mascotte de Gooodeat, au-dessus d'un téléphone qui affiche l'écran Ma journée">
+  </aside>
+
+  <footer>
+    <span>Anne-Charlotte Jalhay · Diététicienne agréée · @annecharlotte.diet</span>
+    <span>Prix indicatifs par portion, à ajuster selon ton magasin</span>
+  </footer>
+</div>
+
+<script>
+const CATS = {
+  leg:{name:"Un légume", short:"Légume"},
+  pro:{name:"Une protéine", short:"Protéine"},
+  cer:{name:"Une « céréale »", short:"Céréale"},
+  sau:{name:"Une sauce", short:"Sauce"}
+};
+const ING = {
+  // légumes
+  carotte:{c:"leg",n:"Carottes",d:"râpées ou en bâtonnets",e:"🥕",p:.10},
+  concombre:{c:"leg",n:"Concombre",d:"en rondelles",e:"🥒",p:.25},
+  chou:{c:"leg",n:"Chou rouge",d:"en lamelles fines",e:"🥬",p:.10},
+  poivron:{c:"leg",n:"Poivron",d:"cru ou grillé",e:"🫑",p:.35},
+  potiron:{c:"leg",n:"Potiron",d:"rôti au four",e:"🎃",p:.30},
+  betterave:{c:"leg",n:"Betterave cuite",d:"en cubes ou en dip",e:"🟣",p:.20},
+  radis:{c:"leg",n:"Radis",d:"en rondelles",e:"🌶️",p:.25},
+  champi:{c:"leg",n:"Champignons",d:"grillés à la poêle",e:"🍄",p:.40},
+  // protéines
+  oeuf:{c:"pro",n:"Oeufs",d:"2 oeufs durs",e:"🥚",p:.50},
+  poischiche:{c:"pro",n:"Pois chiches",d:"½ boîte, rincés",e:"🫘",p:.35},
+  lentille:{c:"pro",n:"Lentilles corail",d:"60 g sec, 12 min",e:"🟠",p:.20},
+  maquereau:{c:"pro",n:"Maquereau en boîte",d:"ou sardines",e:"🐟",p:1.20},
+  poulet:{c:"pro",n:"Poulet",d:"cuisse ou filet, 120 g",e:"🍗",p:1.10},
+  tofu:{c:"pro",n:"Tofu",d:"100 g, poêlé",e:"⬜",p:.70},
+  feta:{c:"pro",n:"Feta",d:"ou fromage, 40 g",e:"🧀",p:.50},
+  // céréales
+  pain:{c:"cer",n:"Pain complet",d:"2 tranches",e:"🍞",p:.20},
+  pdt:{c:"cer",n:"Pommes de terre",d:"grillées ou vapeur",e:"🥔",p:.20},
+  riz:{c:"cer",n:"Riz",d:"60 g sec",e:"🍚",p:.10},
+  pates:{c:"cer",n:"Pâtes semi-complètes",d:"70 g sec",e:"🍝",p:.10},
+  couscous:{c:"cer",n:"Couscous",d:"5 min hors du feu",e:"🥣",p:.10},
+  wrap:{c:"cer",n:"Wraps",d:"1 à 2 galettes",e:"🌯",p:.30},
+  tarte:{c:"cer",n:"Pâte à tarte",d:"¼ de rouleau",e:"🥧",p:.40},
+  nouilles:{c:"cer",n:"Nouilles de riz",d:"ou vermicelles",e:"🍜",p:.20},
+  mais:{c:"cer",n:"Maïs",d:"⅓ de boîte",e:"🌽",p:.25},
+};
+const BASES = [
+  {n:"Huile",d:"colza ou olive",e:"🫒",p:"≈ 0,05 €"},
+  {n:"Yaourt nature",d:"le grand pot",e:"🥛",p:"≈ 0,10 €"},
+  {n:"Citron",d:"ou vinaigre",e:"🍋",p:"≈ 0,10 €"},
+  {n:"Beurre de cacahuète",d:"100 % cacahuète",e:"🥜",p:"≈ 0,10 €"},
+  {n:"Sauce soja",d:"une bouteille dure des mois",e:"🍶",p:"≈ 0,05 €"},
+  {n:"Pesto",d:"en pot",e:"🌿",p:"≈ 0,20 €"},
+];
+const SAUCES = {
+  vinaigrette:{n:"Vinaigrette citron",e:"🍋",p:.10,r:"3 c. à s. d'huile, 1 c. à s. de citron, sel, poivre, un peu de moutarde. On secoue le bocal."},
+  yaourtail:{n:"Sauce yaourt ail-herbes",e:"🥛",p:.15,r:"Yaourt, 1 c. à s. d'huile, ail, herbes séchées, sel. Parfaite avec pommes de terre et poulet."},
+  cacahuete:{n:"Sauce cacahuète",e:"🥜",p:.15,r:"1 c. à s. de beurre de cacahuète, 1 c. à c. de soja, citron, un peu d'eau chaude pour détendre."},
+  pesto:{n:"Pesto-yaourt",e:"🌿",p:.25,r:"Moitié pesto, moitié yaourt. Le goût du pesto, pour moins cher."},
+  soja:{n:"Soja-citron",e:"🍶",p:.05,r:"1 c. à s. de soja, 1 c. à s. d'huile, un filet de citron. Pour les nouilles, le riz, le tofu."},
+  curry:{n:"Yaourt-curry",e:"🟡",p:.15,r:"Yaourt, 1 c. à c. de curry, un filet de citron, sel. Avec pois chiches, lentilles, couscous."},
+};
+for (const [k,s] of Object.entries(SAUCES)) ING[k] = {c:"sau",n:s.n,e:s.e,p:s.p,d:"maison"};
+
+const STATIONS = [
+  {t:"Cuire les céréales",m:"20 min",l:["Riz et pâtes à l'eau bouillante","Couscous : eau bouillante, couvercle, 5 min hors du feu","Nouilles de riz : 3 min dans l'eau chaude"],k:"3 jours au frigo. Le riz, on le refroidit vite et on le garde bien au froid."},
+  {t:"Une plaque au four",m:"30 min · 200 °C",l:["Potiron en cubes","Pommes de terre en quartiers","Champignons","Poulet (ou tofu en cubes)","Un filet d'huile, sel, paprika, tout sur la même plaque"],k:"3 jours au frigo, en boîte fermée."},
+  {t:"Les oeufs durs",m:"10 min",l:["Dans l'eau bouillante, 10 minutes","Puis dans l'eau froide"],k:"Jusqu'à une semaine au frigo dans leur coquille."},
+  {t:"Les lentilles corail",m:"12 min",l:["Pas besoin de les faire tremper","Eau froide, on porte à ébullition, 12 min","Un peu de curry dans l'eau"],k:"3 jours au frigo. Se mangent tièdes ou froides."},
+  {t:"Râper et couper",m:"15 min",l:["Carottes râpées","Chou rouge en lamelles fines","Concombre, radis, poivron","Betterave en cubes"],k:"2 à 3 jours au frigo. Le concombre, plutôt le jour même."},
+  {t:"Les sauces en bocaux",m:"15 min",l:["Les 6 sauces maison ci-dessous","Un bocal par sauce, on écrit le nom dessus"],k:"3 à 4 jours au frigo pour celles au yaourt, une semaine pour la vinaigrette."},
+];
+
+// Recettes : v = légumes, pr = protéine, ce = céréale, sa = sauce
+const R = [
+  {id:1,n:"Bowl riz, carottes, oeuf, sauce cacahuète",v:["carotte"],pr:"oeuf",ce:"riz",sa:"cacahuete",s:["Riz froid au fond","Carottes râpées et oeufs coupés en deux","Sauce cacahuète dans le petit pot"],up:[{t:"+ edamames surgelés et concombre",p:1.50},{t:"Saumon cuit à la place des oeufs, + ½ avocat",p:3.80}],tags:["sans four","végé"]},
+  {id:2,n:"Salade de pâtes pesto, poivron, feta",v:["poivron"],pr:"feta",ce:"pates",sa:"pesto",s:["Pâtes cuites refroidies","Poivron en dés, feta émiettée","On mélange avec le pesto-yaourt"],up:[{t:"+ tomates cerises, mozzarella à la place de la feta",p:1.90},{t:"Mozzarella di bufala, roquette, tomates cerises, pignons",p:3.50}],tags:["végé","enfants"]},
+  {id:3,n:"Couscous pois chiches, carottes, yaourt-curry",v:["carotte"],pr:"poischiche",ce:"couscous",sa:"curry",s:["Couscous gonflé 5 min","Pois chiches rincés, carottes râpées","Sauce yaourt-curry à part"],up:[{t:"+ raisins secs et amandes effilées",p:1.40},{t:"+ poulet mariné au curry et menthe fraîche",p:2.90}],tags:["sans four","végé"]},
+  {id:4,n:"Wrap houmous express, chou rouge, carottes",v:["chou","carotte"],pr:"poischiche",ce:"wrap",sa:"yaourtail",s:["Pois chiches écrasés à la fourchette avec huile, citron, ail","Tartiner le wrap, ajouter chou et carottes","Rouler serré, couper en deux"],up:[{t:"Houmous du commerce + 3 falafels",p:1.90},{t:"Falafels, ½ avocat, feta, graines",p:3.20}],tags:["sans cuisson","végé"]},
+  {id:5,n:"Salade de pommes de terre, oeufs, radis",v:["radis"],pr:"oeuf",ce:"pdt",sa:"yaourtail",s:["Pommes de terre cuites en cubes","Oeufs durs et radis en rondelles","Sauce yaourt ail-herbes, on mélange"],up:[{t:"+ haricots verts surgelés et ciboulette fraîche",p:1.60},{t:"+ truite ou saumon fumé",p:3.50}],tags:["végé","enfants"]},
+  {id:6,n:"Dhal de lentilles corail, potiron, riz",v:["potiron"],pr:"lentille",ce:"riz",sa:"curry",s:["Lentilles cuites 12 min avec curry","Potiron rôti par-dessus, riz à côté","Une cuillère de yaourt-curry"],up:[{t:"Lentilles cuites dans du lait de coco",p:1.30},{t:"+ épinards frais, coriandre, noix de cajou",p:2.40}],tags:["thermos","végé"]},
+  {id:7,n:"Nouilles sautées tofu, chou rouge, cacahuète",v:["chou"],pr:"tofu",ce:"nouilles",sa:"cacahuete",s:["Nouilles de riz trempées 3 min","Tofu en cubes doré à la poêle","Chou rouge cru par-dessus, sauce à part"],up:[{t:"+ brocoli surgelé et cacahuètes concassées",p:1.70},{t:"Crevettes à la place du tofu, + coriandre et citron vert",p:3.40}],tags:["végé"]},
+  {id:8,n:"Tartines maquereau-citron, concombre",v:["concombre"],pr:"maquereau",ce:"pain",sa:"vinaigrette",s:["Maquereau écrasé avec un filet de citron","Sur pain complet","Concombre à croquer à côté"],up:[{t:"+ radis, aneth, un peu de fromage frais",p:2.10},{t:"Saumon fumé et fromage frais sur pain au levain",p:3.90}],tags:["sans cuisson"]},
+  {id:9,n:"Tarte fine potiron-feta",v:["potiron"],pr:"feta",ce:"tarte",sa:"pesto",s:["Pâte étalée, potiron rôti et feta dessus","20 min au four à 200 °C","Une part froide dans la box, pesto-yaourt à tremper"],up:[{t:"+ oignon rouge et cerneaux de noix",p:1.90},{t:"Chèvre, miel et roquette à la place de la feta",p:2.90}],tags:["végé","enfants"]},
+  {id:10,n:"Salade de maïs, oeufs, poivron",v:["poivron"],pr:"oeuf",ce:"mais",sa:"vinaigrette",s:["Maïs égoutté","Poivron en dés, oeufs durs en quartiers","Vinaigrette citron à part"],up:[{t:"+ thon en boîte",p:1.80},{t:"Crevettes et ½ avocat à la place des oeufs",p:3.40}],tags:["sans four","végé"]},
+  {id:11,n:"Pain, dip de betterave, oeuf, radis",v:["betterave","radis"],pr:"oeuf",ce:"pain",sa:"yaourtail",s:["Betterave écrasée avec le yaourt ail-herbes et du cumin","Pain complet pour tremper","Oeuf dur et radis à côté"],up:[{t:"+ fromage frais et graines de tournesol",p:1.80},{t:"Pain au levain, feta et noix",p:2.80}],tags:["sans cuisson","végé"]},
+  {id:12,n:"Poulet, pommes de terre et champignons grillés",v:["champi"],pr:"poulet",ce:"pdt",sa:"yaourtail",s:["Tout sort de la même plaque au four","Dans la box, encore tiède ou froid","Sauce yaourt ail-herbes à part"],up:[{t:"Filet de poulet, + haricots verts",p:2.50},{t:"Poulet fermier, patate douce, légumes grillés",p:3.60}],tags:["thermos","enfants"]},
+  {id:13,n:"Pizza-wrap champignons-feta",v:["champi"],pr:"feta",ce:"wrap",sa:"pesto",s:["Pesto-yaourt étalé sur le wrap","Champignons et feta dessus","8 min au four, on coupe en parts"],up:[{t:"+ mozzarella et poivron",p:1.90},{t:"+ roquette, parmesan et tomates cerises",p:2.80}],tags:["végé","enfants"]},
+  {id:14,n:"Taboulé express aux pois chiches",v:["concombre","poivron"],pr:"poischiche",ce:"couscous",sa:"vinaigrette",s:["Couscous gonflé, refroidi","Concombre, poivron et pois chiches en petits dés","Vinaigrette citron, on mélange"],up:[{t:"+ persil ou menthe frais, feta",p:1.80},{t:"+ grenade et halloumi grillé",p:3.30}],tags:["sans four","végé"]},
+  {id:15,n:"Poke riz, tofu, concombre, soja-citron",v:["concombre","carotte"],pr:"tofu",ce:"riz",sa:"soja",s:["Riz au fond","Tofu poêlé, concombre et carottes en bâtonnets","Sauce soja-citron à part"],up:[{t:"+ sauce cacahuète et chou chinois",p:1.70},{t:"Tofu fumé, mangue, coriandre, sésame",p:2.90}],tags:["végé"]},
+];
+function baseCost(r){let t=r.v.reduce((a,k)=>a+ING[k].p,0)+ING[r.pr].p+ING[r.ce].p+ING[r.sa].p;return Math.round(t*20)/20}
+const eur = x => x.toFixed(2).replace(".",",")+" €";
+function tierOf(p){return p<=1.2?0:p<=2.5?1:2}
+const TIERS=[["Tout petit budget","t1"],["Budget moyen","t2"],["Grand budget","t3"]];
+
+/* tabs */
+const tabs=[...document.querySelectorAll('nav.tabs button')];
+function show(id){
+  tabs.forEach(b=>{const on=b.getAttribute('aria-controls')===id;b.setAttribute('aria-selected',on);});
+  document.querySelectorAll('section.panel').forEach(s=>s.hidden=s.id!==id);
+  try{localStorage.setItem('lb-tab',id)}catch(e){}
+}
+tabs.forEach(b=>b.addEventListener('click',()=>show(b.getAttribute('aria-controls'))));
+let start='methode';
+const h=location.hash.slice(1);
+if(document.getElementById(h)) start=h; else {try{start=localStorage.getItem('lb-tab')||start}catch(e){}}
+if(!document.getElementById(start)) start='methode';
+show(start);
+
+/* ingredients */
+const order=["leg","pro","sau","cer"];
+const colsEl=document.getElementById('cols');
+colsEl.innerHTML=order.map(c=>{
+  const items = c==="sau" ? BASES.map(b=>`<div class="ing"><span class="e">${b.e}</span><span class="nm">${b.n}<small>${b.d}</small></span><span class="pr">${b.p}</span></div>`)
+    : Object.values(ING).filter(i=>i.c===c).map(i=>`<div class="ing"><span class="e">${i.e}</span><span class="nm">${i.n}<small>${i.d}</small></span><span class="pr">≈ ${eur(i.p)}</span></div>`);
+  const title = c==="sau" ? "Du gras & sauce" : CATS[c].name.replace(/^Une? /,'').replace(/^./,m=>m.toUpperCase());
+  return `<div class="col ${c}"><div class="col-h"><h3>${title}</h3><span>${items.length}</span></div>${items.join('')}</div>`;
+}).join('');
+document.getElementById('stations').innerHTML=STATIONS.map(s=>`<div class="st"><div class="st-h"><b>${s.t}</b><span>${s.m}</span></div><ul>${s.l.map(x=>`<li>${x}</li>`).join('')}</ul><p class="keep">${s.k}</p></div>`).join('');
+document.getElementById('sauces').innerHTML=Object.values(SAUCES).map(s=>`<div class="sauce"><b>${s.e} ${s.n}</b><p>${s.r}</p></div>`).join('');
+
+/* composer */
+const sel={leg:["carotte","chou"],pro:"oeuf",cer:"riz",sau:"cacahuete"};
+const pickersEl=document.getElementById('pickers');
+const pickOrder=[["leg","1 ou 2"],["pro","1"],["cer","1"],["sau","1"]];
+pickersEl.innerHTML=pickOrder.map(([c,hint])=>`<div class="pick ${c}"><h3 style="color:var(--${c})">${CATS[c].name} <small>${hint}</small></h3><div class="chips">${Object.entries(ING).filter(([k,i])=>i.c===c).map(([k,i])=>`<button class="chip" data-c="${c}" data-k="${k}" aria-pressed="false"><span>${i.e}</span>${i.n}</button>`).join('')}</div></div>`).join('');
+pickersEl.addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(!b) return;
+  const {c,k}=b.dataset;
+  if(c==="leg"){
+    const a=sel.leg; const i=a.indexOf(k);
+    if(i>=0) a.splice(i,1); else { a.push(k); if(a.length>2) a.shift(); }
+  } else sel[c] = sel[c]===k ? null : k;
+  renderBox();
+});
+function cell(c,keys){
+  const ks=[].concat(keys||[]).filter(Boolean);
+  if(!ks.length) return `<div class="cell ${c} empty"><span class="lab">${CATS[c].short}</span><span class="v">à choisir</span></div>`;
+  return `<div class="cell ${c}"><span class="lab">${CATS[c].short}</span><span class="e">${ks.map(k=>ING[k].e).join(' ')}</span><span class="v">${ks.map(k=>ING[k].n).join(' + ')}</span></div>`;
+}
+function renderBox(){
+  document.querySelectorAll('.chip').forEach(b=>{
+    const {c,k}=b.dataset; const on = c==="leg" ? sel.leg.includes(k) : sel[c]===k;
+    b.setAttribute('aria-pressed',on);
+  });
+  const s=sel.sau?ING[sel.sau]:null;
+  document.getElementById('box').innerHTML = cell('leg',sel.leg)+cell('pro',sel.pro)+cell('cer',sel.cer)+
+    `<div class="pot"><span>Sauce</span><span class="v">${s? s.e+' '+s.n : 'à choisir'}</span></div>`;
+  const total = sel.leg.reduce((a,k)=>a+ING[k].p,0)+['pro','cer','sau'].reduce((a,c)=>a+(sel[c]?ING[sel[c]].p:0),0);
+  const done = sel.leg.length && sel.pro && sel.cer && sel.sau;
+  document.getElementById('price').textContent = "≈ "+eur(Math.round(total*20)/20);
+  const tierEl=document.getElementById('tier');
+  const m=document.getElementById('match');
+  if(!done){
+    tierEl.textContent="";tierEl.className="tier";
+    const miss=['leg','pro','cer','sau'].filter(c=>c==="leg"?!sel.leg.length:!sel[c]).map(c=>CATS[c].short.toLowerCase());
+    m.textContent = "Il manque encore : "+miss.join(', ')+".";
+    return;
+  }
+  const t=tierOf(total); tierEl.textContent=TIERS[t][0]; tierEl.className="tier "+TIERS[t][1];
+  const rec=R.find(r=>r.pr===sel.pro&&r.ce===sel.cer&&r.sa===sel.sau&&r.v.some(v=>sel.leg.includes(v)))
+         || R.find(r=>r.pr===sel.pro&&r.ce===sel.cer&&r.v.some(v=>sel.leg.includes(v)));
+  m.innerHTML = rec
+    ? `Ta box ressemble à la recette <b>${rec.n}</b>. <button class="linklike" data-go="${rec.id}">Voir la recette</button>`
+    : `Box complète, les 4 cases sont remplies. Celle-là n'est pas dans les 15 idées : tu viens d'en inventer une.`;
+}
+document.getElementById('match').addEventListener('click',e=>{
+  const b=e.target.closest('[data-go]'); if(!b) return;
+  budget=0; filter=null; renderBudget(); renderFilters(); renderGrid(+b.dataset.go); show('recettes');
+  document.getElementById('r'+b.dataset.go)?.scrollIntoView({behavior:'smooth',block:'center'});
+});
+const pickRand = c => {const ks=Object.keys(ING).filter(k=>ING[k].c===c);return ks[Math.floor(Math.random()*ks.length)]};
+document.getElementById('rand').addEventListener('click',()=>{
+  const a=pickRand('leg'); let b=pickRand('leg'); while(b===a) b=pickRand('leg');
+  sel.leg = Math.random()<.6?[a,b]:[a]; sel.pro=pickRand('pro'); sel.cer=pickRand('cer'); sel.sau=pickRand('sau'); renderBox();
+});
+document.getElementById('reset').addEventListener('click',()=>{sel.leg=[];sel.pro=sel.cer=sel.sau=null;renderBox();});
+renderBox();
+
+/* recettes */
+let budget=0, filter=null;
+const TAGS=["sans cuisson","sans four","thermos","végé","enfants"];
+const filtEl=document.getElementById('filters');
+function renderFilters(){filtEl.innerHTML=TAGS.map(t=>`<button class="fchip" data-t="${t}" aria-pressed="${filter===t}">${t}</button>`).join('')}
+filtEl.addEventListener('click',e=>{const b=e.target.closest('.fchip');if(!b)return;filter=filter===b.dataset.t?null:b.dataset.t;renderFilters();renderGrid();});
+const budEl=document.getElementById('budget');
+function renderBudget(){budEl.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.b===budget))}
+budEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;budget=+b.dataset.b;renderBudget();renderGrid();});
+const q=(c,keys)=>`<div class="q ${c}"><i>${CATS[c].short}</i>${[].concat(keys).map(k=>ING[k].n).join(', ')}</div>`;
+function renderGrid(hl){
+  const list=R.filter(r=>!filter||r.tags.includes(filter));
+  const g=document.getElementById('grid');
+  if(!list.length){g.innerHTML='<p class="empty-msg">Aucune recette avec ce filtre.</p>';return}
+  g.innerHTML=list.map(r=>{
+    const price = budget===0?baseCost(r):r.up[budget-1].p;
+    const upg = budget===0 ? '' : `<div class="up"><b>${TIERS[budget][0]} :</b> ${r.up[budget-1].t}</div>`;
+    return `<article class="rc${hl===r.id?' hl':''}" id="r${r.id}">
+      <div class="rc-top"><h3>${r.n}</h3><span class="cost">≈ ${eur(price)}<small>la box</small></span></div>
+      <div class="quad">${q('leg',r.v)}${q('pro',r.pr)}${q('cer',r.ce)}${q('sau',r.sa)}</div>
+      <ol>${r.s.map(x=>`<li>${x}</li>`).join('')}</ol>
+      ${upg}
+      <div class="tags">${r.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+    </article>`}).join('');
+}
+renderFilters(); renderGrid();
+
+
+</script>
+<a class="wa-flottant" href="https://wa.me/32472629195?text=Bonjour%2C%20je%20suis%20sur%20votre%20site%20et%20j%E2%80%99ai%20une%20question%20%3A%20" aria-label="Poser une question sur WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M16 2.9C8.8 2.9 3 8.7 3 15.9c0 2.3.6 4.5 1.8 6.5L3 29.1l6.9-1.8c1.9 1 4 1.6 6.1 1.6 7.2 0 13-5.8 13-13S23.2 2.9 16 2.9zm0 23.7c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.1 1.1-4-.3-.4c-1.1-1.7-1.6-3.7-1.6-5.7 0-5.9 4.8-10.7 10.7-10.7s10.7 4.8 10.7 10.7-4.8 10.7-10.7 10.7zm5.9-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.6.1-.2.1-.4 0-.6-.1-.2-.7-1.8-1-2.4-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.4c.2.2 2.3 3.5 5.5 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg><span class="wa-texte">Une question ?</span></a>
+</body>
+</html>
