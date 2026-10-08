@@ -6,6 +6,7 @@ import Base from '../../layouts/Base.astro';
 import CaptureGuide from '../../components/CaptureGuide.astro';
 import CtaFinal from '../../components/CtaFinal.astro';
 import guidesData from '../../data/guides.json';
+import { u } from '../../data/site';
 
 export function getStaticPaths() {
   return guidesData.guides
@@ -42,7 +43,7 @@ const { guide } = Astro.props;
           trouver.
         </p>
       </div>
-      <CaptureGuide guide={guide.titre} />
+      <CaptureGuide guide={guide.titre} pdf={u('/guides/pdf/' + guide.slug + '.pdf')} />
     </div>
   </section>
 

@@ -2,48 +2,93 @@
   "_commentaire": "Généré par scripts/sync-notion.mjs depuis la base Notion « Guides — lead magnets ». Ne pas éditer à la main.",
   "guides": [
     {
-      "titre": "Le kit anti-ballonnements",
-      "slug": "kit-anti-ballonnements",
-      "statut": "En préparation",
-      "pilier": "Troubles digestifs",
-      "accroche": "7 jours pour comprendre ton ventre : journal alimentaire prêt à remplir, les 10 réflexes qui soulagent, et la méthode pour repérer tes déclencheurs.",
+      "titre": "Sortir des régimes",
+      "slug": "sortir-des-regimes",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "T'as tout enlevé, et la balance n'a rien enlevé du tout. Le kit pour descendre du manège des régimes, sans liste d'aliments.",
       "contenuListe": [
-        "Un journal alimentaire 7 jours prêt à remplir",
-        "Les 10 réflexes anti-ballonnements",
-        "La méthode pas à pas pour identifier tes déclencheurs",
-        "Les signes qui méritent une consultation"
+        "Le test du frigo : est-ce que ce kit est pour toi",
+        "Le manège des régimes, dessiné",
+        "Quatre trucs qu'on t'a pas dits",
+        "Ta semaine pour réentendre ton corps, à remplir"
       ],
-      "metaDescription": "Guide gratuit : 7 jours pour comprendre tes ballonnements, avec journal alimentaire, réflexes qui soulagent et méthode pour trouver tes déclencheurs.",
+      "metaDescription": "Kit gratuit d'une diététicienne anti-régime : comprendre le cercle des régimes, en sortir sans liste d'aliments, et réapprendre à écouter sa faim.",
       "html": ""
     },
     {
-      "titre": "SOPK : la semaine de menus qui stabilise",
-      "slug": "sopk-semaine-menus",
-      "statut": "En préparation",
-      "pilier": "Santé féminine",
-      "accroche": "Une semaine complète de menus pensés pour la glycémie stable, avec liste de courses et alternatives, par une diététicienne spécialisée.",
+      "titre": "Arrêter de fumer, sans la peur de grossir",
+      "slug": "arreter-de-fumer-sans-grossir",
+      "statut": "Publié",
+      "pilier": "Arrêt du tabac",
+      "accroche": "Trente jours pour tenir la décision, avec l'assiette de ton côté. Et enfin comprendre pourquoi tu te sens à plat quand tu arrêtes.",
       "contenuListe": [
-        "7 jours de menus complets orientés glycémie stable",
-        "La liste de courses correspondante",
-        "Des alternatives par repas selon tes goûts",
-        "Les 5 principes à retenir pour improviser ensuite"
+        "La courbe de la dopamine : ce qui se passe dans ta tête",
+        "Comment recharger pendant le creux",
+        "Le réflexe main-bouche, et quoi en faire",
+        "Ton tableau de bord de 30 jours"
       ],
-      "metaDescription": "Guide gratuit SOPK : une semaine de menus pour stabiliser la glycémie et calmer les fringales, avec liste de courses et alternatives.",
+      "metaDescription": "Kit gratuit d'une diététicienne tabacologue : arrêter de fumer sans prendre de poids, comprendre le manque et tenir 30 jours.",
+      "html": ""
+    },
+    {
+      "titre": "Moins de fringales, plus d'énergie",
+      "slug": "moins-de-fringales",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "Tu tiens au café jusqu'à midi et tu dévalises le placard à 16 h ? Il manque sûrement un truc qui tient au ventre. On fait simple.",
+      "contenuListe": [
+        "C'est quoi une protéine, en une phrase",
+        "Le test : est-ce qu'il t'en manque",
+        "La liste de courses, sans rien à cuisiner",
+        "Neuf repas qui tiennent, et ton test de la semaine"
+      ],
+      "metaDescription": "Kit gratuit : moins de fringales et plus d'énergie grâce aux protéines, expliqué simplement, avec liste de courses et repas sans cuisiner.",
       "html": ""
     },
     {
       "titre": "La méthode assiette pour les débordé·es",
       "slug": "methode-assiette-debordees",
-      "statut": "En préparation",
+      "statut": "Publié",
       "pilier": "Mieux manger",
-      "accroche": "Manger équilibré sans cuisiner des heures : l'assiette en 3 zones, le batch cooking de 45 minutes et les raccourcis qui sauvent les soirées.",
+      "accroche": "18h30, deux gamins, aucune idée. L'assiette en 3 zones, 45 minutes le dimanche, et 15 repas en 10 minutes chrono.",
       "contenuListe": [
-        "La méthode de l'assiette en 3 zones illustrée",
-        "Le plan de batch cooking en 45 minutes",
-        "15 assemblages de repas en 10 minutes",
-        "La liste des raccourcis malins (surgelés, conserves) validés"
+        "L'assiette en 3 zones, en un coup d'œil",
+        "Le batch cooking de 45 minutes",
+        "15 repas en 10 minutes chrono",
+        "Les raccourcis assumés : surgelés, conserves, tout prêt"
       ],
-      "metaDescription": "Guide gratuit : manger équilibré sans temps, avec la méthode de l'assiette en 3 zones, un batch cooking express et 15 idées de repas en 10 minutes.",
+      "metaDescription": "Kit gratuit : manger bien sans temps, avec l'assiette en 3 zones, un batch cooking de 45 minutes et 15 repas en 10 minutes.",
+      "html": ""
+    },
+    {
+      "titre": "Les 4 saisons de ton cycle",
+      "slug": "les-4-saisons-de-ton-cycle",
+      "statut": "Publié",
+      "pilier": "Santé féminine",
+      "accroche": "Envie de chocolat avant tes règles ? Félicitations, t'es normale. D'abord on observe, on ne change que si ça vaut la peine.",
+      "contenuListe": [
+        "Les 4 saisons de ton cycle, en bref",
+        "Pourquoi observer avant de changer",
+        "Ton calendrier de 50 jours, et comment le lire",
+        "L'assiette qui soutient ton humeur, toute l'année"
+      ],
+      "metaDescription": "Kit gratuit : comprendre les 4 phases de ton cycle, suivre tes symptômes sur 50 jours et soutenir ton humeur avec l'assiette.",
+      "html": ""
+    },
+    {
+      "titre": "Manger enfin des légumes (sans se forcer)",
+      "slug": "manger-enfin-des-legumes",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "Le brocoli qui finit à la poubelle le vendredi, on le connaît toutes. Boîtes, surgelés, soupes : demain midi, t'en mets un de plus.",
+      "contenuListe": [
+        "Pourquoi on t'embête avec ça",
+        "Le jeu des 30 végétaux, à cocher",
+        "Les raccourcis : boîte, surgelé, soupe",
+        "L'entrée qui change tout, et en glisser partout"
+      ],
+      "metaDescription": "Kit gratuit : manger plus de légumes sans se forcer, avec les 30 végétaux, les raccourcis surgelés et conserves, et des idées pour dès demain.",
       "html": ""
     }
   ]

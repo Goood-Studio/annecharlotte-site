@@ -15,7 +15,7 @@ const enPreparation = guides.filter((g) => g.statut === 'En préparation');
 
 <Base
   titre="Les guides gratuits | Anne-Charlotte Diététicienne"
-  description="Les guides pratiques et gratuits d'Anne-Charlotte, diététicienne : ballonnements, SOMP (SOPK), repas équilibrés sans temps. Reçois-les par WhatsApp ou par e-mail."
+  description="Les kits gratuits d'Anne-Charlotte, diététicienne : sortir des régimes, arrêter de fumer sans grossir, moins de fringales, la méthode assiette, ton cycle, plus de légumes. À télécharger tout de suite."
   chemin="/guides/"
 >
   <section class="hero-guides fond-sapin">
@@ -23,8 +23,8 @@ const enPreparation = guides.filter((g) => g.statut === 'En préparation');
       <h1>Des guides gratuits, concrets, à garder</h1>
       <p class="hero-sous">
         Le condensé de ce que je répète en consultation, mis en forme pour que
-        tu puisses agir dès ce soir. Reçois-les par WhatsApp (recommandé) ou
-        par e-mail.
+        tu puisses agir dès ce soir. Tu laisses ton prénom et ton WhatsApp ou
+        ton e-mail, et tu le télécharges tout de suite.
       </p>
     </div>
   </section>
@@ -46,6 +46,7 @@ const enPreparation = guides.filter((g) => g.statut === 'En préparation');
     </section>
   )}
 
+  {enPreparation.length > 0 && (
   <section aria-label="Guides en préparation">
     <div class="contenu" data-reveal>
       <h2>{publies.length > 0 ? 'Bientôt disponibles' : 'Les premiers guides arrivent'}</h2>
@@ -63,6 +64,7 @@ const enPreparation = guides.filter((g) => g.statut === 'En préparation');
       </div>
     </div>
   </section>
+  )}
 
   <section class="section-capture" aria-label="Être prévenu·e">
     <div class="contenu capture-2col" data-reveal>

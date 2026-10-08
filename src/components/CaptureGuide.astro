@@ -8,14 +8,18 @@ import { SITE } from '../data/site';
 
 interface Props {
   guide: string;
+  // Lien du PDF (dans public/guides/pdf/). Quand il est là, le guide se
+  // télécharge dès l'envoi du formulaire : plus besoin d'attendre un envoi.
+  pdf?: string;
 }
-const { guide } = Astro.props;
+const { guide, pdf } = Astro.props;
 ---
 
 <form
   class="capture"
   data-endpoint={SITE.captureEndpoint}
   data-guide={guide}
+  data-pdf={pdf}
   data-whatsapp={SITE.whatsapp}
   method="post"
 >
@@ -109,6 +113,14 @@ const { guide } = Astro.props;
     font-weight: 700;
     color: var(--rose);
   }
+  /* Sur le fond sapin du formulaire, le bouton de téléchargement passe en rose. */
+  .capture-etat :global(a.capture-pdf) {
+    display: block;
+    margin: 4px 0 14px;
+    background: var(--rose);
+    color: var(--sapin);
+    text-decoration: none;
+  }
   .capture-etat :global(a) { color: var(--rose); text-decoration-color: var(--dore); }
 </style>
 
@@ -138,6 +150,10 @@ const { guide } = Astro.props;
         `Bonjour ! Je veux recevoir le guide « ${donnees.guide} ».` +
         (donnees.prenom ? ` Je m’appelle ${donnees.prenom}.` : '');
       const lienWhatsApp = f.dataset.whatsapp + '?text=' + encodeURIComponent(messageWhatsApp);
+      const pdf = f.dataset.pdf;
+      const boutonPdf = pdf
+        ? `<a class="btn btn-principal btn-bloc capture-pdf" href="${pdf}" download target="_blank" rel="noopener">Télécharger mon guide (PDF)</a>`
+        : '';
 
       if (endpoint) {
         try {
@@ -148,6 +164,14 @@ const { guide } = Astro.props;
           });
           if (!reponse.ok) throw new Error(String(reponse.status));
           etat.hidden = false;
+          if (pdf) {
+            etat.innerHTML =
+              boutonPdf +
+              'C’est noté, il est à toi. Tu veux aussi le recevoir sur ton téléphone ? ' +
+              `<a href="${lienWhatsApp}" target="_blank" rel="noopener">Envoie-moi le message prérempli sur WhatsApp</a>.`;
+            f.querySelectorAll('input, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+            return;
+          }
           // Le clic WhatsApp déclenche le message d'accueil automatique
           // d'Anne-Charlotte (WhatsApp Business) : bienvenue immédiate.
           etat.innerHTML =
@@ -160,7 +184,10 @@ const { guide } = Astro.props;
         } catch {
           etat.hidden = false;
           etat.innerHTML =
-            `Oups, l’envoi a échoué. Réessaie, ou <a href="${lienWhatsApp}" target="_blank" rel="noopener">demande le guide directement sur WhatsApp</a>.`;
+            boutonPdf +
+            (pdf
+              ? `Oups, ton contact n’est pas passé, mais le guide est à toi. Tu peux aussi <a href="${lienWhatsApp}" target="_blank" rel="noopener">me le demander sur WhatsApp</a>.`
+              : `Oups, l’envoi a échoué. Réessaie, ou <a href="${lienWhatsApp}" target="_blank" rel="noopener">demande le guide directement sur WhatsApp</a>.`);
         }
         return;
       }
