@@ -1,0 +1,59 @@
+---
+// Bandeau du programme « Prendre soin de son corps » (6 semaines, 15 places).
+// Au-dessus du header, non collant : il défile avec la page.
+// À retirer (ou à basculer sur la cohorte suivante) une fois le groupe complet.
+import { SITE } from '../data/site';
+---
+
+<a class="banniere" href={SITE.rdvProgramme35}>
+  <span class="banniere-pastille">Nouveau</span>
+  <span class="banniere-long">Prendre soin de son corps à partir de 35 ans : 6 semaines en petit groupe, dès le 26 octobre. 15 places.</span>
+  <span class="banniere-court">6 semaines pour reprendre soin de ton corps, dès 35 ans. 15 places.</span>
+  <span class="banniere-fleche" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .banniere {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--sapin);
+    color: var(--ecru);
+    font-size: 0.92rem;
+    line-height: 1.35;
+    text-decoration: none;
+    text-align: center;
+  }
+  .banniere:hover .banniere-fleche,
+  .banniere:focus-visible .banniere-fleche {
+    transform: translateX(3px);
+  }
+  .banniere:focus-visible {
+    outline: 3px solid var(--rose);
+    outline-offset: -3px;
+  }
+  .banniere-pastille {
+    flex-shrink: 0;
+    background: var(--rose);
+    color: var(--sapin);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 3px 9px;
+  }
+  .banniere-fleche {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .banniere-court { display: none; }
+
+  @media (max-width: 720px) {
+    .banniere { justify-content: flex-start; text-align: left; }
+    .banniere-long { display: none; }
+    .banniere-court { display: inline; }
+  }
+</style>

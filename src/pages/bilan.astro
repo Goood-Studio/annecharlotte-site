@@ -12,6 +12,7 @@ import { MOTIFS } from '../data/miroir';
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
 const lieux: [id: string, label: string, lien: string][] = [
+  ['programme', 'Réserver ma place', SITE.calProgramme35],
   ['tabac', 'Réserver mon pack tabac', SITE.calPackTabac],
   ['visio', 'En visio', SITE.calVisio],
   ['malonne', 'Au cabinet de Malonne', SITE.calMalonne],
@@ -44,6 +45,22 @@ const lieux: [id: string, label: string, lien: string][] = [
         <div class="piege" aria-hidden="true">
           <label>Ton site web <input type="text" name="site_web" tabindex="-1" autocomplete="off" /></label>
         </div>
+
+        <!-- 0. Le programme (seulement avec ?formule=programme, retiré sinon) -->
+        <fieldset class="etape" data-etape="programme" hidden>
+          <legend class="h2">Ce qu’on va vivre ensemble</legend>
+          <p class="chapo">6 semaines pour reprendre soin de ton corps, en petit groupe de 15 femmes. Et je le fais avec vous.</p>
+          <ul class="programme-liste">
+            <li><strong>Un premier appel à deux</strong>, la semaine du 26 octobre : on fait connaissance, on regarde ton parcours et tes objectifs dans leur globalité.</li>
+            <li><strong>7 jours</strong> où tu me montres tes repas dans Gooodeat, sans rien changer.</li>
+            <li><strong>Un petit pas par semaine</strong>, adapté à ta vie.</li>
+            <li><strong>5 appels de groupe</strong> le mardi de 20h30 à 21h30 : 3, 10, 17, 24 novembre et 1er décembre.</li>
+            <li><strong>Une formation</strong> pour comprendre ce qui change dans ton corps.</li>
+            <li><strong>Ton évolution</strong> suivie semaine après semaine.</li>
+          </ul>
+          <p class="programme-prix"><strong>390 €</strong> pour les 6 semaines · 15 places</p>
+          <p class="discret">Avant de réserver ta place, prends 3 minutes pour me dire ce que tu vis. Ça me permet de préparer notre premier appel.</p>
+        </fieldset>
 
         <!-- 1. Qui -->
         <fieldset class="etape" data-etape="qui">
@@ -125,7 +142,7 @@ const lieux: [id: string, label: string, lien: string][] = [
             {lieux.map(([id, label, lien]) => (
               <>
                 {id === 'visio' && <p class="sous-lieux" hidden>Ou d’abord une première consultation :</p>}
-                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'tabac'}>
+                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'tabac' || id === 'programme'}>
                   {label}
                   {id === 'visio' && <span class="pastille">plus rapide</span>}
                 </button>
@@ -213,6 +230,8 @@ const lieux: [id: string, label: string, lien: string][] = [
   .bilan :global(.niveau:has(input:focus-visible)) { outline: 3px solid var(--dore); outline-offset: 2px; }
   .entendu { background: var(--rose-2); border-radius: var(--rayon); padding: 16px 18px; font-size: 17px; color: var(--sapin); margin: 0; }
 
+  .programme-liste { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 17px; }
+  .programme-prix { background: var(--rose-2); border-radius: var(--rayon); padding: 14px 18px; font-size: 18px; color: var(--sapin); margin: 0; }
   .photos { background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px; margin: 0; }
   .consentement { flex-direction: row; align-items: flex-start; gap: 12px; font-weight: 600; }
   .consentement input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--sapin); flex: none; }
@@ -242,6 +261,12 @@ const lieux: [id: string, label: string, lien: string][] = [
   // Le code qui relie la fiche à la réservation cal.com (pas de donnée perso).
   const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const ref = 'BIL-' + [...crypto.getRandomValues(new Uint8Array(5))].map((n) => ALPHABET[n % ALPHABET.length]).join('');
+
+  // Arrivée par un bouton de formule (?formule=…). Le programme a sa page de
+  // présentation en tête ; ailleurs, on la retire avant de compter les étapes.
+  const formule = new URLSearchParams(location.search).get('formule');
+  const programme = formule === 'programme';
+  if (!programme) q('[data-etape="programme"]').remove();
 
   // ---------- le miroir ----------
   const niveaux: Record<string, number> = {};
@@ -315,7 +340,8 @@ const lieux: [id: string, label: string, lien: string][] = [
     etapes.forEach((e, k) => (e.hidden = k !== ici));
     const nom = etapes[ici].dataset.etape;
     if (nom === 'miroir') afficherPhrases();
-    if (nom === 'rdv') q<HTMLElement>('.photos').hidden = aMenager();
+    // Programme : les repas passent par Gooodeat, pas de photos à faire avant.
+    if (nom === 'rdv') q<HTMLElement>('.photos').hidden = programme || aMenager();
     retour.hidden = ici === 0;
     suite.hidden = nom === 'rdv';
     suite.textContent = ici === 0 ? 'Commencer' : 'Continuer';
@@ -379,8 +405,16 @@ const lieux: [id: string, label: string, lien: string][] = [
     })
   );
 
+  // Programme : un seul bouton, celui du programme.
+  if (programme) {
+    q<HTMLElement>('.surtitre', document).textContent = 'Programme 6 semaines';
+    q<HTMLElement>('h1', document).textContent = 'Prendre soin de son corps à partir de 35 ans';
+    q<HTMLElement>('[data-etape="rdv"] legend').textContent = 'Réserve ta place';
+    qa<HTMLButtonElement>('[data-lieu]').forEach((b) => (b.hidden = b.dataset.lieu !== 'programme'));
+    q<HTMLButtonElement>('[data-lieu="programme"]').classList.replace('btn-contour', 'btn-principal');
+  }
+
   // Arrivée depuis un bouton de pack (tout compris ou tabac) : ce pack passe en premier.
-  const formule = new URLSearchParams(location.search).get('formule');
   if (formule === 'pack' || formule === 'tabac') {
     const pack = q<HTMLButtonElement>(`[data-lieu="${formule}"]`);
     pack.hidden = false;

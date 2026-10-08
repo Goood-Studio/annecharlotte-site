@@ -30,6 +30,12 @@ export const SITE = {
   calPack: 'https://cal.com/anne-charlotte-diet/pack-visio',
   rdvPackTabac: u('/bilan/') + '?formule=tabac',
   calPackTabac: 'https://cal.com/anne-charlotte-diet/pack-tabac',
+  // Programme « Prendre soin de son corps » (6 semaines en groupe, 15 places,
+  // démarrage le 26/10/2026). Paiement Stripe directement dans cal.com.
+  // Le programme passe aussi par le miroir : /bilan/ présente d'abord le
+  // programme, puis pose les questions, puis mène à ce cal.com.
+  rdvProgramme35: u('/bilan/') + '?formule=programme',
+  calProgramme35: 'https://cal.com/anne-charlotte-diet/prendre-soin-de-son-corps-6-semaines',
 
   // Stats confirmées par Valentin le 29/08/2026.
   statsPatients: '+1 500',
