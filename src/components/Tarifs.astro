@@ -3,7 +3,7 @@
 // Le pack, meilleur choix, prend la scène sur fond sapin.
 //
 // Deux variantes, parce que trois formules côte à côte alourdissent la page :
-//   « classique » (par défaut) → Pack tout compris + Premiers pas
+//   « classique » (par défaut) → Accompagnement + Premiers pas
 //   « tabac »                  → le Pack tabac seul, sur la page arrêt du tabac
 import { OFFRES } from '../data/contenu';
 import { SITE } from '../data/site';
@@ -26,7 +26,7 @@ const tabac = variante === 'tabac';
 
 <section class="tarifs" aria-labelledby="titre-tarifs">
   <div class="contenu" data-reveal>
-    <h2 id="titre-tarifs">Tu es à un clic de la solution</h2>
+    <h2 id="titre-tarifs">Les tarifs, sans surprise</h2>
     <p class="tarifs-chapo">
       {tabac
         ? `Disponibilités : ${SITE.horaires}, et ${SITE.horairesVisio}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`
@@ -47,13 +47,12 @@ const tabac = variante === 'tabac';
       ) : (
         <>
           <article class="offre offre-pack">
-            <span class="pastille">Meilleur choix</span>
+            <span class="pastille">Ce que je propose le plus souvent</span>
             <h3>{pack.nom}</h3>
             <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
-            {!sobre && <p class="offre-eco">{pack.economie}</p>}
-            <p class="offre-desc">{pack.description}</p>
+                        {!sobre && <p class="offre-desc">{pack.description}</p>}
             <ul>
-              {pack.inclus.map((item) => <li>{item}</li>)}
+              {(sobre ? pack.inclus.slice(0, 1) : pack.inclus).map((item) => <li>{item}</li>)}
             </ul>
             <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
           </article>
@@ -72,7 +71,7 @@ const tabac = variante === 'tabac';
       )}
     </div>
     <p class="note-etoile">
-      * Adapté à chacun·e : les séances s’espacent selon ta situation.
+      * Valable 4 mois : les séances s’espacent selon ta situation.
     </p>
   </div>
 </section>
@@ -126,8 +125,7 @@ const tabac = variante === 'tabac';
     white-space: nowrap;
   }
   .unite { color: var(--encre-2); font-size: 15px; }
-  .offre-eco { margin: 0 0 8px; font-weight: 800; font-size: 15px; color: var(--rose-fort); }
-  .offre-pack .offre-eco { color: var(--rose); }
+  .offre-eco { margin: 0 0 8px; font-size: 15px; color: var(--encre-2); }
   .offre ul { margin: 10px 0 20px; padding-left: 20px; }
   .offre li { margin-bottom: 7px; font-size: 16px; }
   .offre .btn { margin-top: auto; }

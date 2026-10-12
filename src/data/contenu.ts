@@ -11,32 +11,34 @@ export const OFFRES = [
     prix: '80 €',
     unite: 'la consultation',
     description:
-      'Consultation individuelle (ou à deux) : on fait le point et tu repars avec des ajustements concrets, adaptés à ta vie.',
+      'Une consultation, seul·e ou à deux : on fait le point et tu repars avec une première piste concrète, adaptée à ta vie.',
     inclus: [
-      'Bilan initial complet',
+      'Bilan complet',
+      'Une première piste concrète à tester',
       'Remboursement mutuelle possible',
-      'Canal direct de discussion',
-      'Planificateur de recettes et analyses',
     ],
-    economie: 'Les suivis : 50 € la séance.',
-    ctaTexte: 'Commence ici',
+    // Info neutre, pas une promo (décision du 12/10/2026).
+    economie: 'Séance de suivi ensuite : 50 €.',
+    ctaTexte: 'Réserver une consultation',
     meilleurChoix: false,
   },
   {
-    nom: 'Pack tout compris',
-    prix: '290 €',
-    unite: 'par personne, avec un objectif',
+    // 330 € depuis le 12/10/2026 : même prix que les séances à l'unité, pas de
+    // remise. Ce qui fait la différence, c'est le suivi entre les séances.
+    nom: 'Accompagnement',
+    prix: '330 €',
+    unite: 'environ 3 mois, en visio',
     description:
-      'On prend un problème ou un objectif, et on solutionne la situation ensemble.',
+      'Le plus souvent, un vrai changement demande plusieurs séances. On avance une chose à la fois : tu testes, on regarde ce que ça donne, on ajuste.',
     inclus: [
-      'Ton bilan + 5 séances de suivi*',
-      'Des améliorations construites pour ta vie réelle',
-      'Remboursement mutuelle possible',
-      'Canal direct de discussion',
-      'Planificateur de recettes et analyses',
+      'Ton bilan + 5 séances de suivi, environ toutes les 2 semaines*',
+      'Un changement concret à la fois, pensé pour ta vraie semaine',
+      'WhatsApp entre les séances : pas besoin d’attendre le prochain rendez-vous pour poser ta question',
+      'L’app Gooodeat, pour garder une trace de tes repas et de ton ressenti',
+      'Remboursement mutuelle possible, à chaque séance',
     ],
-    economie: 'Tu économises 40 € : sans le pack, bilan + 5 suivis = 330 €.',
-    ctaTexte: 'Solutionne ce tracas, enfin !',
+    economie: '',
+    ctaTexte: 'Commencer l’accompagnement',
     meilleurChoix: true,
   },
   {
@@ -129,7 +131,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, la consultation « Premiers pas » est à 80 €, et l’accompagnement complet à 290 € par personne. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, la consultation « Premiers pas » est à 80 €, et l’accompagnement (bilan + 5 suivis, environ 3 mois en visio) à 330 €. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',

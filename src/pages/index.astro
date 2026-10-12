@@ -26,7 +26,8 @@ const siteUrl =
 const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
 // Lues sur cal.com au build (voir src/data/dispos.ts). null = on n'affiche rien.
-const [dispoVisio, dispoMalonne] = await Promise.all([
+const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
+  prochaineDispo('pack-visio'),
   prochaineDispo('premiers-pas-visio'),
   prochaineDispo('premiers-pas-malonne'),
 ]);
@@ -65,17 +66,23 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
         </p>
 
         <div class="hero-actions">
-          <a class="bloc-action principal" href={SITE.rdvVisio} data-anim="bloc">
-            <span class="bloc-titre">Prendre RDV en visio<span class="asterisque" aria-hidden="true">*</span> <span class="pastille">plus rapide</span></span>
+          <!-- L'accompagnement d'abord : c'est l'offre à mettre en avant (12/10/2026).
+               Tout passe en visio ; le cabinet reste en petit lien jusqu'en décembre. -->
+          <a class="bloc-action principal" href={SITE.rdvPack} data-anim="bloc">
+            <span class="bloc-titre"><span>Accompagnement en visio <span class="bloc-prix">330 €<span class="asterisque" aria-hidden="true">*</span></span></span></span>
+            <span class="bloc-sous">Ton bilan + 5 suivis sur environ 3 mois. Une chose à la fois, et WhatsApp entre les séances.</span>
+            {dispoPack && <span class="bloc-dispo">1re dispo : {dispoPack}</span>}
+            <span class="bloc-fleche" aria-hidden="true">→</span>
+          </a>
+          <a class="bloc-action" href={SITE.rdvVisio} data-anim="bloc">
+            <span class="bloc-titre"><span>Une consultation en visio <span class="bloc-prix">80 €<span class="asterisque" aria-hidden="true">*</span></span></span></span>
             <span class="bloc-sous">Depuis chez toi ou ton bureau, aussi sur le temps de midi (12h-13h) et en soirée.</span>
             {dispoVisio && <span class="bloc-dispo">1re dispo : {dispoVisio}</span>}
             <span class="bloc-fleche" aria-hidden="true">→</span>
           </a>
-          <a class="bloc-action" href={SITE.rdvMalonne} data-anim="bloc">
-            <span class="bloc-titre">Prendre RDV à Malonne<span class="asterisque" aria-hidden="true">*</span></span>
-            <span class="bloc-sous">Au cabinet, rue Chapelle Lessire 54 (ou à Namur).</span>
-            {dispoMalonne && <span class="bloc-dispo">1re dispo : {dispoMalonne}</span>}
-            <span class="bloc-fleche" aria-hidden="true">→</span>
+          <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">
+            Plutôt au cabinet ? Consultation à Malonne<span aria-hidden="true">*</span>
+            {dispoMalonne && <span>(1re dispo : {dispoMalonne})</span>} →
           </a>
           <p class="hero-pourquoi" data-anim="bloc">
             * Avant de choisir ton créneau, je te pose quelques questions
@@ -126,6 +133,8 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
     </div>
   </section>
 
+  <Tarifs />
+
   <!-- L'approche : un manifeste, pas quatre mini-cartes -->
   <section class="fond-sapin approche">
     <div class="contenu" data-reveal>
@@ -153,7 +162,6 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
 
   <Avis />
   <Deroule />
-  <Tarifs />
 
   <!-- Les apps : utiles, mais pas avant la prise de RDV (descendues du hero) -->
   <section aria-labelledby="titre-outils">
@@ -292,7 +300,7 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
     color: var(--sapin);
   }
   .bloc-sous { color: var(--encre-2); font-size: 14.5px; }
-  .asterisque { margin-left: -8px; }
+  .asterisque { margin-left: 2px; }
   /* Prochaine dispo : une pastille, lisible sur la carte sapin comme sur la blanche. */
   .bloc-dispo {
     align-self: flex-start;
@@ -306,6 +314,14 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
     color: var(--sapin);
   }
   .bloc-action.principal .bloc-dispo { background: var(--rose); border-color: var(--rose); }
+  .bloc-prix { display: block; white-space: nowrap; font-family: var(--police-titre); font-weight: 400; font-size: 22px; margin-top: 2px; }
+  .lien-cabinet {
+    margin: 2px 4px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sapin);
+  }
+  .lien-cabinet span { font-weight: 400; color: var(--encre-2); }
   .hero-pourquoi { margin: 2px 4px 6px; font-size: 14.5px; color: var(--encre-2); }
   .outils { display: grid; grid-template-columns: 1fr; gap: 10px; }
   @media (min-width: 760px) { .outils { grid-template-columns: 1fr 1fr; } }

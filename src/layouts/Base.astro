@@ -4,7 +4,8 @@
 // sortir sans title ni description : c'est le layout qui les exige.
 import '../styles/global.css';
 import Header from '../components/Header.astro';
-import BanniereProgramme from '../components/BanniereProgramme.astro';
+// Bandeau du programme de groupe retiré le 12/10/2026 (relance début 2027) :
+// remettre <BanniereProgramme /> au-dessus du header pour le réactiver.
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import StickyRdv from '../components/StickyRdv.astro';
@@ -128,7 +129,6 @@ const tousJsonLd = [personne, ...jsonLd];
     ))}
   </head>
   <body>
-    <BanniereProgramme />
     <Header />
     <main id="contenu-principal">
       <slot />
