@@ -4,7 +4,9 @@
 // relais Netlify, qui écrit une fiche dans la base Notion « Demandes avant
 // RDV ». Un code au hasard (BIL-XXXX) est ajouté au lien cal.com pour
 // relier la fiche à la réservation : aucune donnée personnelle dans l'URL.
-// Page technique : noindex, hors sitemap, rien gardé dans le navigateur.
+// Page technique : noindex, hors sitemap. Le navigateur garde seulement la réf.
+// BIL-XXXX pendant 14 jours (aucune réponse) : si la personne revient après avoir
+// regardé un agenda, elle choisit son rendez-vous sans tout réencoder.
 import Base from '../layouts/Base.astro';
 import { SITE, u } from '../data/site';
 import { MOTIFS } from '../data/miroir';
@@ -234,6 +236,10 @@ const lieux: [id: string, label: string, lien: string][] = [
   .programme-prix { background: var(--rose-2); border-radius: var(--rayon); padding: 14px 18px; font-size: 18px; color: var(--sapin); margin: 0; }
   .photos { background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px; margin: 0; }
   .consentement { flex-direction: row; align-items: flex-start; gap: 12px; font-weight: 600; }
+  .consentement[hidden] { display: none; }
+  :global(.deja) { background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px; margin-bottom: 4px; }
+  :global(.deja p) { margin: 0 0 8px; }
+  :global(.deja .btn-lien) { background: none; border: 0; padding: 0; color: var(--sapin); text-decoration: underline; font: inherit; font-weight: 700; cursor: pointer; }
   .consentement input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--sapin); flex: none; }
   .lieux { display: grid; gap: 12px; margin-top: 6px; }
   .lieux [hidden] { display: none; }
@@ -260,7 +266,16 @@ const lieux: [id: string, label: string, lien: string][] = [
 
   // Le code qui relie la fiche à la réservation cal.com (pas de donnée perso).
   const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  const ref = 'BIL-' + [...crypto.getRandomValues(new Uint8Array(5))].map((n) => ALPHABET[n % ALPHABET.length]).join('');
+  const CLE_MEMO = 'acj-bilan', DUREE_MEMO = 14 * 24 * 3600 * 1000;
+  const lireMemo = (): { ref: string; t: number } | null => {
+    try { const m = JSON.parse(localStorage.getItem(CLE_MEMO) || 'null'); return m && /^BIL-/.test(m.ref) && Date.now() - m.t < DUREE_MEMO ? m : null; } catch { return null; }
+  };
+  const ecrireMemo = (r: string | null) => { try { r ? localStorage.setItem(CLE_MEMO, JSON.stringify({ ref: r, t: Date.now() })) : localStorage.removeItem(CLE_MEMO); } catch {} };
+  const nouvelleRef = () => 'BIL-' + [...crypto.getRandomValues(new Uint8Array(5))].map((n) => ALPHABET[n % ALPHABET.length]).join('');
+  const memo = lireMemo();
+  // Déjà répondu (elle revient d'un agenda) : on garde sa réf. et on va droit au rendez-vous.
+  let dejaRepondu = !!memo;
+  let ref = memo ? memo.ref : nouvelleRef();
 
   // Arrivée par un bouton de formule (?formule=…). Le programme a sa page de
   // présentation en tête ; ailleurs, on la retire avant de compter les étapes.
@@ -377,6 +392,7 @@ const lieux: [id: string, label: string, lien: string][] = [
   }
   qa<HTMLButtonElement>('[data-lieu]').forEach((bouton) =>
     bouton.addEventListener('click', async () => {
+      if (dejaRepondu) return allerSurCal(bouton);
       if (!q('[name="consentement"]').checked) {
         erreur.textContent = 'Coche la case pour que je puisse recevoir tes réponses.';
         erreur.hidden = false;
@@ -398,12 +414,19 @@ const lieux: [id: string, label: string, lien: string][] = [
           new Promise((r) => setTimeout(r, 4000)),
         ]);
       }
-      const lien = new URL(bouton.dataset.lien!);
-      lien.searchParams.set('notes', `Réf. ${ref}`);
-      lien.searchParams.set('metadata[ref]', ref);
-      window.location.href = lien.toString();
+      ecrireMemo(ref);
+      allerSurCal(bouton);
     })
   );
+  function allerSurCal(bouton: HTMLButtonElement) {
+    const lien = new URL(bouton.dataset.lien!);
+    lien.searchParams.set('notes', `Réf. ${ref}`);
+    lien.searchParams.set('metadata[ref]', ref);
+    window.location.href = lien.toString();
+  }
+  // Retour arrière depuis cal.com : la page revient figée (« Un instant… ») ; on la recharge
+  // pour retomber sur le choix du rendez-vous.
+  window.addEventListener('pageshow', (e) => { if (e.persisted) location.reload(); });
 
   // Programme : un seul bouton, celui du programme.
   if (programme) {
@@ -429,5 +452,25 @@ const lieux: [id: string, label: string, lien: string][] = [
   (document.querySelector('.progression') as HTMLElement).hidden = false;
   numero.hidden = false;
   qa<HTMLElement>('legend').forEach((l) => (l.tabIndex = -1));
-  montrer(0);
+  if (dejaRepondu) {
+    const rdv = etapes.findIndex((e) => e.dataset.etape === 'rdv');
+    const bandeau = document.createElement('div');
+    bandeau.className = 'deja';
+    bandeau.innerHTML = '<p><strong>Tu m’as déjà répondu, merci.</strong> Choisis simplement ton rendez-vous, pas besoin de tout réécrire.</p><button type="button" class="btn-lien" data-recommencer>Ce n’est pas moi, ou je veux tout reprendre</button>';
+    etapes[rdv].prepend(bandeau);
+    q<HTMLElement>('.consentement').hidden = true;
+    q<HTMLElement>('.photos').hidden = true;
+    q<HTMLButtonElement>('[data-recommencer]').addEventListener('click', () => {
+      ecrireMemo(null);
+      dejaRepondu = false;
+      ref = nouvelleRef();
+      bandeau.remove();
+      q<HTMLElement>('.consentement').hidden = false;
+      montrer(0);
+    });
+    montrer(rdv);
+    retour.hidden = true;
+    (document.querySelector('.progression') as HTMLElement).hidden = true;
+    numero.hidden = true;
+  } else montrer(0);
 </script>
