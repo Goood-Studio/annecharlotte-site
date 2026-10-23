@@ -23,18 +23,17 @@ export const OFFRES = [
     meilleurChoix: false,
   },
   {
-    // 330 € depuis le 12/10/2026 : même prix que les séances à l'unité, pas de
-    // remise. Ce qui fait la différence, c'est le suivi entre les séances.
+    // 330 € pour 10 semaines depuis le 23/10/2026 : une durée, plus un nombre
+    // de séances. On prend un problème et on le traite ; Gooodeat entre les séances.
     nom: 'Accompagnement',
     prix: '330 €',
-    unite: 'environ 3 mois, en visio',
+    unite: '10 semaines, en visio',
     description:
-      'Le plus souvent, un vrai changement demande plusieurs séances. On avance une chose à la fois : tu testes, on regarde ce que ça donne, on ajuste.',
+      'On prend un problème, et on le traite. On avance une chose à la fois : tu testes, on regarde ce que ça donne, on ajuste.',
     inclus: [
-      'Ton bilan + 5 séances de suivi, environ toutes les 2 semaines*',
+      'Ton bilan, puis autant de séances que nécessaire (souvent une toutes les 2 semaines)*',
       'Un changement concret à la fois, pensé pour ta vraie semaine',
-      'WhatsApp entre les séances : pas besoin d’attendre le prochain rendez-vous pour poser ta question',
-      'L’app Gooodeat, pour garder une trace de tes repas et de ton ressenti',
+      'Gooodeat entre les séances : tu notes tes repas et ton ressenti, on les regarde ensemble au rendez-vous',
       'Remboursement mutuelle possible, à chaque séance',
     ],
     economie: '',
@@ -114,7 +113,7 @@ export const DEROULE = [
   {
     titre: 'Entre les rendez-vous',
     texte:
-      'Tu m’écris sur WhatsApp quand ça t’arrange. Toutes mes conversations patient·es sont en silencieux : une photo de ton assiette à 21h30 ne me dérange jamais, ça ne sonne pas chez moi. C’est pensé pour que nos échanges restent simples, sans que tu aies à te demander si c’est le bon moment.',
+      'On garde le lien sur Gooodeat. Tu y notes tes repas et ton ressenti quand ça t’arrange : une photo de ton assiette à 21h30, un ventre qui gonfle après le souper. Je retrouve tout ça de mon côté, alors au rendez-vous suivant, on ne repart pas de zéro et on ne compte pas sur ta mémoire.',
   },
 ] as const;
 
@@ -131,7 +130,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, la consultation « Premiers pas » est à 80 €, et l’accompagnement (bilan + 5 suivis, environ 3 mois en visio) à 330 €. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, la consultation « Premiers pas » est à 80 €, et l’accompagnement (10 semaines en visio, autant de séances que nécessaire) à 330 €. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',

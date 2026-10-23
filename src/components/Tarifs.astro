@@ -71,7 +71,9 @@ const tabac = variante === 'tabac';
       )}
     </div>
     <p class="note-etoile">
-      * Valable 4 mois : les séances s’espacent selon ta situation.
+      {tabac
+        ? '* Valable 4 mois : les séances s’espacent selon ta situation.'
+        : '* 10 semaines ensemble, avec une marge jusqu’à 4 mois si ta vie déborde.'}
     </p>
   </div>
 </section>
