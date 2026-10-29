@@ -145,13 +145,17 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
             <div class="formule" data-formule="tabac" hidden>
               <button type="button" class="btn btn-principal btn-bloc" data-lieu="tabac" data-lien={SITE.calPackTabac}>Réserver mon pack tabac</button>
             </div>
-            <div class="formule" data-formule="consultation">
-              <p class="formule-titre"><strong>Le bilan</strong> <span class="formule-prix">80 €</span></p>
-              <p class="formule-texte">On regarde ton assiette et autour, et tu repars avec le changement qui aura le plus d’impact. Envie de continuer ensuite ? Ce que tu as déjà fait compte.</p>
-              <button type="button" class="btn btn-principal btn-bloc" data-lieu="visio" data-lien={SITE.calVisio}>
-                En visio <span class="pastille">plus rapide</span>
-              </button>
-              <button type="button" class="btn btn-contour btn-bloc" data-lieu="malonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
+            <!-- L'accompagnement d'abord, toujours mis en avant : c'est ce que je propose. -->
+            <div class="formule formule-phare" data-formule="pack">
+              <span class="pastille formule-pastille">Ce que je propose</span>
+              <p class="formule-titre"><strong>L’accompagnement</strong> <span class="formule-prix">330 €</span></p>
+              <p class="formule-texte">10 semaines pour que ça tienne. Un changement à la fois, en commençant par celui qui a le plus d’impact : on regarde ce qu’il a donné, et on ajoute le suivant.</p>
+              <ul class="formule-liste">
+                <li>Ton bilan, puis une séance toutes les 2 semaines environ (souvent 5)</li>
+                <li>Gooodeat entre les séances</li>
+                <li>À la fin, ton mode d’emploi : ce qui marche pour toi</li>
+              </ul>
+              <button type="button" class="btn btn-principal btn-bloc" data-lieu="pack" data-lien={SITE.calPack}>Je choisis l’accompagnement</button>
             </div>
             <div class="formule" data-formule="deux">
               <p class="formule-titre"><strong>Bilan + une séance</strong> <span class="formule-prix">130 €</span></p>
@@ -159,10 +163,13 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
               <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxvisio" data-lien={SITE.calVisio}>En visio</button>
               <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxmalonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
             </div>
-            <div class="formule" data-formule="pack">
-              <p class="formule-titre"><strong>L’accompagnement</strong> <span class="formule-prix">330 €</span></p>
-              <p class="formule-texte">10 semaines en visio : ton bilan, puis une séance toutes les 2 semaines environ, avec Gooodeat entre les séances.</p>
-              <button type="button" class="btn btn-contour btn-bloc" data-lieu="pack" data-lien={SITE.calPack}>Je choisis l’accompagnement</button>
+            <div class="formule" data-formule="consultation">
+              <p class="formule-titre"><strong>Le bilan</strong> <span class="formule-prix">80 €</span></p>
+              <p class="formule-texte">On regarde ton assiette et autour, et tu repars avec le changement qui aura le plus d’impact. Envie de continuer ensuite ? Ce que tu as déjà fait compte.</p>
+              <button type="button" class="btn btn-contour btn-bloc" data-lieu="visio" data-lien={SITE.calVisio}>
+                En visio <span class="pastille">plus rapide</span>
+              </button>
+              <button type="button" class="btn btn-contour btn-bloc" data-lieu="malonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
             </div>
           </div>
         </fieldset>
@@ -263,6 +270,10 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
   .formule-titre strong { font-weight: 400; }
   .formule-prix { font-family: var(--police-texte); font-weight: 700; font-size: 17px; white-space: nowrap; }
   .formule-texte { margin: 0 0 4px; color: var(--encre-2); font-size: 16px; }
+  .formule-phare:has(.formule-titre) { position: relative; border: 2.5px solid var(--sapin); padding-top: 22px; }
+  .formule-pastille { position: absolute; top: -12px; right: 18px; }
+  .formule-liste { margin: 0 0 6px; padding-left: 20px; color: var(--encre); font-size: 15.5px; }
+  .formule-liste li { margin-bottom: 4px; }
 
   .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .erreur { color: #A8452F; font-weight: 700; margin: 18px 0 0; }
@@ -460,22 +471,12 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
     qa<HTMLElement>('[data-formule]').forEach((f) => (f.hidden = f.dataset.formule !== 'programme'));
   }
 
-  // Arrivée depuis un bouton de pack : ce pack passe en tête, mais la consultation
-  // reste juste en dessous, au même niveau. Elle peut toujours choisir une seule séance.
-  if (formule === 'pack' || formule === 'tabac') {
-    const bloc = q<HTMLElement>(`[data-formule="${formule}"]`);
+  // L'accompagnement reste toujours en tête et mis en avant (décision du 29/10/2026).
+  // Seul le pack tabac, venu de sa page, passe devant.
+  if (formule === 'tabac') {
+    const bloc = q<HTMLElement>('[data-formule="tabac"]');
     bloc.hidden = false;
     q<HTMLElement>('.lieux').prepend(bloc);
-    if (formule === 'pack') {
-      q<HTMLButtonElement>('[data-lieu="pack"]').classList.replace('btn-contour', 'btn-principal');
-      q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
-    }
-  }
-  // Arrivée par « Je réserve les deux » : cette formule passe en tête, visio en bouton principal.
-  if (formule === 'deux') {
-    q<HTMLElement>('.lieux').prepend(q<HTMLElement>('[data-formule="deux"]'));
-    q<HTMLButtonElement>('[data-lieu="deuxvisio"]').classList.replace('btn-contour', 'btn-principal');
-    q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
   }
 
   form.hidden = false;
