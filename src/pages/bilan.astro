@@ -146,8 +146,8 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
               <button type="button" class="btn btn-principal btn-bloc" data-lieu="tabac" data-lien={SITE.calPackTabac}>Réserver mon pack tabac</button>
             </div>
             <div class="formule" data-formule="consultation">
-              <p class="formule-titre"><strong>Une consultation</strong> <span class="formule-prix">80 €</span></p>
-              <p class="formule-texte">On fait le point et tu repars avec une première piste. Tu veux un suivi ensuite ? C’est 50 € la séance, sans engagement.</p>
+              <p class="formule-titre"><strong data-titre-bilan>Le bilan</strong> <span class="formule-prix" data-prix-bilan>80 €</span></p>
+              <p class="formule-texte" data-texte-bilan>On regarde ton assiette et autour, et tu repars avec le changement qui aura le plus d’impact. Envie de continuer ensuite ? Ce que tu as déjà fait compte.</p>
               <button type="button" class="btn btn-principal btn-bloc" data-lieu="visio" data-lien={SITE.calVisio}>
                 En visio <span class="pastille">plus rapide</span>
               </button>
@@ -155,7 +155,7 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
             </div>
             <div class="formule" data-formule="pack">
               <p class="formule-titre"><strong>L’accompagnement</strong> <span class="formule-prix">330 €</span></p>
-              <p class="formule-texte">10 semaines en visio : ton bilan, puis autant de séances que nécessaire, avec Gooodeat entre les séances.</p>
+              <p class="formule-texte">10 semaines en visio : ton bilan, puis une séance toutes les 2 semaines environ, avec Gooodeat entre les séances.</p>
               <button type="button" class="btn btn-contour btn-bloc" data-lieu="pack" data-lien={SITE.calPack}>Je choisis l’accompagnement</button>
             </div>
           </div>
@@ -459,6 +459,12 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
       q<HTMLButtonElement>('[data-lieu="pack"]').classList.replace('btn-contour', 'btn-principal');
       q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
     }
+  }
+  // « Bilan + une séance » : on réserve le bilan maintenant, la séance suivante se fixe pendant le bilan.
+  if (formule === 'deux') {
+    q<HTMLElement>('[data-titre-bilan]').textContent = 'Bilan + une séance';
+    q<HTMLElement>('[data-prix-bilan]').textContent = '130 €';
+    q<HTMLElement>('[data-texte-bilan]').textContent = 'Tu réserves ton bilan ici. La deuxième séance, deux semaines plus tard, on la fixe ensemble pendant le bilan.';
   }
 
   form.hidden = false;

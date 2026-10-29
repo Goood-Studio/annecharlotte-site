@@ -7,19 +7,19 @@
 
 export const OFFRES = [
   {
-    nom: 'Premiers pas',
+    // « Petit effort, gros impact » (29/10/2026) : plus de « Premiers pas » ni de suivi à l'unité affiché.
+    nom: 'Le bilan',
     prix: '80 €',
-    unite: 'la consultation',
+    unite: '1 séance, seul·e ou à deux',
     description:
-      'Une consultation, seul·e ou à deux : on fait le point et tu repars avec une première piste concrète, adaptée à ta vie.',
+      'On regarde ton assiette et tout ce qu’il y a autour. Je t’explique ce qui se passe chez toi, et tu repars avec le changement qui aura le plus d’impact, à lancer dès demain.',
     inclus: [
-      'Bilan complet',
-      'Une première piste concrète à tester',
+      'Ce qui se passe chez toi, expliqué simplement',
+      'Ton premier changement, choisi ensemble',
       'Remboursement mutuelle possible',
     ],
-    // Info neutre, pas une promo (décision du 12/10/2026).
-    economie: 'Séance de suivi ensuite : 50 €.',
-    ctaTexte: 'Réserver une consultation',
+    economie: '',
+    ctaTexte: 'Je réserve mon bilan',
     meilleurChoix: false,
   },
   {
@@ -29,12 +29,12 @@ export const OFFRES = [
     prix: '330 €',
     unite: '10 semaines, en visio',
     description:
-      'On prend un problème, et on le traite. On avance une chose à la fois : tu testes, on regarde ce que ça donne, on ajuste.',
+      'Un changement à la fois, en commençant par celui qui a le plus d’impact. On regarde ce qu’il a donné, et on ajoute le suivant.',
     inclus: [
-      'Ton bilan, puis autant de séances que nécessaire (souvent une toutes les 2 semaines)*',
-      'Un changement concret à la fois, pensé pour ta vraie semaine',
+      'Le bilan : ce qui se passe chez toi, et ton premier changement',
+      'Une séance toutes les 2 semaines environ, souvent 5 après le bilan : on regarde ce que ça a donné, on ajoute le suivant*',
       'Gooodeat entre les séances : tu notes tes repas et ton ressenti, on les regarde ensemble au rendez-vous',
-      'Remboursement mutuelle possible, à chaque séance',
+      'À la fin, ton mode d’emploi : ce qui marche pour toi',
     ],
     economie: '',
     ctaTexte: 'Commencer l’accompagnement',
@@ -57,6 +57,26 @@ export const OFFRES = [
     ctaTexte: 'Arrêter, sans la peur de grossir',
     meilleurChoix: false,
   },
+  {
+    // Pour celles qui veulent « juste deux rendez-vous » : le bilan, puis une séance 2 semaines plus tard.
+    nom: 'Bilan + une séance',
+    prix: '130 €',
+    unite: '2 séances, sur 2 semaines',
+    description:
+      'Le bilan, puis on se revoit pour regarder ensemble ce que ton premier changement a donné.',
+    inclus: [],
+    economie: '',
+    ctaTexte: 'Je réserve les deux',
+    meilleurChoix: false,
+  },
+] as const;
+
+// Ce qu'on peut changer : rend concret « le changement qui a le plus d'impact ».
+export const EXEMPLES_CHANGEMENT = [
+  'Manger plus lentement',
+  'Ajouter un aliment qui manque',
+  'En remplacer un qui te dessert',
+  'Souper un peu plus tôt',
 ] as const;
 
 export const SERVICES = [
@@ -130,7 +150,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, la consultation « Premiers pas » est à 80 €, et l’accompagnement (10 semaines en visio, autant de séances que nécessaire) à 330 €. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, le bilan est à 80 €, le bilan avec une séance deux semaines plus tard à 130 €, et l’accompagnement (10 semaines en visio, une séance toutes les 2 semaines environ) à 330 €. Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',

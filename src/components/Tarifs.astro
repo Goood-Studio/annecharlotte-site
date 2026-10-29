@@ -1,16 +1,18 @@
 ---
-// Les offres : deux panneaux assumés et différents (pas de cartes jumelles).
-// Le pack, meilleur choix, prend la scène sur fond sapin.
+// Les offres : l'accompagnement prend la scène sur fond sapin, le bilan et
+// « bilan + une séance » se rangent à côté, plus discrets.
+// « Petit effort, gros impact » (29/10/2026) : on dit concrètement ce qu'on
+// change, et que ce qu'elle a déjà fait compte si elle continue.
 //
-// Deux variantes, parce que trois formules côte à côte alourdissent la page :
-//   « classique » (par défaut) → Accompagnement + Premiers pas
+// Deux variantes :
+//   « classique » (par défaut) → Accompagnement + Bilan + Bilan et une séance
 //   « tabac »                  → le Pack tabac seul, sur la page arrêt du tabac
-import { OFFRES } from '../data/contenu';
+import { OFFRES, EXEMPLES_CHANGEMENT } from '../data/contenu';
 import { SITE } from '../data/site';
 
 interface Props {
   variante?: 'classique' | 'tabac';
-  // Pages villes : on retire les phrases économie et horaires visio, sinon
+  // Pages villes : on retire les exemples, les rassurances et les horaires visio, sinon
   // les pages villes se ressemblent trop pour le détecteur anti-duplication.
   sobre?: boolean;
 }
@@ -18,20 +20,28 @@ interface Props {
 const { variante = 'classique', sobre = false } = Astro.props;
 const horaires = sobre ? SITE.horaires : `${SITE.horaires}, et ${SITE.horairesVisio}, pour que ça colle avec ton boulot`;
 
-const premiersPas = OFFRES[0];
+const bilan = OFFRES[0];
 const pack = OFFRES[1];
 const packTabac = OFFRES[2];
+const deux = OFFRES[3];
 const tabac = variante === 'tabac';
 ---
 
 <section class="tarifs" aria-labelledby="titre-tarifs">
   <div class="contenu" data-reveal>
-    <h2 id="titre-tarifs">Les tarifs, sans surprise</h2>
-    <p class="tarifs-chapo">
-      {tabac
-        ? `Disponibilités : ${SITE.horaires}, et ${SITE.horairesVisio}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`
-        : `Disponibilités : ${horaires}. Visio ou cabinet, c’est toi qui choisis, et la mutuelle rembourse une partie.`}
-    </p>
+    <h2 id="titre-tarifs">{tabac ? 'Les tarifs, sans surprise' : 'Petit effort, gros impact'}</h2>
+    {tabac ? (
+      <p class="tarifs-chapo">{`Disponibilités : ${SITE.horaires}, et ${SITE.horairesVisio}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`}</p>
+    ) : (
+      <>
+        <p class="tarifs-chapo">Pas de plan alimentaire. On regarde ton assiette et tout ce qu’il y a autour, et on met en place le changement qui aura le plus d’impact chez toi. Puis le suivant.</p>
+        {!sobre && (
+          <ul class="exemples" aria-label="Par exemple">
+            {EXEMPLES_CHANGEMENT.map((e) => <li>{e}</li>)}
+          </ul>
+        )}
+      </>
+    )}
 
     <div class:list={['offres', tabac && 'offres-seule']}>
       {tabac ? (
@@ -47,29 +57,43 @@ const tabac = variante === 'tabac';
       ) : (
         <>
           <article class="offre offre-pack">
-            <span class="pastille">Ce que je propose le plus souvent</span>
+            <span class="pastille">Ce que je propose</span>
             <h3>{pack.nom}</h3>
             <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
-                        {!sobre && <p class="offre-desc">{pack.description}</p>}
+            {!sobre && <p class="offre-desc">{pack.description}</p>}
             <ul>
-              {(sobre ? pack.inclus.slice(0, 1) : pack.inclus).map((item) => <li>{item}</li>)}
+              {(sobre ? pack.inclus.slice(0, 2) : pack.inclus).map((item) => <li>{item}</li>)}
             </ul>
             <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
           </article>
 
-          <article class="offre offre-simple">
-            <h3>{premiersPas.nom}</h3>
-            <p class="offre-prix"><span class="prix">{premiersPas.prix}</span> <span class="unite">{premiersPas.unite}</span></p>
-            {!sobre && <p class="offre-eco">{premiersPas.economie}</p>}
-            <p class="offre-desc">{premiersPas.description}</p>
-            <ul>
-              {premiersPas.inclus.map((item) => <li>{item}</li>)}
-            </ul>
-            <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{premiersPas.ctaTexte}</a>
-          </article>
+          <div class="offres-cote">
+            <article class="offre offre-simple">
+              <h3>{bilan.nom}</h3>
+              <p class="offre-prix"><span class="prix">{bilan.prix}</span> <span class="unite">{bilan.unite}</span></p>
+              <p class="offre-desc">{bilan.description}</p>
+              <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{bilan.ctaTexte}</a>
+            </article>
+            <article class="offre offre-simple">
+              <h3>{deux.nom}</h3>
+              <p class="offre-prix"><span class="prix">{deux.prix}</span> <span class="unite">{deux.unite}</span></p>
+              <p class="offre-desc">{deux.description}</p>
+              <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio + '?formule=deux'}>{deux.ctaTexte}</a>
+            </article>
+          </div>
         </>
       )}
     </div>
+    {!tabac && (
+      <p class="regle">Envie de continuer en route ? Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement.</p>
+    )}
+    {!tabac && !sobre && (
+      <ul class="rassure">
+        <li>On ajoute, on ne retire pas</li>
+        <li>Tes photos de repas, sans jugement</li>
+        <li>{`Disponibilités : ${horaires}. La mutuelle rembourse une partie de chaque séance.`}</li>
+      </ul>
+    )}
     <p class="note-etoile">
       {tabac
         ? '* Valable 4 mois : les séances s’espacent selon ta situation.'
@@ -79,7 +103,9 @@ const tabac = variante === 'tabac';
 </section>
 
 <style>
-  .tarifs-chapo { color: var(--encre-2); margin-bottom: 28px; }
+  .tarifs-chapo { color: var(--encre-2); margin-bottom: 18px; max-width: 62ch; }
+  .exemples { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 26px; }
+  .exemples li { background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: 999px; padding: 6px 14px; font-size: 15px; color: var(--sapin); }
   .offres {
     display: grid;
     grid-template-columns: 1fr;
@@ -89,6 +115,7 @@ const tabac = variante === 'tabac';
   @media (min-width: 780px) {
     .offres { grid-template-columns: 1.15fr 1fr; }
   }
+  .offres-cote { display: grid; gap: 18px; }
   /* Un seul panneau : il ne s'étale pas sur toute la largeur. */
   .offres-seule { max-width: 620px; }
   @media (min-width: 780px) {
@@ -115,8 +142,10 @@ const tabac = variante === 'tabac';
   .offre-simple {
     background: var(--blanc);
     border: 1.5px solid var(--ligne);
+    padding: 22px 22px 20px;
   }
-  .offre-simple li::marker { color: var(--dore); }
+  .offre-simple .prix { font-size: 34px; }
+  .offre-simple .offre-desc { margin-bottom: 14px; }
   .offre .pastille { position: absolute; top: -12px; right: 22px; }
   .offre-prix { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 4px; }
   .prix {
@@ -127,9 +156,10 @@ const tabac = variante === 'tabac';
     white-space: nowrap;
   }
   .unite { color: var(--encre-2); font-size: 15px; }
-  .offre-eco { margin: 0 0 8px; font-size: 15px; color: var(--encre-2); }
   .offre ul { margin: 10px 0 20px; padding-left: 20px; }
   .offre li { margin-bottom: 7px; font-size: 16px; }
   .offre .btn { margin-top: auto; }
-  .note-etoile { margin: 14px 4px 0; font-size: 14.5px; color: var(--encre-2); }
+  .regle { margin: 18px 0 0; padding: 12px 16px; background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: 14px; color: var(--sapin); font-size: 15.5px; }
+  .rassure { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 14px 4px 0; padding-left: 18px; color: var(--encre-2); font-size: 14.5px; }
+  .note-etoile { margin: 10px 4px 0; font-size: 14.5px; color: var(--encre-2); }
 </style>
