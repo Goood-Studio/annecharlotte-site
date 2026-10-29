@@ -13,13 +13,11 @@ import { MOTIFS } from '../data/miroir';
 
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
-const lieux: [id: string, label: string, lien: string][] = [
-  ['programme', 'Réserver ma place', SITE.calProgramme35],
-  ['tabac', 'Réserver mon pack tabac', SITE.calPackTabac],
-  ['visio', 'En visio', SITE.calVisio],
-  ['malonne', 'Au cabinet de Malonne', SITE.calMalonne],
-  ['pack', 'Je veux être accompagné·e sur plusieurs séances (accompagnement)', SITE.calPack],
-];
+// Deux chemins côte à côte : la consultation (et des suivis à l'unité si elle veut)
+// ou l'accompagnement. Avant le 29/10/2026, « plusieurs séances » menait d'office
+// au pack : les personnes qui voulaient juste une consultation et un suivi
+// se retrouvaient bloquées et ne réservaient pas.
+// Les id (visio, malonne, pack…) partent tels quels vers la boussole.
 ---
 
 <Base
@@ -141,15 +139,25 @@ const lieux: [id: string, label: string, lien: string][] = [
             <span>J’accepte qu’Anne-Charlotte reçoive ces réponses pour préparer mon rendez-vous.</span>
           </label>
           <div class="lieux">
-            {lieux.map(([id, label, lien]) => (
-              <>
-                {id === 'visio' && <p class="sous-lieux" hidden>Ou d’abord une première consultation :</p>}
-                <button type="button" class:list={['btn', id === 'visio' ? 'btn-principal' : 'btn-contour', 'btn-bloc']} data-lieu={id} data-lien={lien} hidden={id === 'tabac' || id === 'programme'}>
-                  {label}
-                  {id === 'visio' && <span class="pastille">plus rapide</span>}
-                </button>
-              </>
-            ))}
+            <div class="formule" data-formule="programme" hidden>
+              <button type="button" class="btn btn-principal btn-bloc" data-lieu="programme" data-lien={SITE.calProgramme35}>Réserver ma place</button>
+            </div>
+            <div class="formule" data-formule="tabac" hidden>
+              <button type="button" class="btn btn-principal btn-bloc" data-lieu="tabac" data-lien={SITE.calPackTabac}>Réserver mon pack tabac</button>
+            </div>
+            <div class="formule" data-formule="consultation">
+              <p class="formule-titre"><strong>Une consultation</strong> <span class="formule-prix">80 €</span></p>
+              <p class="formule-texte">On fait le point et tu repars avec une première piste. Tu veux un suivi ensuite ? C’est 50 € la séance, sans engagement.</p>
+              <button type="button" class="btn btn-principal btn-bloc" data-lieu="visio" data-lien={SITE.calVisio}>
+                En visio <span class="pastille">plus rapide</span>
+              </button>
+              <button type="button" class="btn btn-contour btn-bloc" data-lieu="malonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
+            </div>
+            <div class="formule" data-formule="pack">
+              <p class="formule-titre"><strong>L’accompagnement</strong> <span class="formule-prix">330 €</span></p>
+              <p class="formule-texte">10 semaines en visio : ton bilan, puis autant de séances que nécessaire, avec Gooodeat entre les séances.</p>
+              <button type="button" class="btn btn-contour btn-bloc" data-lieu="pack" data-lien={SITE.calPack}>Je choisis l’accompagnement</button>
+            </div>
           </div>
         </fieldset>
 
@@ -241,9 +249,14 @@ const lieux: [id: string, label: string, lien: string][] = [
   :global(.deja p) { margin: 0 0 8px; }
   :global(.deja .btn-lien) { background: none; border: 0; padding: 0; color: var(--sapin); text-decoration: underline; font: inherit; font-weight: 700; cursor: pointer; }
   .consentement input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--sapin); flex: none; }
-  .lieux { display: grid; gap: 12px; margin-top: 6px; }
+  .lieux { display: grid; gap: 16px; margin-top: 6px; }
   .lieux [hidden] { display: none; }
-  .sous-lieux { margin: 8px 0 0; font-weight: 700; color: var(--sapin); }
+  .formule { display: grid; gap: 10px; }
+  .formule:has(.formule-titre) { background: var(--blanc); border: 2px solid var(--ligne); border-radius: 18px; padding: 16px; }
+  .formule-titre { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0; font-family: var(--police-titre); color: var(--sapin); font-size: 21px; }
+  .formule-titre strong { font-weight: 400; }
+  .formule-prix { font-family: var(--police-texte); font-weight: 700; font-size: 17px; white-space: nowrap; }
+  .formule-texte { margin: 0 0 4px; color: var(--encre-2); font-size: 16px; }
 
   .piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .erreur { color: #A8452F; font-weight: 700; margin: 18px 0 0; }
@@ -433,19 +446,19 @@ const lieux: [id: string, label: string, lien: string][] = [
     q<HTMLElement>('.surtitre', document).textContent = 'Programme 6 semaines';
     q<HTMLElement>('h1', document).textContent = 'Prendre soin de son corps à partir de 35 ans';
     q<HTMLElement>('[data-etape="rdv"] legend').textContent = 'Réserve ta place';
-    qa<HTMLButtonElement>('[data-lieu]').forEach((b) => (b.hidden = b.dataset.lieu !== 'programme'));
-    q<HTMLButtonElement>('[data-lieu="programme"]').classList.replace('btn-contour', 'btn-principal');
+    qa<HTMLElement>('[data-formule]').forEach((f) => (f.hidden = f.dataset.formule !== 'programme'));
   }
 
-  // Arrivée depuis un bouton de pack (tout compris ou tabac) : ce pack passe en premier.
+  // Arrivée depuis un bouton de pack : ce pack passe en tête, mais la consultation
+  // reste juste en dessous, au même niveau. Elle peut toujours choisir une seule séance.
   if (formule === 'pack' || formule === 'tabac') {
-    const pack = q<HTMLButtonElement>(`[data-lieu="${formule}"]`);
-    pack.hidden = false;
-    // Le pack choisi remonte en tête, avant « Ou d'abord une première consultation ».
-    q<HTMLElement>('.lieux').prepend(pack);
-    pack.classList.replace('btn-contour', 'btn-principal');
-    q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
-    q<HTMLElement>('.sous-lieux').hidden = false;
+    const bloc = q<HTMLElement>(`[data-formule="${formule}"]`);
+    bloc.hidden = false;
+    q<HTMLElement>('.lieux').prepend(bloc);
+    if (formule === 'pack') {
+      q<HTMLButtonElement>('[data-lieu="pack"]').classList.replace('btn-contour', 'btn-principal');
+      q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
+    }
   }
 
   form.hidden = false;
