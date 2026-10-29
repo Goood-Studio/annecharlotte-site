@@ -146,12 +146,18 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
               <button type="button" class="btn btn-principal btn-bloc" data-lieu="tabac" data-lien={SITE.calPackTabac}>Réserver mon pack tabac</button>
             </div>
             <div class="formule" data-formule="consultation">
-              <p class="formule-titre"><strong data-titre-bilan>Le bilan</strong> <span class="formule-prix" data-prix-bilan>80 €</span></p>
-              <p class="formule-texte" data-texte-bilan>On regarde ton assiette et autour, et tu repars avec le changement qui aura le plus d’impact. Envie de continuer ensuite ? Ce que tu as déjà fait compte.</p>
+              <p class="formule-titre"><strong>Le bilan</strong> <span class="formule-prix">80 €</span></p>
+              <p class="formule-texte">On regarde ton assiette et autour, et tu repars avec le changement qui aura le plus d’impact. Envie de continuer ensuite ? Ce que tu as déjà fait compte.</p>
               <button type="button" class="btn btn-principal btn-bloc" data-lieu="visio" data-lien={SITE.calVisio}>
                 En visio <span class="pastille">plus rapide</span>
               </button>
               <button type="button" class="btn btn-contour btn-bloc" data-lieu="malonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
+            </div>
+            <div class="formule" data-formule="deux">
+              <p class="formule-titre"><strong>Bilan + une séance</strong> <span class="formule-prix">130 €</span></p>
+              <p class="formule-texte">Le bilan, puis on se revoit deux semaines plus tard pour regarder ce que ton premier changement a donné. Tu réserves le bilan ici ; la deuxième séance, on la fixe ensemble pendant le bilan.</p>
+              <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxvisio" data-lien={SITE.calVisio}>En visio</button>
+              <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxmalonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
             </div>
             <div class="formule" data-formule="pack">
               <p class="formule-titre"><strong>L’accompagnement</strong> <span class="formule-prix">330 €</span></p>
@@ -437,9 +443,14 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
     lien.searchParams.set('metadata[ref]', ref);
     window.location.href = lien.toString();
   }
-  // Retour arrière depuis cal.com : la page revient figée (« Un instant… ») ; on la recharge
-  // pour retomber sur le choix du rendez-vous.
-  window.addEventListener('pageshow', (e) => { if (e.persisted) location.reload(); });
+  // Retour arrière depuis un agenda cal.com : les boutons reviennent tels quels (plus de
+  // « Un instant… ») et on retombe droit sur le choix du rendez-vous, sans rien recliquer
+  // ni recharger. Elle peut ainsi passer d'un agenda à l'autre avec le bouton retour.
+  const textesBoutons = new Map(qa<HTMLButtonElement>('[data-lieu]').map((b) => [b, b.innerHTML]));
+  window.addEventListener('pageshow', () => {
+    textesBoutons.forEach((html, b) => { b.disabled = false; b.innerHTML = html; });
+    if (lireMemo()) { dejaRepondu = true; allerAuRdv(); }
+  });
 
   // Programme : un seul bouton, celui du programme.
   if (programme) {
@@ -460,36 +471,41 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
       q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
     }
   }
-  // « Bilan + une séance » : on réserve le bilan maintenant, la séance suivante se fixe pendant le bilan.
+  // Arrivée par « Je réserve les deux » : cette formule passe en tête, visio en bouton principal.
   if (formule === 'deux') {
-    q<HTMLElement>('[data-titre-bilan]').textContent = 'Bilan + une séance';
-    q<HTMLElement>('[data-prix-bilan]').textContent = '130 €';
-    q<HTMLElement>('[data-texte-bilan]').textContent = 'Tu réserves ton bilan ici. La deuxième séance, deux semaines plus tard, on la fixe ensemble pendant le bilan.';
+    q<HTMLElement>('.lieux').prepend(q<HTMLElement>('[data-formule="deux"]'));
+    q<HTMLButtonElement>('[data-lieu="deuxvisio"]').classList.replace('btn-contour', 'btn-principal');
+    q<HTMLButtonElement>('[data-lieu="visio"]').classList.replace('btn-principal', 'btn-contour');
   }
 
   form.hidden = false;
   (document.querySelector('.progression') as HTMLElement).hidden = false;
   numero.hidden = false;
   qa<HTMLElement>('legend').forEach((l) => (l.tabIndex = -1));
-  if (dejaRepondu) {
+  // Déjà répondu : droit au choix du rendez-vous, avec un bandeau « tu m'as déjà répondu ».
+  function allerAuRdv() {
     const rdv = etapes.findIndex((e) => e.dataset.etape === 'rdv');
-    const bandeau = document.createElement('div');
-    bandeau.className = 'deja';
-    bandeau.innerHTML = '<p><strong>Tu m’as déjà répondu, merci.</strong> Choisis simplement ton rendez-vous, pas besoin de tout réécrire.</p><button type="button" class="btn-lien" data-recommencer>Ce n’est pas moi, ou je veux tout reprendre</button>';
-    etapes[rdv].prepend(bandeau);
-    q<HTMLElement>('.consentement').hidden = true;
-    q<HTMLElement>('.photos').hidden = true;
-    q<HTMLButtonElement>('[data-recommencer]').addEventListener('click', () => {
-      ecrireMemo(null);
-      dejaRepondu = false;
-      ref = nouvelleRef();
-      bandeau.remove();
-      q<HTMLElement>('.consentement').hidden = false;
-      montrer(0);
-    });
+    if (!etapes[rdv].querySelector('.deja')) {
+      const bandeau = document.createElement('div');
+      bandeau.className = 'deja';
+      bandeau.innerHTML = '<p><strong>Tu m’as déjà répondu, merci.</strong> Choisis simplement ton rendez-vous, pas besoin de tout réécrire.</p><button type="button" class="btn-lien" data-recommencer>Ce n’est pas moi, ou je veux tout reprendre</button>';
+      etapes[rdv].prepend(bandeau);
+      q<HTMLElement>('.consentement').hidden = true;
+      q<HTMLElement>('.photos').hidden = true;
+      q<HTMLButtonElement>('[data-recommencer]').addEventListener('click', () => {
+        ecrireMemo(null);
+        dejaRepondu = false;
+        ref = nouvelleRef();
+        bandeau.remove();
+        q<HTMLElement>('.consentement').hidden = false;
+        montrer(0);
+      });
+    }
     montrer(rdv);
     retour.hidden = true;
     (document.querySelector('.progression') as HTMLElement).hidden = true;
     numero.hidden = true;
-  } else montrer(0);
+  }
+  if (dejaRepondu) allerAuRdv();
+  else montrer(0);
 </script>
