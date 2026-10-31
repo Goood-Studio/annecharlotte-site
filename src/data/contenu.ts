@@ -278,16 +278,17 @@ export const EXEMPLES_CARNET = {
   },
   sopk: {
     label: 'SOPK', prenom: 'Inès',
-    raison: 'Ne plus craquer sur le sucre à 16 h',
-    piste: 'Le sucre plus stable',
-    exos: ['Le fruit accompagné de quelques noix', 'Un petit-déjeuner qui tient jusqu’à midi', 'La balade digestive après le repas'],
-    lendemain: 'Tu commences ta première petite chose : un petit-déj avec une protéine, ton fruit accompagné, 10 minutes de marche…',
+    raison: 'Me sentir bien dans mon corps, toute la journée',
+    piste: 'On améliore ton équilibre',
+    exos: ['L’image du sablier : qu’ajouter à mon repas ?', 'Tiens, j’ai bougé cette semaine', 'Une poignée de noix à 16 h'],
+    lendemain: 'Tu commences ta première petite chose : regarder ton repas avec l’image du sablier, une poignée de noix à 16 h, un peu de mouvement…',
   },
   meno: {
     label: 'Ménopause', prenom: 'Nathalie',
     raison: 'Retrouver mes nuits',
     piste: 'Des soirées qui aident à dormir',
-    exos: ['Souper un peu plus tôt', 'Un goûter vers 16-17 h', 'Une portion de soja par jour'],
-    lendemain: 'Tu commences ta première petite chose : un goûter vers 16 h, un souper un peu plus tôt, la lumière du matin…',
+    exos: ['Souper un peu plus tôt', 'Un goûter vers 16-17 h', 'Tiens, j’ai des protéines au matin ?'],
+    lendemain: 'Tu commences ta première petite chose : un goûter vers 16 h, un souper un peu plus tôt, des protéines au petit-déj…',
   },
+
 } as const;
