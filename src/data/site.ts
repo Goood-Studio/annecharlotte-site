@@ -6,7 +6,7 @@ export const SITE = {
   prenom: 'Anne-Charlotte',
   nomComplet: 'Anne-Charlotte Jalhay',
   slogan: 'Retrouve du plaisir à manger, sans culpabilité',
-  email: 'bonjour@annecharlotte.be',
+  email: 'acj.diet@gmail.com',
 
   telephone: '+32 472 62 91 95',
   telephoneLien: 'tel:+32472629195',
