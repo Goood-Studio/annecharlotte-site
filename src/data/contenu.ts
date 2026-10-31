@@ -199,3 +199,95 @@ export const FAQ_DIET = [
 
 export const TEMOIGNAGE_SECTION_TODO =
   'Les témoignages du site Framer sont dans un carrousel non exporté : à récupérer avec Anne-Charlotte avant la bascule.';
+
+// Le parcours d'accompagnement, problème par problème (31/10/2026) : pourquoi un
+// accompagnement plutôt qu'une consultation, et ce qui se passe séance après séance.
+// Construit sur le plan de sa boussole (J0, J7, ~J21, ~J40, ~J60, fin) et ses pistes.
+// Les durées sont indicatives : on avance à son rythme, un changement à la fois.
+export const PARCOURS = {
+  digestif: {
+    titre: 'Ton ventre, phase par phase',
+    sousTitre: 'Les troubles digestifs',
+    pourquoi: [
+      { t: 'Un ventre, ça se comprend en testant', d: 'Un rendez-vous donne des pistes. Savoir laquelle marche chez toi, ça demande d’essayer, d’observer, d’ajuster.' },
+      { t: 'On ne retire rien sans le remettre', d: 'Si on met un aliment de côté un temps, on le réintroduit ensemble, famille par famille. Seule, c’est là qu’on reste bloquée.' },
+      { t: 'Le ventre et la tête se parlent', d: 'Stress, fatigue, rythme des repas : on regarde tout ce qui tourne autour de ton assiette, pas seulement ce qu’il y a dedans.' },
+    ],
+    phases: [
+      { quand: 'Le bilan', t: 'On comprend', d: 'Ton ventre, ce qui le réveille, ce qui doit d’abord être vu par ton médecin. Et ton premier geste : souvent le rythme des repas ou mâcher plus lentement.' },
+      { quand: '2 semaines après', t: 'On regarde ce qui a changé', d: 'Ton carnet nous dit ce qui a aidé. On garde, on ajuste, ou on change de piste.' },
+      { quand: 'Vers 1 mois', t: 'On cherche ton déclencheur', d: 'Si besoin, les FODMAP en douceur : on remplace 2 ou 3 aliments, pas toute ta cuisine, pendant 2 semaines.' },
+      { quand: 'Vers 6 semaines', t: 'On réintroduit et on élargit', d: 'Famille par famille, pour garder le plus de variété possible. Et on s’occupe du stress qui tape sur le ventre.' },
+      { quand: 'Vers 2 mois', t: 'On consolide', d: 'Ce qui marche devient une habitude, même les semaines chargées.' },
+      { quand: 'La dernière séance', t: 'Ton mode d’emploi', d: 'Ce qui passe bien, tes déclencheurs, et quoi faire si ça revient. Tu repars autonome.' },
+    ],
+    garde: 'Sang dans les selles, perte de poids sans raison, symptômes qui réveillent la nuit : on en parle d’abord avec ton médecin. Je travaille en complément du suivi médical, jamais à sa place.',
+  },
+  sopk: {
+    titre: 'Ton SOPK, ta porte d’entrée',
+    sousTitre: 'SOPK',
+    pourquoi: [
+      { t: 'Il n’y a pas deux SOPK pareils', d: 'Fringales, cycles, peau, fatigue, projet bébé : ce qui te gêne, toi, n’est pas ce qui gêne ta voisine.' },
+      { t: 'Pas de régime unique, c’est la règle', d: 'Les recommandations internationales de 2023 le disent : on construit avec toi, selon tes objectifs et ta vie.' },
+      { t: 'On ajuste en avançant', d: 'Un changement à la fois, on regarde ce qu’il donne chez toi, et on garde ce qui marche.' },
+    ],
+    branchesTitre: 'Tu viens peut-être pour…',
+    portes: ['Comprendre ton diagnostic', 'Tes fringales et ta fatigue', 'Ta peau, tes cheveux, tes cycles', 'Ton poids', 'Ton ventre', 'Un projet bébé', 'Juste aller mieux'],
+    pareil: 'On part de ton histoire. À chaque séance, on regarde ensemble par où on commence, à ton rythme. Toujours avec la même idée : mange pour être libre.',
+    garde: 'Le diagnostic est posé par ton médecin ou ton gynéco. On ne commence jamais par un complément, et tout projet bébé se discute avec eux.',
+  },
+  endo: {
+    titre: 'Ton endométriose, ta porte d’entrée',
+    sousTitre: 'Endométriose',
+    pourquoi: [
+      { t: 'Il n’y a pas deux endométrioses pareilles', d: 'Douleurs, ventre, fatigue, cycle : on part de ce qui pèse le plus pour toi.' },
+      { t: 'Ton ventre peut avoir plusieurs histoires', d: 'Lié au cycle, intestin irritable, transit qui coince ou qui s’emballe : on cherche laquelle, avant de changer quoi que ce soit.' },
+      { t: 'Pas de restriction inutile', d: 'Si tu as déjà beaucoup retiré, on remet d’abord. Manger varié nourrit ton microbiote, ton meilleur allié.' },
+    ],
+    branchesTitre: 'Tu viens peut-être pour…',
+    portes: ['Tes douleurs', 'Ton ventre qui gonfle', 'Ton transit', 'Ta fatigue', 'Tout ce que tu as déjà supprimé', 'Ne plus te priver pour rien'],
+    pareil: 'On part de ton histoire. À chaque séance, on regarde ensemble par où on commence, à ton rythme. Toujours avec la même idée : mange pour être libre.',
+    garde: 'Je travaille avec ton gynéco, jamais à sa place. Sang dans les selles, perte de poids sans raison, douleur à la selle pendant les règles : on vérifie d’abord avec ton médecin, avant de changer ton alimentation.',
+  },
+} as const;
+
+// L'exemple de carnet montré dans « À quoi ça ressemble, au quotidien », selon la page
+// (31/10/2026) : gourmand sur l'accueil, ventre sur troubles digestifs, endo sur santé féminine.
+// Exercices repris des familles du carnet de sa boussole.
+export const EXEMPLES_CARNET = {
+  general: {
+    label: 'Mieux manger', prenom: 'Sophie',
+    raison: 'Avoir de l’énergie pour mes enfants',
+    piste: 'Le même repas, en mieux',
+    exos: ['Tes pâtes bolo, deux fois plus de sauce que de pâtes', 'Ton biscuit, savouré à table et sans écran', 'Du fromage frais sous ta confiture'],
+    lendemain: 'Tu commences ta première petite chose : tes pâtes bolo avec plus de sauce, ton biscuit savouré sans écran, du fromage frais sous ta confiture…',
+  },
+  digestif: {
+    label: 'Ventre', prenom: 'Julie',
+    raison: 'Ne plus avoir le ventre gonflé au bureau',
+    piste: 'Les premiers gestes pour le ventre',
+    exos: ['Des repas à heures régulières', 'Mâcher 10 fois tes 5 premières bouchées', 'Ton plat riche, version légère'],
+    lendemain: 'Tu commences ta première petite chose : des repas à heures régulières, mâcher un peu plus, une balade après le souper…',
+  },
+  endo: {
+    label: 'Endométriose', prenom: 'Emma',
+    raison: 'Vivre mes règles sans être clouée au lit',
+    piste: 'Méditerranéen, en ajoutant',
+    exos: ['Changer d’huile : olive pour cuire, colza pour assaisonner', 'Des petits poissons gras deux fois par semaine', 'Le pot d’épices, un plat par jour'],
+    lendemain: 'Tu commences ta première petite chose : une bonne huile, des sardines sur ta tartine, ton carnet par phase du cycle…',
+  },
+  sopk: {
+    label: 'SOPK', prenom: 'Inès',
+    raison: 'Ne plus craquer sur le sucre à 16 h',
+    piste: 'Le sucre plus stable',
+    exos: ['Le fruit accompagné de quelques noix', 'Un petit-déjeuner qui tient jusqu’à midi', 'La balade digestive après le repas'],
+    lendemain: 'Tu commences ta première petite chose : un petit-déj avec une protéine, ton fruit accompagné, 10 minutes de marche…',
+  },
+  meno: {
+    label: 'Ménopause', prenom: 'Nathalie',
+    raison: 'Retrouver mes nuits',
+    piste: 'Des soirées qui aident à dormir',
+    exos: ['Souper un peu plus tôt', 'Un goûter vers 16-17 h', 'Une portion de soja par jour'],
+    lendemain: 'Tu commences ta première petite chose : un goûter vers 16 h, un souper un peu plus tôt, la lumière du matin…',
+  },
+} as const;

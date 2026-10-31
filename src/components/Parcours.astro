@@ -1,0 +1,76 @@
+---
+// Pourquoi un accompagnement, et le parcours phase par phase, selon le problème
+// (troubles digestifs, SOPK, endométriose). Placé juste avant les tarifs.
+import { PARCOURS } from '../data/contenu';
+import { SITE } from '../data/site';
+
+interface Props {
+  cles: (keyof typeof PARCOURS)[];
+}
+const { cles } = Astro.props;
+const parcours = cles.map((c) => ({ id: c, ...PARCOURS[c] }));
+const plusieurs = parcours.length > 1;
+---
+
+<section class="parcours" aria-labelledby="titre-parcours">
+  <div class="contenu" data-reveal>
+    <h2 id="titre-parcours">Pourquoi un accompagnement{plusieurs ? '' : ', pour toi'}</h2>
+    <p class="parcours-chapo">Une consultation te donne tes premières pistes. L’accompagnement, c’est 6 séances en visio pour trouver celles qui marchent chez toi, avec ton carnet entre les séances, et je reste joignable.</p>
+    <div class:list={['parcours-grille', plusieurs && 'parcours-deux']}>
+      {parcours.map((p) => (
+        <article class="parcours-bloc">
+          {plusieurs && <span class="pastille">{p.sousTitre}</span>}
+          <ul class="pourquoi">
+            {p.pourquoi.map((x) => <li><strong>{x.t}</strong><span>{x.d}</span></li>)}
+          </ul>
+          <h3>{'portes' in p ? p.branchesTitre : p.titre}</h3>
+          {'portes' in p ? (
+            <>
+              <ul class="portes">
+                {p.portes.map((x) => <li>{x}</li>)}
+              </ul>
+              <p class="pareil">{p.pareil}</p>
+            </>
+          ) : (
+            <ol class="phases">
+              {p.phases.map((x) => <li><b>{x.quand}</b><strong>{x.t}</strong><span>{x.d}</span></li>)}
+            </ol>
+          )}
+          <p class="garde">{p.garde}</p>
+        </article>
+      ))}
+    </div>
+    <a class="btn btn-rose" href={SITE.rdvPack}>Je commence l’accompagnement</a>
+  </div>
+</section>
+
+<style>
+  .parcours-chapo { color: var(--encre-2); max-width: 64ch; margin-bottom: 20px; }
+  .parcours-grille { display: grid; gap: 22px; }
+  @media (min-width: 900px) { .parcours-deux { grid-template-columns: 1fr 1fr; } }
+  .parcours-bloc { position: relative; background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: var(--rayon-grand); padding: 26px 22px 20px; }
+  .parcours-bloc .pastille { position: absolute; top: -12px; left: 22px; }
+  .pourquoi { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 10px; }
+  .pourquoi li { background: var(--ecru); border-radius: 14px; padding: 12px 14px; border-left: 4px solid var(--rose); }
+  .pourquoi strong { display: block; color: var(--sapin); font-family: var(--police-titre); font-weight: 400; font-size: 17.5px; margin-bottom: 2px; }
+  .pourquoi span { color: var(--encre-2); font-size: 15.5px; }
+  .parcours-bloc h3 { font-size: 21px; margin: 0 0 14px; }
+  .phases { list-style: none; margin: 0; padding: 0; counter-reset: ph; }
+  .phases li { position: relative; padding: 0 0 18px 46px; counter-increment: ph; }
+  .phases li::before { content: counter(ph); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--sapin); color: var(--ecru); font-weight: 800; font-size: 14px; display: grid; place-items: center; box-shadow: 0 0 0 5px var(--blanc); }
+  .phases li:not(:last-child)::after { content: ''; position: absolute; left: 14px; top: 30px; bottom: -2px; width: 2px; background: var(--rose); }
+  .phases b { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--rose-fort); }
+  .phases strong { display: block; color: var(--sapin); font-size: 17px; }
+  .phases span { color: var(--encre-2); font-size: 15.5px; }
+  /* Les portes d'entrée (SOPK, endo) : « si c'est ça qui t'amène → on travaille ça ». */
+  .branches { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .branches li { display: grid; gap: 2px; padding: 10px 12px 10px 34px; position: relative; border-radius: 12px; background: var(--ecru); }
+  .branches li::before { content: '→'; position: absolute; left: 12px; top: 9px; color: var(--rose-fort); font-weight: 800; }
+  .branches strong { color: var(--sapin); font-size: 16.5px; }
+  .branches span { color: var(--encre-2); font-size: 15px; }
+  .portes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .portes li { background: var(--rose-2, #F7DCE1); color: var(--sapin); border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: 15px; }
+  .pareil { margin: 14px 0 0; font-weight: 700; color: var(--sapin); font-size: 15.5px; }
+  .garde { margin: 4px 0 0; font-size: 14.5px; color: var(--encre-2); background: var(--ecru); border-radius: 12px; padding: 10px 14px; }
+  .parcours .btn { margin-top: 22px; }
+</style>

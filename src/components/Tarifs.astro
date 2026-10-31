@@ -7,7 +7,7 @@
 // Deux variantes :
 //   « classique » (par défaut) → Accompagnement + Bilan + Bilan et une séance
 //   « tabac »                  → le Pack tabac seul, sur la page arrêt du tabac
-import { OFFRES, EXEMPLES_CHANGEMENT, PACK_RYTHME, PACK_FREINS } from '../data/contenu';
+import { OFFRES, EXEMPLES_CHANGEMENT, PACK_RYTHME, PACK_FREINS, EXEMPLES_CARNET } from '../data/contenu';
 import { SITE } from '../data/site';
 
 interface Props {
@@ -15,9 +15,15 @@ interface Props {
   // Pages villes : on retire les exemples, les rassurances et les horaires visio, sinon
   // les pages villes se ressemblent trop pour le détecteur anti-duplication.
   sobre?: boolean;
+  /** L'exemple de carnet dans « À quoi ça ressemble » : general, digestif, endo. */
+  exemple?: keyof typeof EXEMPLES_CARNET;
 }
 
-const { variante = 'classique', sobre = false } = Astro.props;
+const { variante = 'classique', sobre = false, exemple = 'general' } = Astro.props;
+const ex = EXEMPLES_CARNET[exemple];
+// Le carrousel commence par le cas de la page, puis les autres.
+const cas = [exemple, ...Object.keys(EXEMPLES_CARNET).filter((k) => k !== exemple)].map((k) => ({ id: k, ...EXEMPLES_CARNET[k as keyof typeof EXEMPLES_CARNET] }));
+const rythme = PACK_RYTHME.map((e, i) => (i === 0 ? { ...e, quoi: ex.lendemain } : e));
 const horaires = sobre ? SITE.horaires : `${SITE.horaires}, et ${SITE.horairesVisio}, pour que ça colle avec ton boulot`;
 
 const bilan = OFFRES[0];
@@ -91,22 +97,36 @@ const tabac = variante === 'tabac';
       <div class="pack-detail">
         <h3 class="pack-titre">À quoi ça ressemble, au quotidien</h3>
         <div class="pack-haut">
-          <figure class="telephone" aria-label="Exemple de carnet, tel qu’elle le reçoit sur son téléphone">
+          <figure class="telephone" aria-label="Exemples de carnets, tels que tes patientes les reçoivent sur leur téléphone">
+            <div class="cas-onglets" role="tablist" aria-label="Choisir un exemple">
+              {cas.map((c, k) => <button type="button" role="tab" data-cas={k} aria-selected={k === 0 ? 'true' : 'false'}>{c.label}</button>)}
+            </div>
             <div class="ecran">
-              <p class="tel-titre">Le carnet de Sophie</p>
-              <p class="tel-sous">Mis à jour après votre séance</p>
-              <div class="tel-carte tel-rose"><span>Pourquoi tu le fais</span>« Avoir de l’énergie pour mes enfants »</div>
-              <div class="tel-carte tel-sapin"><span>Ta piste</span><b>Le même repas, en mieux</b>
-                <i class="choisi">✓ Tes pâtes bolo, deux fois plus de sauce que de pâtes</i><i>Ton biscuit, savouré à table et sans écran</i><i>Du fromage frais sous ta confiture</i>
-              </div>
-              <div class="tel-carte"><span>Comment ça se passe ?</span>
-                <div class="tel-boutons"><em class="on">Je l’ai fait</em><em>Un peu</em><em>Pas encore</em></div>
+              <div class="cas-piste" tabindex="0" aria-live="polite">
+                {cas.map((c) => (
+                  <div class="cas">
+                    <p class="tel-titre">Le carnet {/^[AEIOUYÉÈÊaeiouy]/.test(c.prenom) ? `d’${c.prenom}` : `de ${c.prenom}`}</p>
+                    <p class="tel-sous">Mis à jour après votre séance</p>
+                    <div class="tel-carte tel-rose"><span>Pourquoi tu le fais</span>« {c.raison} »</div>
+                    <div class="tel-carte tel-sapin"><span>Ta piste</span><b>{c.piste}</b>
+                      {c.exos.map((t, k) => (k === 0 ? <i class="choisi">✓ {t}</i> : <i>{t}</i>))}
+                    </div>
+                    <div class="tel-carte"><span>Comment ça se passe ?</span>
+                      <div class="tel-boutons"><em class="on">Je l’ai fait</em><em>Un peu</em><em>Pas encore</em></div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-            <figcaption>Ton carnet, sur ton téléphone</figcaption>
+            <div class="cas-nav">
+              <button type="button" data-cas-pas="-1" aria-label="Exemple précédent">←</button>
+              <span class="cas-points">{cas.map((_, k) => <i class={k === 0 ? 'on' : ''}></i>)}</span>
+              <button type="button" data-cas-pas="1" aria-label="Exemple suivant">→</button>
+            </div>
+            <figcaption>Un carnet par patiente, sur son téléphone</figcaption>
           </figure>
           <ol class="rythme">
-            {PACK_RYTHME.map((e) => <li><strong>{e.quand}</strong><span>{e.quoi}</span></li>)}
+            {rythme.map((e) => <li><strong>{e.quand}</strong><span>{e.quoi}</span></li>)}
           </ol>
         </div>
         <h3 class="pack-titre">Tu te dis peut-être…</h3>
@@ -130,6 +150,30 @@ const tabac = variante === 'tabac';
     </p>
   </div>
 </section>
+
+<script>
+  // Le carrousel des carnets : glisser au doigt, flèches, étiquettes, et un défilement doux
+  // toutes les 5 secondes tant qu'on n'y touche pas.
+  document.querySelectorAll('.telephone').forEach((tel) => {
+    const piste = tel.querySelector('.cas-piste');
+    if (!piste) return;
+    const n = piste.children.length;
+    let i = 0, auto = true;
+    const montrer = (k, doux = true) => {
+      i = (k + n) % n;
+      piste.scrollTo({ left: piste.clientWidth * i, behavior: doux ? 'smooth' : 'auto' });
+      tel.querySelectorAll('[data-cas]').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
+      tel.querySelectorAll('.cas-points i').forEach((p, j) => p.classList.toggle('on', j === i));
+    };
+    const stop = () => { auto = false; };
+    tel.querySelectorAll('[data-cas]').forEach((b) => b.addEventListener('click', () => { stop(); montrer(+b.dataset.cas); }));
+    tel.querySelectorAll('[data-cas-pas]').forEach((b) => b.addEventListener('click', () => { stop(); montrer(i + +b.dataset.casPas); }));
+    let t;
+    piste.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => { const k = Math.round(piste.scrollLeft / piste.clientWidth); if (k !== i) { i = k; montrer(k, false); } }, 120); }, { passive: true });
+    ['pointerdown', 'touchstart', 'wheel'].forEach((e) => piste.addEventListener(e, stop, { passive: true }));
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => { if (auto) montrer(i + 1); }, 5000);
+  });
+</script>
 
 <style>
   .tarifs-chapo { color: var(--encre-2); margin-bottom: 18px; max-width: 62ch; }
@@ -214,6 +258,17 @@ const tabac = variante === 'tabac';
   .tel-boutons { display: flex; gap: 5px; flex-wrap: wrap; }
   .tel-boutons em { font-style: normal; font-weight: 700; font-size: 11px; padding: 5px 9px; border-radius: 99px; border: 1.3px solid var(--sapin); color: var(--sapin); }
   .tel-boutons em.on { background: var(--sapin); color: var(--ecru, #FAF5EE); }
+  .cas-piste { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .cas-piste::-webkit-scrollbar { display: none; }
+  .cas { flex: 0 0 100%; scroll-snap-align: start; }
+  .cas-onglets { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-bottom: 10px; }
+  .cas-onglets button { border: 1.3px solid var(--ligne); background: var(--blanc); color: var(--sapin); border-radius: 999px; padding: 5px 10px; font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .cas-onglets button[aria-selected="true"] { background: var(--sapin); border-color: var(--sapin); color: var(--ecru, #FAF5EE); }
+  .cas-nav { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
+  .cas-nav button { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--sapin); background: var(--blanc); color: var(--sapin); font-weight: 800; cursor: pointer; }
+  .cas-points { display: flex; gap: 6px; }
+  .cas-points i { width: 7px; height: 7px; border-radius: 50%; background: var(--ligne); }
+  .cas-points i.on { background: var(--rose-fort, #C96C80); }
   .telephone figcaption { text-align: center; font-size: 14px; color: var(--encre-2); margin-top: 12px; }
 
   /* Le rythme : une frise, un rond par étape relié par un trait. */

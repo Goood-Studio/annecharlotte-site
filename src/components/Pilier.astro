@@ -3,6 +3,7 @@
 // mieux manger) : définition « dictionnaire » en hero, réponse citable
 // (GEO), situations accompagnées, façon de travailler, tarifs, FAQ.
 import Base from '../layouts/Base.astro';
+import Parcours from './Parcours.astro';
 import Tarifs from '../components/Tarifs.astro';
 import FaqDiet from '../components/FaqDiet.astro';
 import Nutriciens from '../components/Nutriciens.astro';
@@ -32,6 +33,8 @@ interface Props {
    */
   leviers?: { titre: string; texte: string }[];
   leviersTitre?: string;
+  /** Le parcours d'accompagnement à montrer avant les tarifs (voir Parcours.astro). */
+  parcours?: ('digestif' | 'sopk' | 'endo')[];
   /** Quelles formules montrer en bas de page. Voir Tarifs.astro. */
   varianteTarifs?: 'classique' | 'tabac';
 }
@@ -53,6 +56,7 @@ const {
   leviers = [],
   leviersTitre = 'Les leviers qu’on actionne ensemble',
   varianteTarifs = 'classique',
+  parcours = [],
 } = Astro.props;
 
 const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...FAQ_DIET])];
@@ -144,7 +148,8 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
     </div>
   </section>
 
-  <Tarifs variante={varianteTarifs} />
+  {parcours.length > 0 && <Parcours cles={parcours} />}
+  <Tarifs variante={varianteTarifs} exemple={parcours.includes('digestif') ? 'digestif' : parcours.includes('endo') ? 'endo' : 'general'} />
   <FaqDiet />
   <Nutriciens />
   <CtaFinal />
