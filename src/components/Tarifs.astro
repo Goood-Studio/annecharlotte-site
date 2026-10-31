@@ -7,7 +7,7 @@
 // Deux variantes :
 //   « classique » (par défaut) → Accompagnement + Bilan + Bilan et une séance
 //   « tabac »                  → le Pack tabac seul, sur la page arrêt du tabac
-import { OFFRES, EXEMPLES_CHANGEMENT } from '../data/contenu';
+import { OFFRES, EXEMPLES_CHANGEMENT, PACK_RYTHME, PACK_FREINS } from '../data/contenu';
 import { SITE } from '../data/site';
 
 interface Props {
@@ -34,7 +34,7 @@ const tabac = variante === 'tabac';
       <p class="tarifs-chapo">{`Disponibilités : ${SITE.horaires}, et ${SITE.horairesVisio}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`}</p>
     ) : (
       <>
-        <p class="tarifs-chapo">Pas de plan alimentaire. On regarde ton assiette et tout ce qu’il y a autour, et on met en place le changement qui aura le plus d’impact chez toi. Puis le suivant.</p>
+        <p class="tarifs-chapo">Pas de plan alimentaire, pas de liste d’interdits. On part de ce que tu manges déjà, et on ajoute la petite chose qui changera le plus ta journée. Puis la suivante.</p>
         {!sobre && (
           <ul class="exemples" aria-label="Par exemple">
             {EXEMPLES_CHANGEMENT.map((e) => <li>{e}</li>)}
@@ -62,7 +62,10 @@ const tabac = variante === 'tabac';
             <p class="offre-prix"><span class="prix">{pack.prix}</span> <span class="unite">{pack.unite}</span></p>
             {!sobre && <p class="offre-desc">{pack.description}</p>}
             <ul>
-              {(sobre ? pack.inclus.slice(0, 2) : pack.inclus).map((item) => <li>{item}</li>)}
+              {(sobre ? pack.inclus.slice(0, 2) : pack.inclus).map((item) => {
+                const [cle, ...reste] = item.split(' : ');
+                return reste.length ? <li><strong>{cle}</strong> · {reste.join(' : ')}</li> : <li>{item}</li>;
+              })}
             </ul>
             <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
           </article>
@@ -86,6 +89,35 @@ const tabac = variante === 'tabac';
     </div>
     {!tabac && (
       <p class="regle">Envie de continuer en route ? Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement.</p>
+    )}
+    {!tabac && !sobre && (
+      <div class="pack-detail">
+        <h3 class="pack-titre">À quoi ça ressemble, au quotidien</h3>
+        <div class="pack-haut">
+          <figure class="telephone" aria-label="Exemple de carnet, tel qu’elle le reçoit sur son téléphone">
+            <div class="ecran">
+              <p class="tel-titre">Le carnet de Sophie</p>
+              <p class="tel-sous">Mis à jour après votre séance</p>
+              <div class="tel-carte tel-rose"><span>Pourquoi tu le fais</span>« Avoir de l’énergie pour mes enfants »</div>
+              <div class="tel-carte tel-sapin"><span>Ta piste</span><b>Le même repas, en mieux</b>
+                <i class="choisi">✓ Tes pâtes bolo, deux fois plus de sauce que de pâtes</i><i>Ton biscuit, savouré à table et sans écran</i><i>Du fromage frais sous ta confiture</i>
+              </div>
+              <div class="tel-carte"><span>Comment ça se passe ?</span>
+                <div class="tel-boutons"><em class="on">Je l’ai fait</em><em>Un peu</em><em>Pas encore</em></div>
+              </div>
+            </div>
+            <figcaption>Ton carnet, sur ton téléphone</figcaption>
+          </figure>
+          <ol class="rythme">
+            {PACK_RYTHME.map((e) => <li><strong>{e.quand}</strong><span>{e.quoi}</span></li>)}
+          </ol>
+        </div>
+        <h3 class="pack-titre">Tu te dis peut-être…</h3>
+        <ul class="freins">
+          {PACK_FREINS.map((f) => <li><p class="frein">{f.frein}</p><p>{f.reponse}</p></li>)}
+        </ul>
+        <a class="btn btn-rose" href={SITE.rdvPack}>{pack.ctaTexte}</a>
+      </div>
     )}
     {!tabac && !sobre && (
       <ul class="rassure">
@@ -162,4 +194,44 @@ const tabac = variante === 'tabac';
   .regle { margin: 18px 0 0; padding: 12px 16px; background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: 14px; color: var(--sapin); font-size: 15.5px; }
   .rassure { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 14px 4px 0; padding-left: 18px; color: var(--encre-2); font-size: 14.5px; }
   .note-etoile { margin: 10px 4px 0; font-size: 14.5px; color: var(--encre-2); }
+  .offre-pack li strong { color: var(--ecru); }
+  .pack-detail { margin-top: 30px; padding: 30px 24px; background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: var(--rayon-grand); }
+  .pack-titre { font-size: 24px; margin: 0 0 20px; }
+  .pack-haut { display: grid; gap: 30px; align-items: center; margin-bottom: 34px; }
+  @media (min-width: 780px) { .pack-haut { grid-template-columns: 290px 1fr; gap: 44px; } }
+
+  /* Le téléphone : un aperçu dessiné en CSS de son carnet. */
+  .telephone { margin: 0 auto; width: 270px; }
+  .ecran { background: var(--ecru, #FAF5EE); border: 10px solid var(--sapin); border-radius: 36px; padding: 22px 14px 18px; box-shadow: 0 18px 40px rgba(22, 53, 44, .18); position: relative; }
+  .ecran::before { content: ''; position: absolute; top: 7px; left: 50%; width: 64px; height: 6px; margin-left: -32px; border-radius: 99px; background: var(--sapin); opacity: .35; }
+  .tel-titre { font-family: var(--police-titre); color: var(--sapin); font-size: 19px; margin: 6px 0 0; }
+  .tel-sous { font-size: 11.5px; color: var(--encre-2); margin: 0 0 10px; }
+  .tel-carte { background: var(--blanc); border: 1px solid var(--ligne); border-radius: 14px; padding: 9px 11px; margin-top: 8px; font-size: 12.5px; line-height: 1.4; color: var(--encre); }
+  .tel-carte span { display: block; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--rose-fort, #C96C80); margin-bottom: 3px; }
+  .tel-rose { background: var(--rose-2, #F7DCE1); border: 0; font-family: var(--police-titre); color: var(--sapin); font-size: 13px; }
+  .tel-sapin { background: var(--sapin); border: 0; color: #DCD5C6; }
+  .tel-sapin span { color: var(--rose); }
+  .tel-sapin b { display: block; color: var(--ecru, #FAF5EE); font-family: var(--police-titre); font-weight: 400; font-size: 14px; margin-bottom: 6px; }
+  .tel-sapin i { display: block; font-style: normal; font-size: 11.5px; padding: 5px 8px; margin-top: 4px; border-radius: 9px; background: rgba(255, 255, 255, .07); }
+  .tel-sapin i.choisi { outline: 1.5px solid var(--rose); color: var(--ecru, #FAF5EE); }
+  .tel-boutons { display: flex; gap: 5px; flex-wrap: wrap; }
+  .tel-boutons em { font-style: normal; font-weight: 700; font-size: 11px; padding: 5px 9px; border-radius: 99px; border: 1.3px solid var(--sapin); color: var(--sapin); }
+  .tel-boutons em.on { background: var(--sapin); color: var(--ecru, #FAF5EE); }
+  .telephone figcaption { text-align: center; font-size: 14px; color: var(--encre-2); margin-top: 12px; }
+
+  /* Le rythme : une frise, un rond par étape relié par un trait. */
+  .rythme { list-style: none; margin: 0; padding: 0; counter-reset: etape; }
+  .rythme li:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 30px; bottom: -2px; width: 2px; background: var(--rose); }
+  .rythme li { position: relative; padding: 0 0 22px 50px; counter-increment: etape; }
+  .rythme li:last-child { padding-bottom: 0; }
+  .rythme li::before { content: counter(etape); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 50%; background: var(--sapin); color: var(--ecru, #FAF5EE); font-weight: 800; font-size: 15px; display: grid; place-items: center; box-shadow: 0 0 0 5px var(--blanc); }
+  .rythme strong { display: block; color: var(--sapin); font-size: 17px; }
+  .rythme span { color: var(--encre-2); font-size: 15.5px; }
+
+  /* Les hésitations : des petites cartes, la phrase entre guillemets en titre. */
+  .freins { list-style: none; margin: 0 0 26px; padding: 0; display: grid; gap: 12px; }
+  @media (min-width: 640px) { .freins { grid-template-columns: 1fr 1fr; } }
+  .freins li { background: var(--ecru, #FAF5EE); border-radius: 18px; padding: 16px 18px; border-left: 4px solid var(--rose); }
+  .freins p { margin: 0; color: var(--encre-2); font-size: 15.5px; }
+  .freins .frein { font-family: var(--police-titre); color: var(--sapin); font-size: 17px; margin-bottom: 4px; }
 </style>

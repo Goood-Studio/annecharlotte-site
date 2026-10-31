@@ -24,17 +24,23 @@ export const OFFRES = [
   },
   {
     // 330 € pour 10 semaines depuis le 23/10/2026 : une durée, plus un nombre
-    // de séances. On prend un problème et on le traite ; Gooodeat entre les séances.
+    // de séances. On prend un problème et on le traite.
+    // 31/10/2026 (cadre « Kit Offre » Scalezia) : la promesse en une phrase, puis
+    // ce qu'elle reçoit, dans l'ordre où elle le vit. Le carnet entre les séances
+    // et la relance à J+3 répondent aux deux freins : « je vais oublier » et « je vais lâcher ».
     nom: 'Accompagnement',
     prix: '330 €',
     unite: '10 semaines, en visio',
     description:
-      'Un changement à la fois, en commençant par celui qui a le plus d’impact. On regarde ce qu’il a donné, et on ajoute le suivant.',
+      'Tu gardes ce que tu aimes, et on ajoute ce qui te manque, une petite chose à la fois. Entre les séances, ton carnet t’accompagne et je reste joignable.',
+    // « Mot-clé : détail » : le mot-clé s'affiche en gras, pour lire la carte en diagonale.
     inclus: [
-      'Le bilan : ce qui se passe chez toi, et ton premier changement',
-      'Une séance toutes les 2 semaines environ, souvent 5 après le bilan : on regarde ce que ça a donné, on ajoute le suivant*',
-      'Gooodeat entre les séances : tu notes tes repas et ton ressenti, on les regarde ensemble au rendez-vous',
-      'À la fin, ton mode d’emploi : ce qui marche pour toi',
+      'Le bilan : on comprend ce qui se passe chez toi, et tu repars avec ton premier changement',
+      '5 séances en visio : environ toutes les 2 semaines, on regarde ce que ça a donné et on ajoute le suivant*',
+      'Ton carnet : mis à jour après chaque séance, avec ton changement, 5 exercices au choix et ce qui t’aide',
+      'Je reste joignable : un point à 3 jours, et un message dès que ça coince. On ajuste tout de suite, sans attendre la séance suivante',
+      'Gooodeat : tes repas, qu’on regarde ensemble au rendez-vous',
+      'Ton mode d’emploi : à la fin, ce qui marche pour toi et quoi faire si ça revient',
     ],
     economie: '',
     ctaTexte: 'Commencer l’accompagnement',
@@ -71,12 +77,33 @@ export const OFFRES = [
   },
 ] as const;
 
+// Le rythme de l'accompagnement : quand elle voit les premiers effets.
+export const PACK_RYTHME = [
+  { quand: 'Le lendemain du bilan', quoi: 'Tu commences ta première petite chose : tes pâtes bolo avec plus de sauce, ton biscuit savouré sans écran, du fromage frais sous ta confiture…' },
+  { quand: '3 jours après', quoi: 'Tu me dis en un clic comment ça se passe. Et si ça coince avant, tu m’écris : on ajuste tout de suite' },
+  { quand: 'Toutes les 2 semaines', quoi: 'On regarde ce qui va mieux, et on ajoute la suivante' },
+  { quand: 'Au bout de 10 semaines', quoi: 'Tu vois le chemin parcouru, et tu repars avec ton mode d’emploi' },
+] as const;
+
+// Ce qu'elle se dit peut-être avant de commencer, et ce qui se passe vraiment.
+// Dit à la patiente, dans ses mots (31/10/2026 : moins « vente », plus gourmand).
+export const PACK_FREINS = [
+  { frein: '« Je vais devoir me priver »', reponse: 'Non. Tu gardes ton chocolat, tes pâtes, ton fromage. On ajoute ce qui manque, on ne retire pas ce que tu aimes.' },
+  { frein: '« Je n’ai pas le temps »', reponse: 'Tes pâtes bolo avec plus de sauce, ça ne prend pas une minute de plus. Une seule petite chose à la fois, celle qui rentre dans ta semaine.' },
+  { frein: '« Je vais oublier ce qu’on s’est dit »', reponse: 'Tout est dans ton carnet, avec tes mots, sur ton téléphone.' },
+  { frein: '« Et si ça ne va pas ? »', reponse: 'Tu m’écris, je reste joignable entre les séances. On ajuste tout de suite, sans attendre que tu te démotives. Ce n’est jamais un échec.' },
+] as const;
+
 // Ce qu'on peut changer : rend concret « le changement qui a le plus d'impact ».
+// 31/10/2026 : des exemples concrets et gourmands, tirés de ses tests de consultation
+// (bolo, « le dernier qui finit gagne », biscuit sans écran, mi-assiette) et de ses idées (fromage frais, noisette).
 export const EXEMPLES_CHANGEMENT = [
-  'Manger plus lentement',
-  'Ajouter un aliment qui manque',
-  'En remplacer un qui te dessert',
-  'Souper un peu plus tôt',
+  'Tes pâtes bolo, avec deux fois plus de sauce que de pâtes',
+  '« Le dernier qui finit gagne un point », à table en famille',
+  'Ton biscuit, savouré à table et sans écran',
+  'Du fromage frais entre ta tartine et la confiture',
+  'Beurre de noisette et vrais copeaux de chocolat sur ta tartine',
+  'À mi-assiette, tes couverts posés 5 minutes',
 ] as const;
 
 export const SERVICES = [
@@ -133,7 +160,7 @@ export const DEROULE = [
   {
     titre: 'Entre les rendez-vous',
     texte:
-      'On garde le lien sur Gooodeat. Tu y notes tes repas et ton ressenti quand ça t’arrange : une photo de ton assiette à 21h30, un ventre qui gonfle après le souper. Je retrouve tout ça de mon côté, alors au rendez-vous suivant, on ne repart pas de zéro et on ne compte pas sur ta mémoire.',
+      'Après chaque séance, tu reçois ton carnet sur WhatsApp : ce qu’on s’est dit, ton changement (tu choisis l’exercice qui te parle parmi 5), pourquoi tu le fais, et quoi faire si ça dérape. Trois jours plus tard, tu me dis en un clic comment ça se passe, et si ça coince avant, tu m’écris : on ajuste tout de suite, sans attendre le rendez-vous. Tes repas, tu les notes sur Gooodeat quand ça t’arrange : une photo de ton assiette à 21h30, un ventre qui gonfle après le souper. Au rendez-vous suivant, on ne repart pas de zéro et on ne compte pas sur ta mémoire.',
   },
 ] as const;
 
@@ -150,7 +177,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, le bilan est à 80 €, le bilan avec une séance deux semaines plus tard à 130 €, et l’accompagnement (10 semaines en visio, une séance toutes les 2 semaines environ) à 330 €. Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, le bilan est à 80 €, le bilan avec une séance deux semaines plus tard à 130 €, et l’accompagnement (10 semaines en visio, une séance toutes les 2 semaines environ, avec ton carnet entre les séances) à 330 €. Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',
