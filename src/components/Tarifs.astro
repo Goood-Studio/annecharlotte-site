@@ -2,7 +2,7 @@
 // Les offres : l'accompagnement prend la scène sur fond sapin, le bilan et
 // « bilan + une séance » se rangent à côté, plus discrets.
 // « Petit effort, gros impact » (29/10/2026) : on dit concrètement ce qu'on
-// change, et que ce qu'elle a déjà fait compte si elle continue.
+// change. (31/10/2026 : plus de « il reste 250 € après le bilan ».)
 //
 // Deux variantes :
 //   « classique » (par défaut) → Accompagnement + Bilan + Bilan et une séance
@@ -87,9 +87,6 @@ const tabac = variante === 'tabac';
         </>
       )}
     </div>
-    {!tabac && (
-      <p class="regle">Envie de continuer en route ? Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement.</p>
-    )}
     {!tabac && !sobre && (
       <div class="pack-detail">
         <h3 class="pack-titre">À quoi ça ressemble, au quotidien</h3>
@@ -129,7 +126,7 @@ const tabac = variante === 'tabac';
     <p class="note-etoile">
       {tabac
         ? '* Valable 4 mois : les séances s’espacent selon ta situation.'
-        : '* 10 semaines ensemble, avec une marge jusqu’à 4 mois si ta vie déborde.'}
+        : '* Une séance environ toutes les 2 semaines. Ta vie déborde ? On décale, sans souci.'}
     </p>
   </div>
 </section>

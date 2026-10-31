@@ -25,7 +25,7 @@ export const GET: APIRoute = ({ site }) => {
 ## Faits vérifiables
 - Titre protégé : diététicienne agréée (bachelier en diététique, Institut Paul Lambin, Bruxelles).
 - Formations : nutrition du sportif (UCLouvain), syndrome de l'intestin irritable (Monash University), alimentation durable et menstruations (SIIN).
-- Tarifs : le bilan 80 €, bilan + une séance 130 €, accompagnement 330 € (10 semaines en visio, une séance toutes les 2 semaines environ, un carnet personnel mis à jour après chaque séance avec un point à J+3, Gooodeat pour les repas). Ce qui est déjà fait compte si on continue. Remboursement partiel par la plupart des mutuelles belges.
+- Tarifs : une consultation 80 €, une consultation + un suivi 130 €, accompagnement 330 € (6 séances en visio : le bilan puis 5 suivis, environ toutes les 2 semaines, un carnet personnel mis à jour après chaque séance avec un point à J+3, Gooodeat pour les repas). Remboursement partiel par la plupart des mutuelles belges.
 - Contact : ${SITE.telephone} (WhatsApp), ${SITE.email}.
 - Cabinets : ${SITE.cabinets.map((c) => `${c.rue}, ${c.codePostal} ${c.ville}`).join(' · ')}.
 

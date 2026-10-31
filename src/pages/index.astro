@@ -68,17 +68,22 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
         <div class="hero-actions">
           <!-- L'accompagnement d'abord : c'est l'offre à mettre en avant (12/10/2026).
                Tout passe en visio ; le cabinet reste en petit lien jusqu'en décembre. -->
-          <a class="bloc-action principal" href={SITE.rdvPack} data-anim="bloc">
-            <span class="bloc-titre"><span>Accompagnement en visio <span class="bloc-prix">330 €<span class="asterisque" aria-hidden="true">*</span></span></span></span>
-            <span class="bloc-sous">On prend un problème, et on le traite. 10 semaines ensemble, et Gooodeat entre les séances.</span>
-            {dispoPack && <span class="bloc-dispo">1re dispo : {dispoPack}</span>}
-            <span class="bloc-fleche" aria-hidden="true">→</span>
+          <!-- 31/10/2026 : un vrai bouton avec un verbe et la date, et ce qui est inclus,
+               au lieu d'une carte-lien qui ressemblait à un bloc d'information. -->
+          <a class="bloc-action principal avec-cta" href={SITE.rdvPack} data-anim="bloc">
+            <span class="bloc-titre"><span>Accompagnement en visio <span class="bloc-prix">330 €<span class="asterisque" aria-hidden="true">*</span> <span class="bloc-duree">· 6 séances</span></span></span></span>
+            <span class="bloc-sous">Tu gardes ce que tu aimes, et on ajoute ce qui te manque, une petite chose à la fois.</span>
+            <span class="bloc-inclus">
+              <span>✓ Le bilan + 5 séances de suivi</span>
+              <span>✓ Ton carnet sur ton téléphone</span>
+              <span>✓ Je reste joignable entre les séances</span>
+            </span>
+            <span class="bloc-cta">Je commence{dispoPack && <span class="bloc-cta-dispo"> · 1re dispo {dispoPack}</span>} <span aria-hidden="true">→</span></span>
           </a>
-          <a class="bloc-action" href={SITE.rdvVisio} data-anim="bloc">
+          <a class="bloc-action avec-cta" href={SITE.rdvVisio} data-anim="bloc">
             <span class="bloc-titre"><span>Une consultation en visio <span class="bloc-prix">80 €<span class="asterisque" aria-hidden="true">*</span></span></span></span>
-            <span class="bloc-sous">Depuis chez toi ou ton bureau, aussi sur le temps de midi (12h-13h) et en soirée.</span>
-            {dispoVisio && <span class="bloc-dispo">1re dispo : {dispoVisio}</span>}
-            <span class="bloc-fleche" aria-hidden="true">→</span>
+            <span class="bloc-sous">On fait le point ensemble, et je te donne tes premières pistes pour t’aider. Aussi sur le temps de midi et en soirée.</span>
+            <span class="bloc-cta contour">Je réserve{dispoVisio && <span class="bloc-cta-dispo"> · 1re dispo {dispoVisio}</span>} <span aria-hidden="true">→</span></span>
           </a>
           <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">
             Plutôt au cabinet ? Consultation à Malonne<span aria-hidden="true">*</span>
@@ -338,6 +343,30 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
   }
   .bloc-action:hover .bloc-fleche { transform: translateY(-50%) translateX(4px); }
   .bloc-action.principal .bloc-fleche { color: var(--rose); }
+  /* Les cartes avec un vrai bouton : pas de flèche à droite, le bouton dit quoi faire. */
+  .bloc-action.avec-cta { padding: 20px 20px 18px; }
+  .bloc-duree { font-family: var(--police-texte, inherit); font-size: 15px; opacity: .8; }
+  .bloc-inclus { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: 14.5px; font-weight: 700; color: var(--ecru); }
+  .bloc-cta {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 13px 20px;
+    border-radius: 999px;
+    background: var(--rose);
+    color: var(--sapin);
+    font-weight: 800;
+    font-size: 16.5px;
+    text-align: center;
+    transition: background .15s ease, transform .15s cubic-bezier(.2, .8, .25, 1);
+  }
+  .bloc-cta-dispo { font-weight: 600; }
+  .bloc-action.principal:hover .bloc-cta { background: var(--blanc); }
+  .bloc-cta.contour { background: transparent; border: 1.5px solid var(--sapin); }
+  .bloc-action:hover .bloc-cta.contour { background: var(--sapin); color: var(--ecru); }
 
   @media (min-width: 900px) {
     .hero { padding: 48px 0 72px; }

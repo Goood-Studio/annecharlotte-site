@@ -8,11 +8,11 @@
 export const OFFRES = [
   {
     // « Petit effort, gros impact » (29/10/2026) : plus de « Premiers pas » ni de suivi à l'unité affiché.
-    nom: 'Le bilan',
+    nom: 'Une consultation',
     prix: '80 €',
     unite: '1 séance, seul·e ou à deux',
     description:
-      'On regarde ton assiette et tout ce qu’il y a autour. Je t’explique ce qui se passe chez toi, et tu repars avec le changement qui aura le plus d’impact, à lancer dès demain.',
+      'On fait le point ensemble sur ton assiette et tout ce qu’il y a autour, et je te donne tes premières pistes pour t’aider, à lancer dès demain.',
     inclus: [
       'Ce qui se passe chez toi, expliqué simplement',
       'Ton premier changement, choisi ensemble',
@@ -23,22 +23,22 @@ export const OFFRES = [
     meilleurChoix: false,
   },
   {
-    // 330 € pour 10 semaines depuis le 23/10/2026 : une durée, plus un nombre
-    // de séances. On prend un problème et on le traite.
+    // 330 € = 6 séances en visio (le bilan + 5 suivis), depuis le 31/10/2026 on ne parle
+    // plus de « 10 semaines ». On prend un problème et on le traite.
     // 31/10/2026 (cadre « Kit Offre » Scalezia) : la promesse en une phrase, puis
     // ce qu'elle reçoit, dans l'ordre où elle le vit. Le carnet entre les séances
     // et la relance à J+3 répondent aux deux freins : « je vais oublier » et « je vais lâcher ».
     nom: 'Accompagnement',
     prix: '330 €',
-    unite: '10 semaines, en visio',
+    unite: '6 séances, en visio',
     description:
       'Tu gardes ce que tu aimes, et on ajoute ce qui te manque, une petite chose à la fois. Entre les séances, ton carnet t’accompagne et je reste joignable.',
     // « Mot-clé : détail » : le mot-clé s'affiche en gras, pour lire la carte en diagonale.
     inclus: [
-      'Le bilan : on comprend ce qui se passe chez toi, et tu repars avec ton premier changement',
-      '5 séances en visio : environ toutes les 2 semaines, on regarde ce que ça a donné et on ajoute le suivant*',
-      'Ton carnet : mis à jour après chaque séance, avec ton changement, 5 exercices au choix et ce qui t’aide',
-      'Je reste joignable : un point à 3 jours, et un message dès que ça coince. On ajuste tout de suite, sans attendre la séance suivante',
+      'Le bilan : on fait le point ensemble, et tu repars avec ton premier changement',
+      '5 séances de suivi : environ toutes les 2 semaines, on regarde ce qui va mieux et on ajoute la suite*',
+      'Ton carnet : sur ton téléphone, mis à jour après chaque séance, avec tes exercices au choix',
+      'Je reste joignable : un petit point 3 jours après, et un message dès que ça coince. On ajuste tout de suite',
       'Gooodeat : tes repas, qu’on regarde ensemble au rendez-vous',
       'Ton mode d’emploi : à la fin, ce qui marche pour toi et quoi faire si ça revient',
     ],
@@ -65,11 +65,11 @@ export const OFFRES = [
   },
   {
     // Pour celles qui veulent « juste deux rendez-vous » : le bilan, puis une séance 2 semaines plus tard.
-    nom: 'Bilan + une séance',
+    nom: 'Une consultation + un suivi',
     prix: '130 €',
     unite: '2 séances, sur 2 semaines',
     description:
-      'Le bilan, puis on se revoit pour regarder ensemble ce que ton premier changement a donné.',
+      'On fait le point, tu repars avec tes premières pistes, et on se revoit 2 semaines plus tard pour voir ce qui a changé.',
     inclus: [],
     economie: '',
     ctaTexte: 'Je réserve les deux',
@@ -82,7 +82,7 @@ export const PACK_RYTHME = [
   { quand: 'Le lendemain du bilan', quoi: 'Tu commences ta première petite chose : tes pâtes bolo avec plus de sauce, ton biscuit savouré sans écran, du fromage frais sous ta confiture…' },
   { quand: '3 jours après', quoi: 'Tu me dis en un clic comment ça se passe. Et si ça coince avant, tu m’écris : on ajuste tout de suite' },
   { quand: 'Toutes les 2 semaines', quoi: 'On regarde ce qui va mieux, et on ajoute la suivante' },
-  { quand: 'Au bout de 10 semaines', quoi: 'Tu vois le chemin parcouru, et tu repars avec ton mode d’emploi' },
+  { quand: 'À ta 6e séance', quoi: 'Tu vois le chemin parcouru, et tu repars avec ton mode d’emploi' },
 ] as const;
 
 // Ce qu'elle se dit peut-être avant de commencer, et ce qui se passe vraiment.
@@ -177,7 +177,7 @@ export const FAQ_DIET = [
   },
   {
     q: 'Combien coûte une consultation ?',
-    r: 'Chez moi, le bilan est à 80 €, le bilan avec une séance deux semaines plus tard à 130 €, et l’accompagnement (10 semaines en visio, une séance toutes les 2 semaines environ, avec ton carnet entre les séances) à 330 €. Ce que tu as déjà fait compte : après le bilan, il reste 250 € pour l’accompagnement. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
+    r: 'Chez moi, une consultation est à 80 €, une consultation suivie d’un point deux semaines plus tard à 130 €, et l’accompagnement (6 séances en visio : le bilan puis 5 suivis, environ toutes les 2 semaines, avec ton carnet entre les séances) à 330 €. La plupart des mutuelles belges remboursent une partie des consultations diététiques.',
   },
   {
     q: 'Est-ce remboursé par la mutuelle ?',
