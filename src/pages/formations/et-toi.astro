@@ -9,7 +9,8 @@ import ListeAttente from '../../components/ListeAttente.astro';
 import { SITE, u } from '../../data/site';
 
 const NOM = 'Et toi, dans tout ça ?';
-const PRIX = 89;
+const PRIX = 79; // prix normal
+const PRIX_LANCEMENT = 59; // réservé à la liste d'attente, à la sortie
 const SORTIE = 'décembre 2026';
 const STRIPE = ''; // lien Stripe de la prévente
 // 'attente' : bouton « Préviens-moi » (liste dans Notion). 'vente' : bouton d'achat Stripe.
@@ -74,8 +75,8 @@ const jauge = [
           Une formation à suivre à ton rythme pour retrouver ton énergie et redevenir libre de manger.
         </p>
         <div class="fp-cta">
-          <a class="btn btn-principal" href={lienAchat}>{MODE === 'attente' ? 'Préviens-moi quand elle sort' : `Je réserve ma place · ${PRIX} €`}</a>
-          <p class="fp-petit">Sortie prévue en {SORTIE}, à {PRIX} €. Les inscrites sont prévenues en premier.</p>
+          <a class="btn btn-principal" href={lienAchat}>{MODE === 'attente' ? 'Préviens-moi quand elle sort' : `Je réserve ma place · ${PRIX_LANCEMENT} €`}</a>
+          <p class="fp-petit">Sortie prévue en {SORTIE}. <strong>{PRIX_LANCEMENT} € au lancement</strong> pour les inscrites, puis {PRIX} €.</p>
         </div>
       </div>
       <img src={u('/img/formation/meno-9-freins.jpg')} alt="Une femme souriante, entourée de ce qui joue sur son énergie : sommeil, muscle, chaleur, mouvement, café, écran, ventre" width="1400" height="1050" />
@@ -214,7 +215,7 @@ const jauge = [
       {MODE === 'attente' ? (
         <div class="fp-attente"><ListeAttente source="Page formation" /></div>
       ) : (
-        <a class="btn btn-principal" href={lienAchat}>Je réserve ma place · {PRIX} €</a>
+        <a class="btn btn-principal" href={lienAchat}>Je réserve ma place · {PRIX_LANCEMENT} €</a>
       )}
       <p class="fp-petit">Sortie prévue en {SORTIE} · satisfaite ou remboursée 14 jours</p>
     </div>

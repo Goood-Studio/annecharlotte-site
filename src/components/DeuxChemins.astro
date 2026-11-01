@@ -28,7 +28,7 @@ const pack = OFFRES[1];
         <span class="chemin-kicker">À ton rythme · bientôt</span>
         <h3>Et toi, dans tout ça&nbsp;?</h3>
         <p>La formation en ligne pour les femmes de 35 à 55 ans, épuisées, qui voient leur corps changer. Des vidéos courtes, ton carnet, et à la fin ton guide à toi.</p>
-        <p class="chemin-prix">89 €</p>
+        <p class="chemin-prix">59 € <small>au lancement</small></p>
         <div class="chemin-actions">
           <a class="btn btn-principal" href={u('/formations/et-toi/')}>Découvrir la formation</a>
           <a class="chemin-lien" href={u('/formations/et-toi/') + '#prevenir'}>Préviens-moi quand elle sort&nbsp;→</a>
@@ -54,6 +54,7 @@ const pack = OFFRES[1];
   .chemin-prix { font-family: var(--police-titre); font-size: 26px !important; color: inherit; }
   .chemin--ensemble .chemin-prix { color: var(--rose) !important; }
   .chemin--seule .chemin-prix { color: var(--sapin) !important; }
+  .chemin-prix small { font-family: var(--police-texte); font-size: 15px; font-weight: 700; color: var(--encre-2); }
   .chemin-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
   .chemin-lien { font-weight: 700; font-size: 15.5px; }
   .chemin--ensemble .chemin-lien { color: var(--rose); }
