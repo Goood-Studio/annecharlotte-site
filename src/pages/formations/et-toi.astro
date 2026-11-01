@@ -2,11 +2,8 @@
 // Page de prévente de la formation en ligne « Et toi, dans tout ça ? » (01/11/2026).
 // Cible : femmes de 35 à 55 ans épuisées, dont le corps change, puis la
 // périménopause qui arrive en douce. Chapitres à suivre à son rythme.
-// BROUILLON : noindex, absente du menu. Ne pas publier avant d'avoir :
-//   1. le lien de paiement Stripe (STRIPE),
-//   2. la date d'ouverture (SORTIE) et le prix de prévente éventuel,
-//   3. le nom définitif de la formation (NOM).
-// Sans lien Stripe, le bouton ouvre un e-mail de réservation.
+// En ligne depuis le 01/11/2026 en liste d'attente (MODE 'attente'), indexée.
+// Le jour de la sortie : mettre le lien Stripe (STRIPE) et passer MODE à 'vente'.
 import Base from '../../layouts/Base.astro';
 import ListeAttente from '../../components/ListeAttente.astro';
 import { SITE, u } from '../../data/site';
@@ -65,7 +62,6 @@ const jauge = [
   titre={`${NOM} | Formation en ligne 35-55 ans | Anne-Charlotte`}
   description="Une formation en ligne pour les femmes de 35 à 55 ans, épuisées, dont le corps change : retrouver ton énergie, comprendre la périménopause et redevenir libre de manger, sans régime, à ton rythme."
   chemin="/formations/et-toi/"
-  noindex
 >
   <section class="fp-hero">
     <div class="contenu fp-hero__grille">
