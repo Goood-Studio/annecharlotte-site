@@ -1,0 +1,34 @@
+---
+// L'accompagnement en détail (01/11/2026) : le pack, le carrousel « à quoi ça
+// ressemble au quotidien », les freins, puis le déroulé. Sorti de l'accueil
+// pour que l'accueil reste simple (« Deux façons d'avancer »).
+import Base from '../layouts/Base.astro';
+import Tarifs from '../components/Tarifs.astro';
+import Deroule from '../components/Deroule.astro';
+import Avis from '../components/Avis.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+---
+
+<Base
+  titre="L’accompagnement en visio : 6 séances, ton carnet, je reste joignable | Anne-Charlotte"
+  description="L’accompagnement diététique d’Anne-Charlotte en visio : 6 séances, un carnet entre les séances, une petite chose à la fois, et une diététicienne joignable. Troubles digestifs, santé féminine, mieux manger."
+  chemin="/accompagnement/"
+>
+  <section class="acc-hero">
+    <div class="contenu">
+      <p class="acc-kicker">On avance ensemble</p>
+      <h1>L’accompagnement</h1>
+      <p class="acc-sous">Six séances en visio, une petite chose à la fois, ton carnet entre les séances, et moi joignable quand ça coince. On part de ton histoire, pas d’un menu tout fait.</p>
+    </div>
+  </section>
+  <Tarifs />
+  <Deroule />
+  <Avis />
+  <CtaFinal />
+</Base>
+
+<style>
+  .acc-hero { background: var(--ecru-2); padding-bottom: 20px; }
+  .acc-kicker { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dore); margin: 0 0 10px; }
+  .acc-sous { font-size: 19px; color: var(--encre-2); max-width: 640px; }
+</style>

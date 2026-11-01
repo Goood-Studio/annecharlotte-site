@@ -1,0 +1,61 @@
+---
+// « Deux façons d'avancer » (01/11/2026) : sur l'accueil, remplace le gros
+// bloc des tarifs. Une porte « ensemble » (l'accompagnement, détaillé sur
+// /accompagnement/) et une porte « à ton rythme » (la formation). Le détail
+// du pack (carrousel, freins, déroulé) vit sur /accompagnement/.
+import { OFFRES } from '../data/contenu';
+import { SITE, u } from '../data/site';
+const unique = OFFRES[0];
+const pack = OFFRES[1];
+---
+
+<section class="chemins" aria-labelledby="titre-chemins">
+  <div class="contenu" data-reveal>
+    <h2 id="titre-chemins">Deux façons d’avancer</h2>
+    <p class="section-chapo">Avec moi, en visio. Ou de ton côté, à ton rythme. Dans les deux cas&nbsp;: une petite chose à la fois, et tout se mange.</p>
+    <div class="chemins-grille">
+      <div class="chemin chemin--ensemble">
+        <span class="chemin-kicker">On avance ensemble</span>
+        <h3>L’accompagnement</h3>
+        <p>6 séances en visio, ton carnet entre les séances, et je reste joignable. On part de ton histoire, pas d’un menu tout fait.</p>
+        <p class="chemin-prix">{pack.prix}</p>
+        <div class="chemin-actions">
+          <a class="btn btn-rose" href={u('/accompagnement/')}>Voir l’accompagnement</a>
+          <a class="chemin-lien" href={SITE.rdvVisio}>Ou une seule consultation, {unique.prix}&nbsp;→</a>
+        </div>
+      </div>
+      <div class="chemin chemin--seule">
+        <span class="chemin-kicker">À ton rythme · bientôt</span>
+        <h3>Et toi, dans tout ça&nbsp;?</h3>
+        <p>La formation en ligne pour les femmes de 35 à 55 ans, épuisées, qui voient leur corps changer. Des vidéos courtes, ton carnet, et à la fin ton guide à toi.</p>
+        <p class="chemin-prix">89 €</p>
+        <div class="chemin-actions">
+          <a class="btn btn-principal" href={u('/formations/et-toi/')}>Découvrir la formation</a>
+          <a class="chemin-lien" href={u('/formations/et-toi/') + '#prevenir'}>Préviens-moi quand elle sort&nbsp;→</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .chemins { background: var(--ecru-2); }
+  .chemins-grille { display: grid; gap: 18px; margin-top: 22px; }
+  @media (min-width: 760px) { .chemins-grille { grid-template-columns: 1fr 1fr; } }
+  .chemin { border-radius: var(--rayon-grand); padding: 26px 24px; display: flex; flex-direction: column; gap: 8px; }
+  .chemin--ensemble { background: var(--sapin); color: var(--ecru); }
+  .chemin--ensemble h3 { color: var(--ecru); }
+  .chemin--ensemble p { color: #DCD5C6; }
+  .chemin--seule { background: var(--blanc); border: 1.5px solid var(--ligne); }
+  .chemin--seule p { color: var(--encre-2); }
+  .chemin-kicker { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dore); }
+  .chemin h3 { margin: 0; }
+  .chemin p { margin: 0; font-size: 16.5px; }
+  .chemin-prix { font-family: var(--police-titre); font-size: 26px !important; color: inherit; }
+  .chemin--ensemble .chemin-prix { color: var(--rose) !important; }
+  .chemin--seule .chemin-prix { color: var(--sapin) !important; }
+  .chemin-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .chemin-lien { font-weight: 700; font-size: 15.5px; }
+  .chemin--ensemble .chemin-lien { color: var(--rose); }
+  .chemin--seule .chemin-lien { color: var(--sapin); }
+</style>

@@ -1,0 +1,279 @@
+---
+// Page de prévente de la formation en ligne « Et toi, dans tout ça ? » (01/11/2026).
+// Cible : femmes de 35 à 55 ans épuisées, dont le corps change, puis la
+// périménopause qui arrive en douce. Chapitres à suivre à son rythme.
+// BROUILLON : noindex, absente du menu. Ne pas publier avant d'avoir :
+//   1. le lien de paiement Stripe (STRIPE),
+//   2. la date d'ouverture (SORTIE) et le prix de prévente éventuel,
+//   3. le nom définitif de la formation (NOM).
+// Sans lien Stripe, le bouton ouvre un e-mail de réservation.
+import Base from '../../layouts/Base.astro';
+import ListeAttente from '../../components/ListeAttente.astro';
+import { SITE, u } from '../../data/site';
+
+const NOM = 'Et toi, dans tout ça ?';
+const PRIX = 89;
+const SORTIE = 'décembre 2026';
+const STRIPE = ''; // lien Stripe de la prévente
+// 'attente' : bouton « Préviens-moi » (liste dans Notion). 'vente' : bouton d'achat Stripe.
+const MODE: 'attente' | 'vente' = 'attente';
+
+const lienAchat = MODE === 'attente' ? '#prevenir' :
+  STRIPE ||
+  'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Prévente « Et toi, dans tout ça ? »');
+
+const chapitres = [
+  ['Et toi, dans tout ça ?', 'Ta jauge d’un mardi à 19 h, ta météo de départ, et ta carte d’identité : la femme que tu as envie d’être. C’est d’elle qu’on part.'],
+  ['Ton corps change, d’abord parce que t’es épuisée', 'Le boulot, les kids, les parents, le café bu debout, le sucre de 16 h. Ce que des années à passer après tout le monde font à ton corps.'],
+  ['Et la périménopause arrive en douce', 'Avec des ados à gérer, qui aurait le temps de la remarquer ? C’est quoi, quand ça arrive, ce qui se passe, et pourquoi manger moins n’aide pas.'],
+  ['Les fausses idées qu’on t’a mises dans la tête', 'Supprimer les laitages, chasser le sucre, la gélule miracle, le régime de ta collègue. On trie ce qui aide vraiment.'],
+  ['Des habitudes qui tiennent toutes seules', 'Partir de qui tu es, rendre le petit geste visible, attirant, facile. Plus besoin de motivation : il se fait tout seul.'],
+  ['Ton assiette : le gros chapitre', 'Huit parties pour tout remettre au clair : l’assiette qui te nourrit, les protéines, les glucides sans peur, les bons gras, tes os et ton moral, végétaliser un peu, ta journée du matin au soir, et des repas en 10 minutes pour toi aussi. On garde ce que tu aimes et on ajoute ce qui te nourrit.'],
+  ['Tout ce qu’il y a autour de l’assiette', 'Manger devant ses mails, debout, en finissant les assiettes des enfants. On revient à table, et à ta faim.'],
+  ['Tes émotions, avec la Roue des EmOOOtions', 'Le geste, l’émotion, le besoin caché derrière, et une autre idée que manger. Sans culpabilité.'],
+  ['Ton corps au quotidien', 'Tes nuits, ton ventre, tes bouffées, tes os et tes muscles : des gestes simples pour retrouver ton énergie.'],
+  ['Quand ça déraille, et la suite', 'Comment repartir après un jour sans, ce qui se règle chez le médecin, et le chemin parcouru depuis ta météo de départ.'],
+];
+
+const scenes = [
+  'Ton café, tu le bois froid à 10 h, debout, en cherchant une chaussure.',
+  'Tu finis les frites des enfants sans même avoir faim.',
+  'Réveillée à 3 h du matin, et crevée toute la journée.',
+  'Tu manges moins qu’avant, et ton ventre n’a pas reçu le message.',
+];
+
+const faq = [
+  ['J’ai 37 ans, c’est pour moi ?', 'Oui. À 35 ans, tes hormones vont encore bien : c’est surtout la fatigue et la charge mentale qui parlent, et c’est par là que la formation commence. La périménopause n’est qu’un chapitre, pour savoir la reconnaître quand elle arrivera.'],
+  ['Je suis déjà ménopausée, c’est pour moi ?', 'Oui. Tout ce qu’on met en place pour ton énergie, tes os, ton muscle, ton sommeil et ta liberté de manger compte encore plus après.'],
+  ['Il faut suivre un programme semaine par semaine ?', 'Non, tu avances à ton rythme. À la fin de chaque chapitre, je te propose d’essayer une petite chose pendant quelques jours avant de passer à la suite. Tu peux revenir quand tu veux.'],
+  ['C’est un régime ?', 'Non. Pas de menu imposé, pas de balance, pas d’aliment interdit. On ajoute, on n’enlève pas, et tout se mange.'],
+  ['Est-ce que ça remplace mon médecin ?', 'Non. La formation t’explique ce qui se règle chez le médecin (le traitement hormonal, la prise de sang, la thyroïde) et quand en parler. L’alimentation est un levier en plus, jamais à la place.'],
+  ['Et si j’ai besoin qu’on regarde ma situation à moi ?', 'La formation explique et guide, sans personnaliser. Si tu as envie qu’on regarde ensemble ton histoire, tu peux réserver une consultation, en ligne.'],
+  ['Et si ça ne me plaît pas ?', 'Tu as 14 jours après ton achat pour changer d’avis : je te rembourse, sans question.'],
+];
+
+const jauge = [
+  ['Le boulot', 30],
+  ['Les enfants', 30],
+  ['La maison, les repas', 20],
+  ['La charge mentale', 16],
+  ['Toi', 4],
+];
+---
+
+<Base
+  titre={`${NOM} | Formation en ligne 35-55 ans | Anne-Charlotte`}
+  description="Une formation en ligne pour les femmes de 35 à 55 ans, épuisées, dont le corps change : retrouver ton énergie, comprendre la périménopause et redevenir libre de manger, sans régime, à ton rythme."
+  chemin="/formations/et-toi/"
+  noindex
+>
+  <section class="fp-hero">
+    <div class="contenu fp-hero__grille">
+      <div>
+        <p class="fp-kicker">Formation en ligne · 35-55 ans</p>
+        <h1>Et toi,<br /><em>dans tout ça&nbsp;?</em></h1>
+        <p class="fp-sous">
+          Pour toi qui as passé des années à t’occuper de tout le monde, et qui vois ton corps changer.
+          D’abord parce que t’es épuisée. Puis parce que la périménopause arrive, en douce.
+          Une formation à suivre à ton rythme pour retrouver ton énergie et redevenir libre de manger.
+        </p>
+        <div class="fp-cta">
+          <a class="btn btn-principal" href={lienAchat}>{MODE === 'attente' ? 'Préviens-moi quand elle sort' : `Je réserve ma place · ${PRIX} €`}</a>
+          <p class="fp-petit">Sortie prévue en {SORTIE}, à {PRIX} €. Les inscrites sont prévenues en premier.</p>
+        </div>
+      </div>
+      <img src={u('/img/formation/meno-9-freins.jpg')} alt="Une femme souriante, entourée de ce qui joue sur son énergie : sommeil, muscle, chaleur, mouvement, café, écran, ventre" width="1400" height="1050" />
+    </div>
+  </section>
+
+  <section class="fp-scenes">
+    <div class="contenu">
+      <h2>Tu te reconnais ?</h2>
+      <ul class="fp-scenes__liste">
+        {scenes.map((s) => <li>{s}</li>)}
+      </ul>
+      <p class="fp-phrase">Et derrière, toujours la même petite voix : <strong>« c’est sûrement moi qui fais mal »</strong>.</p>
+    </div>
+  </section>
+
+  <section class="fond-sapin">
+    <div class="contenu fp-recadre">
+      <div class="fp-jauge" aria-label="Ta jauge d’un mardi à 19 h">
+        <p class="fp-jauge__titre">Ta jauge, un mardi à 19 h</p>
+        {jauge.map(([nom, part]) => (
+          <div class={nom === 'Toi' ? 'fp-jauge__ligne fp-jauge__ligne--toi' : 'fp-jauge__ligne'}>
+            <span>{nom}</span>
+            <i style={`width:${part * 3}%`}></i>
+          </div>
+        ))}
+      </div>
+      <div>
+        <h2>C’est pas toi le problème. T’es juste passée après tout le reste.</h2>
+        <p>
+          Le boulot, les enfants, la maison, tes parents : pendant des années, tout est passé avant toi. Les nuits trop
+          courtes, le café pour tenir, les repas avalés debout, ton corps a tout encaissé. Et quand la périménopause
+          s’invite, avec des ados à gérer, tu ne la remarques même pas.
+        </p>
+        <p>
+          La bonne nouvelle, c’est que ça se comprend, et que ça se rééquilibre sans rien enlever aux autres. On commence
+          par une question que plus personne ne te pose : <strong>et toi, dans tout ça&nbsp;?</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu">
+      <h2>Ici, on fait autrement</h2>
+      <div class="fp-principes">
+        <div><b>On part de qui tu es</b><p>Pas d’un chiffre sur la balance : de la femme que tu as envie d’être.</p></div>
+        <div><b>Une seule petite chose à la fois</b><p>Tu l’essaies quelques jours, puis tu passes à la suite, à ton rythme.</p></div>
+        <div><b>On ajoute, on n’enlève pas</b><p>Pas d’aliment interdit, pas de culpabilité. Tout se mange.</p></div>
+        <div><b>Toi d’abord, pour une fois</b><p>Dix minutes pour toi ne volent rien à personne.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fp-programme">
+    <div class="contenu">
+      <h2>Dix chapitres, à ton rythme</h2>
+      <p class="fp-intro">Chaque chapitre : quelques vidéos courtes, une fiche à imprimer, et une petite chose à essayer quelques jours avant de passer à la suite.</p>
+      <ol class="fp-semaines">
+        {chapitres.map(([t, d], i) => (
+          <li>
+            <span class="fp-num">{i}</span>
+            <div><h3>{t}</h3><p>{d}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="fp-dedans">
+    <div class="contenu grille-2">
+      <div>
+        <h2>Ce que tu reçois</h2>
+        <ul class="fp-liste">
+          <li>Des vidéos courtes et dessinées, à regarder quand tu veux, même depuis ton canapé</li>
+          <li>Une fiche par chapitre, à imprimer ou garder sur ton téléphone</li>
+          <li>Ta carte d’identité et ta météo de départ, que tu retrouves à la fin pour voir le chemin parcouru</li>
+          <li>Ton carnet de bord : à chaque chapitre, tu écris ou tu dictes ce que tu vis</li>
+          <li><strong>À la fin, ton guide à toi</strong> : ton histoire, tes victoires, ce qui marche pour toi, et comment tu es devenue la femme de ta carte d’identité</li>
+          <li>Des idées de repas en 10 minutes, pour toi aussi</li>
+          <li>Un accès illimité : tu reviens quand tu veux</li>
+        </ul>
+      </div>
+      <img src={u('/img/formation/maman-assiette.jpg')} alt="Dessin au crayon d’une maman assise devant sa propre assiette" loading="lazy" />
+    </div>
+  </section>
+
+  <section class="fp-pourqui">
+    <div class="contenu grille-2">
+      <div>
+        <h3>C’est pour toi si…</h3>
+        <ul class="fp-liste">
+          <li>Tu as entre 35 et 55 ans, t’es épuisée, et ton corps change sans prévenir</li>
+          <li>Tu en as marre des régimes et des injonctions</li>
+          <li>Tu veux comprendre, pas qu’on te donne une liste d’interdits</li>
+          <li>Tu as envie de retrouver ton énergie, et de manger avec plaisir</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ce n’est pas pour toi si…</h3>
+        <ul class="fp-liste fp-liste--non">
+          <li>Tu cherches un menu à suivre à la lettre pour perdre 5 kilos en un mois</li>
+          <li>Tu vis un trouble du comportement alimentaire en ce moment : là, un accompagnement en personne est plus juste</li>
+          <li>Tu veux remplacer ton suivi médical</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="fond-sapin">
+    <div class="contenu fp-moi">
+      <h2>Qui t’accompagne</h2>
+      <p>
+        Je suis Anne-Charlotte, diététicienne agréée à Namur. J’ai accompagné plus de 1 500 patientes et formé plus de
+        250 diététiciennes, dont une formation complète sur la santé féminine et la ménopause. Dans mon cabinet, je vois
+        chaque semaine des femmes qui arrivent en disant « je me reconnais plus ». Cette formation, c’est tout ce que je
+        leur explique, mis en vidéos pour que tu puisses avancer à ton rythme.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="contenu">
+      <h2>Tes questions</h2>
+      <div class="faq-liste">
+        {faq.map(([q, r]) => (
+          <details><summary>{q}</summary><div class="reponse"><p>{r}</p></div></details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="fp-final">
+    <div class="contenu centre">
+      <h2>Et si cette fois, tu faisais la paix avec ton assiette ?</h2>
+      {MODE === 'attente' ? (
+        <div class="fp-attente"><ListeAttente source="Page formation" /></div>
+      ) : (
+        <a class="btn btn-principal" href={lienAchat}>Je réserve ma place · {PRIX} €</a>
+      )}
+      <p class="fp-petit">Sortie prévue en {SORTIE} · satisfaite ou remboursée 14 jours</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .fp-hero { background: var(--ecru-2); }
+  .fp-hero__grille { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 860px) { .fp-hero__grille { grid-template-columns: 1.1fr 1fr; } }
+  .fp-hero img { border-radius: var(--rayon-grand); width: 100%; }
+  .fp-hero h1 em { font-style: normal; color: var(--rose-fort); }
+  .fp-kicker { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dore); margin: 0 0 10px; }
+  .fp-sous { font-size: 19px; color: var(--encre-2); max-width: 560px; }
+  .fp-cta { margin-top: 22px; }
+  .fp-petit { font-size: 14.5px; color: var(--encre-2); margin: 10px 0 0; }
+  .fond-sapin .fp-petit { color: #DCD5C6; }
+
+  .fp-scenes__liste { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
+  @media (min-width: 760px) { .fp-scenes__liste { grid-template-columns: 1fr 1fr; } }
+  .fp-scenes__liste li { background: var(--blanc); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 16px 20px; font-size: 17px; }
+  .fp-phrase { margin-top: 22px; font-size: 19px; }
+
+  .fp-recadre { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 860px) { .fp-recadre { grid-template-columns: 340px 1fr; } }
+  .fp-jauge { background: var(--sapin-2); border-radius: var(--rayon-grand); padding: 22px 24px; display: grid; gap: 12px; }
+  .fp-jauge__titre { font-family: var(--police-titre); font-size: 19px; color: var(--ecru); margin: 0 0 4px; }
+  .fp-jauge__ligne { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; font-size: 15.5px; color: #DCD5C6; }
+  .fp-jauge__ligne i { display: block; height: 14px; border-radius: 99px; background: var(--sapin-3); }
+  .fp-jauge__ligne--toi { color: var(--rose); font-weight: 700; }
+  .fp-jauge__ligne--toi i { background: var(--rose); min-width: 14px; }
+
+  .fp-principes { display: grid; gap: 14px; margin-top: 18px; }
+  @media (min-width: 760px) { .fp-principes { grid-template-columns: repeat(4, 1fr); } }
+  .fp-principes div { border-top: 3px solid var(--rose); padding-top: 12px; }
+  .fp-principes b { color: var(--sapin); font-size: 17.5px; }
+  .fp-principes p { margin: 6px 0 0; color: var(--encre-2); font-size: 16px; }
+
+  .fp-programme { background: var(--ecru-2); }
+  .fp-intro { color: var(--encre-2); }
+  .fp-semaines { list-style: none; padding: 0; margin: 20px 0 0; border-top: 1px solid var(--ligne); }
+  .fp-semaines li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--ligne); }
+  .fp-semaines h3 { margin: 4px 0 4px; }
+  .fp-semaines p { margin: 0; color: var(--encre-2); font-size: 16.5px; }
+  .fp-num { width: 40px; height: 40px; border-radius: 50%; background: var(--rose); color: var(--sapin); display: grid; place-items: center; font-family: var(--police-titre); font-size: 19px; }
+
+  .fp-dedans img { border-radius: var(--rayon-grand); width: 100%; align-self: center; }
+  .fp-liste { padding-left: 0; list-style: none; display: grid; gap: 10px; }
+  .fp-liste li { position: relative; padding-left: 28px; }
+  .fp-liste li::before { content: ''; position: absolute; left: 4px; top: .55em; width: 10px; height: 10px; border-radius: 50%; background: var(--rose-fort); }
+  .fp-liste--non li::before { background: var(--ligne); }
+  .fp-pourqui { background: var(--ecru-2); }
+
+  .fp-moi p { max-width: 760px; font-size: 18px; }
+  .fp-final h2 { margin-bottom: 22px; }
+  .fp-final .fp-petit { text-align: center; max-width: none; }
+  .fp-attente { display: flex; justify-content: center; text-align: left; margin-bottom: 8px; }
+</style>

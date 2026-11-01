@@ -1,0 +1,78 @@
+---
+// « Préviens-moi quand elle sort » : la liste d'attente de la formation.
+// Envoie prénom + e-mail au relais (SITE.attenteEndpoint), qui les range dans
+// Notion. Un champ caché arrête les robots. `source` dit d'où elle vient.
+import { SITE } from '../data/site';
+
+interface Props {
+  source?: 'Page formation' | 'Lead magnet' | 'Accueil' | 'YouTube' | 'Autre';
+  titre?: string;
+}
+const { source = 'Page formation', titre = 'Préviens-moi quand elle sort' } = Astro.props;
+---
+
+<form class="attente" data-endpoint={SITE.attenteEndpoint} data-source={source} method="post" id="prevenir">
+  <h3>{titre}</h3>
+  <p class="attente-intro">Un seul e-mail le jour de la sortie, avec le prix de lancement réservé à la liste. Pas de spam.</p>
+  <div class="attente-champs">
+    <label>Ton prénom<input type="text" name="prenom" autocomplete="given-name" placeholder="Prénom" /></label>
+    <label>Ton e-mail<input type="email" name="email" autocomplete="email" placeholder="prenom@exemple.be" required /></label>
+  </div>
+  <label class="attente-piege" aria-hidden="true">Site web<input type="text" name="site_web" tabindex="-1" autocomplete="off" /></label>
+  <label class="attente-ok">
+    <input type="checkbox" name="consentement" required />
+    <span>J’accepte qu’Anne-Charlotte me prévienne par e-mail de la sortie de la formation. Désinscription en un clic.</span>
+  </label>
+  <button class="btn btn-rose btn-bloc" type="submit">Préviens-moi</button>
+  <p class="attente-etat" role="status" aria-live="polite" hidden></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form.attente').forEach((f) => {
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const etat = f.querySelector<HTMLElement>('.attente-etat')!;
+      const bouton = f.querySelector<HTMLButtonElement>('button')!;
+      const d = new FormData(f);
+      bouton.disabled = true;
+      etat.hidden = false;
+      etat.textContent = 'Un instant…';
+      try {
+        const r = await fetch(f.dataset.endpoint!, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prenom: d.get('prenom'), email: d.get('email'), site_web: d.get('site_web'),
+            consentement: d.get('consentement') === 'on', source: f.dataset.source,
+          }),
+        });
+        const j = await r.json().catch(() => ({}));
+        if (r.ok) {
+          f.querySelector('.attente-champs')?.remove();
+          f.querySelector('.attente-ok')?.remove();
+          bouton.remove();
+          etat.textContent = j.deja ? 'Tu es déjà sur la liste. Je te préviens dès que ça sort !' : 'C’est noté ! Tu seras la première prévenue.';
+        } else {
+          etat.textContent = j.erreur || 'Oups, ça n’est pas passé. Réessaie dans un instant.';
+          bouton.disabled = false;
+        }
+      } catch {
+        etat.textContent = 'Oups, ça n’est pas passé. Réessaie dans un instant.';
+        bouton.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .attente { background: var(--sapin); border-radius: var(--rayon-grand); padding: 28px 26px; max-width: 560px; scroll-margin-top: 90px; }
+  .attente h3 { color: var(--ecru); font-size: 24px; margin-bottom: 8px; }
+  .attente-intro { color: #DCD5C6; font-size: 15.5px; margin-bottom: 18px; }
+  .attente-champs { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  .attente label { display: flex; flex-direction: column; gap: 6px; color: var(--rose); font-weight: 700; font-size: 14.5px; }
+  .attente input[type='text'], .attente input[type='email'] { min-height: 50px; border-radius: 12px; border: 1.5px solid transparent; padding: 0 14px; font: inherit; font-size: 16px; font-weight: 500; color: var(--encre); background: var(--ecru); }
+  .attente-piege { position: absolute; left: -9999px; }
+  .attente-ok { flex-direction: row !important; align-items: flex-start; gap: 10px !important; color: #DCD5C6 !important; font-weight: 500 !important; font-size: 13.5px !important; margin-bottom: 18px; }
+  .attente-ok input { margin-top: 3px; width: 18px; height: 18px; flex-shrink: 0; }
+  .attente-etat { color: var(--ecru); font-weight: 700; margin: 14px 0 0; }
+</style>

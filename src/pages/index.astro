@@ -3,10 +3,9 @@
 // son cabinet), le geste principal « Prendre RDV en visio », et des blocs
 // d'action nets. Contenu dans la largeur lisible, jamais pleine page.
 import Base from '../layouts/Base.astro';
-import Tarifs from '../components/Tarifs.astro';
-import Deroule from '../components/Deroule.astro';
-import ChaineWhatsApp from '../components/ChaineWhatsApp.astro';
-import Nutriciens from '../components/Nutriciens.astro';
+// 01/11/2026 : accueil allégé. Le détail du pack (Tarifs, Deroule) vit sur
+// /accompagnement/ ; les apps, la chaîne WhatsApp et Nutriciens restent dans le pied de page.
+import DeuxChemins from '../components/DeuxChemins.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import ChatFaq from '../components/ChatFaq.astro';
 import Avis from '../components/Avis.astro';
@@ -138,7 +137,7 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
     </div>
   </section>
 
-  <Tarifs />
+  <DeuxChemins />
 
   <!-- L'approche : un manifeste, pas quatre mini-cartes -->
   <section class="fond-sapin approche">
@@ -166,29 +165,6 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
   </section>
 
   <Avis />
-  <Deroule />
-
-  <!-- Les apps : utiles, mais pas avant la prise de RDV (descendues du hero) -->
-  <section aria-labelledby="titre-outils">
-    <div class="contenu" data-reveal>
-      <h2 id="titre-outils">En attendant qu’on se voie</h2>
-      <div class="outils">
-        <a class="bloc-action" href={SITE.gooodeat}>
-          <span class="bloc-titre">Télécharger l’app Gooodeat</span>
-          <span class="bloc-sous">Pour déculpabiliser ton alimentation au quotidien.</span>
-          <span class="bloc-fleche" aria-hidden="true">→</span>
-        </a>
-        <a class="bloc-action" href={SITE.vroooz}>
-          <span class="bloc-titre">Vérifie ce que tu as entendu</span>
-          <span class="bloc-sous">Une info nutrition vue sur TikTok ? Passe-la dans Vroooz.</span>
-          <span class="bloc-fleche" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <ChaineWhatsApp />
-  <Nutriciens />
 
   <!-- Le blog et les guides : contenu frais pour les humains et les moteurs -->
   <section aria-labelledby="titre-lire">

@@ -58,6 +58,10 @@ export const SITE = {
   // le formulaire bascule sur WhatsApp (message prérempli).
   captureEndpoint: 'https://n8n.gooodstudio.com/webhook/annecharlotte-guides',
 
+  // Liste d'attente de la formation « Et toi, dans tout ça ? » : le relais
+  // Netlify range chaque inscription dans la base Notion « Liste d'attente ».
+  attenteEndpoint: 'https://consult-boussole-acj.netlify.app/api/liste-attente',
+
   // Questionnaire pré-consultation (/bilan) : URL du relais Netlify qui
   // écrit dans la base Notion « Pré-consultations ». Tant que c'est vide,
   // le questionnaire s'affiche mais ne peut pas être envoyé.
