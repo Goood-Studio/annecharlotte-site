@@ -2,17 +2,25 @@
 // Les avis de patient·es : des citations courtes, un lien vers tous les avis
 // Google. Contenu statique (voir src/data/avis.ts), aucun widget tiers.
 import { AVIS, AVIS_GOOGLE } from '../data/avis';
+
+interface Props {
+  /** Ne garder que ces avis (par prénom), dans cet ordre */
+  noms?: string[];
+  titre?: string;
+}
+const { noms, titre = 'Elles et ils en parlent mieux que moi' } = Astro.props;
+const liste = noms ? noms.map((n) => AVIS.find((a) => a.nom === n)!).filter(Boolean) : AVIS;
 ---
 
 <section aria-labelledby="titre-avis" class="avis">
   <div class="contenu" data-reveal>
-    <h2 id="titre-avis">Elles et ils en parlent mieux que moi</h2>
+    <h2 id="titre-avis">{titre}</h2>
     <p class="avis-chapo">
       <span class="etoiles" aria-hidden="true">★★★★★</span>
       {AVIS_GOOGLE.note} sur Google, {AVIS_GOOGLE.nombre} avis.
     </p>
     <ul class="avis-liste">
-      {AVIS.map((a) => (
+      {liste.map((a) => (
         <li class="avis-carte">
           <blockquote>« {a.texte} »</blockquote>
           <p class="avis-nom">{a.nom} <span>· avis {a.source === 'Google' ? 'Google' : 'patient·e'}</span></p>

@@ -6,6 +6,7 @@
 // Le jour de la sortie : mettre le lien Stripe (STRIPE) et passer MODE à 'vente'.
 import Base from '../../layouts/Base.astro';
 import ListeAttente from '../../components/ListeAttente.astro';
+import Avis from '../../components/Avis.astro';
 import { SITE, u } from '../../data/site';
 
 const NOM = 'Et toi, dans tout ça ?';
@@ -29,7 +30,7 @@ const chapitres = [
   ['Ton assiette : le gros chapitre', 'Huit parties pour tout remettre au clair : l’assiette qui te nourrit, les protéines, les glucides sans peur, les bons gras, tes os et ton moral, végétaliser un peu, ta journée du matin au soir, et des repas en 10 minutes pour toi aussi. On garde ce que tu aimes et on ajoute ce qui te nourrit.'],
   ['Tout ce qu’il y a autour de l’assiette', 'Manger devant ses mails, debout, en finissant les assiettes des enfants. On revient à table, et à ta faim.'],
   ['Tes émotions, avec la Roue des EmOOOtions', 'Le geste, l’émotion, le besoin caché derrière, et une autre idée que manger. Sans culpabilité.'],
-  ['Ton corps au quotidien', 'Tes nuits, ton ventre, tes bouffées, tes os et tes muscles : des gestes simples pour retrouver ton énergie.'],
+  ['Ton corps au quotidien', 'Tes nuits, ton ventre qui gonfle, tes bouffées, tes os et tes muscles : des gestes simples pour retrouver ton énergie.'],
   ['Quand ça déraille, et la suite', 'Comment repartir après un jour sans, ce qui se règle chez le médecin, et le chemin parcouru depuis ta météo de départ.'],
 ];
 
@@ -38,6 +39,8 @@ const scenes = [
   'Tu finis les frites des enfants sans même avoir faim.',
   'Réveillée à 3 h du matin, et crevée toute la journée.',
   'Tu manges moins qu’avant, et ton ventre n’a pas reçu le message.',
+  'Le soir, ton ventre gonfle, et tu ne sais même plus ce qui passe ou pas.',
+  'Tu cuisines pour toute la tablée, et ton assiette à toi passe à la trappe.',
 ];
 
 const faq = [
@@ -63,6 +66,7 @@ const jauge = [
   titre={`${NOM} | Formation en ligne 35-55 ans | Anne-Charlotte`}
   description="Une formation en ligne pour les femmes de 35 à 55 ans, épuisées, dont le corps change : retrouver ton énergie, comprendre la périménopause et redevenir libre de manger, sans régime, à ton rythme."
   chemin="/formations/et-toi/"
+  barre={MODE === 'attente' ? { texte: 'Préviens-moi quand elle sort', lien: '#prevenir' } : { texte: `Je réserve ma place · ${PRIX_LANCEMENT} €`, lien: lienAchat }}
 >
   <section class="fp-hero">
     <div class="contenu fp-hero__grille">
@@ -119,6 +123,21 @@ const jauge = [
     </div>
   </section>
 
+  <section class="fp-essaye">
+    <div class="contenu">
+      <h2>Tu as déjà tout essayé ?</h2>
+      <p>
+        Le régime de tes 15 ans, l’appli qui compte tout, le sans-gluten « pour voir », la gélule de ta collègue.
+        Et à chaque fois, la même conclusion : <strong>« j’ai sûrement foiré »</strong>.
+      </p>
+      <p>
+        Ce n’était pas la volonté, c’était la méthode. Ton corps ne fait pas la différence entre un régime et une
+        période où il n’y a plus assez à manger : quand tu manges moins, il se met en mode économie. Alors ici, on
+        fait l’inverse. On ne retire rien, on ajoute ce qui te nourrit.
+      </p>
+    </div>
+  </section>
+
   <section>
     <div class="contenu">
       <h2>Ici, on fait autrement</h2>
@@ -126,7 +145,7 @@ const jauge = [
         <div><b>On part de qui tu es</b><p>Pas d’un chiffre sur la balance : de la femme que tu as envie d’être.</p></div>
         <div><b>Une seule petite chose à la fois</b><p>Tu l’essaies quelques jours, puis tu passes à la suite, à ton rythme.</p></div>
         <div><b>On ajoute, on n’enlève pas</b><p>Pas d’aliment interdit, pas de culpabilité. Tout se mange.</p></div>
-        <div><b>Toi d’abord, pour une fois</b><p>Dix minutes pour toi ne volent rien à personne.</p></div>
+        <div><b>Toi d’abord, pour une fois</b><p>Dix minutes pour toi ne volent rien à personne. Et pas de deuxième repas à cuisiner : ton assiette trouve sa place dans celui de la famille.</p></div>
       </div>
     </div>
   </section>
@@ -198,6 +217,8 @@ const jauge = [
     </div>
   </section>
 
+  <Avis noms={['Maurine', 'Dominique', 'Chantal W.']} titre="Ce que mes patientes disent de ma façon de faire" />
+
   <section>
     <div class="contenu">
       <h2>Tes questions</h2>
@@ -247,6 +268,8 @@ const jauge = [
   .fp-jauge__ligne i { display: block; height: 14px; border-radius: 99px; background: var(--sapin-3); }
   .fp-jauge__ligne--toi { color: var(--rose); font-weight: 700; }
   .fp-jauge__ligne--toi i { background: var(--rose); min-width: 14px; }
+
+  .fp-essaye p { max-width: 720px; font-size: 18px; }
 
   .fp-principes { display: grid; gap: 14px; margin-top: 18px; }
   @media (min-width: 760px) { .fp-principes { grid-template-columns: repeat(4, 1fr); } }

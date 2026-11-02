@@ -22,9 +22,11 @@ interface Props {
   noindex?: boolean;
   /** Joue l'entrée orchestrée du hero (accueil) */
   animer?: boolean;
+  /** Remplace le bouton de la barre RDV mobile, ex. { texte, lien } */
+  barre?: { texte: string; lien: string };
 }
 
-const { titre, description, chemin, jsonLd = [], noindex = false } = Astro.props;
+const { titre, description, chemin, jsonLd = [], noindex = false, barre } = Astro.props;
 
 const site = (import.meta.env.SITE ?? 'https://www.annecharlotte.be').replace(/\/$/, '');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -135,7 +137,7 @@ const tousJsonLd = [personne, ...jsonLd];
     </main>
     <Footer />
     <WhatsAppFloat />
-    <StickyRdv />
+    <StickyRdv texte={barre?.texte} lien={barre?.lien} />
 
     <!-- GSAP auto-hébergé (RGPD : aucun CDN). Le contenu reste visible sans
          JavaScript : les états initiaux sont posés par GSAP lui-même. -->

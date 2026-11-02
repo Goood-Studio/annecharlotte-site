@@ -1,14 +1,25 @@
 ---
 // Barre RDV fixée en bas de l'écran mobile : l'objectif n°1 du site est
 // le RDV en ligne, ce bouton ne quitte jamais l'écran (55 %+ de trafic mobile).
+// Une page peut remplacer le bouton (la page formation y met « Préviens-moi »).
 import { SITE } from '../data/site';
+
+interface Props {
+  texte?: string;
+  lien?: string;
+}
+const { texte, lien } = Astro.props;
 ---
 
 <div class="barre-rdv">
-  <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>
-    Prendre RDV en visio
-    <span class="pastille">plus rapide</span>
-  </a>
+  {texte ? (
+    <a class="btn btn-principal btn-bloc" href={lien}>{texte}</a>
+  ) : (
+    <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>
+      Prendre RDV en visio
+      <span class="pastille">plus rapide</span>
+    </a>
+  )}
 </div>
 
 <style>

@@ -2,7 +2,11 @@
 // « Préviens-moi quand elle sort » : la liste d'attente de la formation.
 // Envoie prénom + e-mail au relais (SITE.attenteEndpoint), qui les range dans
 // Notion. Un champ caché arrête les robots. `source` dit d'où elle vient.
-import { SITE } from '../data/site';
+// En cadeau, tout de suite après l'inscription : le guide « Épuisée, ou déjà
+// la périménopause ? » (02/11/2026), pour ne pas la laisser attendre décembre.
+import { SITE, u } from '../data/site';
+
+const GUIDE = u('/guides/pdf/epuisee-ou-perimenopause.pdf');
 
 interface Props {
   source?: 'Page formation' | 'Lead magnet' | 'Accueil' | 'YouTube' | 'Autre';
@@ -11,9 +15,12 @@ interface Props {
 const { source = 'Page formation', titre = 'Préviens-moi quand elle sort' } = Astro.props;
 ---
 
-<form class="attente" data-endpoint={SITE.attenteEndpoint} data-source={source} method="post" id="prevenir">
+<form class="attente" data-endpoint={SITE.attenteEndpoint} data-source={source} data-guide={GUIDE} method="post" id="prevenir">
   <h3>{titre}</h3>
-  <p class="attente-intro">Un seul e-mail le jour de la sortie, avec le prix de lancement à 59 € réservé à la liste. Pas de spam.</p>
+  <p class="attente-intro">
+    <strong>Tout de suite, je t’offre mon guide « Épuisée, ou déjà la périménopause ? »</strong>, pour commencer dès ce soir.
+    Puis un seul e-mail le jour de la sortie, avec le prix de lancement à 59 € réservé à la liste. Pas de spam.
+  </p>
   <div class="attente-champs">
     <label>Ton prénom<input type="text" name="prenom" autocomplete="given-name" placeholder="Prénom" /></label>
     <label>Ton e-mail<input type="email" name="email" autocomplete="email" placeholder="prenom@exemple.be" required /></label>
@@ -52,6 +59,13 @@ const { source = 'Page formation', titre = 'Préviens-moi quand elle sort' } = A
           f.querySelector('.attente-ok')?.remove();
           bouton.remove();
           etat.textContent = j.deja ? 'Tu es déjà sur la liste. Je te préviens dès que ça sort !' : 'C’est noté ! Tu seras la première prévenue.';
+          const cadeau = document.createElement('a');
+          cadeau.className = 'btn btn-rose btn-bloc attente-cadeau';
+          cadeau.href = f.dataset.guide!;
+          cadeau.target = '_blank';
+          cadeau.rel = 'noopener';
+          cadeau.textContent = 'Ton guide offert (PDF)';
+          etat.after(cadeau);
         } else {
           etat.textContent = j.erreur || 'Oups, ça n’est pas passé. Réessaie dans un instant.';
           bouton.disabled = false;
@@ -75,4 +89,6 @@ const { source = 'Page formation', titre = 'Préviens-moi quand elle sort' } = A
   .attente-ok { flex-direction: row !important; align-items: flex-start; gap: 10px !important; color: #DCD5C6 !important; font-weight: 500 !important; font-size: 13.5px !important; margin-bottom: 18px; }
   .attente-ok input { margin-top: 3px; width: 18px; height: 18px; flex-shrink: 0; }
   .attente-etat { color: var(--ecru); font-weight: 700; margin: 14px 0 0; }
+  .attente-intro strong { color: var(--ecru); }
+  .attente-cadeau { margin-top: 14px; }
 </style>
