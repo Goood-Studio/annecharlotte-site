@@ -1,0 +1,102 @@
+---
+// « Ton ventre, à ton rythme » (09/11/2026) : la page « bientôt » du futur
+// accompagnement en ligne, autonome, pour le ventre (ventre gonflé, gaz,
+// transit). Les 3 guides digestifs y renvoient ; elle sert de liste d'attente
+// et mesure l'envie avant de le construire.
+// Liste d'attente par WhatsApp : le relais de la liste « Et toi, dans tout
+// ça ? » (Netlify de Valentin, déployé à la main) ne sait pas encore
+// distinguer un second programme. Pour passer à l'e-mail dans Notion, ajouter
+// un champ « programme » au relais, puis brancher ListeAttente ici.
+// Contenu de la page à valider par Anne-Charlotte (rien n'est encore construit).
+import Base from '../layouts/Base.astro';
+import AvancerEnsemble from '../components/AvancerEnsemble.astro';
+import { articleDuGuide } from '../data/guides-site';
+import { SITE, u } from '../data/site';
+
+const NOM = 'Ton ventre, à ton rythme';
+const lienWhatsApp =
+  SITE.whatsapp + '?text=' + encodeURIComponent(`Bonjour Anne-Charlotte, préviens-moi quand « ${NOM} » est prêt.`);
+
+const guides = ['ventre-gonfle-le-soir', 'trop-de-gaz', 'constipation']
+  .map((slug) => articleDuGuide(slug))
+  .filter((a) => !!a);
+---
+
+<Base
+  titre={NOM + ' : l’accompagnement en ligne pour ton ventre | Anne-Charlotte Diététicienne'}
+  description="Ventre qui gonfle le soir, gaz, transit qui fait du yoyo ? Anne-Charlotte, diététicienne, prépare un accompagnement en ligne pour avancer à ton rythme, une petite chose à la fois. Sois prévenue de la sortie."
+  chemin="/ventre-a-ton-rythme/"
+>
+  <section class="hero-ventre fond-sapin">
+    <div class="contenu">
+      <p class="ventre-kicker">À ton rythme · bientôt</p>
+      <h1>{NOM}</h1>
+      <p class="hero-sous">
+        Ton ventre gonfle le soir, des gaz te gâchent les sorties, ou ton transit
+        fait du yoyo&nbsp;? Je prépare un accompagnement en ligne pour avancer de
+        ton côté, chez toi, quand tu veux. Une petite chose à la fois.
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="titre-esprit">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-esprit">Ce que je prépare</h2>
+      <div class="rangs">
+        <div class="rang">
+          <h3>Le comment avant le quoi</h3>
+          <p>Le même esprit que mes guides&nbsp;: on regarde comment tu manges avant de retirer quoi que ce soit. Sans supprimer un seul aliment au départ.</p>
+        </div>
+        <div class="rang">
+          <h3>Une petite chose à la fois</h3>
+          <p>Tu avances de ton côté, à ton rythme, un geste après l’autre, et tu vois ce qui change pour ton ventre.</p>
+        </div>
+        <div class="rang">
+          <h3>Des repères clairs</h3>
+          <p>Ce qui se règle dans l’assiette, et ce qui mérite d’abord un avis médical. Pour ne plus tourner en rond seule.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ventre-prevenir" aria-labelledby="titre-prevenir">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-prevenir">Tu veux être prévenue&nbsp;?</h2>
+      <p>Pas encore de date. Envoie-moi un petit message, je te préviens dès que c’est prêt. Et ça m’aide à savoir si je dois accélérer.</p>
+      <a class="btn btn-principal" href={lienWhatsApp}>Préviens-moi sur WhatsApp</a>
+    </div>
+  </section>
+
+  {guides.length > 0 && (
+    <section aria-labelledby="titre-attendant">
+      <div class="contenu" data-reveal>
+        <h2 id="titre-attendant">En attendant, les guides gratuits</h2>
+        <div class="rangs">
+          {guides.map((a) => (
+            <a class="rang rang-ventre" href={u('/articles/' + a!.slug + '/')}>
+              <h3>{a!.titre}</h3>
+              <p>{a!.metaDescription}</p>
+              <p class="avec-guide">Avec le guide gratuit à télécharger</p>
+              <span class="rang-fleche" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <AvancerEnsemble />
+</Base>
+
+<style>
+  .hero-ventre { padding: 56px 0 48px; }
+  .ventre-kicker { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--rose); margin-bottom: 10px; }
+  .hero-sous { font-size: 18.5px; max-width: 58ch; margin: 0; }
+  .ventre-prevenir { background: var(--rose-2); }
+  .ventre-prevenir p { max-width: 60ch; }
+  .ventre-prevenir .btn { margin-top: 8px; }
+  .rang-ventre { position: relative; padding-right: 44px; }
+  .rang-ventre:hover h3 { color: var(--rose-fort); }
+  .avec-guide { font-size: 13.5px !important; font-weight: 700; color: var(--dore) !important; margin-top: 6px !important; }
+  .rang-fleche { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--dore); }
+</style>
