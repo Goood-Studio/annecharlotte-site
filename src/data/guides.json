@@ -92,18 +92,144 @@
       "html": ""
     },
     {
-      "titre": "Le kit anti-ballonnements",
-      "slug": "kit-anti-ballonnements",
-      "statut": "En préparation",
-      "pilier": "Troubles digestifs",
-      "accroche": "7 jours pour comprendre ton ventre : journal alimentaire prêt à remplir, les 10 réflexes qui soulagent, et la méthode pour repérer tes déclencheurs.",
+      "titre": "Épuisée, ou déjà la périménopause ?",
+      "slug": "epuisee-ou-perimenopause",
+      "statut": "Publié",
+      "pilier": "Santé féminine",
+      "accroche": "Tu manges moins qu'avant, tu dors mal, ton ventre change. Avant d'accuser tes hormones, ou toi, on remet les choses à leur place en 5 minutes.",
       "contenuListe": [
-        "Un journal alimentaire 7 jours prêt à remplir",
-        "Les 10 réflexes anti-ballonnements",
-        "La méthode pas à pas pour identifier tes déclencheurs",
-        "Les signes qui méritent une consultation"
+        "Ta jauge, un mardi à 19 h",
+        "Le petit test : fatigue ou périménopause ?",
+        "Pourquoi manger moins ne marche pas : les 9 freins",
+        "Une seule petite chose pour cette semaine"
       ],
-      "metaDescription": "Guide gratuit : 7 jours pour comprendre tes ballonnements, avec journal alimentaire, réflexes qui soulagent et méthode pour trouver tes déclencheurs.",
+      "metaDescription": "Guide gratuit pour les femmes de 35 à 55 ans : faire la part entre fatigue et périménopause, comprendre pourquoi manger moins ne marche pas, et commencer par une seule petite chose.",
+      "html": ""
+    },
+    {
+      "titre": "Mieux dormir, ça se prépare dès le matin",
+      "slug": "mieux-dormir",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "« Ça fait 15 ans que je n'avais plus aussi bien dormi. » Elle a juste allégé son souper et ajouté une vraie collation. Ton sommeil se prépare toute la journée.",
+      "contenuListe": [
+        "La chaîne du sommeil, du petit-déj à la nuit",
+        "Le petit test : qu'est-ce qui sabote tes nuits ?",
+        "Des idées de collation et de souper léger",
+        "Tes 7 nuits pour tester une seule petite chose"
+      ],
+      "metaDescription": "Guide gratuit d'une diététicienne : comprendre comment ton alimentation prépare ton sommeil, trouver ce qui sabote tes nuits et tester une seule petite chose pendant 7 nuits.",
+      "html": ""
+    },
+    {
+      "titre": "Ton ventre gonfle le soir ?",
+      "slug": "ventre-gonfle-le-soir",
+      "statut": "Publié",
+      "pilier": "Troubles digestifs",
+      "accroche": "Le matin ça va, le soir tu ne fermes plus ton jean ? Les 4 raisons que je vois le plus souvent en consultation, et un geste simple pour chacune. Sans supprimer un seul aliment.",
+      "contenuListe": [
+        "Tu manges trop vite : le comment avant le quoi",
+        "Ton ventre n'a jamais de pause",
+        "Ton repas pèse lourd, c'est une question de moment",
+        "Ta tête est ailleurs : méditer, mâcher, marcher",
+        "L'assiette typique qui fait gonfler, réorganisée"
+      ],
+      "metaDescription": "Guide gratuit d'une diététicienne : pourquoi ton ventre gonfle le soir, les 4 raisons les plus fréquentes et un geste simple pour chacune, sans supprimer d'aliment.",
+      "html": ""
+    },
+    {
+      "titre": "Tu pètes trop, et en plus ça sent mauvais ?",
+      "slug": "trop-de-gaz",
+      "statut": "Publié",
+      "pilier": "Troubles digestifs",
+      "accroche": "On en parle sans tabou et sans gêne : ce qui se passe vraiment dans ton ventre, et un geste simple pour chaque situation. Sans arrêter de manger.",
+      "contenuListe": [
+        "« Je pète tout le temps » : d'où ça vient",
+        "« Ça sent vraiment mauvais » : pourquoi",
+        "« Je n'arrive pas à les retenir »",
+        "« Alors j'évite de manger » : le piège",
+        "Avant un moment important"
+      ],
+      "metaDescription": "Guide gratuit d'une diététicienne : pourquoi tu as beaucoup de gaz, pourquoi ils sentent fort, et un geste simple pour chaque situation, sans arrêter de manger.",
+      "html": ""
+    },
+    {
+      "titre": "Tu y vas tous les 3 jours, et c'est toujours la galère ?",
+      "slug": "constipation",
+      "statut": "Publié",
+      "pilier": "Troubles digestifs",
+      "accroche": "Les 4 raisons que je vois le plus souvent en consultation, et un geste simple pour chacune. Sans pruneaux à la chaîne, sans laxatifs en premier.",
+      "contenuListe": [
+        "Tu rates le bon moment",
+        "La position, qui change tout",
+        "Des fibres, et assez d'eau",
+        "Ton intestin a besoin de bouger",
+        "La journée typique qui constipe, et comment la réorganiser"
+      ],
+      "metaDescription": "Guide gratuit d'une diététicienne sur la constipation : les 4 raisons les plus fréquentes et un geste simple pour chacune, sans pruneaux à la chaîne ni laxatifs.",
+      "html": ""
+    },
+    {
+      "titre": "Les fêtes, sans culpabiliser",
+      "slug": "fetes-sans-culpabiliser",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "La bûche de mamie, le foie gras de tonton, l'apéro qui dure jusqu'à 22 h. Pas d'aliment interdit, pas de « je rattrape lundi » : de quoi arriver bien, savourer et te sentir légère le lendemain.",
+      "contenuListe": [
+        "Avant la fête : on n'arrive pas le ventre vide",
+        "Le jour J : l'apéro, les verres, la table, la bûche",
+        "Après le repas, la balade digestive",
+        "Le lendemain, j'attends ma faim",
+        "Ta fête à toi, préparée tranquillement"
+      ],
+      "metaDescription": "Guide gratuit pour les fêtes de fin d'année : profiter de l'apéro, du repas et de la bûche sans culpabiliser, et te sentir légère le lendemain. Rien d'interdit.",
+      "html": ""
+    },
+    {
+      "titre": "Le kit idées repas",
+      "slug": "kit-idees-repas",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "Tu ouvres le frigo, tu ne sais pas quoi faire, et tu finis par ne rien faire. Pas de menus ici : des colonnes. Un truc dans chaque colonne, et c'est un repas.",
+      "contenuListe": [
+        "Le petit déj, comment le composer",
+        "La lunch box, la base",
+        "La lunch box, quand tu tournes en rond",
+        "Comment on s'en sert vraiment"
+      ],
+      "metaDescription": "Guide gratuit d'une diététicienne : composer ton petit déj et ta lunch box sans menus, avec des colonnes à combiner. Un truc dans chaque colonne, et c'est un repas.",
+      "html": ""
+    },
+    {
+      "titre": "Le kit du 18 h",
+      "slug": "kit-du-18h",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "Pour toi qui nourris tout le monde… sauf toi. Une seule petite habitude, et une semaine de soupers que toute la famille mange, prêts en moins de 10 minutes.",
+      "contenuListe": [
+        "Le mini-test : par où je commence ?",
+        "Une habitude qui tient toute seule",
+        "7 soupers pour toute la famille, en moins de 10 minutes",
+        "La liste de courses de la semaine",
+        "La page frigo à colorier avec les enfants"
+      ],
+      "metaDescription": "Guide gratuit pour les mamans : une seule petite habitude et 7 soupers que toute la famille mange, prêts en moins de 10 minutes, avec la liste de courses.",
+      "html": ""
+    },
+    {
+      "titre": "Tu nourris tout le monde. Et toi ?",
+      "slug": "defi-7-jours-mamans",
+      "statut": "Publié",
+      "pilier": "Mieux manger",
+      "accroche": "Le défi de 7 jours pour retrouver ta place à table : une seule petite habitude pour toi, sans cuisiner un repas de plus ni chambouler ton quotidien de maman.",
+      "contenuListe": [
+        "Ta jauge à colorier, avant et après",
+        "Non, tu n'es pas une poubelle de table",
+        "Je mange quoi, moi, quand je n'ai pas le temps ?",
+        "Le défi : 7 jours à cocher",
+        "Ton petit bilan du jour 7"
+      ],
+      "metaDescription": "Défi gratuit de 7 jours pour les mamans qui nourrissent tout le monde sauf elles : ton assiette à toi, assise, un repas par jour, sans cuisiner en plus.",
       "html": ""
     }
   ]

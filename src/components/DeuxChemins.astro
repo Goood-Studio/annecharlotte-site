@@ -3,9 +3,9 @@
 // bloc des tarifs. Une porte « ensemble » (l'accompagnement, détaillé sur
 // /accompagnement/) et une porte « à ton rythme » (la formation). Le détail
 // du pack (carrousel, freins, déroulé) vit sur /accompagnement/.
+// 02/11/2026 : un seul bouton par carte (plus de lien secondaire en dessous).
 import { OFFRES } from '../data/contenu';
-import { SITE, u } from '../data/site';
-const unique = OFFRES[0];
+import { u } from '../data/site';
 const pack = OFFRES[1];
 ---
 
@@ -21,7 +21,6 @@ const pack = OFFRES[1];
         <p class="chemin-prix">{pack.prix}</p>
         <div class="chemin-actions">
           <a class="btn btn-rose" href={u('/accompagnement/')}>Voir l’accompagnement</a>
-          <a class="chemin-lien" href={SITE.rdvVisio}>Ou une seule consultation, {unique.prix}&nbsp;→</a>
         </div>
       </div>
       <div class="chemin chemin--seule">
@@ -31,7 +30,6 @@ const pack = OFFRES[1];
         <p class="chemin-prix">59 € <small>au lancement</small></p>
         <div class="chemin-actions">
           <a class="btn btn-principal" href={u('/formations/et-toi/')}>Découvrir la formation</a>
-          <a class="chemin-lien" href={u('/formations/et-toi/') + '#prevenir'}>Préviens-moi quand elle sort&nbsp;→</a>
         </div>
       </div>
     </div>
@@ -56,7 +54,4 @@ const pack = OFFRES[1];
   .chemin--seule .chemin-prix { color: var(--sapin) !important; }
   .chemin-prix small { font-family: var(--police-texte); font-size: 15px; font-weight: 700; color: var(--encre-2); }
   .chemin-actions { margin-top: auto; padding-top: 10px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
-  .chemin-lien { font-weight: 700; font-size: 15.5px; }
-  .chemin--ensemble .chemin-lien { color: var(--rose); }
-  .chemin--seule .chemin-lien { color: var(--sapin); }
 </style>

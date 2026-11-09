@@ -1,0 +1,51 @@
+---
+// « En ce moment, je te reçois en visio » (06/11/2026, demande d'ACJ).
+// Un encart court : le message, le bon lien de réservation, et un repli
+// « La visio, ça te freine ? » qui rassure (appel vidéo WhatsApp possible)
+// et dit pourquoi la visio colle à sa façon de travailler (photos des
+// assiettes, roue à l'écran, dossier envoyé sur WhatsApp juste après).
+// Un seul bouton : la réservation. Le repli n'est pas un deuxième appel à
+// l'action. `bouton={false}` quand la page a déjà ses boutons (le /bilan).
+import { SITE } from '../data/site';
+
+interface Props {
+  bouton?: boolean;
+}
+const { bouton = true } = Astro.props;
+---
+
+<aside class="visio" aria-labelledby="visio-titre">
+  <p class="visio-titre" id="visio-titre">En ce moment, je te reçois en visio</p>
+  <p class="visio-texte">De chez toi, sur ton téléphone ou ton ordi. Le lien arrive avec ta réservation, rien à installer.</p>
+  {bouton && <a class="btn btn-principal visio-bouton" href={SITE.rdvVisio}>Je réserve en visio <span aria-hidden="true">→</span></a>}
+  <details class="visio-repli">
+    <summary>La visio, ça te freine un peu&nbsp;?</summary>
+    <div class="visio-plus">
+      <p><strong>Pas à l’aise avec un lien&nbsp;?</strong> Dis-le-moi en réservant, ou écris-moi sur <a href={SITE.whatsapp}>WhatsApp</a>&nbsp;: je t’appelle en vidéo sur WhatsApp, comme avec une amie. Si ça coupe, je te rappelle, tout simplement.</p>
+      <p><strong>Et pour ma façon de travailler, c’est même mieux&nbsp;:</strong></p>
+      <ul>
+        <li>Si tu veux, tu m’envoies 2 ou 3 photos de tes vraies assiettes, et on les regarde ensemble. Tu peux même me montrer ton frigo.</li>
+        <li>Je te montre ta roue à l’écran pendant qu’on parle&nbsp;: on voit ensemble ce qui prend le plus de place.</li>
+        <li>Juste après, tu reçois ton dossier sur WhatsApp&nbsp;: ce que tu m’as dit, tes petites choses à tester, des idées de plats.</li>
+        <li>Pas de trajet, pas de parking, pas de garde à trouver. Aussi sur le temps de midi et en soirée.</li>
+        <li>Entre les séances, on reste en contact sur WhatsApp, là où tout se passe déjà.</li>
+      </ul>
+    </div>
+  </details>
+</aside>
+
+<style>
+  .visio {
+    background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px;
+    display: grid; gap: 8px; justify-items: start;
+  }
+  .visio-titre { margin: 0; font-family: var(--police-titre); color: var(--sapin); font-size: 19px; line-height: 1.25; }
+  .visio-texte { margin: 0; font-size: 15.5px; color: var(--encre-2); }
+  .visio-bouton { margin-top: 4px; }
+  .visio-repli { width: 100%; }
+  /* La flèche dorée vient du style commun des <details> (global.css). */
+  .visio-repli summary { font-size: 15.5px; padding: 8px 40px 8px 0; min-height: 0; }
+  .visio-plus { display: grid; gap: 6px; font-size: 15.5px; padding: 4px 0 2px; }
+  .visio-plus p { margin: 0; }
+  .visio-plus ul { margin: 0; padding-left: 20px; display: grid; gap: 5px; }
+</style>

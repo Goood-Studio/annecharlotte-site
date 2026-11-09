@@ -23,7 +23,8 @@ export function getStaticPaths() {
 
 const { ville } = Astro.props;
 
-const proposeCabinet = (ville.consultation ?? []).includes('Cabinet Malonne');
+// 09/11/2026 : pas de bouton cabinet tant que SITE.visioSeulement est vrai.
+const proposeCabinet = !SITE.visioSeulement && (ville.consultation ?? []).includes('Cabinet Malonne');
 
 const siteUrl =
   (import.meta.env.SITE ?? '').replace(/\/$/, '') +
@@ -56,7 +57,7 @@ const autresVilles = villesData.villes.filter((v) => v.slug !== ville.slug);
       <p class="intro-locale">{ville.introLocale}</p>
       <div class="hero-boutons">
         <a class="btn btn-rose" href={SITE.rdvVisio}>
-          Prendre RDV en visio <span class="pastille">plus rapide</span>
+          Prendre RDV en visio {proposeCabinet && <span class="pastille">plus rapide</span>}
         </a>
         {proposeCabinet && (
           <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>

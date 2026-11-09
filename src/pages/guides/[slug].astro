@@ -1,20 +1,19 @@
 ---
-// La page d'un guide publié : présentation + captation. Le contenu du
-// guide lui-même n'est PAS affiché (c'est le lead magnet) : la page vend,
-// le formulaire capte, la livraison se fait par WhatsApp ou e-mail.
+// La page d'un guide publié. Depuis le 09/11/2026 : plus de formulaire, le
+// PDF se télécharge directement. Quand un article explique le guide, la page
+// y renvoie (c'est là que tout est raconté, le PDF est aussi sous l'article).
 import Base from '../../layouts/Base.astro';
-import CaptureGuide from '../../components/CaptureGuide.astro';
-import CtaFinal from '../../components/CtaFinal.astro';
-import guidesData from '../../data/guides.json';
+import GuideTelecharger from '../../components/GuideTelecharger.astro';
+import AvancerEnsemble from '../../components/AvancerEnsemble.astro';
+import { guidesPublies, articleDuGuide } from '../../data/guides-site';
 import { u } from '../../data/site';
 
 export function getStaticPaths() {
-  return guidesData.guides
-    .filter((g) => g.statut === 'Publié' && g.slug)
-    .map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
+  return guidesPublies.map((guide) => ({ params: { slug: guide.slug }, props: { guide } }));
 }
 
 const { guide } = Astro.props;
+const article = articleDuGuide(guide.slug);
 ---
 
 <Base
@@ -31,23 +30,18 @@ const { guide } = Astro.props;
   </section>
 
   <section>
-    <div class="contenu guide-2col" data-reveal>
-      <div>
-        <h2>Ce que tu reçois</h2>
-        <ul class="recu">
-          {guide.contenuListe.map((item) => <li>{item}</li>)}
-        </ul>
-        <p class="gratuit">
-          C’est gratuit, et c’est le condensé de ce que je construis en
-          consultation. Si tu veux ensuite aller plus loin, tu sauras où me
-          trouver.
+    <div class="contenu guide-corps" data-reveal>
+      <GuideTelecharger guide={guide} kicker="À télécharger, gratuit" />
+      {article && (
+        <p class="guide-article">
+          Tout est expliqué dans l’article
+          <a href={u('/articles/' + article.slug + '/')}>« {article.titre} »</a>.
         </p>
-      </div>
-      <CaptureGuide guide={guide.titre} pdf={u('/guides/pdf/' + guide.slug + '.pdf')} />
+      )}
     </div>
   </section>
 
-  <CtaFinal />
+  <AvancerEnsemble apresGuide />
 </Base>
 
 <style>
@@ -61,15 +55,6 @@ const { guide } = Astro.props;
     margin-bottom: 10px;
   }
   .hero-sous { font-size: 18.5px; max-width: 56ch; margin: 0; }
-  .guide-2col {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 28px;
-    align-items: start;
-  }
-  @media (min-width: 900px) { .guide-2col { grid-template-columns: 1fr 1.1fr; gap: 56px; } }
-  .recu { padding-left: 20px; }
-  .recu li { margin-bottom: 10px; font-size: 17.5px; }
-  .recu li::marker { color: var(--rose-fort); }
-  .gratuit { color: var(--encre-2); margin-top: 16px; }
+  .guide-corps { max-width: 780px; }
+  .guide-article { font-size: 17px; margin-top: 18px; }
 </style>

@@ -17,7 +17,7 @@ const { texte, lien } = Astro.props;
   ) : (
     <a class="btn btn-principal btn-bloc" href={SITE.rdvVisio}>
       Prendre RDV en visio
-      <span class="pastille">plus rapide</span>
+      {!SITE.visioSeulement && <span class="pastille">plus rapide</span>}
     </a>
   )}
 </div>

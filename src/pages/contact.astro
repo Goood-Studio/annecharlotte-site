@@ -33,10 +33,10 @@ const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonL
       <!-- Le geste principal, mis en scène seul -->
       <div class="moyen-principal">
         <div>
-          <h2>Réserver en visio <span class="pastille">plus rapide</span></h2>
+          <h2>Réserver en visio {!SITE.visioSeulement && <span class="pastille">plus rapide</span>}</h2>
           <p>
-            Tu choisis ton créneau, la confirmation est immédiate. En visio
-            depuis chez toi, ou au cabinet.
+            Tu choisis ton créneau, la confirmation est immédiate.
+            {SITE.visioSeulement ? 'En ce moment, je te reçois en visio, depuis chez toi.' : 'En visio depuis chez toi, ou au cabinet.'}
           </p>
         </div>
         <a class="btn btn-rose" href={SITE.rdvVisio}>Prendre RDV en visio</a>
@@ -49,7 +49,8 @@ const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonL
           <p>Une question avant de réserver ? Je te réponds directement.</p>
           <a class="btn btn-contour" href={SITE.whatsappMessage}>{SITE.telephone}</a>
         </div>
-        {SITE.cabinets.map((cabinet) => (
+        {/* 09/11/2026 : pas de RDV au cabinet tant que SITE.visioSeulement est vrai. */}
+        {!SITE.visioSeulement && SITE.cabinets.map((cabinet) => (
           <div class="rang moyen">
             <h3>{cabinet.nom}</h3>
             <p>

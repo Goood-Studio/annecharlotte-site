@@ -15,6 +15,20 @@ export const MOTIFS: [id: string, label: string][] = [
   ['autre', 'Autre chose'],
 ];
 
+// « Comment tu m'as connue ? » : une seule réponse, facultative. Jamais de nom
+// de médecin. Les id partent tels quels vers la boussole (même liste dans
+// relais/netlify/lib/fiche.mjs) et servent ensuite le canal d'arrivée dans Filo.
+export const CONNUE: [id: string, label: string][] = [
+  ['medecin', 'Mon médecin traitant'],
+  ['gyneco', 'Ma gynéco'],
+  ['gastro', 'Mon gastro'],
+  ['soignant', 'Un·e autre soignant·e (kiné, psy…)'],
+  ['internet', 'En cherchant sur internet'],
+  ['instagram', 'Instagram'],
+  ['viavia', 'Via via : un·e ami·e, la famille…'],
+  ['autre', 'Autrement'],
+];
+
 export const PHRASES: Record<string, Phrase[]> = {
   sii: [
     { texte: 'Le soir, j’ai l’air enceinte de plusieurs mois.' },

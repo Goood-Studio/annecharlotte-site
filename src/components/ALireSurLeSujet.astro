@@ -1,0 +1,52 @@
+---
+// « À lire sur ce sujet » (09/11/2026) : sur chaque page thème, les articles
+// du même pilier, ceux qui ont leur guide gratuit d'abord. Les visiteuses
+// arrivent surtout par ces pages : elles y trouvent les articles et les PDF.
+// Un seul bouton, vers tous les articles.
+import articlesData from '../data/articles.json';
+import { guideDeLArticle } from '../data/guides-site';
+import { u } from '../data/site';
+
+interface Props {
+  pilier: string;
+  max?: number;
+}
+const { pilier, max = 10 } = Astro.props;
+
+const duPilier = articlesData.articles
+  .filter((a) => a.pilier === pilier)
+  .map((a) => ({ a, avecGuide: !!guideDeLArticle(a)?.sien }));
+const choisis = [...duPilier.filter((x) => x.avecGuide), ...duPilier.filter((x) => !x.avecGuide)].slice(0, max);
+---
+
+{choisis.length > 0 && (
+  <section class="a-lire" aria-labelledby="titre-a-lire">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-a-lire">À lire sur ce sujet</h2>
+      <p class="a-lire-chapo">Des réponses claires, et souvent un guide gratuit à télécharger juste en dessous, sans formulaire.</p>
+      <div class="rangs">
+        {choisis.map(({ a, avecGuide }) => (
+          <a class="rang rang-a-lire" href={u('/articles/' + a.slug + '/')}>
+            <h3>{a.titre}</h3>
+            <p>{a.metaDescription}</p>
+            {avecGuide && <p class="avec-guide">Avec le guide gratuit à télécharger</p>}
+            <span class="rang-fleche" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+      <div class="a-lire-action">
+        <a class="btn btn-contour" href={u('/articles/')}>Tous les articles et guides</a>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .a-lire-chapo { color: var(--encre-2); max-width: 60ch; margin: -4px 0 18px; }
+  .rang-a-lire { position: relative; padding-right: 44px; }
+  .rang-a-lire h3 { transition: color .15s ease; }
+  .rang-a-lire:hover h3 { color: var(--rose-fort); }
+  .avec-guide { font-size: 13.5px !important; font-weight: 700; color: var(--dore) !important; margin-top: 6px !important; }
+  .rang-fleche { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--dore); }
+  .a-lire-action { margin-top: 22px; }
+</style>

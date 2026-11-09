@@ -8,6 +8,7 @@ import Tarifs from '../components/Tarifs.astro';
 import FaqDiet from '../components/FaqDiet.astro';
 import Nutriciens from '../components/Nutriciens.astro';
 import CtaFinal from '../components/CtaFinal.astro';
+import ALireSurLeSujet from '../components/ALireSurLeSujet.astro';
 import { SITE } from '../data/site';
 import { faqJsonLd } from '../data/jsonld';
 import { FAQ_DIET, SERVICES } from '../data/contenu';
@@ -59,6 +60,15 @@ const {
   parcours = [],
 } = Astro.props;
 
+// Le pilier (au sens du CMS) de la page, déduit de son chemin.
+const PILIER_PAR_CHEMIN: Record<string, string> = {
+  '/troubles-digestifs/': 'Troubles digestifs',
+  '/sante-feminine/': 'Santé féminine',
+  '/mieux-manger/': 'Mieux manger',
+  '/arreter-de-fumer/': 'Arrêt du tabac',
+};
+const pilierCms = PILIER_PAR_CHEMIN[chemin];
+
 const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...FAQ_DIET])];
 ---
 
@@ -73,9 +83,9 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
       </p>
       <div class="hero-boutons">
         <a class="btn btn-rose" href={SITE.rdvVisio}>
-          Prendre RDV en visio <span class="pastille">plus rapide</span>
+          Prendre RDV en visio {!(visioSeule || SITE.visioSeulement) && <span class="pastille">plus rapide</span>}
         </a>
-        {!visioSeule && (
+        {!(visioSeule || SITE.visioSeulement) && (
           <a class="btn btn-contour-clair" href={SITE.rdvMalonne}>Prendre RDV au cabinet</a>
         )}
       </div>
@@ -117,6 +127,9 @@ const jsonLd = [faqJsonLd([{ q: questionCle, r: reponseCle }, ...faqPilier, ...F
       </div>
     </section>
   )}
+
+  <!-- 09/11/2026 : les articles (et leurs guides) du pilier -->
+  {pilierCms && <ALireSurLeSujet pilier={pilierCms} />}
 
   <!-- Ce que je propose : une liste éditoriale, pas des cartes -->
   <section aria-labelledby="titre-services-pilier" class="fond-ecru2">

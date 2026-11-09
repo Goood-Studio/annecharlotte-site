@@ -88,6 +88,12 @@ export const SITE = {
   horaires: 'Lundi à vendredi, 8h30 à 17h00',
   // La visio a aussi des plages hors bureau (vérifié sur cal.com le 01/10/2026).
   horairesVisio: 'en visio, aussi sur le temps de midi (12h-13h) et en soirée',
+
+  // 06/11/2026 : « actuellement je ne reçois plus qu'en visio » (ACJ).
+  // true = l'encart « En ce moment, je te reçois en visio » remplace le lien
+  // vers le cabinet sur l'accueil, et le /bilan ne propose plus Malonne.
+  // Repasser à false quand le cabinet rouvre : tout revient comme avant.
+  visioSeulement: true,
 };
 
 // Préfixe toutes les URLs internes avec la base de déploiement

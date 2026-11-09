@@ -1,0 +1,58 @@
+---
+// Sous chaque article et chaque guide (09/11/2026) : après le PDF, les deux
+// façons d'aller plus loin avec Anne-Charlotte. Un seul bouton par carte.
+import { OFFRES } from '../data/contenu';
+import { SITE, u } from '../data/site';
+interface Props {
+  // true quand un guide PDF vient juste au-dessus : le chapeau en parle.
+  apresGuide?: boolean;
+}
+const { apresGuide = false } = Astro.props;
+const unique = OFFRES[0];
+const pack = OFFRES[1];
+---
+
+<section class="ensemble" aria-labelledby="titre-ensemble">
+  <div class="contenu">
+    <h2 id="titre-ensemble">Et si on regardait ta situation à toi&nbsp;?</h2>
+    <p class="ensemble-chapo">{apresGuide ? 'Le guide, c’est un premier pas. ' : ''}Si tu as envie qu’on avance ensemble, je te reçois en visio, où que tu sois.</p>
+    <div class="ensemble-grille">
+      <div class="porte porte--rdv">
+        <span class="porte-kicker">Pour commencer</span>
+        <h3>Une consultation</h3>
+        <p>On fait le point sur ton assiette et tout ce qu’il y a autour, et tu repars avec ton premier changement.</p>
+        <p class="porte-prix">{unique.prix}</p>
+        <a class="btn btn-principal" href={SITE.rdvVisio}>Prendre rendez-vous</a>
+      </div>
+      <div class="porte porte--acc">
+        <span class="porte-kicker">On avance ensemble</span>
+        <h3>L’accompagnement</h3>
+        <p>6 séances en visio, ton carnet entre les séances, et je reste joignable. Une petite chose à la fois.</p>
+        <p class="porte-prix">{pack.prix}</p>
+        <a class="btn btn-rose" href={u('/accompagnement/')}>Voir l’accompagnement</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ensemble { background: var(--ecru-2); }
+  .ensemble h2 { margin-bottom: 8px; }
+  .ensemble-chapo { color: var(--encre-2); max-width: 60ch; margin: 0 0 22px; }
+  .ensemble-grille { display: grid; gap: 18px; }
+  @media (min-width: 760px) { .ensemble-grille { grid-template-columns: 1fr 1fr; } }
+  .porte { border-radius: var(--rayon-grand); padding: 26px 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .porte--rdv { background: var(--blanc); border: 1.5px solid var(--ligne); }
+  .porte--rdv p { color: var(--encre-2); }
+  .porte--acc { background: var(--sapin); color: var(--ecru); }
+  .porte--acc h3 { color: var(--ecru); }
+  .porte--acc p { color: #DCD5C6; }
+  .porte-kicker { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dore); }
+  .porte h3 { margin: 0; }
+  .porte p { margin: 0; font-size: 16.5px; }
+  .porte-prix { font-family: var(--police-titre); font-size: 26px !important; }
+  .porte--rdv .porte-prix { color: var(--sapin) !important; }
+  .porte--acc .porte-prix { color: var(--rose) !important; }
+  .porte .btn { margin-top: auto; }
+  .porte-prix + .btn { margin-top: 10px; }
+</style>

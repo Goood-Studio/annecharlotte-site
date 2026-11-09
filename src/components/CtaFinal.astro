@@ -7,10 +7,13 @@ import { SITE } from '../data/site';
     <h2 id="titre-cta-final">Prêt·e à (re)trouver du plaisir à manger ?</h2>
     <p>À ton rythme, avec le sourire.</p>
     <div class="cta-boutons">
+      {/* 09/11/2026 : tant que SITE.visioSeulement est vrai, plus de bouton Malonne. */}
       <a class="btn btn-principal" href={SITE.rdvVisio}>
-        Prendre RDV en visio <span class="pastille">plus rapide</span>
+        Prendre RDV en visio {!SITE.visioSeulement && <span class="pastille">plus rapide</span>}
       </a>
-      <a class="btn btn-contour" href={SITE.rdvMalonne}>Prendre RDV à Malonne</a>
+      {!SITE.visioSeulement && (
+        <a class="btn btn-contour" href={SITE.rdvMalonne}>Prendre RDV à Malonne</a>
+      )}
     </div>
   </div>
 </section>

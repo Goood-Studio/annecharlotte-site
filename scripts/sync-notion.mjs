@@ -158,6 +158,11 @@ for (const ligne of await toutesLesLignes(VILLES_DB)) {
 villes.sort((a, b) => (a.distanceMin ?? 99) - (b.distanceMin ?? 99));
 
 /* ---------- ARTICLES ---------- */
+// Les guides sont lus d'abord : chaque article pointe vers SON guide par la
+// relation Notion « Guide » (09/11/2026), et le PDF se télécharge sous l'article.
+const lignesGuides = await toutesLesLignes(GUIDES_DB);
+const slugGuideParId = Object.fromEntries(lignesGuides.map((l) => [l.id, texte(l.properties['Slug'])]));
+
 const articles = [];
 for (const ligne of await toutesLesLignes(ARTICLES_DB)) {
   const p = ligne.properties;
@@ -174,6 +179,7 @@ for (const ligne of await toutesLesLignes(ARTICLES_DB)) {
     metaDescription: texte(p['Meta description']),
     publieLe: p['Publié le']?.date?.start ?? null,
     misAJour: ligne.last_edited_time?.slice(0, 10) ?? null,
+    guide: (p['Guide']?.relation ?? []).map((r) => slugGuideParId[r.id]).find(Boolean) ?? null,
     html: await contenuHtml(ligne.id),
   });
 }
@@ -181,7 +187,7 @@ articles.sort((a, b) => (b.publieLe ?? '').localeCompare(a.publieLe ?? '') || a.
 
 /* ---------- GUIDES ---------- */
 const guides = [];
-for (const ligne of await toutesLesLignes(GUIDES_DB)) {
+for (const ligne of lignesGuides) {
   const p = ligne.properties;
   const statut = p['Statut']?.select?.name;
   if (statut !== 'Publié' && statut !== 'En préparation') continue;

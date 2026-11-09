@@ -1,5 +1,6 @@
 // llms.txt : la carte du site pour les moteurs IA (GEO). Généré au build
 // depuis les mêmes données que les pages, donc jamais désynchronisé.
+import { guidesPublies } from '../data/guides-site';
 import type { APIRoute } from 'astro';
 import villesData from '../data/villes.json';
 import articlesData from '../data/articles.json';
@@ -44,8 +45,8 @@ ${villes}
 ${articlesData.articles.map((a) => `- [${a.titre}](${racine}/articles/${a.slug}/) : ${a.metaDescription}`).join('\n')}
 
 ## Guides gratuits
-- [Tous les guides](${racine}/guides/) : guides pratiques envoyés par WhatsApp ou e-mail.
-${guidesData.guides.map((g) => `- ${g.titre} (${g.statut === 'Publié' ? racine + '/guides/' + g.slug + '/' : 'bientôt'}) : ${g.accroche}`).join('\n')}
+- [Tous les guides](${racine}/guides/) : guides pratiques à télécharger directement (PDF, sans formulaire), chacun expliqué dans un article.
+${guidesPublies.map((g) => `- ${g.titre} (${racine}/guides/${g.slug}/) : ${g.accroche}`).join('\n')}
 
 ## Écosystème
 - [Gooodeat](${SITE.gooodeat}) : l'app pour déculpabiliser son alimentation.

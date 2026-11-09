@@ -9,14 +9,21 @@ import DeuxChemins from '../components/DeuxChemins.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import ChatFaq from '../components/ChatFaq.astro';
 import Avis from '../components/Avis.astro';
+import VisioRassure from '../components/VisioRassure.astro';
 import { prochaineDispo } from '../data/dispos';
 import villesData from '../data/villes.json';
 import articlesData from '../data/articles.json';
 import { SITE, u } from '../data/site';
 import { cabinetJsonLd } from '../data/jsonld';
+import { guideDeLArticle } from '../data/guides-site';
 
 const villes = villesData.villes;
-const derniersArticles = articlesData.articles.slice(0, 3);
+// 09/11/2026 : les 3 articles de l'accueil sont choisis (avec leur guide), pas
+// juste les 3 derniers. Un slug absent (pas encore publié) est remplacé par
+// le plus récent des autres.
+const ARTICLES_ACCUEIL = ['maman-qui-s-oublie', 'ballonnements-apres-repas', 'fetes-sans-culpabiliser'];
+const choisisAccueil = ARTICLES_ACCUEIL.map((slug) => articlesData.articles.find((a) => a.slug === slug)).filter(Boolean);
+const derniersArticles = [...choisisAccueil, ...articlesData.articles.filter((a) => !ARTICLES_ACCUEIL.includes(a.slug))].slice(0, 3);
 const siteUrl =
   (import.meta.env.SITE ?? '').replace(/\/$/, '') +
   import.meta.env.BASE_URL.replace(/\/$/, '') +
@@ -84,10 +91,14 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
             <span class="bloc-sous">On fait le point ensemble, et je te donne tes premières pistes pour t’aider. Aussi sur le temps de midi et en soirée.</span>
             <span class="bloc-cta contour">Je réserve{dispoVisio && <span class="bloc-cta-dispo"> · 1re dispo {dispoVisio}</span>} <span aria-hidden="true">→</span></span>
           </a>
-          <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">
-            Plutôt au cabinet ? Consultation à Malonne<span aria-hidden="true">*</span>
-            {dispoMalonne && <span>(1re dispo : {dispoMalonne})</span>} →
-          </a>
+          {SITE.visioSeulement ? (
+            <div data-anim="bloc"><VisioRassure bouton={false} /></div>
+          ) : (
+            <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">
+              Plutôt au cabinet ? Consultation à Malonne<span aria-hidden="true">*</span>
+              {dispoMalonne && <span>(1re dispo : {dispoMalonne})</span>} →
+            </a>
+          )}
           <p class="hero-pourquoi" data-anim="bloc">
             * Avant de choisir ton créneau, je te pose quelques questions
             (3 minutes). Je lis tes réponses avant qu’on se voie : j’ai déjà un
@@ -137,6 +148,26 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
     </div>
   </section>
 
+  <!-- Le blog et les guides, juste après les thèmes (09/11/2026) : 3 articles choisis -->
+  <section aria-labelledby="titre-lire">
+    <div class="contenu" data-reveal>
+      <h2 id="titre-lire">À lire, pour commencer ce soir</h2>
+      <div class="rangs">
+        {derniersArticles.map((a) => (
+          <a class="rang rang-lien" href={u('/articles/' + a.slug + '/')}>
+            <h3>{a.titre}</h3>
+            <p>{a.metaDescription}</p>
+            {guideDeLArticle(a)?.sien && <p class="avec-guide">Avec le guide gratuit à télécharger</p>}
+            <span class="rang-fleche" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </div>
+      <div class="lire-liens">
+        <a class="btn btn-contour" href={u('/articles/')}>Tous les articles et guides</a>
+      </div>
+    </div>
+  </section>
+
   <DeuxChemins />
 
   <!-- L'approche : un manifeste, pas quatre mini-cartes -->
@@ -166,26 +197,6 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
 
   <Avis />
 
-  <!-- Le blog et les guides : contenu frais pour les humains et les moteurs -->
-  <section aria-labelledby="titre-lire">
-    <div class="contenu" data-reveal>
-      <h2 id="titre-lire">À lire, pour commencer ce soir</h2>
-      <div class="rangs">
-        {derniersArticles.map((a) => (
-          <a class="rang rang-lien" href={u('/articles/' + a.slug + '/')}>
-            <h3>{a.titre}</h3>
-            <p>{a.metaDescription}</p>
-            <span class="rang-fleche" aria-hidden="true">→</span>
-          </a>
-        ))}
-      </div>
-      <div class="lire-liens">
-        <a class="btn btn-contour" href={u('/articles/')}>Tous les articles</a>
-        <a class="btn btn-contour" href={u('/guides/')}>Les guides gratuits</a>
-      </div>
-    </div>
-  </section>
-
   <!-- Villes : distribution du jus SEO vers les pages locales -->
   <section>
     <div class="contenu" data-reveal>
@@ -207,6 +218,7 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
 </Base>
 
 <style>
+  .avec-guide { font-size: 13.5px !important; font-weight: 700; color: var(--dore) !important; margin-top: 6px !important; }
   /* HERO : mobile = photo arche centrée puis actions ;
      desktop = photo à gauche (38 %), texte et actions à droite. */
   .hero { padding: 30px 0 52px; }

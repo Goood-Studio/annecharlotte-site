@@ -3,11 +3,12 @@
 // « bilan + une séance » se rangent à côté, plus discrets.
 // « Petit effort, gros impact » (29/10/2026) : on dit concrètement ce qu'on
 // change. (31/10/2026 : plus de « il reste 250 € après le bilan ».)
+// 02/11/2026 : chapeau et pastilles d'exemples retirés, « trop chargé » (ACJ).
 //
 // Deux variantes :
 //   « classique » (par défaut) → Accompagnement + Bilan + Bilan et une séance
 //   « tabac »                  → le Pack tabac seul, sur la page arrêt du tabac
-import { OFFRES, EXEMPLES_CHANGEMENT, PACK_RYTHME, PACK_FREINS, EXEMPLES_CARNET } from '../data/contenu';
+import { OFFRES, PACK_RYTHME, PACK_FREINS, EXEMPLES_CARNET } from '../data/contenu';
 import { SITE } from '../data/site';
 
 interface Props {
@@ -38,16 +39,7 @@ const tabac = variante === 'tabac';
     <h2 id="titre-tarifs">{tabac ? 'Les tarifs, sans surprise' : 'Petit effort, gros impact'}</h2>
     {tabac ? (
       <p class="tarifs-chapo">{`Disponibilités : ${SITE.horaires}, et ${SITE.horairesVisio}. L’accompagnement à l’arrêt se fait en visio, et la mutuelle rembourse une partie.`}</p>
-    ) : (
-      <>
-        <p class="tarifs-chapo">Pas de plan alimentaire, pas de liste d’interdits. On part de ce que tu manges déjà, et on ajoute la petite chose qui changera le plus ta journée. Puis la suivante.</p>
-        {!sobre && (
-          <ul class="exemples" aria-label="Par exemple">
-            {EXEMPLES_CHANGEMENT.map((e) => <li>{e}</li>)}
-          </ul>
-        )}
-      </>
-    )}
+    ) : null}
 
     <div class:list={['offres', tabac && 'offres-seule']}>
       {tabac ? (
@@ -106,7 +98,7 @@ const tabac = variante === 'tabac';
                 {cas.map((c) => (
                   <div class="cas">
                     <p class="tel-titre">Le carnet {/^[AEIOUYÉÈÊaeiouy]/.test(c.prenom) ? `d’${c.prenom}` : `de ${c.prenom}`}</p>
-                    <p class="tel-sous">Mis à jour après votre séance</p>
+                    <p class="tel-sous">Mis à jour après ta séance</p>
                     <div class="tel-carte tel-rose"><span>Pourquoi tu le fais</span>« {c.raison} »</div>
                     <div class="tel-carte tel-sapin"><span>Ta piste</span><b>{c.piste}</b>
                       {c.exos.map((t, k) => (k === 0 ? <i class="choisi">✓ {t}</i> : <i>{t}</i>))}
@@ -177,8 +169,6 @@ const tabac = variante === 'tabac';
 
 <style>
   .tarifs-chapo { color: var(--encre-2); margin-bottom: 18px; max-width: 62ch; }
-  .exemples { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0 0 26px; }
-  .exemples li { background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: 999px; padding: 6px 14px; font-size: 15px; color: var(--sapin); }
   .offres {
     display: grid;
     grid-template-columns: 1fr;

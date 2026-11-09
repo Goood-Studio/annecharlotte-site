@@ -9,7 +9,11 @@
 // regardé un agenda, elle choisit son rendez-vous sans tout réencoder.
 import Base from '../layouts/Base.astro';
 import { SITE, u } from '../data/site';
-import { MOTIFS } from '../data/miroir';
+import { MOTIFS, CONNUE } from '../data/miroir';
+import VisioRassure from '../components/VisioRassure.astro';
+// 06/11/2026 : tant que SITE.visioSeulement est vrai, plus de bouton Malonne
+// et l'encart « je te reçois en visio » au moment de choisir.
+const malonne = !SITE.visioSeulement;
 
 // En local, PUBLIC_BILAN_ENDPOINT pointe vers le relais à blanc (dev.mjs).
 const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
@@ -118,11 +122,20 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
           <legend class="h2">Qu’est-ce que tu as déjà essayé ?</legend>
           <p class="discret">Régimes, médecins, applis, conseils d’amies… et ce que ça a donné.</p>
           <textarea name="dejaEssaye" rows="5" aria-label="Ce que tu as déjà essayé"></textarea>
+          <div class="connue" role="radiogroup" aria-labelledby="connue-titre">
+            <p class="question" id="connue-titre">Et comment tu m’as connue ?</p>
+            <div class="puces">
+              {CONNUE.map(([id, label]) => (
+                <label class="puce"><input type="radio" name="connue" value={id} /> <span>{label}</span></label>
+              ))}
+            </div>
+          </div>
         </fieldset>
 
         <!-- 6. Le rendez-vous -->
         <fieldset class="etape" data-etape="rdv" hidden>
           <legend class="h2">Choisis ton rendez-vous</legend>
+          {!malonne && <VisioRassure bouton={false} />}
           <p class="photos" hidden>
             <strong>Un petit service avant qu’on se voie :</strong> si tu es à l’aise, prends en photo ce
             que tu manges pendant 2 ou 3 jours. Sinon, pas de souci, on en parle ensemble.
@@ -162,15 +175,15 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
               <p class="formule-titre"><strong>Une consultation + un suivi</strong> <span class="formule-prix">130 €</span></p>
               <p class="formule-texte">On fait le point, tu repars avec tes premières pistes, et on se revoit deux semaines plus tard pour voir ce qui a changé. Tu réserves la première ici ; la deuxième, on la fixe ensemble.</p>
               <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxvisio" data-lien={SITE.calVisio}>En visio</button>
-              <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxmalonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
+              {malonne && <button type="button" class="btn btn-contour btn-bloc" data-lieu="deuxmalonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>}
             </div>
             <div class="formule" data-formule="consultation">
               <p class="formule-titre"><strong>Une consultation</strong> <span class="formule-prix">80 €</span></p>
               <p class="formule-texte">On fait le point ensemble sur ton assiette et tout ce qu’il y a autour, et je te donne tes premières pistes pour t’aider.</p>
               <button type="button" class="btn btn-contour btn-bloc" data-lieu="visio" data-lien={SITE.calVisio}>
-                En visio <span class="pastille">plus rapide</span>
+                En visio {malonne && <span class="pastille">plus rapide</span>}
               </button>
-              <button type="button" class="btn btn-contour btn-bloc" data-lieu="malonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>
+              {malonne && <button type="button" class="btn btn-contour btn-bloc" data-lieu="malonne" data-lien={SITE.calMalonne}>Au cabinet de Malonne</button>}
             </div>
           </div>
         </fieldset>
@@ -256,6 +269,16 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
 
   .programme-liste { margin: 0; padding-left: 20px; display: grid; gap: 8px; font-size: 17px; }
   .programme-prix { background: var(--rose-2); border-radius: var(--rayon); padding: 14px 18px; font-size: 18px; color: var(--sapin); margin: 0; }
+  .connue { display: grid; gap: 10px; margin-top: 6px; }
+  .connue .question { margin: 0; font-weight: 700; color: var(--sapin); }
+  .puces { display: flex; flex-wrap: wrap; gap: 8px; }
+  .puce {
+    flex-direction: row; align-items: center; min-height: 44px; padding: 8px 16px; background: var(--blanc);
+    border: 2px solid var(--ligne); border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 15px;
+  }
+  .puce input { position: absolute; opacity: 0; pointer-events: none; }
+  .puce:has(input:checked) { border-color: var(--sapin); background: var(--sapin); color: var(--ecru); }
+  .puce:has(input:focus-visible) { outline: 3px solid var(--dore); outline-offset: 2px; }
   .photos { background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px; margin: 0; }
   .consentement { flex-direction: row; align-items: flex-start; gap: 12px; font-weight: 600; }
   .consentement[hidden] { display: none; }
@@ -417,6 +440,7 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
       pointB: val('pointB'),
       miroir: phrases().map((p) => ({ phrase: p.texte, niveau: niveaux[p.texte] ?? null })),
       dejaEssaye: val('dejaEssaye'),
+      connue: coches('connue')[0] || '',
       lieu,
       consentement: q('[name="consentement"]').checked,
     };

@@ -1,0 +1,52 @@
+---
+// Le guide PDF à télécharger directement (09/11/2026), sans prénom ni e-mail :
+// « il faut mettre nom mail pour avoir les guides, pas pratique » (ACJ).
+// Un seul bouton, le téléchargement.
+import { lienPdf, poidsPdf, type Guide } from '../data/guides-site';
+
+interface Props {
+  guide: Guide;
+  kicker?: string;
+}
+const { guide, kicker = 'Le guide gratuit qui va avec' } = Astro.props;
+const poids = poidsPdf(guide.slug);
+---
+
+<section class="telecharger" aria-label={'Télécharger le guide ' + guide.titre}>
+  <p class="tel-kicker">{kicker}</p>
+  <h2>{guide.titre}</h2>
+  {guide.accroche && <p class="tel-accroche">{guide.accroche}</p>}
+  {guide.contenuListe.length > 0 && (
+    <ul class="tel-liste">
+      {guide.contenuListe.map((item) => <li>{item}</li>)}
+    </ul>
+  )}
+  <a class="btn btn-rose btn-bloc" href={lienPdf(guide.slug)} download>
+    Télécharger le guide{poids ? ` (PDF, ${poids})` : ''}
+  </a>
+  <p class="tel-note">Gratuit, sans formulaire. Il s’ouvre tout de suite, à garder sur ton téléphone ou à imprimer.</p>
+</section>
+
+<style>
+  .telecharger {
+    background: var(--sapin);
+    color: var(--ecru);
+    border-radius: var(--rayon-grand);
+    padding: 28px 26px 24px;
+    margin: 30px 0 10px;
+  }
+  .tel-kicker {
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--dore);
+    margin: 0 0 8px;
+  }
+  .telecharger h2 { color: var(--ecru); margin: 0 0 8px; font-size: 26px; }
+  .tel-accroche { color: #DCD5C6; font-size: 17px; margin: 0 0 14px; }
+  .tel-liste { padding-left: 20px; margin: 0 0 20px; color: var(--ecru); }
+  .tel-liste li { margin-bottom: 6px; font-size: 16px; }
+  .tel-liste li::marker { color: var(--rose); }
+  .tel-note { color: #B9C4BC; font-size: 14px; margin: 12px 0 0; text-align: center; }
+</style>

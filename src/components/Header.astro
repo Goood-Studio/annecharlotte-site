@@ -22,7 +22,7 @@ import { SITE, u } from '../data/site';
       <a href={u('/arreter-de-fumer/')}>Arrêt du tabac</a>
       <a href={u('/accompagnement/')}>Accompagnement</a>
       <a href={u('/formations/et-toi/')}>La formation</a>
-      <a href={u('/articles/')}>Blog</a>
+      <a href={u('/articles/')}>Articles et guides gratuits</a>
       <a href={u('/contact/')}>Contact</a>
       <a class="btn btn-rose nav-cta" href={SITE.rdvVisio}>RDV en visio</a>
     </nav>
@@ -122,13 +122,17 @@ import { SITE, u } from '../data/site';
   .entete.ouvert .nav .nav-cta { margin-top: 12px; }
 
   /* Le menu complet ne s'affiche que quand il tient vraiment sur une ligne.
-     En dessous, on garde le burger, propre. */
-  @media (min-width: 1320px) {
+     En dessous, on garde le burger, propre.
+     09/11/2026 : 9 entrées (dont « Articles et guides gratuits ») ne tenaient
+     plus dans 1320 px, le menu débordait déjà sur un écran de 1366 : on passe
+     à 1440 px, et la barre du haut s'élargit pour lui. */
+  @media (min-width: 1440px) {
+    .barre { max-width: 1440px; }
     .burger { display: none; }
     .nav {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
     .nav a:not(.nav-cta) {
       text-decoration: none;
