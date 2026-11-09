@@ -7,6 +7,7 @@ import GuideTelecharger from '../../components/GuideTelecharger.astro';
 import AvancerEnsemble from '../../components/AvancerEnsemble.astro';
 import articlesData from '../../data/articles.json';
 import { guideDeLArticle } from '../../data/guides-site';
+import { avecIllustration } from '../../data/illustrations';
 import redirections from '../../data/redirections.json';
 import { SITE, u } from '../../data/site';
 import { faqJsonLd } from '../../data/jsonld';
@@ -56,6 +57,8 @@ const lienPilier: Record<string, { chemin: string; texte: string }> = {
 // formulaire), puis la consultation et l'accompagnement. Un article sans
 // guide à lui propose un guide du même pilier ; sinon, la page pilier.
 const guideFin = type === 'article' ? guideDeLArticle(article) : undefined;
+// 09/11/2026 : un schéma ou un dessin du guide, placé dans le texte (voir illustrations.ts).
+const htmlArticle = type === 'article' ? avecIllustration(article.slug, article.html, u('/img/articles/' + article.slug + '.jpg')) : '';
 
 const autres = type === 'article'
   ? articlesData.articles.filter((a) => a.slug !== article.slug && a.pilier === article.pilier).slice(0, 3)
@@ -105,7 +108,7 @@ function dateFr(iso: string | null) {
         </div>
       </header>
 
-      <div class="contenu article-corps" set:html={article.html} />
+      <div class="contenu article-corps" set:html={htmlArticle} />
 
       <div class="contenu article-fin">
         <p class="avertissement">
@@ -174,6 +177,11 @@ function dateFr(iso: string | null) {
     border-radius: var(--rayon);
     color: var(--sapin);
   }
+
+  .article-corps :global(.article-visuel) { margin: 28px 0 30px; }
+  .article-corps :global(.article-visuel a) { display: block; border-radius: var(--rayon); overflow: hidden; border: 1px solid var(--ligne); background: #f7f4ed; }
+  .article-corps :global(.article-visuel img) { display: block; width: 100%; height: auto; }
+  .article-corps :global(.article-visuel figcaption) { font-size: 14.5px; color: var(--encre-2); margin-top: 10px; max-width: 62ch; }
 
   .article-fin { max-width: 780px; padding-top: 26px; padding-bottom: 20px; }
   .avertissement { font-size: 14.5px; color: var(--encre-2); font-style: italic; }
