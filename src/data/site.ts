@@ -90,6 +90,7 @@ export const SITE = {
   horairesVisio: 'en visio, aussi sur le temps de midi (12h-13h) et en soirée',
 
   // 06/11/2026 : « actuellement je ne reçois plus qu'en visio » (ACJ).
+  // 09/11/2026 : retour au cabinet mi-2027 (dit dans VisioRassure et contact).
   // true = l'encart « En ce moment, je te reçois en visio » remplace le lien
   // vers le cabinet sur l'accueil, et le /bilan ne propose plus Malonne.
   // Repasser à false quand le cabinet rouvre : tout revient comme avant.

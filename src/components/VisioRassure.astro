@@ -1,11 +1,11 @@
 ---
-// « En ce moment, je te reçois en visio » (06/11/2026, demande d'ACJ).
-// Un encart court : le message, le bon lien de réservation, et un repli
-// « La visio, ça te freine ? » qui rassure (appel vidéo WhatsApp possible)
-// et dit pourquoi la visio colle à sa façon de travailler (photos des
-// assiettes, roue à l'écran, dossier envoyé sur WhatsApp juste après).
-// Un seul bouton : la réservation. Le repli n'est pas un deuxième appel à
-// l'action. `bouton={false}` quand la page a déjà ses boutons (le /bilan).
+// L'encart visio (06/11/2026, refait le 09/11/2026 à sa demande : « c'est
+// moche, tourne-le plus positivement »). Elle retrouve son cabinet mi-2027 ;
+// d'ici là, tout se fait en visio. L'encart le dit simplement, puis répond
+// aux deux vraies questions : pourquoi la visio, et comment ça marche.
+// Plus de repli « La visio, ça te freine ? » (formulé en négatif).
+// Un seul bouton : la réservation. `bouton={false}` quand la page a déjà ses
+// boutons (l'accueil, le /bilan).
 import { SITE } from '../data/site';
 
 interface Props {
@@ -15,37 +15,64 @@ const { bouton = true } = Astro.props;
 ---
 
 <aside class="visio" aria-labelledby="visio-titre">
-  <p class="visio-titre" id="visio-titre">En ce moment, je te reçois en visio</p>
-  <p class="visio-texte">De chez toi, sur ton téléphone ou ton ordi. Le lien arrive avec ta réservation, rien à installer.</p>
-  {bouton && <a class="btn btn-principal visio-bouton" href={SITE.rdvVisio}>Je réserve en visio <span aria-hidden="true">→</span></a>}
-  <details class="visio-repli">
-    <summary>La visio, ça te freine un peu&nbsp;?</summary>
-    <div class="visio-plus">
-      <p><strong>Pas à l’aise avec un lien&nbsp;?</strong> Dis-le-moi en réservant, ou écris-moi sur <a href={SITE.whatsapp}>WhatsApp</a>&nbsp;: je t’appelle en vidéo sur WhatsApp, comme avec une amie. Si ça coupe, je te rappelle, tout simplement.</p>
-      <p><strong>Et pour ma façon de travailler, c’est même mieux&nbsp;:</strong></p>
-      <ul>
-        <li>Si tu veux, tu m’envoies 2 ou 3 photos de tes vraies assiettes, et on les regarde ensemble. Tu peux même me montrer ton frigo.</li>
-        <li>Je te montre ta roue à l’écran pendant qu’on parle&nbsp;: on voit ensemble ce qui prend le plus de place.</li>
-        <li>Juste après, tu reçois ton dossier sur WhatsApp&nbsp;: ce que tu m’as dit, tes petites choses à tester, des idées de plats.</li>
-        <li>Pas de trajet, pas de parking, pas de garde à trouver. Aussi sur le temps de midi et en soirée.</li>
-        <li>Entre les séances, on reste en contact sur WhatsApp, là où tout se passe déjà.</li>
+  <p class="visio-titre" id="visio-titre">Jusqu’à mi-2027, on se voit en visio</p>
+  <p class="visio-texte">
+    Je retrouve mon cabinet mi-2027. En attendant, je te reçois de chez toi,
+    et pour beaucoup, c’est même plus simple.
+  </p>
+
+  <div class="visio-colonnes">
+    <div>
+      <p class="visio-sous">Pourquoi la visio</p>
+      <ul class="visio-liste">
+        <li>Pas de trajet ni de garde à trouver, et des créneaux sur le temps de midi et en soirée.</li>
+        <li>On regarde ta vraie vie&nbsp;: tes photos d’assiettes, et même ton frigo si tu veux.</li>
+        <li>Juste après, ton dossier arrive sur WhatsApp, avec tes petites choses à tester.</li>
       </ul>
     </div>
-  </details>
+    <div>
+      <p class="visio-sous">Comment ça marche</p>
+      <ol class="visio-etapes">
+        <li>Tu choisis ton créneau.</li>
+        <li>Le lien arrive avec ta réservation. Rien à installer.</li>
+        <li>À l’heure, tu cliques, sur ton téléphone ou ton ordi. Pas à l’aise avec un lien&nbsp;? Je t’appelle en vidéo sur WhatsApp.</li>
+      </ol>
+    </div>
+  </div>
+
+  {bouton && <a class="btn btn-principal visio-bouton" href={SITE.rdvVisio}>Je réserve en visio <span aria-hidden="true">→</span></a>}
 </aside>
 
 <style>
   .visio {
-    background: var(--ecru-2); border-radius: var(--rayon); padding: 16px 18px;
-    display: grid; gap: 8px; justify-items: start;
+    background: var(--ecru-2); border-radius: var(--rayon); padding: 20px 22px 22px;
+    display: grid; gap: 6px; justify-items: start; text-align: left;
   }
-  .visio-titre { margin: 0; font-family: var(--police-titre); color: var(--sapin); font-size: 19px; line-height: 1.25; }
-  .visio-texte { margin: 0; font-size: 15.5px; color: var(--encre-2); }
-  .visio-bouton { margin-top: 4px; }
-  .visio-repli { width: 100%; }
-  /* La flèche dorée vient du style commun des <details> (global.css). */
-  .visio-repli summary { font-size: 15.5px; padding: 8px 40px 8px 0; min-height: 0; }
-  .visio-plus { display: grid; gap: 6px; font-size: 15.5px; padding: 4px 0 2px; }
-  .visio-plus p { margin: 0; }
-  .visio-plus ul { margin: 0; padding-left: 20px; display: grid; gap: 5px; }
+  .visio-titre { margin: 0; font-family: var(--police-titre); color: var(--sapin); font-size: 21px; line-height: 1.25; }
+  .visio-texte { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--encre-2); max-width: 60ch; }
+
+  .visio-colonnes {
+    width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px;
+    margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--ligne);
+  }
+  @media (max-width: 640px) { .visio-colonnes { grid-template-columns: 1fr; } }
+  .visio-sous {
+    margin: 0 0 8px; font-size: 12.5px; font-weight: 800; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--dore);
+  }
+  .visio-liste, .visio-etapes { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .visio-liste li, .visio-etapes li {
+    position: relative; padding-left: 30px; font-size: 15px; line-height: 1.45; color: var(--encre);
+  }
+  .visio-liste li::before {
+    content: '✓'; position: absolute; left: 2px; top: 0; font-weight: 800; color: var(--dore);
+  }
+  .visio-etapes { counter-reset: etape; }
+  .visio-etapes li { counter-increment: etape; }
+  .visio-etapes li::before {
+    content: counter(etape); position: absolute; left: 0; top: 1px;
+    width: 21px; height: 21px; border-radius: 50%; background: var(--sapin); color: var(--blanc);
+    font-size: 12px; font-weight: 800; display: grid; place-items: center;
+  }
+  .visio-bouton { margin-top: 12px; }
 </style>
