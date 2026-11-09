@@ -78,12 +78,14 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
                se choisit sur le /bilan ; les offres sont détaillées plus bas
                (« Deux façons d'avancer ») ; les questions passent par le bouton
                WhatsApp flottant. -->
-          <a class="btn btn-principal hero-bouton" href={SITE.rdvVisio} data-anim="bloc">
-            Prendre rendez-vous <span aria-hidden="true">→</span>
+          <!-- Même libellé que la barre fixe du téléphone, qui s'efface tant que
+               ce bouton est visible (data-masque-barre, voir StickyRdv). -->
+          <a class="btn btn-principal hero-bouton" href={SITE.rdvVisio} data-anim="bloc" data-masque-barre>
+            Prendre RDV en visio <span aria-hidden="true">→</span>
           </a>
           <p class="hero-rassure" data-anim="bloc">
             {dispoVisio && <><strong>1re dispo {dispoVisio}</strong><br /></>}
-            En visio, de chez toi · dès 80&nbsp;€ · 3 minutes de questions, puis tu choisis ton créneau.
+            De chez toi · dès 80&nbsp;€ · 3 minutes de questions, puis tu choisis ton créneau.
           </p>
           {!SITE.visioSeulement && (
             <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">

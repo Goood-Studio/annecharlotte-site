@@ -1,7 +1,11 @@
 ---
 // Barre RDV fixée en bas de l'écran mobile : l'objectif n°1 du site est
-// le RDV en ligne, ce bouton ne quitte jamais l'écran (55 %+ de trafic mobile).
+// le RDV en ligne, ce bouton reste à portée de pouce (55 %+ de trafic mobile).
 // Une page peut remplacer le bouton (la page formation y met « Préviens-moi »).
+// 09/11/2026 : la barre s'efface tant qu'un bouton marqué `data-masque-barre`
+// (le bouton du haut de l'accueil) est entièrement visible au-dessus d'elle,
+// pour ne jamais montrer deux boutons identiques en même temps. Le bouton
+// WhatsApp flottant redescend pendant ce temps.
 import { SITE } from '../data/site';
 
 interface Props {
@@ -22,6 +26,19 @@ const { texte, lien } = Astro.props;
   )}
 </div>
 
+<script is:inline>
+  (function () {
+    var cible = document.querySelector('[data-masque-barre]');
+    if (!cible || !('IntersectionObserver' in window)) return;
+    var html = document.documentElement;
+    // La zone utile s'arrête au-dessus de la barre (80 px) : on ne cache la
+    // barre que si le bouton du haut est entièrement visible au-dessus d'elle.
+    new IntersectionObserver(function (entrees) {
+      html.classList.toggle('barre-rdv-cachee', entrees[0].intersectionRatio > 0.98);
+    }, { rootMargin: '0px 0px -80px 0px', threshold: [0, 0.5, 0.99, 1] }).observe(cible);
+  })();
+</script>
+
 <style>
   .barre-rdv {
     position: fixed;
@@ -33,6 +50,17 @@ const { texte, lien } = Astro.props;
     background: color-mix(in srgb, var(--ecru) 88%, transparent);
     backdrop-filter: blur(8px);
     border-top: 1px solid var(--ligne);
+    transition: transform .25s ease, visibility 0s;
+  }
+  :global(html.barre-rdv-cachee) .barre-rdv {
+    transform: translateY(110%);
+    visibility: hidden;
+    transition: transform .25s ease, visibility 0s .25s;
+  }
+  :global(html.barre-rdv-cachee .wa-flottant) { bottom: 22px; }
+  :global(.wa-flottant) { transition: bottom .25s ease; }
+  @media (prefers-reduced-motion: reduce) {
+    .barre-rdv, :global(html.barre-rdv-cachee) .barre-rdv, :global(.wa-flottant) { transition: none; }
   }
   @media (min-width: 860px) {
     .barre-rdv { display: none; }
