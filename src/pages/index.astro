@@ -32,8 +32,7 @@ const siteUrl =
 const jsonLd = SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl));
 
 // Lues sur cal.com au build (voir src/data/dispos.ts). null = on n'affiche rien.
-const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
-  prochaineDispo('pack-visio'),
+const [dispoVisio, dispoMalonne] = await Promise.all([
   prochaineDispo('premiers-pas-visio'),
   prochaineDispo('premiers-pas-malonne'),
 ]);
@@ -72,43 +71,26 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
         </p>
 
         <div class="hero-actions">
-          <!-- L'accompagnement d'abord : c'est l'offre à mettre en avant (12/10/2026).
-               Tout passe en visio ; le cabinet reste en petit lien jusqu'en décembre. -->
-          <!-- 31/10/2026 : un vrai bouton avec un verbe et la date, et ce qui est inclus,
-               au lieu d'une carte-lien qui ressemblait à un bloc d'information. -->
-          <a class="bloc-action principal avec-cta" href={SITE.rdvPack} data-anim="bloc">
-            <span class="bloc-titre"><span>Accompagnement en visio <span class="bloc-prix">330 €<span class="asterisque" aria-hidden="true">*</span> <span class="bloc-duree">· 6 séances</span></span></span></span>
-            <span class="bloc-sous">Tu gardes ce que tu aimes, et on ajoute ce qui te manque, une petite chose à la fois.</span>
-            <span class="bloc-inclus">
-              <span>✓ Le bilan + 5 séances de suivi</span>
-              <span>✓ Ton carnet sur ton téléphone</span>
-              <span>✓ Je reste joignable entre les séances</span>
-            </span>
-            <span class="bloc-cta">Je commence{dispoPack && <span class="bloc-cta-dispo"> · 1re dispo {dispoPack}</span>} <span aria-hidden="true">→</span></span>
+          <!-- 09/11/2026 (analyse UX) : une seule action dans le haut de page.
+               Avant : 2 cartes de prix + l'encart visio + la note + « Poser une
+               question » = 1 150 px de blocs, photo et bouton sous la ligne de
+               flottaison. La formule (accompagnement mis en avant, consultation)
+               se choisit sur le /bilan ; les offres sont détaillées plus bas
+               (« Deux façons d'avancer ») ; les questions passent par le bouton
+               WhatsApp flottant. -->
+          <a class="btn btn-principal hero-bouton" href={SITE.rdvVisio} data-anim="bloc">
+            Prendre rendez-vous <span aria-hidden="true">→</span>
           </a>
-          <a class="bloc-action avec-cta" href={SITE.rdvVisio} data-anim="bloc">
-            <span class="bloc-titre"><span>Une consultation en visio <span class="bloc-prix">80 €<span class="asterisque" aria-hidden="true">*</span></span></span></span>
-            <span class="bloc-sous">On fait le point ensemble, et je te donne tes premières pistes pour t’aider. Aussi sur le temps de midi et en soirée.</span>
-            <span class="bloc-cta contour">Je réserve{dispoVisio && <span class="bloc-cta-dispo"> · 1re dispo {dispoVisio}</span>} <span aria-hidden="true">→</span></span>
-          </a>
-          {SITE.visioSeulement ? (
-            <div data-anim="bloc"><VisioRassure bouton={false} /></div>
-          ) : (
+          <p class="hero-rassure" data-anim="bloc">
+            {dispoVisio && <><strong>1re dispo {dispoVisio}</strong><br /></>}
+            En visio, de chez toi · dès 80&nbsp;€ · 3 minutes de questions, puis tu choisis ton créneau.
+          </p>
+          {!SITE.visioSeulement && (
             <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">
-              Plutôt au cabinet ? Consultation à Malonne<span aria-hidden="true">*</span>
+              Plutôt au cabinet ? Consultation à Malonne
               {dispoMalonne && <span>(1re dispo : {dispoMalonne})</span>} →
             </a>
           )}
-          <p class="hero-pourquoi" data-anim="bloc">
-            * Avant de choisir ton créneau, je te pose quelques questions
-            (3 minutes). Je lis tes réponses avant qu’on se voie : j’ai déjà un
-            peu de contexte, et on garde plus de temps pour se consacrer à toi.
-          </p>
-          <a class="bloc-action" href={SITE.whatsappMessage} data-anim="bloc">
-            <span class="bloc-titre">Poser une question</span>
-            <span class="bloc-sous">Réponse directe sur WhatsApp.</span>
-            <span class="bloc-fleche" aria-hidden="true">→</span>
-          </a>
         </div>
       </div>
     </div>
@@ -169,6 +151,14 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
   </section>
 
   <DeuxChemins />
+
+  {/* 09/11/2026 : l'encart visio (pourquoi, comment) quitte le haut de page et
+      vient ici, après les offres. Un seul bouton : la réservation. */}
+  {SITE.visioSeulement && (
+    <section class="visio-accueil" aria-label="La consultation en visio">
+      <div class="contenu" data-reveal><VisioRassure /></div>
+    </section>
+  )}
 
   <!-- L'approche : un manifeste, pas quatre mini-cartes -->
   <section class="fond-sapin approche">
@@ -262,52 +252,13 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
   }
 
   .hero-actions { display: flex; flex-direction: column; gap: 10px; }
-  .bloc-action {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    background: var(--blanc);
-    border: 1.5px solid var(--ligne);
-    border-radius: var(--rayon);
-    padding: 15px 52px 15px 18px;
-    text-decoration: none;
-    min-height: 60px;
-    justify-content: center;
-    transition: border-color .15s ease, transform .15s cubic-bezier(.2, .8, .25, 1), box-shadow .15s ease;
-  }
-  .bloc-action:hover {
-    border-color: var(--dore);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px -14px rgba(22, 53, 44, .35);
-  }
-  .bloc-action:active { transform: none; }
-  .bloc-action.principal { background: var(--sapin); border-color: var(--sapin); }
-  .bloc-titre {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-weight: 800;
-    font-size: 17.5px;
-    color: var(--sapin);
-  }
-  .bloc-sous { color: var(--encre-2); font-size: 14.5px; }
-  .asterisque { margin-left: 2px; }
-  /* Prochaine dispo : une pastille, lisible sur la carte sapin comme sur la blanche. */
-  .bloc-dispo {
-    align-self: flex-start;
-    margin-top: 8px;
-    padding: 4px 12px;
-    border-radius: 999px;
-    background: var(--ecru);
-    border: 1px solid var(--ligne);
-    font-size: 14.5px;
-    font-weight: 800;
-    color: var(--sapin);
-  }
-  .bloc-action.principal .bloc-dispo { background: var(--rose); border-color: var(--rose); }
-  .bloc-prix { display: block; white-space: nowrap; font-family: var(--police-titre); font-weight: 400; font-size: 22px; margin-top: 2px; }
+  /* 09/11/2026 : l'unique bouton du haut de page, et sa ligne de réassurance. */
+  .hero-bouton { align-self: stretch; min-height: 58px; font-size: 18px; padding: 15px 30px; }
+  .hero-rassure { margin: 2px 4px 0; font-size: 15px; line-height: 1.5; color: var(--encre-2); }
+  .hero-rassure strong { color: var(--sapin); }
+  @media (min-width: 900px) { .hero-bouton { align-self: flex-start; } }
+  /* Sur téléphone, une photo plus petite : le titre remonte dans le premier écran. */
+  @media (max-width: 899px) { .hero-photo { width: min(58vw, 230px); margin-bottom: 0; } }
   .lien-cabinet {
     margin: 2px 4px 0;
     font-size: 15px;
@@ -315,46 +266,6 @@ const [dispoPack, dispoVisio, dispoMalonne] = await Promise.all([
     color: var(--sapin);
   }
   .lien-cabinet span { font-weight: 400; color: var(--encre-2); }
-  .hero-pourquoi { margin: 2px 4px 6px; font-size: 14.5px; color: var(--encre-2); }
-  .outils { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  @media (min-width: 760px) { .outils { grid-template-columns: 1fr 1fr; } }
-  .bloc-action.principal .bloc-titre { color: var(--ecru); }
-  .bloc-action.principal .bloc-sous { color: var(--rose); }
-  .bloc-fleche {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-    color: var(--dore);
-    transition: transform .15s cubic-bezier(.2, .8, .25, 1);
-  }
-  .bloc-action:hover .bloc-fleche { transform: translateY(-50%) translateX(4px); }
-  .bloc-action.principal .bloc-fleche { color: var(--rose); }
-  /* Les cartes avec un vrai bouton : pas de flèche à droite, le bouton dit quoi faire. */
-  .bloc-action.avec-cta { padding: 20px 20px 18px; }
-  .bloc-duree { font-family: var(--police-texte, inherit); font-size: 15px; opacity: .8; }
-  .bloc-inclus { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: 14.5px; font-weight: 700; color: var(--ecru); }
-  .bloc-cta {
-    margin-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 4px 8px;
-    padding: 13px 20px;
-    border-radius: 999px;
-    background: var(--rose);
-    color: var(--sapin);
-    font-weight: 800;
-    font-size: 16.5px;
-    text-align: center;
-    transition: background .15s ease, transform .15s cubic-bezier(.2, .8, .25, 1);
-  }
-  .bloc-cta-dispo { font-weight: 600; }
-  .bloc-action.principal:hover .bloc-cta { background: var(--blanc); }
-  .bloc-cta.contour { background: transparent; border: 1.5px solid var(--sapin); }
-  .bloc-action:hover .bloc-cta.contour { background: var(--sapin); color: var(--ecru); }
 
   @media (min-width: 900px) {
     .hero { padding: 48px 0 72px; }
