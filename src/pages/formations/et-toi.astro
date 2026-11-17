@@ -1,299 +1,635 @@
 ---
-// Page de prévente de la formation en ligne « Et toi, dans tout ça ? » (01/11/2026).
-// Cible : femmes de 35 à 55 ans épuisées, dont le corps change, puis la
-// périménopause qui arrive en douce. Chapitres à suivre à son rythme.
-// En ligne depuis le 01/11/2026 en liste d'attente (MODE 'attente'), indexée.
-// Le jour de la sortie : mettre le lien Stripe (STRIPE) et passer MODE à 'vente'.
+// Page « Et toi, dans tout ça ? » : l'accompagnement autonome sur WhatsApp, avec Floris (17/11/2026).
+// Reprise de la maquette validée par Anne-Charlotte (canevas https://claude.ai/artifact/7HxNxVMY13aFqvnL56RjUC,
+// version 14). Remplace l'ancienne page « formation en ligne » en 10 chapitres (voir l'historique git).
+// Cible : les femmes qui gèrent tout et s'oublient au passage (pas seulement la périménopause).
+// Tant que le bilan n'est pas prêt : boutons « Je fais mon bilan » grisés, « Bientôt disponible », et la
+// liste d'attente (#prevenir, lien depuis /bingo/suite/). Prix : 59 € (puis 79 €) ou 119 € avec un appel ;
+// à deux, 99 € et 199 € (choix Seule / À deux en bas de page).
+// Le jour de l'ouverture : remplacer les <span aria-disabled> par des liens vers le bilan.
 import Base from '../../layouts/Base.astro';
 import ListeAttente from '../../components/ListeAttente.astro';
-import Avis from '../../components/Avis.astro';
-import { SITE, u } from '../../data/site';
+import { u } from '../../data/site';
 
-const NOM = 'Et toi, dans tout ça ?';
-const PRIX = 79; // prix normal
-const PRIX_LANCEMENT = 59; // réservé à la liste d'attente, à la sortie
-const SORTIE = 'décembre 2026';
-const STRIPE = ''; // lien Stripe de la prévente
-// 'attente' : bouton « Préviens-moi » (liste dans Notion). 'vente' : bouton d'achat Stripe.
-const MODE: 'attente' | 'vente' = 'attente';
+const IMG = {
+  floris: u('/img/et-toi/anne-charlotte-floris.jpg'),
+  murVert: u('/img/et-toi/anne-charlotte-mur-vert.jpg'),
+  pastille: u('/img/et-toi/floris-pastille.svg'),
+  assiette1: u('/img/et-toi/assiette-1.jpg'),
+  assiette2: u('/img/et-toi/assiette-2.jpg'),
+  assiette3: u('/img/et-toi/assiette-3.jpg'),
+  maman: u('/img/formation/maman-assiette.jpg'),
+};
 
-const lienAchat = MODE === 'attente' ? '#prevenir' :
-  STRIPE ||
-  'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Prévente « Et toi, dans tout ça ? »');
-
-const chapitres = [
-  ['Et toi, dans tout ça ?', 'Ta jauge d’un mardi à 19 h, ta météo de départ, et ta carte d’identité : la femme que tu as envie d’être. C’est d’elle qu’on part.'],
-  ['Ton corps change, d’abord parce que t’es épuisée', 'Le boulot, les kids, les parents, le café bu debout, le sucre de 16 h. Ce que des années à passer après tout le monde font à ton corps.'],
-  ['Et la périménopause arrive en douce', 'Avec des ados à gérer, qui aurait le temps de la remarquer ? C’est quoi, quand ça arrive, ce qui se passe, et pourquoi manger moins n’aide pas.'],
-  ['Les fausses idées qu’on t’a mises dans la tête', 'Supprimer les laitages, chasser le sucre, la gélule miracle, le régime de ta collègue. On trie ce qui aide vraiment.'],
-  ['Des habitudes qui tiennent toutes seules', 'Partir de qui tu es, rendre le petit geste visible, attirant, facile. Plus besoin de motivation : il se fait tout seul.'],
-  ['Ton assiette : le gros chapitre', 'Huit parties pour tout remettre au clair : l’assiette qui te nourrit, les protéines, les glucides sans peur, les bons gras, tes os et ton moral, végétaliser un peu, ta journée du matin au soir, et des repas en 10 minutes pour toi aussi. On garde ce que tu aimes et on ajoute ce qui te nourrit.'],
-  ['Tout ce qu’il y a autour de l’assiette', 'Manger devant ses mails, debout, en finissant les assiettes des enfants. On revient à table, et à ta faim.'],
-  ['Tes émotions, avec la Roue des EmOOOtions', 'Le geste, l’émotion, le besoin caché derrière, et une autre idée que manger. Sans culpabilité.'],
-  ['Ton corps au quotidien', 'Tes nuits, ton ventre qui gonfle, tes bouffées, tes os et tes muscles : des gestes simples pour retrouver ton énergie.'],
-  ['Quand ça déraille, et la suite', 'Comment repartir après un jour sans, ce qui se règle chez le médecin, et le chemin parcouru depuis ta météo de départ.'],
-];
-
-const scenes = [
-  'Ton café, tu le bois froid à 10 h, debout, en cherchant une chaussure.',
-  'Tu finis les frites des enfants sans même avoir faim.',
-  'Réveillée à 3 h du matin, et crevée toute la journée.',
-  'Tu manges moins qu’avant, et ton ventre n’a pas reçu le message.',
-  'Le soir, ton ventre gonfle, et tu ne sais même plus ce qui passe ou pas.',
-  'Tu cuisines pour toute la tablée, et ton assiette à toi passe à la trappe.',
-];
-
-const faq = [
-  ['J’ai 37 ans, c’est pour moi ?', 'Oui. À 35 ans, tes hormones vont encore bien : c’est surtout la fatigue et la charge mentale qui parlent, et c’est par là que la formation commence. La périménopause n’est qu’un chapitre, pour savoir la reconnaître quand elle arrivera.'],
-  ['Je suis déjà ménopausée, c’est pour moi ?', 'Oui. Tout ce qu’on met en place pour ton énergie, tes os, ton muscle, ton sommeil et ta liberté de manger compte encore plus après.'],
-  ['Il faut suivre un programme semaine par semaine ?', 'Non, tu avances à ton rythme. À la fin de chaque chapitre, je te propose d’essayer une petite chose pendant quelques jours avant de passer à la suite. Tu peux revenir quand tu veux.'],
-  ['C’est un régime ?', 'Non. Pas de menu imposé, pas de balance, pas d’aliment interdit. On ajoute, on n’enlève pas, et tout se mange.'],
-  ['Est-ce que ça remplace mon médecin ?', 'Non. La formation t’explique ce qui se règle chez le médecin (le traitement hormonal, la prise de sang, la thyroïde) et quand en parler. L’alimentation est un levier en plus, jamais à la place.'],
-  ['Et si j’ai besoin qu’on regarde ma situation à moi ?', 'La formation explique et guide, sans personnaliser. Si tu as envie qu’on regarde ensemble ton histoire, tu peux réserver une consultation, en ligne.'],
-  ['Et si ça ne me plaît pas ?', 'Tu as 14 jours après ton achat pour changer d’avis : je te rembourse, sans question.'],
-];
-
-const jauge = [
-  ['Le boulot', 30],
-  ['Les enfants', 30],
-  ['La maison, les repas', 20],
-  ['La charge mentale', 16],
-  ['Toi', 4],
-];
+// Les jauges et les semaines des écrans WhatsApp (reprises de la maquette).
+const C = 169.65;
+const gauge = (label: string, p: number) => ({
+  label,
+  dash: Math.round(Math.min(p, 1) * C) + ' 200',
+  color: p >= 1 ? '#16352C' : '#B98D45',
+  check: p >= 1 ? 1 : 0,
+});
+const days = (flags: number[]) => ['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((l, i) => ({ l, on: !!flags[i], off: !flags[i] }));
+const heroGauges = [gauge('Protéines', 1), gauge('Fruits', 0.7), gauge('Complètes', 0.5), gauge('Légumes', 0.15)];
+const cardGauges = [gauge('Protéines', 0.3), gauge('Légumes', 0.6), gauge('Fruits', 1), gauge('Complètes', 0.4)];
+const week = days([1, 1, 1, 0, 0, 0, 0]);
+const duoA = days([1, 1, 1, 1, 1, 0, 0]);
+const duoB = days([1, 1, 0, 1, 1, 0, 0]);
+const wave = [6, 10, 14, 8, 16, 12, 18, 9, 13, 7, 15, 11, 6, 12, 8, 14, 10, 6].map((h) => ({ h: h + 'px' }));
 ---
 
 <Base
-  titre={`${NOM} | Formation en ligne 35-55 ans | Anne-Charlotte`}
-  description="Une formation en ligne pour les femmes de 35 à 55 ans, épuisées, dont le corps change : retrouver ton énergie, comprendre la périménopause et redevenir libre de manger, sans régime, à ton rythme."
+  titre="Et toi, dans tout ça ? | Accompagnement autonome sur WhatsApp | Anne-Charlotte"
+  description="Un accompagnement autonome sur WhatsApp pour les femmes qui gèrent tout et s’oublient au passage : chaque matin ton idée repas, une habitude par semaine, et Floris, mon assistante, qui regarde tes photos. Sans régime, sans balance."
   chemin="/formations/et-toi/"
-  barre={MODE === 'attente' ? { texte: 'Préviens-moi quand elle sort', lien: '#prevenir' } : { texte: `Je réserve ma place · ${PRIX_LANCEMENT} €`, lien: lienAchat }}
+  barre={{ texte: 'Préviens-moi quand ça ouvre', lien: '#prevenir' }}
 >
-  <section class="fp-hero">
-    <div class="contenu fp-hero__grille">
-      <div>
-        <p class="fp-kicker">Formation en ligne · 35-55 ans</p>
-        <h1>Et toi,<br /><em>dans tout ça&nbsp;?</em></h1>
-        <p class="fp-sous">
-          Pour toi qui as passé des années à t’occuper de tout le monde, et qui vois ton corps changer.
-          D’abord parce que t’es épuisée. Puis parce que la périménopause arrive, en douce.
-          Une formation à suivre à ton rythme pour retrouver ton énergie et redevenir libre de manger.
-        </p>
-        <div class="fp-cta">
-          <a class="btn btn-principal" href={lienAchat}>{MODE === 'attente' ? 'Préviens-moi quand elle sort' : `Je réserve ma place · ${PRIX_LANCEMENT} €`}</a>
-          <p class="fp-petit">Sortie prévue en {SORTIE}. <strong>{PRIX_LANCEMENT} € au lancement</strong> pour les inscrites, puis {PRIX} €.</p>
-        </div>
-      </div>
-      <img src={u('/img/formation/meno-9-freins.jpg')} alt="Une femme souriante, entourée de ce qui joue sur son énergie : sommeil, muscle, chaleur, mouvement, café, écran, ventre" width="1400" height="1050" />
-    </div>
-  </section>
+<div class="et-toi">
+<section style="padding-top: 56px; padding-bottom: 80px;">
+<div class="contenu" style="display: flex; flex-wrap: wrap; align-items: center; gap: 48px;">
+<div style="flex: 1 1 440px; min-width: 0;">
+<span style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #16352C;">Accompagnement autonome · sur WhatsApp</span>
+<h1 style="margin-top: 20px; font-size: clamp(34px, 6vw, 56px);">Tu vis ta vie. Je pense à tes repas.</h1>
+<p style="margin-top: 18px; font-size: 21px; font-weight: 700; color: #16352C;">Pour toi qui gères tout, et qui t'oublies au passage.</p>
+<p style="font-size: 19px; color: #22312C;">Quoi manger, comment l'améliorer et pourquoi ça marche, choisi d'après ton bilan, tes photos et ton sommeil. Chaque jour sur WhatsApp, jusqu'à ce que tu n'aies plus besoin de moi.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 28px;">
+<span class="btn btn-principal" aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;">Je fais mon bilan</span>
+<span style="font-size: 15.5px; color: #52625B;"><strong style="color: #16352C;">Bientôt disponible</strong> · <a href="#prevenir">Préviens-moi quand ça ouvre</a></span>
+</div>
+<p style="margin-top: 26px; font-weight: 700; color: #16352C;">Rien à installer, pas de balance, pas de régime.</p>
+</div>
+<div style="flex: 0 1 320px; display: flex; flex-direction: column; align-items: center; gap: 16px; min-width: 0;">
+<figure role="img" aria-label="Une conversation WhatsApp avec Anne-Charlotte : elle écrit qu'elle n'a pris qu'un café, reçoit l'idée d'ajouter un yaourt, puis envoie le lendemain la photo de son petit-déjeuner et reçoit ses jauges du jour." style="margin: 0; width: 300px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 46px; padding: 10px; box-shadow: 0 30px 60px -30px rgba(22, 53, 44, 0.5);">
+<div style="background: #EFEAE2; border-radius: 37px; overflow: hidden; height: 640px; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif; color: #111B21;">
+<div style="display: flex; align-items: center; gap: 8px; padding: 18px 12px 9px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9 2L2 9l7 7" fill="none" stroke="#111B21" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<img src={IMG.pastille} alt="" style="display: block; width: 34px; height: 34px; border-radius: 50%; background: #FAF5EE; padding: 5px; box-sizing: border-box; border: 1px solid #E4E6E8;">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2;">
+<span style="font-weight: 700; font-size: 14.5px;">Et toi</span>
+<span style="font-size: 11px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anne-Charlotte, diététicienne</span>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="#111B21" stroke-width="1.8"></rect><path d="M15.5 10.5l5-3v9l-5-3z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3c0 1.1-.9 2-2 2C10.6 19.4 4.6 13.4 4.6 5.5c0-1.1.9-2 2-2z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 10px; display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35;">
+<span style="align-self: center; margin: 2px 0 4px; background: #FFFFFF; color: #54656F; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Aujourd'hui</span>
+<div style="align-self: flex-end; max-width: 80%; background: #D9FDD3; border-radius: 10px 2px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Ce matin, juste un café. Pas eu le temps.<span style="display: flex; justify-content: flex-end; align-items: center; gap: 3px; font-size: 10px; color: #667781; margin-top: 1px;">07:58<svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 5.8l2.8 2.8L10 2M6.2 8.6l.6.6L14 2" fill="none" stroke="#53BDEB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+<div style="align-self: flex-start; width: 84%; display: flex; flex-direction: column; gap: 2px; margin-top: 3px;">
+<div style="background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Un café seul ce matin. C'est peut-être pour ça que 11 h est dur ? <strong style="color: #111B21;">Et si demain, tu ajoutais un yaourt ?</strong><span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">07:58</span></div>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Je vais essayer</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Une autre idée</span>
+</div>
+<span style="align-self: center; margin: 6px 0 4px; background: #FFFFFF; color: #54656F; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Le lendemain</span>
+<div style="align-self: flex-end; width: 64%; background: #D9FDD3; border-radius: 10px 2px 10px 10px; padding: 3px; position: relative; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">
+<img src={IMG.assiette1} alt="" style="display: block; width: 100%; height: 104px; object-fit: cover; border-radius: 8px;">
+<span style="position: absolute; left: 3px; right: 3px; bottom: 3px; height: 26px; border-radius: 0 0 8px 8px; background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));"></span>
+<span style="position: absolute; right: 8px; bottom: 6px; display: flex; align-items: center; gap: 3px; font-size: 10px; color: #FFFFFF;">07:41<svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 5.8l2.8 2.8L10 2M6.2 8.6l.6.6L14 2" fill="none" stroke="#53BDEB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+</div>
+<div style="align-self: flex-start; width: 86%; background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 3px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); margin-top: 3px;">
+<div style="background: #F7DCE1; border-radius: 8px; padding: 9px 6px 7px; display: flex; flex-direction: column; gap: 6px; font-family: 'Figtree', sans-serif;">
+<span style="padding-left: 4px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #16352C;">Ta journée</span>
+<div style="display: flex; justify-content: space-between; gap: 2px;">
+{heroGauges.map((g) => (<Fragment>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 3px; width: 56px;">
+<svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="#FFFFFF" stroke="#E3D8C7" stroke-width="5" stroke-dasharray="2 3"></circle><circle cx="32" cy="32" r="27" fill="none" stroke={g.color} stroke-width="5" stroke-linecap="round" stroke-dasharray={g.dash} transform="rotate(-90 32 32)"></circle><path d="M23 33 l6 6 l12 -13" fill="none" stroke="#16352C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-opacity={g.check}></path></svg>
+<span style="font-size: 10px; font-weight: 700; color: #16352C; line-height: 1.1;">{g.label}</span>
+</div>
+</Fragment>))}
+</div>
+</div>
+<div style="padding: 5px 6px 3px;">Œufs, yaourt, fruits : ce matin va tenir jusqu'à midi. <strong style="color: #111B21;">Ta case du jour est coloriée.</strong><span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">07:42</span></div>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px 14px; background: #F7F8FA; border-top: 1px solid #E4E6E8;">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#54656F" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="flex: 1; display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E4E6E8; font-size: 13px; color: #8696A0;">Message</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3v10H4z" fill="none" stroke="#54656F" stroke-width="1.8" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" fill="none" stroke="#54656F" stroke-width="1.8"></circle></svg>
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #00A884; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#FFFFFF"></rect><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+</div>
+</div>
+</figure>
+<span style="font-size: 15px; color: #52625B; text-align: center;">Une conversation WhatsApp, comme avec moi.</span>
+</div>
+</div>
+</section>
 
-  <section class="fp-scenes">
-    <div class="contenu">
-      <h2>Tu te reconnais ?</h2>
-      <ul class="fp-scenes__liste">
-        {scenes.map((s) => <li>{s}</li>)}
-      </ul>
-      <p class="fp-phrase">Et derrière, toujours la même petite voix : <strong>« c’est sûrement moi qui fais mal »</strong>.</p>
-    </div>
-  </section>
+<section style="padding-top: 0;">
+<div class="contenu" style="display: flex; flex-wrap: wrap; gap: 32px 56px; align-items: center;">
+<div style="flex: 1 1 440px; min-width: 0;">
+<img src={IMG.floris} alt="Anne-Charlotte, diététicienne, en pull rose dans son salon, avec Floris, son assistante dessinée en pixel art, assise sur son épaule" style="display: block; width: 100%; height: auto; aspect-ratio: 1600 / 893; object-fit: cover; border-radius: 26px;">
+</div>
+<div style="flex: 1 1 380px; min-width: 0;">
+<span style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #16352C;">Un accompagnement autonome</span>
+<h2 style="margin-top: 14px;">Tu avances seule, mais jamais toute seule</h2>
+<p>Floris, c'est mon assistante. Elle est dans ton WhatsApp chaque jour : elle regarde tes photos avec mes repères et te propose ton habitude de la semaine, par exemple « une protéine au petit-déj ».</p>
+<p style="color: #52625B; font-size: 16px;">Floris est une IA formée à ma méthode. Les idées, les vidéos et les vocaux, c'est moi.</p>
+</div>
+</div>
+</section>
 
-  <section class="fond-sapin">
-    <div class="contenu fp-recadre">
-      <div class="fp-jauge" aria-label="Ta jauge d’un mardi à 19 h">
-        <p class="fp-jauge__titre">Ta jauge, un mardi à 19 h</p>
-        {jauge.map(([nom, part]) => (
-          <div class={nom === 'Toi' ? 'fp-jauge__ligne fp-jauge__ligne--toi' : 'fp-jauge__ligne'}>
-            <span>{nom}</span>
-            <i style={`width:${part * 3}%`}></i>
-          </div>
-        ))}
-      </div>
-      <div>
-        <h2>C’est pas toi le problème. T’es juste passée après tout le reste.</h2>
-        <p>
-          Le boulot, les enfants, la maison, tes parents : pendant des années, tout est passé avant toi. Les nuits trop
-          courtes, le café pour tenir, les repas avalés debout, ton corps a tout encaissé. Et quand la périménopause
-          s’invite, avec des ados à gérer, tu ne la remarques même pas.
-        </p>
-        <p>
-          La bonne nouvelle, c’est que ça se comprend, et que ça se rééquilibre sans rien enlever aux autres. On commence
-          par une question que plus personne ne te pose : <strong>et toi, dans tout ça&nbsp;?</strong>
-        </p>
-      </div>
-    </div>
-  </section>
+<section style="background: #F1E8DA;">
+<div class="contenu">
+<h2>Comment ça marche</h2>
+<p style="color: #52625B;">Trois étapes, et tout se passe dans le WhatsApp que t'as déjà.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 48px 28px; margin-top: 40px;">
 
-  <section class="fp-essaye">
-    <div class="contenu">
-      <h2>Tu as déjà tout essayé ?</h2>
-      <p>
-        Le régime de tes 15 ans, l’appli qui compte tout, le sans-gluten « pour voir », la gélule de ta collègue.
-        Et à chaque fois, la même conclusion : <strong>« j’ai sûrement foiré »</strong>.
-      </p>
-      <p>
-        Ce n’était pas la volonté, c’était la méthode. Ton corps ne fait pas la différence entre un régime et une
-        période où il n’y a plus assez à manger : quand tu manges moins, il se met en mode économie. Alors ici, on
-        fait l’inverse. On ne retire rien, on ajoute ce qui te nourrit.
-      </p>
-    </div>
-  </section>
+<div style="flex: 1 1 290px; max-width: 330px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+<figure role="img" aria-label="Le bilan sur la page annecharlotte.be/et-toi, ouverte dans le navigateur du téléphone : la question « Qu'est-ce qui te ressemble ? » et six réponses, dont deux cochées." style="margin: 0; width: 290px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 44px; padding: 10px; box-shadow: 0 26px 50px -30px rgba(22, 53, 44, 0.5);">
+<div style="background: #FAF5EE; border-radius: 35px; overflow: hidden; height: 580px; display: flex; flex-direction: column;">
+<div style="padding: 16px 12px 8px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; height: 30px; border-radius: 10px; background: #E9EBEE; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, Arial, sans-serif; font-size: 12px; color: #3B4A54;"><svg width="11" height="12" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" fill="none" stroke="#3B4A54" stroke-width="2.2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="#3B4A54" stroke-width="2.2"></path></svg>annecharlotte.be/et-toi</span>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; padding: 16px 16px 16px; gap: 11px;">
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<img src={IMG.pastille} alt="" style="display: block; width: 26px; height: 26px;">
+<span style="font-size: 11.5px; font-weight: 700; color: #52625B;">Ton bilan · 1 sur 5</span>
+</div>
+<div style="height: 5px; border-radius: 99px; background: #E3D8C7; overflow: hidden;"><div style="width: 20%; height: 100%; background: #16352C; border-radius: 99px;"></div></div>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 20px; line-height: 1.15; color: #16352C; margin-top: 2px;">Qu'est-ce qui te ressemble ?</span>
+<span style="font-size: 12px; color: #52625B; margin-top: -6px;">Plusieurs réponses possibles.</span>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; line-height: 1.3; color: #22312C;">
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 14px; border: 1.5px solid #16352C; background: #F7DCE1;"><span style="flex: none; width: 18px; height: 18px; border-radius: 6px; background: #16352C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FAF5EE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span>J'ai fait tous les régimes, et je ne perds plus</span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 14px; border: 1.5px solid #16352C; background: #F7DCE1;"><span style="flex: none; width: 18px; height: 18px; border-radius: 6px; background: #16352C; display: flex; align-items: center; justify-content: center;"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FAF5EE" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span><span>Je m'occupe de tout le monde, et je suis crevée</span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 14px; border: 1.5px solid #E3D8C7; background: #FFFFFF;"><span style="flex: none; width: 18px; height: 18px; border-radius: 6px; border: 2px solid #C9BBA5; box-sizing: border-box;"></span><span>Je suis stressée, débordée</span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 14px; border: 1.5px solid #E3D8C7; background: #FFFFFF;"><span style="flex: none; width: 18px; height: 18px; border-radius: 6px; border: 2px solid #C9BBA5; box-sizing: border-box;"></span><span>Mon corps change, la périménopause arrive</span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 14px; border: 1.5px solid #E3D8C7; background: #FFFFFF;"><span style="flex: none; width: 18px; height: 18px; border-radius: 6px; border: 2px solid #C9BBA5; box-sizing: border-box;"></span><span>Avant mes règles, c'est compliqué</span></div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 8px 11px; border-radius: 14px; border: 1.5px solid #E3D8C7; background: #FFFFFF;"><span style="flex: none; width: 18px; height: 18px; border-radius: 6px; border: 2px solid #C9BBA5; box-sizing: border-box;"></span><span>Mon ventre gonfle souvent</span></div>
+</div>
+<span style="margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 999px; background: #16352C; color: #FAF5EE; font-size: 14px; font-weight: 700;">Continuer</span>
+</div>
+</div>
+</figure>
+<div style="display: flex; gap: 14px; align-items: flex-start; width: 100%;">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: #F0C3CB; color: #16352C; display: flex; align-items: center; justify-content: center; font-family: 'Young Serif', Georgia, serif; font-size: 20px;">1</span>
+<div><h3 style="margin: 0 0 6px;">Tu fais ton bilan</h3><p style="margin: 0; font-size: 16.5px; color: #52625B;">Sur cette page, 3 minutes, gratuit. À la fin, tu vois déjà ce qu'on va regarder.</p></div>
+</div>
+</div>
 
-  <section>
-    <div class="contenu">
-      <h2>Ici, on fait autrement</h2>
-      <div class="fp-principes">
-        <div><b>On part de qui tu es</b><p>Pas d’un chiffre sur la balance : de la femme que tu as envie d’être.</p></div>
-        <div><b>Une seule petite chose à la fois</b><p>Tu l’essaies quelques jours, puis tu passes à la suite, à ton rythme.</p></div>
-        <div><b>On ajoute, on n’enlève pas</b><p>Pas d’aliment interdit, pas de culpabilité. Tout se mange.</p></div>
-        <div><b>Toi d’abord, pour une fois</b><p>Dix minutes pour toi ne volent rien à personne. Et pas de deuxième repas à cuisiner : ton assiette trouve sa place dans celui de la famille.</p></div>
-      </div>
-    </div>
-  </section>
+<div style="flex: 1 1 290px; max-width: 330px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+<figure role="img" aria-label="Conversation WhatsApp : elle envoie la photo de sa boîte à lunch et reçoit une idée de goûter avec deux boutons, puis elle raconte en message vocal le souper de la veille qu'elle avait oublié de photographier." style="margin: 0; width: 290px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 44px; padding: 10px; box-shadow: 0 26px 50px -30px rgba(22, 53, 44, 0.5);">
+<div style="background: #EFEAE2; border-radius: 35px; overflow: hidden; height: 580px; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif; color: #111B21;">
+<div style="display: flex; align-items: center; gap: 8px; padding: 18px 12px 9px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9 2L2 9l7 7" fill="none" stroke="#111B21" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<img src={IMG.pastille} alt="" style="display: block; width: 34px; height: 34px; border-radius: 50%; background: #FAF5EE; padding: 5px; box-sizing: border-box; border: 1px solid #E4E6E8;">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2;">
+<span style="font-weight: 700; font-size: 14.5px;">Et toi</span>
+<span style="font-size: 11px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anne-Charlotte, diététicienne</span>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="#111B21" stroke-width="1.8"></rect><path d="M15.5 10.5l5-3v9l-5-3z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3c0 1.1-.9 2-2 2C10.6 19.4 4.6 13.4 4.6 5.5c0-1.1.9-2 2-2z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 10px; display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35;">
+<div style="align-self: flex-end; width: 66%; background: #D9FDD3; border-radius: 10px 2px 10px 10px; padding: 3px; position: relative; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">
+<img src={IMG.assiette2} alt="" style="display: block; width: 100%; height: 112px; object-fit: cover; border-radius: 8px;">
+<span style="position: absolute; left: 3px; right: 3px; bottom: 3px; height: 26px; border-radius: 0 0 8px 8px; background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));"></span>
+<span style="position: absolute; right: 8px; bottom: 6px; display: flex; align-items: center; gap: 3px; font-size: 10px; color: #FFFFFF;">12:31<svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 5.8l2.8 2.8L10 2M6.2 8.6l.6.6L14 2" fill="none" stroke="#53BDEB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+</div>
+<div style="align-self: flex-start; width: 86%; display: flex; flex-direction: column; gap: 2px; margin-top: 3px;">
+<div style="background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Œufs, crudités, pâtes : ton midi coche presque tout. Il manque juste des fruits aujourd'hui. <strong style="color: #111B21;">Pour ton goûter, une pomme et quelques amandes ?</strong><span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">12:31</span></div>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Oui</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Une autre</span>
+</div>
+<div style="align-self: flex-end; width: 76%; background: #D9FDD3; border-radius: 10px 2px 10px 10px; padding: 7px 8px 4px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); margin-top: 6px;">
+<div style="display: flex; align-items: center; gap: 8px;">
+<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="#54656F"></path></svg>
+<div style="flex: 1; display: flex; align-items: center; gap: 2px; height: 22px;">
+{wave.map((w) => (<Fragment><span style={`flex: none; width: 3px; border-radius: 2px; background: #8696A0; height: ${w.h};`}></span></Fragment>))}
+</div>
+<span style="flex: none; width: 28px; height: 28px; border-radius: 50%; background: #F0C3CB; color: #16352C; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">N</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #667781; margin-top: 2px;"><span>0:08</span><span style="display: flex; align-items: center; gap: 3px;">20:05<svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 5.8l2.8 2.8L10 2M6.2 8.6l.6.6L14 2" fill="none" stroke="#53BDEB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+</div>
+<div style="align-self: flex-start; max-width: 86%; background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); margin-top: 3px;">C'est noté pour hier soir : pâtes au saumon et une salade.<span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">20:05</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px 14px; background: #F7F8FA; border-top: 1px solid #E4E6E8;">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#54656F" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="flex: 1; display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E4E6E8; font-size: 13px; color: #8696A0;">Message</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3v10H4z" fill="none" stroke="#54656F" stroke-width="1.8" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" fill="none" stroke="#54656F" stroke-width="1.8"></circle></svg>
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #00A884; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#FFFFFF"></rect><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+</div>
+</div>
+</figure>
+<div style="display: flex; gap: 14px; align-items: flex-start; width: 100%;">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: #F0C3CB; color: #16352C; display: flex; align-items: center; justify-content: center; font-family: 'Young Serif', Georgia, serif; font-size: 20px;">2</span>
+<div><h3 style="margin: 0 0 6px;">Tu m'envoies tes assiettes sur WhatsApp</h3><p style="margin: 0; font-size: 16.5px; color: #52625B;">Une photo, comme à une amie. Et si t'as oublié de la prendre, un vocal suffit.</p></div>
+</div>
+</div>
 
-  <section class="fp-programme">
-    <div class="contenu">
-      <h2>Dix chapitres, à ton rythme</h2>
-      <p class="fp-intro">Chaque chapitre : quelques vidéos courtes, une fiche à imprimer, et une petite chose à essayer quelques jours avant de passer à la suite.</p>
-      <ol class="fp-semaines">
-        {chapitres.map(([t, d], i) => (
-          <li>
-            <span class="fp-num">{i}</span>
-            <div><h3>{t}</h3><p>{d}</p></div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
+<div style="flex: 1 1 290px; max-width: 330px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+<figure role="img" aria-label="Conversation WhatsApp, le troisième soir : elle reçoit l'image de sa carte « Je suis une femme qui… prend un petit-déj qui tient jusqu'à midi », avec ses quatre jauges et son habitude de la semaine." style="margin: 0; width: 290px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 44px; padding: 10px; box-shadow: 0 26px 50px -30px rgba(22, 53, 44, 0.5);">
+<div style="background: #EFEAE2; border-radius: 35px; overflow: hidden; height: 580px; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif; color: #111B21;">
+<div style="display: flex; align-items: center; gap: 8px; padding: 18px 12px 9px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9 2L2 9l7 7" fill="none" stroke="#111B21" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<img src={IMG.pastille} alt="" style="display: block; width: 34px; height: 34px; border-radius: 50%; background: #FAF5EE; padding: 5px; box-sizing: border-box; border: 1px solid #E4E6E8;">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2;">
+<span style="font-weight: 700; font-size: 14.5px;">Et toi</span>
+<span style="font-size: 11px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anne-Charlotte, diététicienne</span>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="#111B21" stroke-width="1.8"></rect><path d="M15.5 10.5l5-3v9l-5-3z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3c0 1.1-.9 2-2 2C10.6 19.4 4.6 13.4 4.6 5.5c0-1.1.9-2 2-2z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 10px; display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35;">
+<span style="align-self: center; margin: 2px 0 4px; background: #FFFFFF; color: #54656F; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Jeudi</span>
+<div style="align-self: flex-start; width: 92%; background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 3px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">
+<div style="background: #F7DCE1; border-radius: 8px; padding: 11px 10px; display: flex; flex-direction: column; gap: 8px; font-family: 'Figtree', sans-serif; color: #22312C;">
+<span style="font-size: 9.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #16352C;">La carte de Nathalie</span>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 16px; line-height: 1.15; color: #16352C;">Je suis une femme qui…</span>
+<div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; line-height: 1.3;">
+<span style="display: flex; align-items: center; gap: 8px; background: #FFFFFF; border-radius: 10px; padding: 6px 8px; font-weight: 700; color: #16352C;"><span style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: #B98D45;"></span>prend un petit-déj qui tient jusqu'à midi</span>
+<span style="padding: 1px 8px 1px 24px; color: #52625B;">mange assise, au moins une fois par jour</span>
+<span style="padding: 1px 8px 1px 24px; color: #52625B;">garde son goûter comme un vrai rendez-vous</span>
+</div>
+<div style="display: flex; justify-content: space-between; background: #FFFFFF; border-radius: 10px; padding: 7px 2px 5px;">
+{cardGauges.map((g) => (<Fragment>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px; width: 56px;">
+<svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="#E3D8C7" stroke-width="5" stroke-dasharray="2 3"></circle><circle cx="32" cy="32" r="27" fill="none" stroke={g.color} stroke-width="5" stroke-linecap="round" stroke-dasharray={g.dash} transform="rotate(-90 32 32)"></circle><path d="M23 33 l6 6 l12 -13" fill="none" stroke="#16352C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-opacity={g.check}></path></svg>
+<span style="font-size: 9.5px; font-weight: 700; color: #52625B; line-height: 1.1;">{g.label}</span>
+</div>
+</Fragment>))}
+</div>
+<div style="display: flex; flex-direction: column; gap: 1px;">
+<span style="font-size: 9.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #16352C;">Ton habitude de la semaine</span>
+<span style="font-size: 12px;">Une protéine au petit-déj : un yaourt, un œuf, du fromage blanc.</span>
+</div>
+<div style="display: flex; justify-content: space-between;">
+{week.map((d) => (<Fragment>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+{d.on && (<span style="width: 24px; height: 24px; border-radius: 7px; background: #16352C; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FAF5EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>)}
+{d.off && (<span style="display: block; width: 24px; height: 24px; border-radius: 7px; border: 2px dashed #C9A3AC; box-sizing: border-box;"></span>)}
+<span style="font-size: 9.5px; font-weight: 700; color: #16352C;">{d.l}</span>
+</div>
+</Fragment>))}
+</div>
+</div>
+<div style="padding: 5px 6px 3px;">Trois jours d'assiettes, c'est fait. Voilà par où on commence.<span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">20:30</span></div>
+</div>
+<span style="align-self: flex-start; width: 92%; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>C'est parti</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px 14px; background: #F7F8FA; border-top: 1px solid #E4E6E8;">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#54656F" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="flex: 1; display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E4E6E8; font-size: 13px; color: #8696A0;">Message</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3v10H4z" fill="none" stroke="#54656F" stroke-width="1.8" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" fill="none" stroke="#54656F" stroke-width="1.8"></circle></svg>
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #00A884; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#FFFFFF"></rect><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+</div>
+</div>
+</figure>
+<div style="display: flex; gap: 14px; align-items: flex-start; width: 100%;">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 50%; background: #F0C3CB; color: #16352C; display: flex; align-items: center; justify-content: center; font-family: 'Young Serif', Georgia, serif; font-size: 20px;">3</span>
+<div><h3 style="margin: 0 0 6px;">Une habitude par semaine, cochée chaque jour</h3><p style="margin: 0; font-size: 16.5px; color: #52625B;">Par exemple : une protéine au petit-déj. Tu la coches sur WhatsApp, et le dimanche tu vois combien de jours tu l'as tenue.</p></div>
+</div>
+</div>
 
-  <section class="fp-dedans">
-    <div class="contenu grille-2">
-      <div>
-        <h2>Ce que tu reçois</h2>
-        <ul class="fp-liste">
-          <li>Des vidéos courtes et dessinées, à regarder quand tu veux, même depuis ton canapé</li>
-          <li>Une fiche par chapitre, à imprimer ou garder sur ton téléphone</li>
-          <li>Ta carte d’identité et ta météo de départ, que tu retrouves à la fin pour voir le chemin parcouru</li>
-          <li>Ton carnet de bord : à chaque chapitre, tu écris ou tu dictes ce que tu vis</li>
-          <li><strong>À la fin, ton guide à toi</strong> : ton histoire, tes victoires, ce qui marche pour toi, et comment tu es devenue la femme de ta carte d’identité</li>
-          <li>Des idées de repas en 10 minutes, pour toi aussi</li>
-          <li>Un accès illimité : tu reviens quand tu veux</li>
-        </ul>
-      </div>
-      <img src={u('/img/formation/maman-assiette.jpg')} alt="Dessin au crayon d’une maman assise devant sa propre assiette" loading="lazy" />
-    </div>
-  </section>
+</div>
+</div>
+</section>
 
-  <section class="fp-pourqui">
-    <div class="contenu grille-2">
-      <div>
-        <h3>C’est pour toi si…</h3>
-        <ul class="fp-liste">
-          <li>Tu as entre 35 et 55 ans, t’es épuisée, et ton corps change sans prévenir</li>
-          <li>Tu en as marre des régimes et des injonctions</li>
-          <li>Tu veux comprendre, pas qu’on te donne une liste d’interdits</li>
-          <li>Tu as envie de retrouver ton énergie, et de manger avec plaisir</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Ce n’est pas pour toi si…</h3>
-        <ul class="fp-liste fp-liste--non">
-          <li>Tu cherches un menu à suivre à la lettre pour perdre 5 kilos en un mois</li>
-          <li>Tu vis un trouble du comportement alimentaire en ce moment : là, un accompagnement en personne est plus juste</li>
-          <li>Tu veux remplacer ton suivi médical</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+<section>
+<div class="contenu" style="display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: flex-start;">
+<div style="flex: 1 1 300px; max-width: 380px; min-width: 0;">
+<h2>C'est pour toi si tu te reconnais là-dedans</h2>
+<p style="color: #52625B;">À 30 ou 35 ans, c'est rarement une histoire d'hormones : tu t'oublies, à force de tout gérer. Ton bilan regarde d'où tu pars. Tu peux cocher plusieurs choses, on en tient compte dans l'ordre.</p>
+<img src={IMG.maman} alt="Dessin au crayon d'une maman et de son assiette" style="display: block; width: 100%; margin-top: 18px; border-radius: 26px;">
+</div>
+<div style="flex: 999 1 520px; min-width: 0;">
+<div class="rangs">
+<div class="rang"><h3 style="font-size: 20px;">« Je gère tout, et je m'oublie au passage »</h3><p>Le boulot, les enfants, la maison, la charge mentale : tu passes après tout le reste. Tu nourris tout le monde. Et toi ? On commence souvent par tes matins.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">« J'ai fait tous les régimes, et je ne perds plus »</h3><p>On arrête de compter. On regarde ce qui se passe vraiment dans tes assiettes, une habitude à la fois.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">« Je suis stressée, débordée »</h3><p>Pas une liste de plus. Une seule habitude par semaine, qui tient dans ta vie telle qu'elle est.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">« Mon corps change, la périménopause arrive »</h3><p>Ce qui se passe dans ton corps, et ce qui t'aide vraiment. Si tu le coches, on en parle. Sinon, non.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">« Avant mes règles, c'est compliqué »</h3><p>On repère ta semaine difficile dans tes assiettes, et on la prépare.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">« Mon ventre gonfle souvent »</h3><p>On commence par le comment et le quand, avant de retirer quoi que ce soit.</p></div>
+</div>
+<div style="margin-top: 26px; padding: 18px 22px; border-radius: 16px; background: #F1E8DA;">
+<p style="margin: 0;"><strong>Endométriose, SII, SOPK, ou un ventre qui fait mal ?</strong> Là, le plus juste, c'est qu'on se voie en consultation. Ton bilan te le dira.</p>
+</div>
+</div>
+</div>
+</section>
 
-  <section class="fond-sapin">
-    <div class="contenu fp-moi">
-      <h2>Qui t’accompagne</h2>
-      <p>
-        Je suis Anne-Charlotte, diététicienne agréée à Namur. J’ai accompagné plus de 1 500 patientes et formé plus de
-        250 diététiciennes, dont une formation complète sur la santé féminine et la ménopause. Dans mon cabinet, je vois
-        chaque semaine des femmes qui arrivent en disant « je me reconnais plus ». Cette formation, c’est tout ce que je
-        leur explique, mis en vidéos pour que tu puisses avancer à ton rythme.
-      </p>
-    </div>
-  </section>
+<section class="fond-sapin">
+<div class="contenu" style="display: flex; flex-wrap: wrap-reverse; gap: 48px; align-items: center;">
+<div style="flex: 0 1 320px; display: flex; justify-content: center; min-width: 0;">
+<figure role="img" aria-label="Le matin dans WhatsApp : sa carte du jour « C'est quoi, un petit-déj qui tient ? » avec une question vrai ou faux, puis son idée recette du jour en photo." style="margin: 0; width: 300px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 46px; padding: 10px; box-shadow: 0 0 0 1px rgba(250, 245, 238, 0.28), 0 30px 60px -30px rgba(0, 0, 0, 0.6);">
+<div style="background: #EFEAE2; border-radius: 37px; overflow: hidden; height: 640px; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif; color: #111B21;">
+<div style="display: flex; align-items: center; gap: 8px; padding: 18px 12px 9px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9 2L2 9l7 7" fill="none" stroke="#111B21" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<img src={IMG.pastille} alt="" style="display: block; width: 34px; height: 34px; border-radius: 50%; background: #FAF5EE; padding: 5px; box-sizing: border-box; border: 1px solid #E4E6E8;">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2;">
+<span style="font-weight: 700; font-size: 14.5px;">Et toi</span>
+<span style="font-size: 11px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anne-Charlotte, diététicienne</span>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="#111B21" stroke-width="1.8"></rect><path d="M15.5 10.5l5-3v9l-5-3z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3c0 1.1-.9 2-2 2C10.6 19.4 4.6 13.4 4.6 5.5c0-1.1.9-2 2-2z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 10px; display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35;">
+<div style="align-self: flex-start; width: 88%; display: flex; flex-direction: column; gap: 2px;">
+<div style="background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Bonjour Nathalie, ta carte du jour.<br><br><strong style="color: #111B21;">C'est quoi, un petit-déj qui tient ?</strong><br>Avec une protéine et des fibres, ton petit-déj tient plus longtemps. La faim de 10 h, souvent, c'est lui.<br><br>Vrai ou faux : un café suffit pour tenir jusqu'à midi.<span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">07:15</span></div>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Vrai</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Faux</span>
+</div>
+<div style="align-self: flex-start; width: 88%; display: flex; flex-direction: column; gap: 2px; margin-top: 4px;">
+<div style="background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 3px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">
+<img src={IMG.assiette3} alt="" style="display: block; width: 100%; height: 112px; object-fit: cover; border-radius: 8px;">
+<div style="padding: 5px 6px 3px;"><strong style="color: #111B21;">Ton idée recette du jour :</strong> saumon, brocolis, tomates et pommes de terre rôties.<span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">07:15</span></div>
+</div>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Je la garde</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Une autre</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px 14px; background: #F7F8FA; border-top: 1px solid #E4E6E8;">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#54656F" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="flex: 1; display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E4E6E8; font-size: 13px; color: #8696A0;">Message</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3v10H4z" fill="none" stroke="#54656F" stroke-width="1.8" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" fill="none" stroke="#54656F" stroke-width="1.8"></circle></svg>
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #00A884; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#FFFFFF"></rect><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+</div>
+</div>
+</figure>
+</div>
+<div style="flex: 999 1 460px; min-width: 0;">
+<h2>Ta journée tient en trois gestes</h2>
+<p>Tout le travail est derrière : ton bilan, tes photos et tes réponses choisissent la suite.</p>
+<div style="margin-top: 26px; border-top: 1px solid rgba(250, 245, 238, 0.2);">
+<div style="display: flex; flex-wrap: wrap; gap: 6px 22px; padding: 22px 0; border-bottom: 1px solid rgba(250, 245, 238, 0.2);">
+<span style="flex: 0 0 140px; font-family: 'Young Serif', Georgia, serif; font-size: 22px; line-height: 1.2; color: #F0C3CB;">Le matin</span>
+<div style="flex: 1 1 260px; min-width: 0;"><p style="margin: 0; color: #FAF5EE; font-weight: 700;">Tu lis ta carte, une minute, et tu touches « vrai » ou « faux ».</p><p style="margin: 4px 0 0;">Avec ton idée recette du jour, choisie d'après tes assiettes et ce que tu aimes.</p></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 22px; padding: 22px 0; border-bottom: 1px solid rgba(250, 245, 238, 0.2);">
+<span style="flex: 0 0 140px; font-family: 'Young Serif', Georgia, serif; font-size: 22px; line-height: 1.2; color: #F0C3CB;">À chaque repas</span>
+<div style="flex: 1 1 260px; min-width: 0;"><p style="margin: 0; color: #FAF5EE; font-weight: 700;">Tu envoies une photo.</p><p style="margin: 4px 0 0;">En quelques secondes, tes jauges du jour et une phrase sur toi, pas sur une assiette idéale.</p></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 22px; padding: 22px 0; border-bottom: 1px solid rgba(250, 245, 238, 0.2);">
+<span style="flex: 0 0 140px; font-family: 'Young Serif', Georgia, serif; font-size: 22px; line-height: 1.2; color: #F0C3CB;">Le soir</span>
+<div style="flex: 1 1 260px; min-width: 0;"><p style="margin: 0; color: #FAF5EE; font-weight: 700;">Tu touches un bouton.</p><p style="margin: 4px 0 0;">Ta case du jour se colorie. Le dimanche, tu vois ta semaine et ce qui a bougé.</p></div>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-  <Avis noms={['Maurine', 'Dominique', 'Chantal W.']} titre="Ce que mes patientes disent de ma façon de faire" />
+<section>
+<div class="contenu" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center;">
+<div style="flex: 999 1 460px; min-width: 0;">
+<h2>Ton sommeil, tes pas, ton cycle : on fait le lien</h2>
+<p>Si tu veux, tu relies Apple Santé sur iPhone, ou Santé Connect sur Android. Tes nuits, tes pas et ton cycle arrivent tout seuls, et on les croise avec tes assiettes.</p>
+<div class="rangs" style="margin-top: 22px;">
+<div class="rang"><h3 style="font-size: 20px;">Tes nuits</h3><p>Après une nuit courte, ton idée repas du jour s'adapte.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">Tes pas</h3><p>« Marcher après le souper » se coche tout seul.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">Ton cycle</h3><p>Ta semaine avant les règles, on la voit venir.</p></div>
+<div class="rang"><h3 style="font-size: 20px;">Le dimanche</h3><p>Les liens apparaissent : « tes nuits courtes arrivent souvent avant tes grignotages de 16 h ».</p></div>
+</div>
+<p style="margin-top: 18px; font-size: 16px; color: #52625B;">Sans ça, tout marche aussi : on te demande juste comment s'annonce ta journée.</p>
+</div>
+<div style="flex: 0 1 320px; display: flex; justify-content: center; min-width: 0;">
+<figure role="img" aria-label="Conversation WhatsApp : elle reçoit sa nuit et ses pas venus d'Apple Santé, avec une idée pour préparer son goûter après une nuit courte, et répond oui." style="margin: 0; width: 300px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 46px; padding: 10px; box-shadow: 0 30px 60px -30px rgba(22, 53, 44, 0.5);">
+<div style="background: #EFEAE2; border-radius: 37px; overflow: hidden; height: 600px; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif; color: #111B21;">
+<div style="display: flex; align-items: center; gap: 8px; padding: 18px 12px 9px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9 2L2 9l7 7" fill="none" stroke="#111B21" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<img src={IMG.pastille} alt="" style="display: block; width: 34px; height: 34px; border-radius: 50%; background: #FAF5EE; padding: 5px; box-sizing: border-box; border: 1px solid #E4E6E8;">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2;">
+<span style="font-weight: 700; font-size: 14.5px;">Et toi</span>
+<span style="font-size: 11px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anne-Charlotte, diététicienne</span>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="#111B21" stroke-width="1.8"></rect><path d="M15.5 10.5l5-3v9l-5-3z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3c0 1.1-.9 2-2 2C10.6 19.4 4.6 13.4 4.6 5.5c0-1.1.9-2 2-2z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 10px; display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35;">
+<span style="align-self: center; margin: 2px 0 4px; background: #FFFFFF; color: #54656F; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Mardi</span>
+<div style="align-self: flex-start; width: 88%; display: flex; flex-direction: column; gap: 2px;">
+<div style="background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 3px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">
+<div style="background: #FAF5EE; border-radius: 8px; padding: 10px 11px; display: flex; flex-direction: column; gap: 8px; font-family: 'Figtree', sans-serif; color: #22312C;">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #16352C;"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20z" fill="none" stroke="#C96C80" stroke-width="2.2" stroke-linejoin="round"></path></svg>Depuis Apple Santé</span>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline;"><span style="font-size: 12.5px;">Ta nuit</span><span style="font-family: 'Young Serif', Georgia, serif; font-size: 16px; color: #16352C;">5 h 40</span></div>
+<div style="height: 6px; border-radius: 99px; background: #E3D8C7; overflow: hidden;"><div style="width: 68%; height: 100%; border-radius: 99px; background: #B98D45;"></div></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #E3D8C7; padding-top: 7px;"><span style="font-size: 12.5px;">Tes pas hier</span><span style="font-family: 'Young Serif', Georgia, serif; font-size: 16px; color: #16352C;">3 200</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid #E3D8C7; padding-top: 7px;"><span style="font-size: 12.5px;">Ton cycle</span><span style="font-family: 'Young Serif', Georgia, serif; font-size: 16px; color: #16352C;">jour 24</span></div>
+</div>
+<div style="padding: 5px 6px 3px;">Ta nuit a été courte, et t'arrives dans ta semaine avant les règles. Ces jours-là, la faim de 16 h est souvent plus forte. <strong style="color: #111B21;">Et si on préparait ton goûter dès ce midi ?</strong><span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">07:20</span></div>
+</div>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Oui</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Pas aujourd'hui</span>
+</div>
+<div style="align-self: flex-end; max-width: 80%; background: #D9FDD3; border-radius: 10px 2px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); margin-top: 4px;">Oui<span style="display: flex; justify-content: flex-end; align-items: center; gap: 3px; font-size: 10px; color: #667781; margin-top: 1px;">07:22<svg width="16" height="11" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 5.8l2.8 2.8L10 2M6.2 8.6l.6.6L14 2" fill="none" stroke="#53BDEB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+<div style="align-self: flex-start; max-width: 86%; background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13); margin-top: 3px;">Un carré de chocolat et une poignée d'amandes dans ton sac : du plaisir, et un truc qui cale.<span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">07:22</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px 14px; background: #F7F8FA; border-top: 1px solid #E4E6E8;">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#54656F" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="flex: 1; display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E4E6E8; font-size: 13px; color: #8696A0;">Message</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3v10H4z" fill="none" stroke="#54656F" stroke-width="1.8" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" fill="none" stroke="#54656F" stroke-width="1.8"></circle></svg>
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #00A884; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#FFFFFF"></rect><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
 
-  <section>
-    <div class="contenu">
-      <h2>Tes questions</h2>
-      <div class="faq-liste">
-        {faq.map(([q, r]) => (
-          <details><summary>{q}</summary><div class="reponse"><p>{r}</p></div></details>
-        ))}
-      </div>
-    </div>
-  </section>
+<section style="background: #F1E8DA;">
+<div class="contenu">
+<h2>Ce qui change, semaine après semaine</h2>
+<p style="color: #52625B;">Des exemples, pas des promesses : chacune avance à son rythme.</p>
+<ol style="list-style: none; padding: 0; margin: 40px 0 0; display: flex; flex-wrap: wrap; gap: 32px 22px;">
+<li style="flex: 1 1 170px; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="flex: none; width: 16px; height: 16px; border-radius: 50%; background: #B98D45;"></span><span style="flex: 1; height: 2px; background: #D9CBB4;"></span></div>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 22px; color: #16352C;">Aujourd'hui</span>
+<span style="font-size: 16.5px; color: #52625B;">Ton bilan, et ta carte « Je suis une femme qui… ».</span>
+</li>
+<li style="flex: 1 1 170px; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="flex: none; width: 16px; height: 16px; border-radius: 50%; background: #B98D45;"></span><span style="flex: 1; height: 2px; background: #D9CBB4;"></span></div>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 22px; color: #16352C;">Jour 1</span>
+<span style="font-size: 16.5px; color: #52625B;">Ta première photo, et déjà une idée pour demain.</span>
+</li>
+<li style="flex: 1 1 170px; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="flex: none; width: 16px; height: 16px; border-radius: 50%; background: #B98D45;"></span><span style="flex: 1; height: 2px; background: #D9CBB4;"></span></div>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 22px; color: #16352C;">Jour 3</span>
+<span style="font-size: 16.5px; color: #52625B;">Tu découvres par où on commence, et tu sais déjà pourquoi.</span>
+</li>
+<li style="flex: 1 1 170px; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="flex: none; width: 16px; height: 16px; border-radius: 50%; background: #B98D45;"></span><span style="flex: 1; height: 2px; background: #D9CBB4;"></span></div>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 22px; color: #16352C;">Semaine 3</span>
+<span style="font-size: 16.5px; color: #52625B;">Souvent, des matins qui tiennent jusqu'à midi.</span>
+</li>
+<li style="flex: 1 1 170px; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="flex: none; width: 16px; height: 16px; border-radius: 50%; background: #16352C;"></span><span style="flex: 1; height: 2px; background: transparent;"></span></div>
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 22px; color: #16352C;">Semaine 8</span>
+<span style="font-size: 16.5px; color: #52625B;">Manger sans y penser tout le temps.</span>
+</li>
+</ol>
+</div>
+</section>
 
-  <section class="fp-final">
-    <div class="contenu centre">
-      <h2>Et si cette fois, tu faisais la paix avec ton assiette ?</h2>
-      {MODE === 'attente' ? (
-        <div class="fp-attente"><ListeAttente source="Page formation" /></div>
-      ) : (
-        <a class="btn btn-principal" href={lienAchat}>Je réserve ma place · {PRIX_LANCEMENT} €</a>
-      )}
-      <p class="fp-petit">Sortie prévue en {SORTIE} · satisfaite ou remboursée 14 jours</p>
-    </div>
-  </section>
+<section>
+<div class="contenu" style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center;">
+<div style="flex: 0 1 320px; display: flex; justify-content: center; min-width: 0;">
+<figure role="img" aria-label="Conversation WhatsApp à deux : « Sophie a coché son habitude aujourd'hui. Et toi ? », puis, le dimanche, l'image de leur semaine à deux avec leurs cases coloriées côte à côte." style="margin: 0; width: 300px; max-width: 100%; box-sizing: border-box; background: #1F2321; border-radius: 46px; padding: 10px; box-shadow: 0 30px 60px -30px rgba(22, 53, 44, 0.5);">
+<div style="background: #EFEAE2; border-radius: 37px; overflow: hidden; height: 560px; display: flex; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif; color: #111B21;">
+<div style="display: flex; align-items: center; gap: 8px; padding: 18px 12px 9px; background: #F7F8FA; border-bottom: 1px solid #E4E6E8;">
+<svg width="11" height="18" viewBox="0 0 11 18" aria-hidden="true"><path d="M9 2L2 9l7 7" fill="none" stroke="#111B21" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<img src={IMG.pastille} alt="" style="display: block; width: 34px; height: 34px; border-radius: 50%; background: #FAF5EE; padding: 5px; box-sizing: border-box; border: 1px solid #E4E6E8;">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2;">
+<span style="font-weight: 700; font-size: 14.5px;">Et toi</span>
+<span style="font-size: 11px; color: #667781; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anne-Charlotte, diététicienne</span>
+</div>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="3" fill="none" stroke="#111B21" stroke-width="1.8"></rect><path d="M15.5 10.5l5-3v9l-5-3z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3c0 1.1-.9 2-2 2C10.6 19.4 4.6 13.4 4.6 5.5c0-1.1.9-2 2-2z" fill="none" stroke="#111B21" stroke-width="1.8" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex: 1; overflow: hidden; padding: 10px; display: flex; flex-direction: column; gap: 5px; font-size: 13px; line-height: 1.35;">
+<div style="align-self: flex-start; width: 84%; display: flex; flex-direction: column; gap: 2px;">
+<div style="background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 6px 8px 4px 9px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Sophie a coché son habitude aujourd'hui. <strong style="color: #111B21;">Et toi ?</strong><span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">18:40</span></div>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>C'est fait</span>
+<span style="display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; background: #FFFFFF; border-radius: 8px; color: #027EB5; font-size: 13px; font-weight: 600; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6L3.5 11.5 9 17M4 11.5h9.5a6.5 6.5 0 0 1 6.5 6.5" fill="none" stroke="#027EB5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Ce soir</span>
+</div>
+<span style="align-self: center; margin: 6px 0 4px; background: #FFFFFF; color: #54656F; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 7px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">Dimanche</span>
+<div style="align-self: flex-start; width: 90%; background: #FFFFFF; border-radius: 2px 10px 10px 10px; padding: 3px; box-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);">
+<div style="background: #F7DCE1; border-radius: 8px; padding: 12px 11px; display: flex; flex-direction: column; gap: 10px; font-family: 'Figtree', sans-serif;">
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 16px; line-height: 1.15; color: #16352C;">Votre semaine à deux</span>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 11px; font-weight: 700; color: #16352C;">Sophie</span>
+<div style="display: flex; gap: 5px;">
+{duoA.map((d) => (<Fragment>
+{d.on && (<span style="width: 26px; height: 26px; border-radius: 7px; background: #16352C; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FAF5EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>)}
+{d.off && (<span style="display: block; width: 26px; height: 26px; border-radius: 7px; border: 2px dashed #C9A3AC; box-sizing: border-box;"></span>)}
+</Fragment>))}
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-size: 11px; font-weight: 700; color: #16352C;">Nathalie</span>
+<div style="display: flex; gap: 5px;">
+{duoB.map((d) => (<Fragment>
+{d.on && (<span style="width: 26px; height: 26px; border-radius: 7px; background: #B98D45; display: flex; align-items: center; justify-content: center;"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>)}
+{d.off && (<span style="display: block; width: 26px; height: 26px; border-radius: 7px; border: 2px dashed #C9A3AC; box-sizing: border-box;"></span>)}
+</Fragment>))}
+</div>
+</div>
+</div>
+<div style="padding: 5px 6px 3px;">9 petits oui cette semaine, à vous deux. On continue ?<span style="display: block; text-align: right; font-size: 10px; color: #667781; margin-top: 1px;">10:00</span></div>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px 14px; background: #F7F8FA; border-top: 1px solid #E4E6E8;">
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="#54656F" stroke-width="2" stroke-linecap="round"></path></svg>
+<span style="flex: 1; display: flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E4E6E8; font-size: 13px; color: #8696A0;">Message</span>
+<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5h3l1.5-2.5h7L17 8.5h3v10H4z" fill="none" stroke="#54656F" stroke-width="1.8" stroke-linejoin="round"></path><circle cx="12" cy="13" r="3.2" fill="none" stroke="#54656F" stroke-width="1.8"></circle></svg>
+<span style="flex: none; width: 34px; height: 34px; border-radius: 50%; background: #00A884; display: flex; align-items: center; justify-content: center;"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#FFFFFF"></rect><path d="M6 11a6 6 0 0 0 12 0M12 17v4" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span>
+</div>
+</div>
+</figure>
+</div>
+<div style="flex: 999 1 460px; min-width: 0;">
+<h2>À deux, c'est plus facile</h2>
+<p>Embarque ta copine, ta sœur ou ta mère. Au départ, vous choisissez un défi : 7 petits-déj qui tiennent, un repas assise par jour, ou 30 végétaux dans la semaine. Vos photos le vérifient.</p>
+<p>Quand l'une coche, l'autre reçoit un petit mot sur WhatsApp. Le dimanche, vous voyez votre semaine côte à côte, et à la fin, une recette à partager pour un souper ensemble.</p>
+<p>Avec la formule appel, on se voit à trois après votre première semaine : vos questions, vos petites victoires, et de quoi vous booster pour la suite.</p>
+<p><strong>Vous ne partagez que vos petits oui : jamais une photo, jamais une réponse.</strong></p>
+</div>
+</div>
+</section>
+
+<section style="background: #F1E8DA;">
+<div class="contenu" style="display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: center;">
+<div style="flex: 0 1 360px; min-width: 0;">
+<img src={IMG.murVert} alt="Anne-Charlotte, diététicienne, devant un mur vert sapin" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 26px;">
+</div>
+<div style="flex: 999 1 420px; min-width: 0;">
+<h2>Ma méthode de consultation, dans ton WhatsApp</h2>
+<p>En consultation, mes patientes m'envoient leurs assiettes en photo sur WhatsApp, et on avance une habitude à la fois. C'est ce qui marche le mieux, et de loin.</p>
+<p>« Et toi » reprend cette méthode pour celles qui veulent avancer seules, à leur rythme. Les cartes, les vidéos et les vocaux, c'est moi. Floris, mon assistante IA, regarde tes photos avec mes repères.</p>
+<p style="color: #52625B; font-size: 16px;">Anne-Charlotte Jalhay, diététicienne agréée en Belgique.</p>
+</div>
+</div>
+</section>
+
+<section id="bilan">
+<div class="contenu">
+<div class="centre">
+<h2>Seule, ou avec un coup de pouce ?</h2>
+<p style="color: #52625B;">Ton bilan est gratuit. Tu choisis ta formule après ton premier aperçu.</p>
+</div>
+<div role="group" aria-label="Pour qui" style="display: flex; justify-content: center; margin: 26px 0 30px;">
+<div style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3D8C7;">
+<button type="button" class="et-qui" data-qui="seule" aria-pressed="true" style="min-height: 46px; padding: 0 26px; border: 0; border-radius: 999px; cursor: pointer; font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 700; background: #16352C; color: #FAF5EE;">Seule</button>
+<button type="button" class="et-qui" data-qui="deux" aria-pressed="false" style="min-height: 46px; padding: 0 26px; border: 0; border-radius: 999px; cursor: pointer; font-family: 'Figtree', sans-serif; font-size: 16px; font-weight: 700; background: transparent; color: #16352C;">À deux</button>
+</div>
+</div>
+<div style="max-width: 920px; margin: 0 auto; background: #FFFFFF; border: 1px solid #E3D8C7; border-radius: 26px; padding: 14px; box-sizing: border-box;">
+<div style="display: flex; flex-wrap: wrap; gap: 14px;">
+<div style="flex: 1 1 300px; min-width: 0; border-radius: 18px; background: #FAF5EE; padding: 28px 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px;">
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 24px; line-height: 1.2; color: #16352C;">En autonomie</span>
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;"><span style="font-family: 'Young Serif', Georgia, serif; font-size: 52px; line-height: 1; color: #16352C;"><span data-seule="59 €" data-deux="99 €">59 €</span></span><span style="font-size: 15px; color: #52625B;"><span data-seule="prix de lancement, puis 79 €" data-deux="pour vous deux, prix de lancement">prix de lancement, puis 79 €</span></span></div>
+<ul style="list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-direction: column; gap: 10px;">
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#B98D45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><strong>Ton bilan, et ta carte « Je suis une femme qui… »</strong> : tu sais d'où tu pars, et par quoi on commence.</span></li>
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#B98D45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><strong>Chaque matin sur WhatsApp, ton idée repas</strong> : une décision de moins à prendre dans ta journée.</span></li>
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#B98D45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><strong>Une habitude par semaine, cochée chaque jour</strong> : le dimanche, tu vois combien de jours tu l'as tenue.</span></li>
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#B98D45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><strong>Tes photos de repas, regardées par Floris avec mes repères</strong> : tu vois ce qui manque, sans rien peser ni compter.</span></li>
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#B98D45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><strong>Mes vidéos courtes et mes vocaux, choisis pour toi</strong> : moins de 2 minutes, au moment où t'en as besoin.</span></li>
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#B98D45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><strong>Si tu veux, Apple Santé ou Santé Connect</strong> : on relie ton sommeil et tes pas à tes repas.</span></li>
+</ul>
+</div>
+<div style="flex: 1 1 300px; min-width: 0; border-radius: 18px; background: #16352C; color: #FAF5EE; padding: 28px 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px;">
+<span style="font-family: 'Young Serif', Georgia, serif; font-size: 24px; line-height: 1.2; color: #F0C3CB;">Avec un appel</span>
+<div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;"><span style="font-family: 'Young Serif', Georgia, serif; font-size: 52px; line-height: 1; color: #FAF5EE;"><span data-seule="119 €" data-deux="199 €">119 €</span></span><span style="font-size: 15px; color: #DCD5C6;"><span data-seule="une fois" data-deux="pour vous deux">une fois</span></span></div>
+<span style="font-weight: 700; color: #FAF5EE; margin-top: 4px;">Tout ce qu'il y a en autonomie, et :</span>
+<ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F0C3CB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><span data-seule="Un appel en visio avec moi, après ta première semaine" data-deux="Un appel à trois en visio, après votre première semaine">Un appel en visio avec moi, après ta première semaine</span></span></li>
+<li style="margin: 0; display: flex; gap: 12px; align-items: flex-start;"><svg style="flex: none; margin-top: 5px;" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F0C3CB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg><span><span data-seule="Toutes tes questions, et on ajuste ensemble ce qui coince" data-deux="Vos questions, vos petites victoires, et de quoi vous booster ensemble">Toutes tes questions, et on ajuste ensemble ce qui coince</span></span></li>
+</ul>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 26px 12px 14px; text-align: center;">
+<span class="btn btn-principal" aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;">Je fais mon bilan</span>
+<span style="font-size: 15px; color: #52625B;"><strong style="color: #16352C;">Bientôt disponible.</strong> 3 minutes, gratuit. Satisfaite ou remboursée 14 jours.</span>
+</div>
+</div>
+<div class="et-attente"><ListeAttente source="Page formation" titre="Préviens-moi quand ça ouvre" quoi="accompagnement" /></div>
+</div>
+</section>
+
+<section style="padding-top: 0;">
+<div class="contenu">
+<h2>Tes questions</h2>
+<div class="faq-liste" style="margin-top: 24px;">
+<details><summary>Je dois installer une appli ?</summary><div class="reponse"><p>Non. Tout se passe dans WhatsApp, que t'as déjà. Ton bilan se fait sur cette page.</p></div></details>
+<details><summary>Ça me prend combien de temps par jour ?</summary><div class="reponse"><p>Une minute le matin, une photo par repas, un bouton le soir. Si t'oublies une photo, tu me dis en vocal ce que t'as mangé.</p></div></details>
+<details><summary>Il faut se peser ?</summary><div class="reponse"><p>Non. Pas de balance, pas de calories. On regarde ton énergie, tes matins, ton ventre, et ce qui bouge dans tes assiettes.</p></div></details>
+<details><summary>Je peux relier Apple Santé ?</summary><div class="reponse"><p>Oui, si tu veux : ton sommeil, tes pas et ton cycle. Sur Android, c'est Santé Connect. Sans ça, tout marche aussi.</p></div></details>
+<details><summary>C'est quoi, l'appel après une semaine ?</summary><div class="reponse"><p>Avec la formule appel, tu réserves un rendez-vous en visio avec moi après ta première semaine. Tu poses toutes tes questions, et on ajuste ensemble ce qui coince. À deux, on se voit à trois, et ça booste.</p></div></details>
+<details><summary>Qui me répond ?</summary><div class="reponse"><p>Floris, mon assistante IA, formée à ma méthode. Elle regarde tes photos et te propose ton habitude de la semaine. Les cartes, les vidéos et les vocaux, c'est moi qui les ai faits.</p></div></details>
+<details><summary>Et mes données ?</summary><div class="reponse"><p>Tes photos et tes réponses sont gardées en Europe, et tu peux tout effacer quand tu veux. Ta copine ne voit que tes petits oui.</p></div></details>
+<details><summary>Et si j'ai une endométriose, un SII ou un SOPK ?</summary><div class="reponse"><p>Ton bilan te le dira. Dans ce cas, le plus juste, c'est qu'on se voie en consultation.</p></div></details>
+<details><summary>Et si ça ne me convient pas ?</summary><div class="reponse"><p>Satisfaite ou remboursée pendant 14 jours. Tu m'écris, je te rembourse.</p></div></details>
+</div>
+</div>
+</section>
+
+<section class="fond-sapin">
+<div class="contenu centre">
+<h2>Et toi, dans tout ça ?</h2>
+<p>Ton bilan arrive bientôt. 3 minutes, gratuit, et tu vois déjà ce qu'on va regarder.</p>
+<span class="btn btn-rose" aria-disabled="true" style="margin-top: 12px; opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none;">Bientôt disponible</span>
+<p style="margin-top: 16px;"><a href="#prevenir">Préviens-moi quand ça ouvre</a></p>
+</div>
+</section>
+</div>
 </Base>
 
+<script>
+  // Seule / À deux : change les prix et les lignes de l'offre.
+  const boutons = document.querySelectorAll<HTMLButtonElement>('.et-qui');
+  boutons.forEach((b) => b.addEventListener('click', () => {
+    const deux = b.dataset.qui === 'deux';
+    boutons.forEach((x) => {
+      const actif = x === b;
+      x.setAttribute('aria-pressed', String(actif));
+      x.style.background = actif ? '#16352C' : 'transparent';
+      x.style.color = actif ? '#FAF5EE' : '#16352C';
+    });
+    document.querySelectorAll<HTMLElement>('[data-seule]').forEach((el) => {
+      el.textContent = (deux ? el.dataset.deux : el.dataset.seule) ?? '';
+    });
+  }));
+</script>
+
 <style>
-  .fp-hero { background: var(--ecru-2); }
-  .fp-hero__grille { display: grid; gap: 28px; align-items: center; }
-  @media (min-width: 860px) { .fp-hero__grille { grid-template-columns: 1.1fr 1fr; } }
-  .fp-hero img { border-radius: var(--rayon-grand); width: 100%; }
-  .fp-hero h1 em { font-style: normal; color: var(--rose-fort); }
-  .fp-kicker { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dore); margin: 0 0 10px; }
-  .fp-sous { font-size: 19px; color: var(--encre-2); max-width: 560px; }
-  .fp-cta { margin-top: 22px; }
-  .fp-petit { font-size: 14.5px; color: var(--encre-2); margin: 10px 0 0; }
-  .fond-sapin .fp-petit { color: #DCD5C6; }
-
-  .fp-scenes__liste { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
-  @media (min-width: 760px) { .fp-scenes__liste { grid-template-columns: 1fr 1fr; } }
-  .fp-scenes__liste li { background: var(--blanc); border: 1px solid var(--ligne); border-radius: var(--rayon); padding: 16px 20px; font-size: 17px; }
-  .fp-phrase { margin-top: 22px; font-size: 19px; }
-
-  .fp-recadre { display: grid; gap: 28px; align-items: center; }
-  @media (min-width: 860px) { .fp-recadre { grid-template-columns: 340px 1fr; } }
-  .fp-jauge { background: var(--sapin-2); border-radius: var(--rayon-grand); padding: 22px 24px; display: grid; gap: 12px; }
-  .fp-jauge__titre { font-family: var(--police-titre); font-size: 19px; color: var(--ecru); margin: 0 0 4px; }
-  .fp-jauge__ligne { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; font-size: 15.5px; color: #DCD5C6; }
-  .fp-jauge__ligne i { display: block; height: 14px; border-radius: 99px; background: var(--sapin-3); }
-  .fp-jauge__ligne--toi { color: var(--rose); font-weight: 700; }
-  .fp-jauge__ligne--toi i { background: var(--rose); min-width: 14px; }
-
-  .fp-essaye p { max-width: 720px; font-size: 18px; }
-
-  .fp-principes { display: grid; gap: 14px; margin-top: 18px; }
-  @media (min-width: 760px) { .fp-principes { grid-template-columns: repeat(4, 1fr); } }
-  .fp-principes div { border-top: 3px solid var(--rose); padding-top: 12px; }
-  .fp-principes b { color: var(--sapin); font-size: 17.5px; }
-  .fp-principes p { margin: 6px 0 0; color: var(--encre-2); font-size: 16px; }
-
-  .fp-programme { background: var(--ecru-2); }
-  .fp-intro { color: var(--encre-2); }
-  .fp-semaines { list-style: none; padding: 0; margin: 20px 0 0; border-top: 1px solid var(--ligne); }
-  .fp-semaines li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--ligne); }
-  .fp-semaines h3 { margin: 4px 0 4px; }
-  .fp-semaines p { margin: 0; color: var(--encre-2); font-size: 16.5px; }
-  .fp-num { width: 40px; height: 40px; border-radius: 50%; background: var(--rose); color: var(--sapin); display: grid; place-items: center; font-family: var(--police-titre); font-size: 19px; }
-
-  .fp-dedans img { border-radius: var(--rayon-grand); width: 100%; align-self: center; }
-  .fp-liste { padding-left: 0; list-style: none; display: grid; gap: 10px; }
-  .fp-liste li { position: relative; padding-left: 28px; }
-  .fp-liste li::before { content: ''; position: absolute; left: 4px; top: .55em; width: 10px; height: 10px; border-radius: 50%; background: var(--rose-fort); }
-  .fp-liste--non li::before { background: var(--ligne); }
-  .fp-pourqui { background: var(--ecru-2); }
-
-  .fp-moi p { max-width: 760px; font-size: 18px; }
-  .fp-final h2 { margin-bottom: 22px; }
-  .fp-final .fp-petit { text-align: center; max-width: none; }
-  .fp-attente { display: flex; justify-content: center; text-align: left; margin-bottom: 8px; }
+  .et-toi { background: #FAF5EE; color: #22312C; }
+  .et-attente { display: flex; justify-content: center; text-align: left; margin-top: 34px; }
 </style>

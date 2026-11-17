@@ -11,15 +11,19 @@ const GUIDE = u('/guides/pdf/epuisee-ou-perimenopause.pdf');
 interface Props {
   source?: 'Page formation' | 'Lead magnet' | 'Accueil' | 'YouTube' | 'Autre';
   titre?: string;
+  /** 'accompagnement' (17/11/2026) : « Et toi » sur WhatsApp, on parle d'ouverture et plus de sortie de formation. */
+  quoi?: 'formation' | 'accompagnement';
 }
-const { source = 'Page formation', titre = 'Préviens-moi quand elle sort' } = Astro.props;
+const { source = 'Page formation', titre = 'Préviens-moi quand elle sort', quoi = 'formation' } = Astro.props;
+const leJour = quoi === 'accompagnement' ? 'le jour de l’ouverture' : 'le jour de la sortie';
+const accord = quoi === 'accompagnement' ? 'de l’ouverture de « Et toi, dans tout ça ? »' : 'de la sortie de la formation';
 ---
 
 <form class="attente" data-endpoint={SITE.attenteEndpoint} data-source={source} data-guide={GUIDE} method="post" id="prevenir">
   <h3>{titre}</h3>
   <p class="attente-intro">
     <strong>Tout de suite, je t’offre mon guide « Épuisée, ou déjà la périménopause ? »</strong>, pour commencer dès ce soir.
-    Puis un seul e-mail le jour de la sortie, avec le prix de lancement à 59 € réservé à la liste. Pas de spam.
+    Puis un seul e-mail {leJour}, avec le prix de lancement à 59 € réservé à la liste. Pas de spam.
   </p>
   <div class="attente-champs">
     <label>Ton prénom<input type="text" name="prenom" autocomplete="given-name" placeholder="Prénom" /></label>
@@ -28,7 +32,7 @@ const { source = 'Page formation', titre = 'Préviens-moi quand elle sort' } = A
   <label class="attente-piege" aria-hidden="true">Site web<input type="text" name="site_web" tabindex="-1" autocomplete="off" /></label>
   <label class="attente-ok">
     <input type="checkbox" name="consentement" required />
-    <span>J’accepte qu’Anne-Charlotte me prévienne par e-mail de la sortie de la formation. Désinscription en un clic.</span>
+    <span>J’accepte qu’Anne-Charlotte me prévienne par e-mail {accord}. Désinscription en un clic.</span>
   </label>
   <button class="btn btn-rose btn-bloc" type="submit">Préviens-moi</button>
   <p class="attente-etat" role="status" aria-live="polite" hidden></p>
