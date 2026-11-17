@@ -98,6 +98,15 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
     </div>
   </section>
 
+  {/* 17/11/2026 (sa demande) : l'encart « Jusqu'à mi-2027, on se voit en visio »
+      remonte juste sous la prise de RDV (il était après « Deux façons d'avancer »).
+      Sans bouton : celui du haut est juste au-dessus. */}
+  {SITE.visioSeulement && (
+    <section class="visio-accueil" aria-label="La consultation en visio">
+      <div class="contenu"><VisioRassure bouton={false} /></div>
+    </section>
+  )}
+
   <!-- Les trois piliers : un index éditorial, pas des cartes -->
   <section>
     <div class="contenu" data-reveal>
@@ -153,14 +162,6 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
   </section>
 
   <DeuxChemins />
-
-  {/* 09/11/2026 : l'encart visio (pourquoi, comment) quitte le haut de page et
-      vient ici, après les offres. Un seul bouton : la réservation. */}
-  {SITE.visioSeulement && (
-    <section class="visio-accueil" aria-label="La consultation en visio">
-      <div class="contenu" data-reveal><VisioRassure /></div>
-    </section>
-  )}
 
   <!-- L'approche : un manifeste, pas quatre mini-cartes -->
   <section class="fond-sapin approche">
@@ -278,6 +279,9 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
     }
     .hero-photo { width: 100%; justify-self: start; }
   }
+
+  /* L'encart visio colle au bouton du haut : pas d'espace de section en plus. */
+  .visio-accueil { padding-top: 0; }
 
   .section-chapo { color: var(--encre-2); margin-bottom: 26px; }
 
