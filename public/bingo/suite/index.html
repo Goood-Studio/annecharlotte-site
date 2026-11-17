@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Et la suite ? · Anne-Charlotte, diététicienne</title>
+<meta name="description" content="Après ton bingo, trois façons d’avancer : une consultation en visio, l’accompagnement en 6 séances, ou « Et toi, dans tout ça ? », à ton rythme, bientôt.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Et la suite ?">
+<meta property="og:description" content="Trois façons d’avancer, selon ce qui te va. Par Anne-Charlotte, diététicienne agréée.">
+<meta property="og:image" content="https://www.annecharlotte.be/bingo/og.jpg">
+<meta property="og:url" content="https://www.annecharlotte.be/bingo/suite/">
+<link rel="canonical" href="https://www.annecharlotte.be/bingo/suite/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="https://www.annecharlotte.be/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,700;0,800;1,800&family=Poppins:wght@400;500;600&display=swap">
+<!-- /bingo/suite (17/11/2026) : la page où mène le QR du bingo (case départ, jour 4). Les 3 options demandées par Anne-Charlotte tant que « Et toi » n'est pas prêt : consultation 80 €, accompagnement 330 €, « Et toi » en liste d'attente. Adresse imprimée sur la feuille : ne pas la déplacer ; quand « Et toi » sort, on change CETTE page. -->
+<style>
+:root { --forest: #2e4a38; --ink: #24382b; --ink-soft: #5d6b60; --rose: #e5b3aa; --rose-soft: #f2d3cd; --cream: #f7f4ed; --white: #fff; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--cream); color: var(--ink); font-family: Poppins, system-ui, sans-serif; font-size: 16px; line-height: 1.55; }
+main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
+.haut { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.haut a { color: inherit; text-decoration: none; }
+.grille { display: grid; gap: 28px; margin-top: 28px; align-items: center; }
+.badge { display: inline-block; background: var(--forest); color: #fff; border-radius: 99px; padding: 7px 16px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+h1 { font-family: Archivo, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; line-height: .98; font-size: clamp(38px, 9vw, 64px); margin: 16px 0 14px; color: var(--ink); }
+.surligne { display: inline-block; background: var(--rose); color: var(--ink); border-radius: 14px; padding: 8px 16px; font-family: Archivo, sans-serif; font-weight: 800; font-style: italic; font-size: 20px; }
+.chapeau { font-size: 17px; margin: 18px 0 0; max-width: 34em; }
+.image { margin: 0; justify-self: center; width: min(100%, 380px); }
+.image img { display: block; width: 100%; height: auto; border-radius: 22px; box-shadow: 0 0 0 7px var(--white), 0 12px 30px rgba(36, 56, 43, .14); transform: rotate(1.4deg); }
+.bouton { display: flex; flex-direction: column; align-items: center; gap: 2px; background: var(--forest); color: #fff; text-decoration: none; border-radius: 18px; padding: 18px 22px; margin-top: 26px; text-align: center; max-width: 420px; }
+.bouton b { font-family: Archivo, sans-serif; font-weight: 800; text-transform: uppercase; font-size: 20px; letter-spacing: .01em; }
+.bouton span { font-size: 13px; color: var(--rose-soft); }
+.bouton:focus-visible { outline: 3px solid var(--rose); outline-offset: 3px; }
+.dedans { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 8px; font-size: 15px; }
+.dedans li { display: flex; gap: 10px; align-items: baseline; }
+.dedans li::before { content: ''; flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--rose); transform: translateY(-1px); }
+footer { max-width: 960px; margin: 0 auto; padding: 22px 16px 100px; border-top: 1px solid #e3ddd0; font-size: 13px; color: var(--ink-soft); display: grid; gap: 6px; }
+.wa-flottant { position: fixed; right: 14px; bottom: 22px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; background: #1DA851; color: #fff; border-radius: 999px; padding: 12px 16px; min-height: 54px; font-weight: 700; font-size: 15px; text-decoration: none; box-shadow: 0 6px 18px rgba(22, 53, 44, .3); }
+.wa-flottant:hover { background: #1EBE5A; color: #fff; }
+.wa-texte { display: none; }
+@media (min-width: 860px) { .wa-flottant { right: 22px; } .wa-texte { display: inline; } }
+@media print { .wa-flottant { display: none; } }
+
+footer a { color: var(--forest); font-weight: 600; }
+.intro { max-width: 40em; }
+.cartes { display: grid; gap: 16px; margin-top: 28px; }
+.carte { background: var(--white); border: 1.5px solid #e3ddd0; border-radius: 22px; padding: 22px 20px; display: flex; flex-direction: column; gap: 8px; }
+.carte--ensemble { background: var(--forest); border-color: var(--forest); color: #fff; }
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.carte--ensemble .kicker { color: var(--rose-soft); }
+.carte h2 { font-family: Archivo, sans-serif; font-weight: 800; text-transform: uppercase; font-size: 24px; line-height: 1.05; margin: 0; }
+.prix { font-family: Archivo, sans-serif; font-weight: 800; font-size: 28px; margin: 0; color: var(--forest); }
+.prix small { font-family: Poppins, system-ui, sans-serif; font-size: 14px; font-weight: 600; color: var(--ink-soft); }
+.carte--ensemble .prix { color: var(--rose); }
+.carte--ensemble .prix small { color: var(--rose-soft); }
+.carte p.texte { margin: 0; font-size: 15.5px; }
+.carte .bouton { margin-top: auto; align-self: stretch; padding: 14px 18px; }
+.carte .bouton b { font-size: 16px; }
+.carte--ensemble .bouton { background: var(--rose); color: var(--ink); }
+@media (min-width: 860px) { .cartes { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 760px) {
+  main { padding: 32px 24px 56px; }
+  .grille { grid-template-columns: 1.15fr .85fr; gap: 48px; }
+}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Et la suite ?", "url": "https://www.annecharlotte.be/bingo/suite/", "inLanguage": "fr-BE", "description": "Après le bingo, trois façons d’avancer : une consultation en visio, l’accompagnement en 6 séances, ou « Et toi, dans tout ça ? », à ton rythme.", "author": {"@type": "Person", "name": "Anne-Charlotte Jalhay", "jobTitle": "Diététicienne agréée", "url": "https://www.annecharlotte.be/"}}</script>
+</head>
+<body>
+<main>
+  <div class="haut"><a href="https://www.annecharlotte.be/">Anne-Charlotte</a><span>@annecharlotte.diet</span></div>
+  <div class="intro">
+    <span class="badge" style="margin-top:28px">Après ton bingo</span>
+    <h1>Et la suite&nbsp;?</h1>
+    <p class="chapeau">Tes 3 jours de photos, tu les as déjà. Pour continuer, trois façons d’avancer, selon ce qui te va.</p>
+  </div>
+  <div class="cartes">
+    <div class="carte">
+      <span class="kicker">On fait le point</span>
+      <h2>Une consultation</h2>
+      <p class="prix">80&nbsp;€ <small>en visio</small></p>
+      <p class="texte">On fait le point ensemble sur ton assiette et tout ce qu’il y a autour, et je te donne tes premières pistes pour t’aider, à lancer dès demain.</p>
+      <a class="bouton" href="https://www.annecharlotte.be/bilan/"><b>Je réserve mon bilan</b></a>
+    </div>
+    <div class="carte carte--ensemble">
+      <span class="kicker">On avance ensemble</span>
+      <h2>L’accompagnement</h2>
+      <p class="prix">330&nbsp;€ <small>6 séances en visio</small></p>
+      <p class="texte">Tu gardes ce que tu aimes, et on ajoute ce qui te manque, une petite chose à la fois. Entre les séances, ton carnet t’accompagne et je reste joignable.</p>
+      <a class="bouton" href="https://www.annecharlotte.be/accompagnement/"><b>Voir l’accompagnement</b></a>
+    </div>
+    <div class="carte">
+      <span class="kicker">À ton rythme · bientôt</span>
+      <h2>Et toi, dans tout ça&nbsp;?</h2>
+      <p class="prix">59&nbsp;€ <small>au lancement</small></p>
+      <p class="texte">Pour les femmes de 35 à 55 ans dont le corps change. Une petite chose à la fois, choisie d’après tes photos, sur WhatsApp.</p>
+      <a class="bouton" href="https://www.annecharlotte.be/formations/et-toi/#prevenir"><b>Préviens-moi quand ça sort</b></a>
+    </div>
+  </div>
+</main>
+<footer>
+  <span>Envie qu’on regarde ton assiette à toi&nbsp;? <a href="https://www.annecharlotte.be/bilan/">Prendre RDV en visio</a></span>
+  <span>Anne-Charlotte Jalhay, diététicienne agréée · <a href="https://www.annecharlotte.be/">annecharlotte.be</a></span>
+</footer>
+<a class="wa-flottant" href="https://wa.me/32472629195?text=Bonjour%2C%20je%20suis%20sur%20votre%20site%20et%20j%E2%80%99ai%20une%20question%20%3A%20" aria-label="Poser une question sur WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M16 2.9C8.8 2.9 3 8.7 3 15.9c0 2.3.6 4.5 1.8 6.5L3 29.1l6.9-1.8c1.9 1 4 1.6 6.1 1.6 7.2 0 13-5.8 13-13S23.2 2.9 16 2.9zm0 23.7c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.1 1.1-4-.3-.4c-1.1-1.7-1.6-3.7-1.6-5.7 0-5.9 4.8-10.7 10.7-10.7s10.7 4.8 10.7 10.7-4.8 10.7-10.7 10.7zm5.9-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.6.1-.2.1-.4 0-.6-.1-.2-.7-1.8-1-2.4-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.4c.2.2 2.3 3.5 5.5 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg><span class="wa-texte">Une question ?</span></a>
+</body>
+</html>
