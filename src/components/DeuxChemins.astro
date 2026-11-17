@@ -1,7 +1,8 @@
 ---
 // « Deux façons d'avancer » (01/11/2026) : sur l'accueil, remplace le gros
 // bloc des tarifs. Une porte « ensemble » (l'accompagnement, détaillé sur
-// /accompagnement/) et une porte « à ton rythme » (la formation). Le détail
+// /accompagnement/) et une porte « à ton rythme » (l'accompagnement autonome
+// « Et toi », sur WhatsApp avec Floris, depuis le 17/11/2026 ; ce n'est plus une formation). Le détail
 // du pack (carrousel, freins, déroulé) vit sur /accompagnement/.
 // 02/11/2026 : un seul bouton par carte (plus de lien secondaire en dessous).
 import { OFFRES } from '../data/contenu';
@@ -12,7 +13,7 @@ const pack = OFFRES[1];
 <section class="chemins" aria-labelledby="titre-chemins">
   <div class="contenu" data-reveal>
     <h2 id="titre-chemins">Deux façons d’avancer</h2>
-    <p class="section-chapo">Avec moi, en visio. Ou de ton côté, à ton rythme. Dans les deux cas&nbsp;: une petite chose à la fois, et tout se mange.</p>
+    <p class="section-chapo">Avec moi, en visio. Ou de ton côté, à ton rythme. Dans les deux cas&nbsp;: une habitude à la fois, et tout se mange.</p>
     <div class="chemins-grille">
       <div class="chemin chemin--ensemble">
         <span class="chemin-kicker">On avance ensemble</span>
@@ -26,10 +27,10 @@ const pack = OFFRES[1];
       <div class="chemin chemin--seule">
         <span class="chemin-kicker">À ton rythme · bientôt</span>
         <h3>Et toi, dans tout ça&nbsp;?</h3>
-        <p>La formation en ligne pour les femmes de 35 à 55 ans, épuisées, qui voient leur corps changer. Des vidéos courtes, ton carnet, et à la fin ton guide à toi.</p>
+        <p>L’accompagnement autonome sur WhatsApp, avec Floris, mon assistante. Pour toi qui gères tout, et qui t’oublies au passage : chaque matin ton idée repas, et une habitude par semaine.</p>
         <p class="chemin-prix">59 € <small>au lancement</small></p>
         <div class="chemin-actions">
-          <a class="btn btn-principal" href={u('/formations/et-toi/')}>Découvrir la formation</a>
+          <a class="btn btn-principal" href={u('/formations/et-toi/')}>Découvrir l’accompagnement autonome</a>
         </div>
       </div>
     </div>
