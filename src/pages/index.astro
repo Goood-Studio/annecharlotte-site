@@ -85,8 +85,14 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
           </a>
           <p class="hero-rassure" data-anim="bloc">
             {dispoVisio && <><strong>1re dispo {dispoVisio}</strong><br /></>}
-            De chez toi · dès 80&nbsp;€ · 3 minutes de questions, puis tu choisis ton créneau.
+            De chez toi · 3 minutes de questions, puis tu choisis ton créneau.
           </p>
+          {/* 17/11/2026 : « dès 80 € » trop « biz » (ACJ). À la place, un lien
+              discret vers les 3 formules (consultation, consultation + suivi,
+              accompagnement) sur /accompagnement/. */}
+          <a class="lien-tarifs" href={u('/accompagnement/#titre-tarifs')} data-anim="bloc">
+            Voir mes tarifs <span aria-hidden="true">→</span>
+          </a>
           {!SITE.visioSeulement && (
             <a class="lien-cabinet" href={SITE.rdvMalonne} data-anim="bloc">
               Plutôt au cabinet ? Consultation à Malonne
@@ -262,6 +268,16 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
   @media (min-width: 900px) { .hero-bouton { align-self: flex-start; } }
   /* Sur téléphone, une photo plus petite : le titre remonte dans le premier écran. */
   @media (max-width: 899px) { .hero-photo { width: min(58vw, 230px); margin-bottom: 0; } }
+  .lien-tarifs {
+    align-self: flex-start;
+    margin: 0 4px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sapin);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .lien-tarifs:hover { color: var(--rose-fort); }
   .lien-cabinet {
     margin: 2px 4px 0;
     font-size: 15px;
