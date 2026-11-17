@@ -1,34 +1,215 @@
 ---
-// L'accompagnement en détail (01/11/2026) : le pack, le carrousel « à quoi ça
-// ressemble au quotidien », les freins, puis le déroulé. Sorti de l'accueil
-// pour que l'accueil reste simple (« Deux façons d'avancer »).
+// L'accompagnement en visio, refait le 17/11/2026 « à la Justin Welsh » (plan validé par
+// Anne-Charlotte) : la promesse, pour qui c'est (et pour qui ce n'est pas), ce qu'elle reçoit
+// (en gras ce qu'elle reçoit, puis ce que ça change pour elle), ce qui change séance après
+// séance, les carnets, les avis, les 3 formules (#titre-tarifs, lien depuis l'accueil),
+// ses hésitations, et un seul bouton final.
+// Règles : jamais « petite chose » côté cliente (un changement, une habitude, avec un exemple),
+// jamais « ton chemin » ni « chemin parcouru », pas de durée en semaines (décision du 31/10),
+// un bouton par carte. Tarifs.astro et Deroule.astro restent tels quels pour les autres pages.
 import Base from '../layouts/Base.astro';
-import Tarifs from '../components/Tarifs.astro';
-import Deroule from '../components/Deroule.astro';
 import Avis from '../components/Avis.astro';
-import CtaFinal from '../components/CtaFinal.astro';
+import CarnetsTelephone from '../components/CarnetsTelephone.astro';
+import { OFFRES } from '../data/contenu';
+import { SITE } from '../data/site';
+
+const bilan = OFFRES[0];
+const pack = OFFRES[1];
+const deux = OFFRES[3];
+const horaires = `${SITE.horaires}, et ${SITE.horairesVisio}`;
+
+// Cible principale (Anne-Charlotte, 17/11) : troubles digestifs (SII), endométriose et
+// endobelly, SMOP (SOPK). Puis le reste.
+const pourToi = [
+  '« J’ai un SII, et c’est mon ventre qui décide de ma journée »',
+  '« J’ai une endométriose, et l’endobelly me gâche la vie »',
+  '« J’ai un SMOP (SOPK), et je ne sais plus quoi manger »',
+  '« Mon ventre gonfle, et je ne sais plus ce qui passe ou pas »',
+  '« Ma ménopause a tout chamboulé »',
+  '« J’ai tout essayé, et je reprends toujours tout »',
+  '« Je mange sans faim, surtout le soir »',
+];
+const pasPourToi = [
+  'Tu cherches un menu à suivre à la lettre, ou à perdre 5 kilos en un mois',
+  'Tu traverses un trouble du comportement alimentaire : là, un suivi spécialisé est plus juste, et je t’aide à le trouver',
+  'Tu veux juste un avis ponctuel : la consultation à 80 € est faite pour ça',
+];
+const recois = [
+  ['Le bilan', 'on comprend ce qui se passe chez toi, et tu repars avec ton premier changement.'],
+  ['5 séances de suivi, environ toutes les 2 semaines*', 'on regarde ce qui a bougé, et on ajoute le changement suivant.'],
+  ['Ton carnet, sur ton téléphone', 'ce qu’on s’est dit, ton changement, pourquoi tu le fais, et quoi faire si ça dérape.'],
+  ['Un point 3 jours après chaque séance', 'un clic pour me dire comment ça se passe. Si ça coince, on ajuste tout de suite.'],
+  ['Tes repas en photo, sur Gooodeat', 'on les regarde ensemble au rendez-vous, sans compter et sans jugement.'],
+  ['Ton mode d’emploi, à la fin', 'ce qui marche pour toi, et quoi faire si ça revient.'],
+];
+const etapes = [
+  ['Avant le bilan', 'Un petit questionnaire de 3 minutes. Je lis tes réponses avant qu’on se voie.'],
+  ['Le lendemain du bilan', 'Tu commences ton premier changement. Par exemple : des repas à heures régulières, ou mâcher 10 fois tes 5 premières bouchées.'],
+  ['3 jours après', 'Tu me dis en un clic si tu l’as fait, un peu, ou pas encore. Si ça coince, on ajuste.'],
+  ['Toutes les 2 semaines', 'On regarde ce qui a bougé, et on ajoute le changement suivant.'],
+  ['À ta 6e séance', 'Tu repars avec ton mode d’emploi : ce qui marche pour toi, et quoi faire si ça revient.'],
+];
+const freins = [
+  ['« Je vais devoir me priver »', 'Non. Tu gardes ton chocolat, tes pâtes, ton fromage. On ajoute ce qui manque, on ne retire pas ce que tu aimes.'],
+  ['« Je n’ai pas le temps »', 'Tes pâtes bolo avec plus de sauce, ça ne prend pas une minute de plus. Un seul changement à la fois, celui qui rentre dans ta semaine.'],
+  ['« Je vais oublier ce qu’on s’est dit »', 'Tout est dans ton carnet, avec tes mots, sur ton téléphone.'],
+  ['« Et si ça ne va pas ? »', 'Tu m’écris, je reste joignable entre les séances. On ajuste tout de suite, sans attendre que tu te démotives. Ce n’est jamais un échec.'],
+];
 ---
 
 <Base
-  titre="L’accompagnement en visio : 6 séances, ton carnet, je reste joignable | Anne-Charlotte"
-  description="L’accompagnement diététique d’Anne-Charlotte en visio : 6 séances, un carnet entre les séances, une petite chose à la fois, et une diététicienne joignable. Troubles digestifs, santé féminine, mieux manger."
+  titre="L’accompagnement en visio : 6 séances pour savoir ce qui marche pour toi | Anne-Charlotte"
+  description="L’accompagnement diététique d’Anne-Charlotte en visio pour le SII, l’endométriose et l’endobelly, le SMOP (SOPK) : 6 séances, un changement à la fois, ton carnet sur ton téléphone, et une diététicienne joignable entre les séances."
   chemin="/accompagnement/"
+  barre={{ texte: 'Commencer l’accompagnement', lien: SITE.rdvPack }}
 >
   <section class="acc-hero">
     <div class="contenu">
-      <p class="acc-kicker">On avance ensemble</p>
-      <h1>L’accompagnement</h1>
-      <p class="acc-sous">Six séances en visio, une petite chose à la fois, ton carnet entre les séances, et moi joignable quand ça coince. On part de ton histoire, pas d’un menu tout fait.</p>
+      <p class="acc-kicker">Avec moi, en visio</p>
+      <h1>En 6 séances, tu sais ce qui marche pour toi. <em>Et tu n’as plus besoin de moi.</em></h1>
+      <p class="acc-sous"><strong>Pour ton SII, ton endométriose et l’endobelly, ton SMOP (SOPK), ou ton ventre qui gonfle.</strong> Un changement à la fois, ton carnet sur ton téléphone, et moi joignable entre les séances. On part de ton histoire, pas d’un menu tout fait.</p>
+      <div class="acc-cta">
+        <a class="btn btn-principal" href={SITE.rdvPack}>{pack.ctaTexte}</a>
+        <p class="acc-petit">{pack.prix} pour les 6 séances · la mutuelle rembourse une partie de chaque séance</p>
+      </div>
     </div>
   </section>
-  <Tarifs />
-  <Deroule />
+
+  <section>
+    <div class="contenu grille-2 acc-pourqui">
+      <div>
+        <h2>C’est pour toi si…</h2>
+        <ul class="acc-liste">{pourToi.map((t) => <li>{t}</li>)}</ul>
+      </div>
+      <div>
+        <h2>Ce n’est pas pour toi si…</h2>
+        <ul class="acc-liste acc-liste--non">{pasPourToi.map((t) => <li>{t}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="fond-sapin">
+    <div class="contenu">
+      <h2>Ce que tu reçois</h2>
+      <ul class="acc-recois">
+        {recois.map(([quoi, gain]) => <li><strong>{quoi}</strong> : {gain}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="acc-change">
+    <div class="contenu">
+      <h2>Ce qui change, séance après séance</h2>
+      <div class="acc-change__grille">
+        <CarnetsTelephone ordre={['digestif', 'endo', 'sopk', 'meno', 'general']} />
+        <ol class="acc-etapes">
+          {etapes.map(([quand, quoi]) => <li><strong>{quand}</strong><span>{quoi}</span></li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <Avis />
-  <CtaFinal />
+
+  <section class="acc-formules">
+    <div class="contenu">
+      <h2 id="titre-tarifs">Trois façons de commencer</h2>
+      <div class="acc-offres">
+        <article class="acc-offre acc-offre--pack">
+          <span class="pastille">Ce que je propose</span>
+          <h3>L’accompagnement</h3>
+          <p class="acc-prix"><span>{pack.prix}</span> {pack.unite}</p>
+          <p>Le bilan, 5 séances de suivi, ton carnet, et moi joignable entre les séances.</p>
+          <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
+        </article>
+        <article class="acc-offre">
+          <h3>{bilan.nom}</h3>
+          <p class="acc-prix"><span>{bilan.prix}</span> {bilan.unite}</p>
+          <p>{bilan.description}</p>
+          <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{bilan.ctaTexte}</a>
+        </article>
+        <article class="acc-offre">
+          <h3>{deux.nom}</h3>
+          <p class="acc-prix"><span>{deux.prix}</span> {deux.unite}</p>
+          <p>{deux.description}</p>
+          <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio + '?formule=deux'}>{deux.ctaTexte}</a>
+        </article>
+      </div>
+      <p class="acc-rassure">La mutuelle rembourse une partie de chaque séance. Disponibilités : {horaires}.</p>
+      <p class="acc-rassure">* Une séance environ toutes les 2 semaines. Ta vie déborde ? On décale, sans souci.</p>
+    </div>
+  </section>
+
+  <section class="acc-freins-section">
+    <div class="contenu">
+      <h2>Tu te dis peut-être…</h2>
+      <ul class="acc-freins">
+        {freins.map(([frein, reponse]) => <li><p class="acc-frein">{frein}</p><p>{reponse}</p></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="fond-sapin">
+    <div class="contenu centre">
+      <h2>On commence par ton bilan ?</h2>
+      <p>6 séances en visio, {pack.prix}. La mutuelle rembourse une partie de chaque séance.</p>
+      <a class="btn btn-rose" href={SITE.rdvPack}>{pack.ctaTexte}</a>
+    </div>
+  </section>
 </Base>
 
 <style>
-  .acc-hero { background: var(--ecru-2); padding-bottom: 20px; }
+  .acc-hero { background: var(--ecru-2); }
   .acc-kicker { font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dore); margin: 0 0 10px; }
+  .acc-hero h1 { max-width: 820px; }
+  .acc-hero h1 em { font-style: normal; color: var(--rose-fort); }
   .acc-sous { font-size: 19px; color: var(--encre-2); max-width: 640px; }
+  .acc-cta { margin-top: 24px; }
+  .acc-petit { font-size: 14.5px; color: var(--encre-2); margin: 10px 0 0; }
+
+  .acc-pourqui h2 { font-size: 26px; }
+  .acc-liste { padding-left: 0; list-style: none; display: grid; gap: 12px; margin: 14px 0 0; }
+  .acc-liste li { position: relative; padding-left: 28px; font-size: 17px; }
+  .acc-liste li::before { content: ''; position: absolute; left: 4px; top: .55em; width: 10px; height: 10px; border-radius: 50%; background: var(--rose-fort); }
+  .acc-liste--non li { color: var(--encre-2); font-size: 16px; }
+  .acc-liste--non li::before { background: var(--ligne); }
+
+  .acc-recois { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 14px; max-width: 820px; }
+  .acc-recois li { position: relative; padding-left: 30px; font-size: 17.5px; color: #DCD5C6; }
+  .acc-recois li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--rose); font-weight: 800; }
+  .acc-recois strong { color: var(--ecru); }
+
+  .acc-change__grille { display: grid; gap: 30px; align-items: center; margin-top: 22px; }
+  @media (min-width: 780px) { .acc-change__grille { grid-template-columns: 290px 1fr; gap: 48px; } }
+  .acc-etapes { list-style: none; margin: 0; padding: 0; counter-reset: etape; }
+  .acc-etapes li { position: relative; padding: 0 0 22px 50px; counter-increment: etape; }
+  .acc-etapes li:last-child { padding-bottom: 0; }
+  .acc-etapes li:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 30px; bottom: -2px; width: 2px; background: var(--rose); }
+  .acc-etapes li::before { content: counter(etape); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 50%; background: var(--sapin); color: var(--ecru); font-weight: 800; font-size: 15px; display: grid; place-items: center; box-shadow: 0 0 0 5px var(--ecru); }
+  .acc-etapes strong { display: block; color: var(--sapin); font-size: 17px; }
+  .acc-etapes span { color: var(--encre-2); font-size: 16px; }
+
+  .acc-formules { background: var(--ecru-2); }
+  #titre-tarifs { scroll-margin-top: 96px; }
+  .acc-offres { display: grid; gap: 18px; margin-top: 22px; align-items: stretch; }
+  @media (min-width: 860px) { .acc-offres { grid-template-columns: 1.2fr 1fr 1fr; } }
+  .acc-offre { position: relative; display: flex; flex-direction: column; gap: 6px; background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: var(--rayon-grand); padding: 26px 22px 22px; }
+  .acc-offre h3 { margin: 0; }
+  .acc-offre p { margin: 0 0 8px; color: var(--encre-2); font-size: 16px; }
+  .acc-offre .btn { margin-top: auto; }
+  .acc-offre .pastille { position: absolute; top: -12px; right: 22px; }
+  .acc-prix { color: var(--encre-2) !important; font-size: 15px !important; }
+  .acc-prix span { font-family: var(--police-titre); font-size: 38px; color: var(--sapin); margin-right: 6px; }
+  .acc-offre--pack { background: var(--sapin); border-color: var(--sapin); }
+  .acc-offre--pack h3 { color: var(--ecru); font-size: 26px; }
+  .acc-offre--pack p { color: #DCD5C6; }
+  .acc-offre--pack .acc-prix { color: #B9C4BC !important; }
+  .acc-offre--pack .acc-prix span { color: var(--rose); }
+  .acc-rassure { margin: 12px 4px 0; font-size: 14.5px; color: var(--encre-2); }
+
+  .acc-freins { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 12px; }
+  @media (min-width: 640px) { .acc-freins { grid-template-columns: 1fr 1fr; } }
+  .acc-freins li { background: var(--blanc); border-radius: 18px; padding: 16px 18px; border-left: 4px solid var(--rose); }
+  .acc-freins p { margin: 0; color: var(--encre-2); font-size: 15.5px; }
+  .acc-freins .acc-frein { font-family: var(--police-titre); color: var(--sapin); font-size: 17px; margin-bottom: 4px; }
 </style>

@@ -1,0 +1,101 @@
+---
+// Le carrousel des carnets (Sophie, Julie, Emma…) dans un téléphone dessiné en CSS.
+// Repris tel quel de Tarifs.astro le 17/11/2026 pour la nouvelle page /accompagnement/,
+// sans toucher Tarifs.astro (partagé avec les pages villes et la page tabac).
+import { EXEMPLES_CARNET } from '../data/contenu';
+
+type Cle = keyof typeof EXEMPLES_CARNET;
+interface Props {
+  /** Le carnet montré en premier : general, digestif, endo… */
+  exemple?: Cle;
+  /** Ou l'ordre complet des carnets (17/11 : /accompagnement/ commence par le ventre). */
+  ordre?: Cle[];
+}
+const { exemple = 'general', ordre } = Astro.props;
+const cles = ordre ?? [exemple, ...(Object.keys(EXEMPLES_CARNET) as Cle[]).filter((k) => k !== exemple)];
+const cas = cles.map((k) => ({ id: k, ...EXEMPLES_CARNET[k] }));
+---
+
+<figure class="telephone" aria-label="Exemples de carnets, tels que tes patientes les reçoivent sur leur téléphone">
+  <div class="cas-onglets" role="tablist" aria-label="Choisir un exemple">
+    {cas.map((c, k) => <button type="button" role="tab" data-cas={k} aria-selected={k === 0 ? 'true' : 'false'}>{c.label}</button>)}
+  </div>
+  <div class="ecran">
+    <div class="cas-piste" tabindex="0" aria-live="polite">
+      {cas.map((c) => (
+        <div class="cas">
+          <p class="tel-titre">Le carnet {/^[AEIOUYÉÈÊaeiouy]/.test(c.prenom) ? `d’${c.prenom}` : `de ${c.prenom}`}</p>
+          <p class="tel-sous">Mis à jour après ta séance</p>
+          <div class="tel-carte tel-rose"><span>Pourquoi tu le fais</span>« {c.raison} »</div>
+          <div class="tel-carte tel-sapin"><span>Ta piste</span><b>{c.piste}</b>
+            {c.exos.map((t, k) => (k === 0 ? <i class="choisi">✓ {t}</i> : <i>{t}</i>))}
+          </div>
+          <div class="tel-carte"><span>Comment ça se passe ?</span>
+            <div class="tel-boutons"><em class="on">Je l’ai fait</em><em>Un peu</em><em>Pas encore</em></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="cas-nav">
+    <button type="button" data-cas-pas="-1" aria-label="Exemple précédent">←</button>
+    <span class="cas-points">{cas.map((_, k) => <i class={k === 0 ? 'on' : ''}></i>)}</span>
+    <button type="button" data-cas-pas="1" aria-label="Exemple suivant">→</button>
+  </div>
+  <figcaption>Un carnet par patiente, sur son téléphone</figcaption>
+</figure>
+
+<script>
+  // Glisser au doigt, flèches, étiquettes, et un défilement doux toutes les 5 secondes
+  // tant qu'on n'y touche pas.
+  document.querySelectorAll<HTMLElement>('.telephone').forEach((tel) => {
+    const piste = tel.querySelector<HTMLElement>('.cas-piste');
+    if (!piste) return;
+    const n = piste.children.length;
+    let i = 0, auto = true;
+    const montrer = (k: number, doux = true) => {
+      i = (k + n) % n;
+      piste.scrollTo({ left: piste.clientWidth * i, behavior: doux ? 'smooth' : 'auto' });
+      tel.querySelectorAll('[data-cas]').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
+      tel.querySelectorAll('.cas-points i').forEach((p, j) => p.classList.toggle('on', j === i));
+    };
+    const stop = () => { auto = false; };
+    tel.querySelectorAll<HTMLElement>('[data-cas]').forEach((b) => b.addEventListener('click', () => { stop(); montrer(+b.dataset.cas!); }));
+    tel.querySelectorAll<HTMLElement>('[data-cas-pas]').forEach((b) => b.addEventListener('click', () => { stop(); montrer(i + +b.dataset.casPas!); }));
+    let t: ReturnType<typeof setTimeout>;
+    piste.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => { const k = Math.round(piste.scrollLeft / piste.clientWidth); if (k !== i) { i = k; montrer(k, false); } }, 120); }, { passive: true });
+    ['pointerdown', 'touchstart', 'wheel'].forEach((e) => piste.addEventListener(e, stop, { passive: true }));
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => { if (auto) montrer(i + 1); }, 5000);
+  });
+</script>
+
+<style>
+  .telephone { margin: 0 auto; width: 270px; }
+  .ecran { background: var(--ecru, #FAF5EE); border: 10px solid var(--sapin); border-radius: 36px; padding: 22px 14px 18px; box-shadow: 0 18px 40px rgba(22, 53, 44, .18); position: relative; }
+  .ecran::before { content: ''; position: absolute; top: 7px; left: 50%; width: 64px; height: 6px; margin-left: -32px; border-radius: 99px; background: var(--sapin); opacity: .35; }
+  .tel-titre { font-family: var(--police-titre); color: var(--sapin); font-size: 19px; margin: 6px 0 0; }
+  .tel-sous { font-size: 11.5px; color: var(--encre-2); margin: 0 0 10px; }
+  .tel-carte { background: var(--blanc); border: 1px solid var(--ligne); border-radius: 14px; padding: 9px 11px; margin-top: 8px; font-size: 12.5px; line-height: 1.4; color: var(--encre); }
+  .tel-carte span { display: block; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--rose-fort, #C96C80); margin-bottom: 3px; }
+  .tel-rose { background: var(--rose-2, #F7DCE1); border: 0; font-family: var(--police-titre); color: var(--sapin); font-size: 13px; }
+  .tel-sapin { background: var(--sapin); border: 0; color: #DCD5C6; }
+  .tel-sapin span { color: var(--rose); }
+  .tel-sapin b { display: block; color: var(--ecru, #FAF5EE); font-family: var(--police-titre); font-weight: 400; font-size: 14px; margin-bottom: 6px; }
+  .tel-sapin i { display: block; font-style: normal; font-size: 11.5px; padding: 5px 8px; margin-top: 4px; border-radius: 9px; background: rgba(255, 255, 255, .07); }
+  .tel-sapin i.choisi { outline: 1.5px solid var(--rose); color: var(--ecru, #FAF5EE); }
+  .tel-boutons { display: flex; gap: 5px; flex-wrap: wrap; }
+  .tel-boutons em { font-style: normal; font-weight: 700; font-size: 11px; padding: 5px 9px; border-radius: 99px; border: 1.3px solid var(--sapin); color: var(--sapin); }
+  .tel-boutons em.on { background: var(--sapin); color: var(--ecru, #FAF5EE); }
+  .cas-piste { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .cas-piste::-webkit-scrollbar { display: none; }
+  .cas { flex: 0 0 100%; scroll-snap-align: start; }
+  .cas-onglets { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin-bottom: 10px; }
+  .cas-onglets button { border: 1.3px solid var(--ligne); background: var(--blanc); color: var(--sapin); border-radius: 999px; padding: 5px 10px; font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .cas-onglets button[aria-selected="true"] { background: var(--sapin); border-color: var(--sapin); color: var(--ecru, #FAF5EE); }
+  .cas-nav { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
+  .cas-nav button { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--sapin); background: var(--blanc); color: var(--sapin); font-weight: 800; cursor: pointer; }
+  .cas-points { display: flex; gap: 6px; }
+  .cas-points i { width: 7px; height: 7px; border-radius: 50%; background: var(--ligne); }
+  .cas-points i.on { background: var(--rose-fort, #C96C80); }
+  .telephone figcaption { text-align: center; font-size: 14px; color: var(--encre-2); margin-top: 12px; }
+</style>
