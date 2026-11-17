@@ -1,9 +1,11 @@
 ---
 // L'accompagnement en visio, refait le 17/11/2026 « à la Justin Welsh » (plan validé par
-// Anne-Charlotte) : la promesse, pour qui c'est (et pour qui ce n'est pas), ce qu'elle reçoit
-// (en gras ce qu'elle reçoit, puis ce que ça change pour elle), ce qui change séance après
-// séance, les carnets, les avis, les 3 formules (#titre-tarifs, lien depuis l'accueil),
-// ses hésitations, et un seul bouton final.
+// Anne-Charlotte) : la promesse, les 3 formules, pour qui c'est (et pour qui ce n'est pas),
+// ce qu'elle reçoit (en gras ce qu'elle reçoit, puis ce que ça change pour elle), ce qui change
+// séance après séance, les carnets, les avis, ses hésitations, un seul bouton final.
+// 17/11 (soir), à sa demande : les 3 formules (#titre-tarifs, lien « Voir mes tarifs » de
+// l'accueil) sont juste sous la promesse, AVANT le détail de l'accompagnement, dans l'ordre
+// 80 €, 130 €, 330 € : qui clique sur « tarifs » ne tombe plus d'abord sur le 330 €.
 // Règles : jamais « petite chose » côté cliente (un changement, une habitude, avec un exemple),
 // jamais « ton chemin » ni « chemin parcouru », pas de durée en semaines (décision du 31/10),
 // un bouton par carte. Tarifs.astro et Deroule.astro restent tels quels pour les autres pages.
@@ -75,6 +77,36 @@ const freins = [
     </div>
   </section>
 
+  <section class="acc-formules">
+    <div class="contenu">
+      <p class="acc-kicker">Mes tarifs</p>
+      <h2 id="titre-tarifs">Trois façons de commencer</h2>
+      <div class="acc-offres">
+        <article class="acc-offre">
+          <h3>{bilan.nom}</h3>
+          <p class="acc-prix"><span>{bilan.prix}</span> {bilan.unite}</p>
+          <p>{bilan.description}</p>
+          <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{bilan.ctaTexte}</a>
+        </article>
+        <article class="acc-offre">
+          <h3>{deux.nom}</h3>
+          <p class="acc-prix"><span>{deux.prix}</span> {deux.unite}</p>
+          <p>{deux.description}</p>
+          <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio + '?formule=deux'}>{deux.ctaTexte}</a>
+        </article>
+        <article class="acc-offre acc-offre--pack">
+          <span class="pastille">Ce que je propose</span>
+          <h3>L’accompagnement</h3>
+          <p class="acc-prix"><span>{pack.prix}</span> {pack.unite}</p>
+          <p>Le bilan, 5 séances de suivi, ton carnet, et moi joignable entre les séances.</p>
+          <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
+        </article>
+      </div>
+      <p class="acc-rassure">La mutuelle rembourse une partie de chaque séance. Disponibilités : {horaires}.</p>
+      <p class="acc-rassure">* Une séance environ toutes les 2 semaines. Ta vie déborde ? On décale, sans souci.</p>
+    </div>
+  </section>
+
   <section>
     <div class="contenu grille-2 acc-pourqui">
       <div>
@@ -110,35 +142,6 @@ const freins = [
   </section>
 
   <Avis />
-
-  <section class="acc-formules">
-    <div class="contenu">
-      <h2 id="titre-tarifs">Trois façons de commencer</h2>
-      <div class="acc-offres">
-        <article class="acc-offre acc-offre--pack">
-          <span class="pastille">Ce que je propose</span>
-          <h3>L’accompagnement</h3>
-          <p class="acc-prix"><span>{pack.prix}</span> {pack.unite}</p>
-          <p>Le bilan, 5 séances de suivi, ton carnet, et moi joignable entre les séances.</p>
-          <a class="btn btn-rose btn-bloc" href={SITE.rdvPack}>{pack.ctaTexte}</a>
-        </article>
-        <article class="acc-offre">
-          <h3>{bilan.nom}</h3>
-          <p class="acc-prix"><span>{bilan.prix}</span> {bilan.unite}</p>
-          <p>{bilan.description}</p>
-          <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio}>{bilan.ctaTexte}</a>
-        </article>
-        <article class="acc-offre">
-          <h3>{deux.nom}</h3>
-          <p class="acc-prix"><span>{deux.prix}</span> {deux.unite}</p>
-          <p>{deux.description}</p>
-          <a class="btn btn-contour btn-bloc" href={SITE.rdvVisio + '?formule=deux'}>{deux.ctaTexte}</a>
-        </article>
-      </div>
-      <p class="acc-rassure">La mutuelle rembourse une partie de chaque séance. Disponibilités : {horaires}.</p>
-      <p class="acc-rassure">* Une séance environ toutes les 2 semaines. Ta vie déborde ? On décale, sans souci.</p>
-    </div>
-  </section>
 
   <section class="acc-freins-section">
     <div class="contenu">
@@ -190,9 +193,9 @@ const freins = [
   .acc-etapes span { color: var(--encre-2); font-size: 16px; }
 
   .acc-formules { background: var(--ecru-2); }
-  #titre-tarifs { scroll-margin-top: 96px; }
+  #titre-tarifs { scroll-margin-top: 130px; }
   .acc-offres { display: grid; gap: 18px; margin-top: 22px; align-items: stretch; }
-  @media (min-width: 860px) { .acc-offres { grid-template-columns: 1.2fr 1fr 1fr; } }
+  @media (min-width: 860px) { .acc-offres { grid-template-columns: 1fr 1fr 1.2fr; } }
   .acc-offre { position: relative; display: flex; flex-direction: column; gap: 6px; background: var(--blanc); border: 1.5px solid var(--ligne); border-radius: var(--rayon-grand); padding: 26px 22px 22px; }
   .acc-offre h3 { margin: 0; }
   .acc-offre p { margin: 0 0 8px; color: var(--encre-2); font-size: 16px; }
