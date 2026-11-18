@@ -44,13 +44,82 @@ const recois = [
   ['Tes repas en photo, sur Gooodeat', 'on les regarde ensemble au rendez-vous, sans compter et sans jugement.'],
   ['Ton mode d’emploi, à la fin', 'ce qui marche pour toi, et quoi faire si ça revient.'],
 ];
-const etapes = [
-  ['Avant le bilan', 'Un petit questionnaire de 3 minutes. Je lis tes réponses avant qu’on se voie.'],
-  ['Le lendemain du bilan', 'Tu commences ton premier changement. Par exemple : des repas à heures régulières, ou mâcher 10 fois tes 5 premières bouchées.'],
-  ['3 jours après', 'Tu me dis en un clic si tu l’as fait, un peu, ou pas encore. Si ça coince, on ajuste.'],
-  ['Toutes les 2 semaines', 'On regarde ce qui a bougé, et on ajoute le changement suivant.'],
-  ['À ta 6e séance', 'Tu repars avec ton mode d’emploi : ce qui marche pour toi, et quoi faire si ça revient.'],
-];
+// 18/11/2026 (ACJ) : la frise n'est plus la même pour tout le monde, elle suit l'onglet du
+// carnet (Ventre, Endométriose, SOPK, Ménopause, Mieux manger). En tête, « Ce qu'on vise » :
+// ce que la personne y gagne. Troubles digestifs, endo : au moins 30 à 50 % de symptômes en
+// moins (sa formation endo : « l'objectif n'est pas d'être à zéro, c'est de se sentir mieux »),
+// on refait l'échelle au bout d'une semaine ; on ne parle pas de mâcher, on parle de symptômes.
+// Endo : le ventre d'abord s'il y a des symptômes digestifs, et autour l'alimentation qui aide.
+// Poids : une conséquence, jamais en avant ; pas de balance à chaque séance (sa méthode :
+// l'évolution se lit aux vêtements). Ménopause : pas encore validée par elle.
+const ORDRE_CARNETS = ['digestif', 'endo', 'sopk', 'meno', 'general'] as const;
+const avant = ['Avant le bilan', 'Un questionnaire de 3 minutes. Je lis tes réponses avant qu’on se voie.'];
+const unClic = ['3 jours après', 'Tu me dis en un clic si tu l’as fait, un peu, ou pas encore. Si ça coince, on ajuste.'];
+const frises: Record<(typeof ORDRE_CARNETS)[number], { vise: string; etapes: string[][] }> = {
+  digestif: {
+    vise: 'Au moins 30 à 50 % de symptômes en moins. C’est ça qui change ta journée.',
+    etapes: [
+      ['Avant le bilan', 'Un questionnaire de 3 minutes : ce qui t’embête le plus, et tout ce que tu as déjà essayé.'],
+      ['Au bilan', 'Tu notes tes symptômes : c’est ton point de départ. Un intestin irritable a beaucoup de causes possibles. On cherche celle qui pèse le plus chez toi, et on commence par elle.'],
+      ['Au bout d’une semaine', 'Tu notes à nouveau tes symptômes. Ça baisse ? On garde. Rien ne bouge ? On change de piste, sans attendre.'],
+      ['Toutes les 2 semaines', 'On compare tes symptômes à ton point de départ, et on passe à l’étape suivante.'],
+      ['À ta 6e séance', 'Tu repars avec ton mode d’emploi : ce qui calme ton ventre, et quoi faire si ça revient.'],
+    ],
+  },
+  // 18/11 (ACJ) : pas « anti-inflammatoire » (terme marketing). Le déclic visé : être écoutée
+  // et crue, comprendre ce qui se passe, et le LIEN entre son ventre et ses règles (75 à 98 %
+  // des patientes endo ont des troubles digestifs, sa formation) ; ce que les patientes
+  // écrivent dans le /bilan : « est-ce qu'il y a un lien ? », « jamais vraiment écoutée »,
+  // « on m'a retiré tellement d'aliments ». Puis : le ventre d'abord, et autour l'alimentation
+  // qui l'aide le plus, construite sur sa vraie vie.
+  endo: {
+    vise: 'Comprendre ce qui se passe dans ton corps, et te sentir mieux. Pas zéro symptôme : au moins 30 à 50 % en moins.',
+    etapes: [
+      ['Avant le bilan', 'Un questionnaire de 3 minutes. Tu peux tout me dire : ton ventre, tes règles, tout ce que tu as déjà essayé. Je lis tout avant qu’on se voie.'],
+      ['Au bilan', 'Je t’écoute, et je te crois. On regarde où tu as mal, quand, à quel moment de ton cycle, et on fait le lien entre ton ventre et tes règles. Tu notes tes symptômes : c’est ton point de départ.'],
+      ['Ton premier plan', 'Ton ventre gonfle, te fait mal ou te brûle ? On s’en occupe en premier, pour le calmer. Et autour, on construit l’alimentation qui t’aide le plus, à partir de ta vraie vie : on ajoute, on ne te retire pas ce que tu aimes.'],
+      ['Au bout d’une semaine', 'Tu notes à nouveau tes symptômes. Ce qui t’aide, on le garde. Le reste, on l’ajuste.'],
+      ['Toutes les 2 semaines', 'On regarde ce qui a bougé, phase par phase de ton cycle, et on passe à l’étape suivante.'],
+      ['À ta 6e séance', 'Ton mode d’emploi : ce qui t’aide, à quel moment du cycle, et quoi faire les jours où ça va moins bien.'],
+    ],
+  },
+  // SMOP : l'arbre de la formation SOPK (guide « Ovaire et contre tout ») part de l'objectif
+  // (poids, insulinorésistance, symptômes, désir de grossesse, comprendre) ; prise de sang
+  // refaite « deux, trois mois après » dans les cas.
+  sopk: {
+    vise: 'Te sentir mieux, et voir tes paramètres s’améliorer : tes cycles, ta peau, tes fringales, ta prise de sang.',
+    etapes: [
+      avant,
+      ['Au bilan', 'On regarde ce que ton SMOP te fait vivre, et ta prise de sang si tu en as une. Insulinorésistance, cycles, peau, énergie, envie d’un bébé : selon ce qui ressort, on ne commence pas par la même chose.'],
+      ['Le lendemain du bilan', 'Tu commences ta première habitude, celle qui répond à ta priorité. Par exemple : regarder ton assiette avec l’image du sablier.'],
+      unClic,
+      ['Toutes les 2 semaines', 'On regarde ce qui a bougé, ton énergie, tes fringales, tes cycles, et on ajoute l’habitude suivante.'],
+      ['À ta 6e séance', 'Ton mode d’emploi : ce qui marche pour toi. Et une prise de sang à refaire avec ton médecin, pour voir tes paramètres bouger.'],
+    ],
+  },
+  meno: {
+    vise: 'Retrouver de l’énergie et tes nuits, et te sentir bien dans ce corps qui change.',
+    etapes: [
+      avant,
+      ['Au bilan', 'On fait le point sur ce qui te pèse le plus : tes nuits, ta fatigue, ton ventre plat le matin et gonflé le soir… et on commence par là.'],
+      ['Le lendemain du bilan', 'Tu commences ta première habitude. Par exemple : un goûter vers 16 h, ou souper un peu plus tôt.'],
+      unClic,
+      ['Toutes les 2 semaines', 'On regarde ce qui a bougé, tes nuits, ton énergie, et on ajoute l’habitude suivante.'],
+      ['À ta 6e séance', 'Ton mode d’emploi : ce qui marche pour toi, et quoi faire si ça revient.'],
+    ],
+  },
+  general: {
+    vise: 'Te sentir mieux d’abord : de l’énergie, des repas qui te calent. Le poids suit, et il tient.',
+    etapes: [
+      avant,
+      ['Au bilan', 'On part de tes vrais repas, pas d’un menu tout fait, et on choisit ton premier changement : celui qui rentre dans ta semaine.'],
+      ['Le lendemain du bilan', 'Tu commences ta première habitude. Par exemple : tes pâtes bolo, avec deux fois plus de sauce que de pâtes.'],
+      unClic,
+      ['Toutes les 2 semaines', 'On regarde comment tu te sens, et si ton poids suit. Pas de balance à chaque séance : tes vêtements le disent souvent avant. Puis on ajoute l’habitude suivante.'],
+      ['À ta 6e séance', 'Ton mode d’emploi : ce qui marche pour toi, et comment garder le cap quand la vie déborde.'],
+    ],
+  },
+};
 const freins = [
   ['« Je vais devoir me priver »', 'Non. Tu gardes ton chocolat, tes pâtes, ton fromage. On ajoute ce qui manque, on ne retire pas ce que tu aimes.'],
   ['« Je n’ai pas le temps »', 'Tes pâtes bolo avec plus de sauce, ça ne prend pas une minute de plus. Un seul changement à la fois, celui qui rentre dans ta semaine.'],
@@ -133,10 +202,17 @@ const freins = [
     <div class="contenu">
       <h2>Ce qui change, séance après séance</h2>
       <div class="acc-change__grille">
-        <CarnetsTelephone ordre={['digestif', 'endo', 'sopk', 'meno', 'general']} />
-        <ol class="acc-etapes">
-          {etapes.map(([quand, quoi]) => <li><strong>{quand}</strong><span>{quoi}</span></li>)}
-        </ol>
+        <CarnetsTelephone ordre={[...ORDRE_CARNETS]} auto={false} />
+        <div class="acc-frises" aria-live="polite">
+          {ORDRE_CARNETS.map((cle, k) => (
+            <div class="acc-frise" data-frise={cle} hidden={k !== 0}>
+              <p class="acc-vise"><span>Ce qu’on vise</span>{frises[cle].vise}</p>
+              <ol class="acc-etapes">
+                {frises[cle].etapes.map(([quand, quoi]) => <li><strong>{quand}</strong><span>{quoi}</span></li>)}
+              </ol>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -182,7 +258,9 @@ const freins = [
   .acc-recois li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--rose); font-weight: 800; }
   .acc-recois strong { color: var(--ecru); }
 
-  .acc-change__grille { display: grid; gap: 30px; align-items: center; margin-top: 22px; }
+  .acc-change__grille { display: grid; gap: 30px; align-items: start; margin-top: 22px; }
+  .acc-vise { margin: 0 0 22px; padding: 14px 18px; border-radius: var(--rayon); background: var(--rose-2, #F7DCE1); font-family: var(--police-titre); font-size: 19px; line-height: 1.35; color: var(--sapin); }
+  .acc-vise span { display: block; margin-bottom: 4px; font-family: var(--police-texte); font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--rose-fort); }
   @media (min-width: 780px) { .acc-change__grille { grid-template-columns: 290px 1fr; gap: 48px; } }
   .acc-etapes { list-style: none; margin: 0; padding: 0; counter-reset: etape; }
   .acc-etapes li { position: relative; padding: 0 0 22px 50px; counter-increment: etape; }
@@ -216,3 +294,11 @@ const freins = [
   .acc-freins p { margin: 0; color: var(--encre-2); font-size: 15.5px; }
   .acc-freins .acc-frein { font-family: var(--police-titre); color: var(--sapin); font-size: 17px; margin-bottom: 4px; }
 </style>
+
+<script>
+  // 18/11/2026 : la frise suit l'onglet du carnet (événement « carnet-change » de CarnetsTelephone).
+  document.addEventListener('carnet-change', (e) => {
+    const cle = (e as CustomEvent<string>).detail;
+    document.querySelectorAll<HTMLElement>('.acc-frise').forEach((f) => { f.hidden = f.dataset.frise !== cle; });
+  });
+</script>

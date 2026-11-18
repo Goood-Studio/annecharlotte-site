@@ -10,13 +10,16 @@ interface Props {
   exemple?: Cle;
   /** Ou l'ordre complet des carnets (17/11 : /accompagnement/ commence par le ventre). */
   ordre?: Cle[];
+  /** Défilement tout seul toutes les 5 s. Coupé quand la page fait suivre un autre bloc
+   *  (18/11 : la frise de /accompagnement/ change avec l'onglet, elle ne doit pas bouger seule). */
+  auto?: boolean;
 }
-const { exemple = 'general', ordre } = Astro.props;
+const { exemple = 'general', ordre, auto = true } = Astro.props;
 const cles = ordre ?? [exemple, ...(Object.keys(EXEMPLES_CARNET) as Cle[]).filter((k) => k !== exemple)];
 const cas = cles.map((k) => ({ id: k, ...EXEMPLES_CARNET[k] }));
 ---
 
-<figure class="telephone" aria-label="Exemples de carnets, tels que tes patientes les reçoivent sur leur téléphone">
+<figure class="telephone" aria-label="Exemples de carnets, tels que tes patientes les reçoivent sur leur téléphone" data-cles={cles.join(',')} data-auto={auto ? 'oui' : 'non'}>
   <div class="cas-onglets" role="tablist" aria-label="Choisir un exemple">
     {cas.map((c, k) => <button type="button" role="tab" data-cas={k} aria-selected={k === 0 ? 'true' : 'false'}>{c.label}</button>)}
   </div>
@@ -47,23 +50,30 @@ const cas = cles.map((k) => ({ id: k, ...EXEMPLES_CARNET[k] }));
 
 <script>
   // Glisser au doigt, flèches, étiquettes, et un défilement doux toutes les 5 secondes
-  // tant qu'on n'y touche pas.
+  // tant qu'on n'y touche pas (sauf data-auto="non"). À chaque changement, l'événement
+  // « carnet-change » (detail = la clé : digestif, endo…) permet à la page de suivre.
   document.querySelectorAll<HTMLElement>('.telephone').forEach((tel) => {
     const piste = tel.querySelector<HTMLElement>('.cas-piste');
     if (!piste) return;
     const n = piste.children.length;
-    let i = 0, auto = true;
+    const cles = (tel.dataset.cles || '').split(',');
+    let i = 0, auto = tel.dataset.auto !== 'non';
+    // Pendant un défilement lancé par un clic, on ignore la position intermédiaire de la
+    // piste : sinon un clic rapide sur un autre onglet pouvait ramener l'onglet d'avant.
+    let clicJusqua = 0;
     const montrer = (k: number, doux = true) => {
       i = (k + n) % n;
+      if (doux) clicJusqua = Date.now() + 900;
       piste.scrollTo({ left: piste.clientWidth * i, behavior: doux ? 'smooth' : 'auto' });
       tel.querySelectorAll('[data-cas]').forEach((b, j) => b.setAttribute('aria-selected', String(j === i)));
       tel.querySelectorAll('.cas-points i').forEach((p, j) => p.classList.toggle('on', j === i));
+      tel.dispatchEvent(new CustomEvent('carnet-change', { detail: cles[i], bubbles: true }));
     };
     const stop = () => { auto = false; };
     tel.querySelectorAll<HTMLElement>('[data-cas]').forEach((b) => b.addEventListener('click', () => { stop(); montrer(+b.dataset.cas!); }));
     tel.querySelectorAll<HTMLElement>('[data-cas-pas]').forEach((b) => b.addEventListener('click', () => { stop(); montrer(i + +b.dataset.casPas!); }));
     let t: ReturnType<typeof setTimeout>;
-    piste.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => { const k = Math.round(piste.scrollLeft / piste.clientWidth); if (k !== i) { i = k; montrer(k, false); } }, 120); }, { passive: true });
+    piste.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(() => { if (Date.now() < clicJusqua) return; const k = Math.round(piste.scrollLeft / piste.clientWidth); if (k !== i) { i = k; montrer(k, false); } }, 120); }, { passive: true });
     ['pointerdown', 'touchstart', 'wheel'].forEach((e) => piste.addEventListener(e, stop, { passive: true }));
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(() => { if (auto) montrer(i + 1); }, 5000);
   });
