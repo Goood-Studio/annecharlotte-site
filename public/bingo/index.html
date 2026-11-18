@@ -93,5 +93,24 @@ footer a { color: var(--forest); font-weight: 600; }
   <span>Anne-Charlotte Jalhay, diététicienne agréée · <a href="https://www.annecharlotte.be/">annecharlotte.be</a></span>
 </footer>
 <a class="wa-flottant" href="https://wa.me/32472629195?text=Bonjour%2C%20je%20suis%20sur%20votre%20site%20et%20j%E2%80%99ai%20une%20question%20%3A%20" aria-label="Poser une question sur WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" fill="currentColor"><path d="M16 2.9C8.8 2.9 3 8.7 3 15.9c0 2.3.6 4.5 1.8 6.5L3 29.1l6.9-1.8c1.9 1 4 1.6 6.1 1.6 7.2 0 13-5.8 13-13S23.2 2.9 16 2.9zm0 23.7c-1.9 0-3.8-.5-5.4-1.5l-.4-.2-4.1 1.1 1.1-4-.3-.4c-1.1-1.7-1.6-3.7-1.6-5.7 0-5.9 4.8-10.7 10.7-10.7s10.7 4.8 10.7 10.7-4.8 10.7-10.7 10.7zm5.9-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.6.1-.2.1-.4 0-.6-.1-.2-.7-1.8-1-2.4-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.4c.2.2 2.3 3.5 5.5 4.9.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg><span class="wa-texte">Une question ?</span></a>
+<script>
+// Arrivée par un lien de liens.annecharlotte.be (?via=…) : on compte le
+// téléchargement du PDF pour ce lien, puis on nettoie l'adresse.
+(function () {
+  var p = new URLSearchParams(location.search), via = (p.get('via') || '').toLowerCase();
+  if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(via)) return;
+  p.delete('via');
+  var q = p.toString();
+  history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
+  var bouton = document.querySelector('a.bouton[href$=".pdf"]');
+  if (!bouton) return;
+  bouton.addEventListener('click', function () {
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+    var url = 'https://bgenoxwpwhqvsqdupnub.supabase.co/functions/v1/go?' + new URLSearchParams({ l: via, e: 'telechargement', tz: tz });
+    try { navigator.sendBeacon(url); } catch (e) {}
+  }, { once: true });
+})();
+</script>
 </body>
 </html>
