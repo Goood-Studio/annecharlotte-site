@@ -9,6 +9,7 @@
 // Le jour de l'ouverture : remplacer les <span aria-disabled> par des liens vers le bilan.
 import Base from '../../layouts/Base.astro';
 import ListeAttente from '../../components/ListeAttente.astro';
+import Reseaux from '../../components/Reseaux.astro';
 import { u } from '../../data/site';
 
 const IMG = {
@@ -534,7 +535,8 @@ const wave = [6, 10, 14, 8, 16, 12, 18, 9, 13, 7, 15, 11, 6, 12, 8, 14, 10, 6].m
 <h2>Ma méthode de consultation, dans ton WhatsApp</h2>
 <p>En consultation, mes patientes m'envoient leurs assiettes en photo sur WhatsApp, et on avance une habitude à la fois. C'est ce qui marche le mieux, et de loin.</p>
 <p>« Et toi » reprend cette méthode pour celles qui veulent avancer seules, à leur rythme. Les cartes, les vidéos et les vocaux, c'est moi. Floris, mon assistante IA, regarde tes photos avec mes repères.</p>
-<p style="color: #52625B; font-size: 16px;">Anne-Charlotte Jalhay, diététicienne agréée en Belgique.</p>
+<p style="color: #52625B; font-size: 16px; margin-bottom: 4px;">Anne-Charlotte Jalhay, diététicienne agréée en Belgique.</p>
+<Reseaux class="etoi-reseaux" />
 </div>
 </div>
 </section>
@@ -630,6 +632,7 @@ const wave = [6, 10, 14, 8, 16, 12, 18, 9, 13, 7, 15, 11, 6, 12, 8, 14, 10, 6].m
 </script>
 
 <style>
+  :global(.etoi-reseaux) { color: #52625B; --reseaux-survol: var(--sapin); }
   .et-toi { background: #FAF5EE; color: #22312C; }
   .et-attente { display: flex; justify-content: center; text-align: left; margin-top: 34px; }
 </style>

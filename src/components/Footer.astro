@@ -1,6 +1,7 @@
 ---
 import villesData from '../data/villes.json';
 import { SITE, u } from '../data/site';
+import Reseaux from './Reseaux.astro';
 
 const villes = villesData.villes;
 const annee = new Date().getFullYear();
@@ -19,6 +20,7 @@ const annee = new Date().getFullYear();
           <a href={SITE.whatsappMessage}>WhatsApp : {SITE.telephone}</a><br />
           <a href={'mailto:' + SITE.email}>{SITE.email}</a>
         </p>
+        <Reseaux class="pied-reseaux" />
       </div>
 
       <nav aria-label="Accompagnements">
@@ -86,6 +88,7 @@ const annee = new Date().getFullYear();
     color: var(--ecru);
     font-weight: 400;
   }
+  .colonnes :global(.pied-reseaux) { color: #E6DFD1; --reseaux-survol: var(--rose); margin-top: -6px; }
   .pied-titre {
     font-family: var(--police-texte);
     font-size: 13px;

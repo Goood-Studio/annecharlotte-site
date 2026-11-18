@@ -11,6 +11,7 @@ import { avecIllustration } from '../../data/illustrations';
 import redirections from '../../data/redirections.json';
 import { SITE, u } from '../../data/site';
 import { faqJsonLd } from '../../data/jsonld';
+import Reseaux from '../../components/Reseaux.astro';
 
 export function getStaticPaths() {
   const articles = articlesData.articles.map((article) => ({
@@ -105,6 +106,7 @@ function dateFr(iso: string | null) {
             Par Anne-Charlotte Jalhay, diététicienne agréée, spécialisée en
             troubles digestifs et santé féminine.
           </p>
+          <Reseaux class="article-reseaux" />
         </div>
       </header>
 
@@ -163,6 +165,7 @@ function dateFr(iso: string | null) {
   .article-meta a { color: var(--rose); }
   .article-entete h1 { max-width: 22ch; }
   .article-signature { font-size: 15.5px; color: #B9C4BC; margin: 0; }
+  .article-entete :global(.article-reseaux) { color: #B9C4BC; --reseaux-survol: var(--rose); margin-top: 6px; margin-bottom: -10px; }
 
   .article-corps { padding: 44px 20px 8px; max-width: 780px; }
   .article-corps :global(h2) { margin-top: 36px; }

@@ -46,6 +46,8 @@ export const SITE = {
   nutriciens: 'https://www.nutriciens.com',
   instagram: 'https://www.instagram.com/annecharlotte.diet/',
   linkedin: 'https://www.linkedin.com/in/annecharlottejalhay/',
+  facebook: 'https://www.facebook.com/ACdietetique',
+  youtube: 'https://www.youtube.com/@mangerlibre',
 
   // La chaîne WhatsApp d'Anne-Charlotte : coller ici le lien d'invitation
   // (whatsapp.com/channel/…) dès que la chaîne est créée. Tant que c'est
