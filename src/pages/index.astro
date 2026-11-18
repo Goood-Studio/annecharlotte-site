@@ -11,13 +11,11 @@ import ChatFaq from '../components/ChatFaq.astro';
 import Avis from '../components/Avis.astro';
 import VisioRassure from '../components/VisioRassure.astro';
 import { prochaineDispo } from '../data/dispos';
-import villesData from '../data/villes.json';
 import articlesData from '../data/articles.json';
 import { SITE, u } from '../data/site';
 import { cabinetJsonLd } from '../data/jsonld';
 import { guideDeLArticle } from '../data/guides-site';
 
-const villes = villesData.villes;
 // 09/11/2026 : les 3 articles de l'accueil sont choisis (avec leur guide), pas
 // juste les 3 derniers. Un slug absent (pas encore publié) est remplacé par
 // le plus récent des autres.
@@ -196,20 +194,8 @@ const [dispoVisio, dispoMalonne] = await Promise.all([
 
   <Avis />
 
-  <!-- Villes : distribution du jus SEO vers les pages locales -->
-  <section>
-    <div class="contenu" data-reveal>
-      <h2>Près de chez toi</h2>
-      <p class="section-chapo">
-        En visio où que tu sois, ou en cabinet à Malonne et Namur.
-      </p>
-      <div class="villes-liens">
-        {villes.map((v) => (
-          <a class="ville-lien" href={u('/' + v.slug + '/')}>Diététicienne {v.ville}</a>
-        ))}
-      </div>
-    </div>
-  </section>
+  {/* 18/11/2026 (ACJ) : « Près de chez toi » retiré de l'accueil, « ça prend trop de place ».
+      Les liens vers les pages villes restent dans le pied de page de toutes les pages. */}
 
   <ChatFaq />
 
