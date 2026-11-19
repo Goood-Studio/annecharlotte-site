@@ -179,10 +179,12 @@
     bandeau.className = 'ac-cookies';
     bandeau.setAttribute('role', 'region');
     bandeau.setAttribute('aria-label', 'Cookies');
-    var outils = [GA4_ID && 'Google Analytics', DATAFAST_ID && !DATAFAST_SANS_COOKIE && 'DataFast'].filter(Boolean).join(' et ') || 'des outils de mesure';
+    var liste = [GA4_ID && 'Google Analytics', DATAFAST_ID && !DATAFAST_SANS_COOKIE && 'DataFast'].filter(Boolean);
+    var outils = liste.join(' et ') || 'des outils de mesure';
+    var verbe = liste.length === 1 ? 'compte' : 'comptent';
     bandeau.innerHTML =
       '<p><strong>Des cookies sans sucre ajouté</strong>' +
-      'Avec ton accord, ' + outils + ' comptent les visites, pour savoir ce qui t’aide vraiment. ' +
+      'Avec ton accord, ' + outils + ' ' + verbe + ' les visites, pour savoir ce qui t’aide vraiment. ' +
       'Pas de pub, promis, et tu peux changer d’avis en bas de page. ' +
       '<a href="' + politique + '#cookies">En savoir plus</a></p>' +
       '<div class="ac-cookies-actions">' +
