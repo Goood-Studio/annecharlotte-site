@@ -91,20 +91,23 @@
     chargerGA();
     chargerDataFast();
   }
-  // Retrait du consentement : on coupe GA et on efface ses cookies.
-  function retirer() {
-    try { if (charge.ga && window.gtag) gtag('consent', 'update', { analytics_storage: 'denied' }); } catch (e) {}
-    if (GA4_ID) window['ga-disable-' + GA4_ID] = true;
-    // (datafast_* : anciens cookies de l'époque Framer, avant le mode sans cookie)
+  // Efface les cookies dont le nom correspond (domaine www et domaine racine).
+  function effacer(motif) {
     var noms = document.cookie.split(';').map(function (c) { return c.split('=')[0].trim(); });
     noms.forEach(function (n) {
-      if (/^_ga(_|$)|^datafast_/.test(n)) {
+      if (motif.test(n)) {
         [location.hostname, '.' + location.hostname.replace(/^www\./, '')].forEach(function (d) {
           document.cookie = n + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=' + d;
         });
         document.cookie = n + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
       }
     });
+  }
+  // Retrait du consentement : on coupe GA et on efface ses cookies.
+  function retirer() {
+    try { if (charge.ga && window.gtag) gtag('consent', 'update', { analytics_storage: 'denied' }); } catch (e) {}
+    if (GA4_ID) window['ga-disable-' + GA4_ID] = true;
+    effacer(/^_ga(_|$)/);
   }
 
   // ——— Événements utiles (RDV, WhatsApp, guides) ———
@@ -205,6 +208,10 @@
   // ——— Démarrage ———
   var force = /[?&]cookies(=|&|$)/.test(location.search);
   var choix = lireChoix();
+  // Ménage des cookies hérités du site Framer (avant le 29/08/2026) : DataFast
+  // tourne désormais sans cookie, et GA n'a droit à ses cookies qu'avec accord.
+  if (DATAFAST_SANS_COOKIE) effacer(/^datafast_/);
+  if (choix !== 'oui') effacer(/^_ga(_|$)/);
   appliquer(choix);
   function demarrer() { if (force || (aDemander && !choix)) ouvrir(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', demarrer);
