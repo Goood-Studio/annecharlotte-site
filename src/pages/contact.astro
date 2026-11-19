@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import FaqDiet from '../components/FaqDiet.astro';
 import CtaFinal from '../components/CtaFinal.astro';
 import ChatFaq from '../components/ChatFaq.astro';
+import Reseaux from '../components/Reseaux.astro';
 import { SITE } from '../data/site';
 import { cabinetJsonLd, faqJsonLd } from '../data/jsonld';
 import { FAQ_DIET } from '../data/contenu';
@@ -65,6 +66,11 @@ const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonL
           <p>Pour tout le reste, y compris les demandes professionnelles.</p>
           <a class="btn btn-contour" href={'mailto:' + SITE.email}>{SITE.email}</a>
         </div>
+        <div class="rang moyen rang-reseaux">
+          <h3>Sur les réseaux</h3>
+          <p>Pour me suivre et ne rien rater de mes conseils.</p>
+          <Reseaux avecNoms class="contact-reseaux" />
+        </div>
       </div>
     </div>
   </section>
@@ -117,4 +123,10 @@ const jsonLd = [...SITE.cabinets.map((c) => cabinetJsonLd(c, siteUrl)), faqJsonL
   }
   .rang.moyen .btn { min-height: 48px; padding: 10px 20px; font-size: 16px; justify-self: start; }
   @media (min-width: 760px) { .rang.moyen .btn { justify-self: end; } }
+
+  .rang-reseaux :global(.contact-reseaux) { margin-top: 12px; }
+  @media (min-width: 760px) {
+    .rang.moyen.rang-reseaux { grid-template-columns: 240px 1fr; }
+    .rang-reseaux :global(.contact-reseaux) { grid-column: 2; margin-top: 8px; }
+  }
 </style>
