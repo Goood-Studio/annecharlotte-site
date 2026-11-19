@@ -45,6 +45,12 @@ export const ILLUSTRATIONS: Record<string, Illustration> = {
     legende: "L'échelle de Bristol : on vise le 3 et le 4.",
     largeur: 1400, hauteur: 855,
   },
+  'coup-de-barre-apres-manger': {
+    section: 'est un sablier',
+    alt: 'Deux sabliers dessinés au crayon : à gauche, le sable rose file tout seul ; à droite, des noix, des flocons et une pomme le freinent',
+    legende: 'Sable fin, tout seul : ça file d’un coup. Avec des freins : ça passe doucement. Extrait du guide « Le sablier ».',
+    largeur: 900, hauteur: 672,
+  },
   'epuisee-ou-perimenopause': {
     section: 'Pourquoi manger moins ne marche pas',
     alt: 'Une femme au centre, entourée des neuf freins qui expliquent pourquoi manger moins ne marche pas, dessin au crayon',
