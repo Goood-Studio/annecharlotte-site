@@ -16,11 +16,16 @@
 
   // ——— Réglages ———
   var GA4_ID = ''; // ID de mesure GA4 (G-XXXXXXXXXX), à coller une fois la propriété créée
-  var DATAFAST_ID = ''; // data-website-id DataFast (dfid_…)
-  var DATAFAST_DOMAINE = 'annecharlotte.be';
-  // DataFast (script.js) dépose des cookies 365 jours (datafast_visitor_id…) :
-  // il passe derrière le bandeau, comme GA4. Même sa version « sans cookie »
-  // écrit en sessionStorage, donc elle resterait soumise au consentement.
+  var DATAFAST_ID = 'dfid_m5WwsB60wnlIhsZZLbPXv'; // site DataFast « www.annecharlotte.be », créé en 07/2025 (historique Framer conservé)
+  var DATAFAST_DOMAINE = 'www.annecharlotte.be'; // = domaine enregistré dans DataFast (comme Nutriciens)
+  // DataFast en mode « sans cookie » (décision de Valentin, 19/11/2026) : chargé
+  // dès l'arrivée pour compter tout le monde, sans cookie et sans transfert à
+  // Google (identifiant haché côté serveur, sel renouvelé chaque jour ; seul un
+  // identifiant de session temporaire est gardé en sessionStorage). Le réglage
+  // « Cookieless » du site est activé dans DataFast : les deux doivent rester
+  // alignés. Mettre false repasse DataFast (script.js, cookies 365 j) derrière
+  // le bandeau, comme GA4.
+  var DATAFAST_SANS_COOKIE = true;
   var CHOIX_DUREE_JOURS = 182; // APD : préférence gardée ~6 mois, puis on redemande (oui comme non)
   var COOKIE_GA_SECONDES = 60 * 60 * 24 * 180; // cookies _ga alignés sur la durée du choix
   var VERSION = 1; // à incrémenter si les outils ou les finalités changent : tout le monde est redemandé
@@ -30,7 +35,7 @@
   var script = document.currentScript;
   var politique = (script && script.getAttribute('data-politique')) || '/technique/politique-confidentialite/';
   var enProd = HOTES_MESURES.indexOf(location.hostname) !== -1;
-  var aDemander = !!GA4_ID || !!DATAFAST_ID;
+  var aDemander = !!GA4_ID || (!!DATAFAST_ID && !DATAFAST_SANS_COOKIE);
 
   // ——— Choix mémorisé ———
   function lireChoix() {
@@ -78,9 +83,10 @@
     if (!DATAFAST_ID || !enProd || charge.df) return;
     charge.df = true;
     window.datafast = window.datafast || function () { (window.datafast.q = window.datafast.q || []).push(arguments); };
-    chargerScript('https://datafa.st/js/script.js', { 'data-website-id': DATAFAST_ID, 'data-domain': DATAFAST_DOMAINE });
+    chargerScript('https://datafa.st/js/' + (DATAFAST_SANS_COOKIE ? 'script.cookieless.js' : 'script.js'), { 'data-website-id': DATAFAST_ID, 'data-domain': DATAFAST_DOMAINE });
   }
   function appliquer(choix) {
+    if (DATAFAST_SANS_COOKIE) chargerDataFast();
     if (choix !== 'oui') return;
     chargerGA();
     chargerDataFast();
@@ -89,6 +95,7 @@
   function retirer() {
     try { if (charge.ga && window.gtag) gtag('consent', 'update', { analytics_storage: 'denied' }); } catch (e) {}
     if (GA4_ID) window['ga-disable-' + GA4_ID] = true;
+    // (datafast_* : anciens cookies de l'époque Framer, avant le mode sans cookie)
     var noms = document.cookie.split(';').map(function (c) { return c.split('=')[0].trim(); });
     noms.forEach(function (n) {
       if (/^_ga(_|$)|^datafast_/.test(n)) {
@@ -169,7 +176,7 @@
     bandeau.className = 'ac-cookies';
     bandeau.setAttribute('role', 'region');
     bandeau.setAttribute('aria-label', 'Cookies');
-    var outils = [GA4_ID && 'Google Analytics', DATAFAST_ID && 'DataFast'].filter(Boolean).join(' et ') || 'des outils de mesure';
+    var outils = [GA4_ID && 'Google Analytics', DATAFAST_ID && !DATAFAST_SANS_COOKIE && 'DataFast'].filter(Boolean).join(' et ') || 'des outils de mesure';
     bandeau.innerHTML =
       '<p><strong>Des cookies sans sucre ajouté</strong>' +
       'Avec ton accord, ' + outils + ' comptent les visites, pour savoir ce qui t’aide vraiment. ' +

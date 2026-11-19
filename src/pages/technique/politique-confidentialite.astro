@@ -37,47 +37,50 @@ import { SITE, u } from '../../data/site';
       <p>
         Ces données sont traitées de manière confidentielle, conformément au
         RGPD (Règlement Général sur la Protection des Données). Ce site ne
-        dépose aucun cookie publicitaire. Les outils de mesure d’audience ne se
-        chargent qu’avec votre accord (voir le point 4).
+        dépose aucun cookie publicitaire. La mesure d’audience est décrite au
+        point 4.
       </p>
 
       <h2 id="cookies">4. Cookies et mesure d’audience</h2>
       <p>
-        À votre première visite, un petit bandeau vous demande si vous acceptez
-        les cookies de mesure d’audience. Tant que vous n’avez pas répondu, et
-        si vous refusez, aucun de ces cookies n’est déposé et rien n’est envoyé
-        aux outils ci-dessous. Refuser ne change rien à votre utilisation du site.
+        <strong>Une mesure de base, sans cookie.</strong> Pour savoir combien de
+        personnes visitent le site et ce qui leur est utile, nous utilisons
+        DataFast (datafa.st) dans son mode « sans cookie » : aucun cookie n’est
+        déposé et aucune donnée n’est transmise à Google. DataFast compte les
+        pages consultées, la provenance des visites (moteur de recherche, réseau
+        social…), le type d’appareil, le pays, et quelques gestes utiles (clic
+        vers la prise de rendez-vous, vers WhatsApp, téléchargement d’un guide).
+        Les visites sont reconnues par un identifiant anonyme calculé sur le
+        serveur de DataFast et renouvelé chaque jour ; seul un identifiant de
+        session temporaire est gardé dans votre navigateur, effacé à la
+        fermeture de l’onglet. Base légale : notre intérêt légitime à mesurer la
+        fréquentation du site (article 6.1.f du RGPD). Vous pouvez vous y
+        opposer en nous écrivant (voir le point 5).
       </p>
       <p>
-        Base légale : votre consentement (article 6.1.a du RGPD et article 10/2
-        de la loi belge du 30 juillet 2018). Si vous acceptez, deux outils
-        comptent les visites, de façon globale :
+        <strong>Google Analytics, seulement avec votre accord.</strong> À votre
+        première visite, un petit bandeau vous demande si vous acceptez les
+        cookies de Google Analytics 4. Tant que vous n’avez pas répondu, et si
+        vous refusez, aucun de ces cookies n’est déposé et rien n’est envoyé à
+        Google. Refuser ne change rien à votre utilisation du site. Base légale :
+        votre consentement (article 6.1.a du RGPD et article 10/2 de la loi
+        belge du 30 juillet 2018).
       </p>
       <ul>
         <li>
           <strong>Google Analytics 4</strong> (Google Ireland Limited) : pages
-          consultées, durée de visite, type d’appareil, pays et ville
-          approximatifs. Cookies <code>_ga</code> et <code>_ga_*</code>, gardés
+          consultées, durée de visite, type d’appareil, pays, et les mêmes
+          gestes utiles. Cookies <code>_ga</code> et <code>_ga_*</code>, gardés
           6 mois au maximum ; données conservées 14 mois. Google Signals, la
           personnalisation publicitaire et le partage de données avec Google
           sont désactivés. Google agit comme sous-traitant ; certaines données
           peuvent être traitées aux États-Unis, dans le cadre du Data Privacy
           Framework UE–États-Unis et, à défaut, de clauses contractuelles types.
         </li>
-        <li>
-          <strong>DataFast</strong> (datafa.st) : pages consultées, provenance
-          des visites (moteur de recherche, réseau social…), type d’appareil et
-          pays. Cookies <code>datafast_visitor_id</code>,
-          <code>datafast_visitor_first_seen_at</code> et
-          <code>datafast_visitor_session_count</code> (12 mois), et
-          <code>datafast_session_id</code> (30 minutes).
-        </li>
       </ul>
       <p>
-        Ils mesurent aussi quelques gestes utiles (clic vers la prise de
-        rendez-vous, vers WhatsApp, téléchargement d’un guide), pour savoir ce
-        qui vous aide vraiment. Les réponses que vous donnez dans les
-        questionnaires n’y sont jamais envoyées.
+        Les réponses que vous donnez dans les questionnaires ne sont jamais
+        envoyées à ces outils.
       </p>
       <p>
         Votre choix est retenu sur votre appareil (stockage local du navigateur,
@@ -85,7 +88,7 @@ import { SITE, u } from '../../data/site';
         vous le redemande. Vous pouvez le changer
         à tout moment :
         <a href={u('/technique/politique-confidentialite/') + '#cookies'} data-cookies-gerer>gérer les cookies</a>.
-        Retirer votre accord efface les cookies de mesure.
+        Retirer votre accord efface les cookies de Google Analytics.
       </p>
       <p>
         Les liens vers WhatsApp, cal.com (prise de rendez-vous) et les réseaux
@@ -119,7 +122,7 @@ import { SITE, u } from '../../data/site';
         votre consentement.
       </p>
 
-      <p class="maj">Version 2, mise à jour le 19 novembre 2026 (version 1 : 29 août 2026)</p>
+      <p class="maj">Version 3, mise à jour le 19 novembre 2026 (versions précédentes : 19 novembre 2026 et 29 août 2026)</p>
     </div>
   </section>
 </Base>
