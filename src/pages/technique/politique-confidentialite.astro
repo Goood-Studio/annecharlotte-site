@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { SITE } from '../../data/site';
+import { SITE, u } from '../../data/site';
 ---
 
 <Base
@@ -37,11 +37,63 @@ import { SITE } from '../../data/site';
       <p>
         Ces données sont traitées de manière confidentielle, conformément au
         RGPD (Règlement Général sur la Protection des Données). Ce site ne
-        dépose aucun cookie publicitaire et ne charge aucune ressource depuis
-        des serveurs tiers de suivi.
+        dépose aucun cookie publicitaire. Les outils de mesure d’audience ne se
+        chargent qu’avec votre accord (voir le point 4).
       </p>
 
-      <h2>4. Vos droits</h2>
+      <h2 id="cookies">4. Cookies et mesure d’audience</h2>
+      <p>
+        À votre première visite, un petit bandeau vous demande si vous acceptez
+        les cookies de mesure d’audience. Tant que vous n’avez pas répondu, et
+        si vous refusez, aucun de ces cookies n’est déposé et rien n’est envoyé
+        aux outils ci-dessous. Refuser ne change rien à votre utilisation du site.
+      </p>
+      <p>
+        Base légale : votre consentement (article 6.1.a du RGPD et article 10/2
+        de la loi belge du 30 juillet 2018). Si vous acceptez, deux outils
+        comptent les visites, de façon globale :
+      </p>
+      <ul>
+        <li>
+          <strong>Google Analytics 4</strong> (Google Ireland Limited) : pages
+          consultées, durée de visite, type d’appareil, pays et ville
+          approximatifs. Cookies <code>_ga</code> et <code>_ga_*</code>, gardés
+          6 mois au maximum ; données conservées 14 mois. Google Signals, la
+          personnalisation publicitaire et le partage de données avec Google
+          sont désactivés. Google agit comme sous-traitant ; certaines données
+          peuvent être traitées aux États-Unis, dans le cadre du Data Privacy
+          Framework UE–États-Unis et, à défaut, de clauses contractuelles types.
+        </li>
+        <li>
+          <strong>DataFast</strong> (datafa.st) : pages consultées, provenance
+          des visites (moteur de recherche, réseau social…), type d’appareil et
+          pays. Cookies <code>datafast_visitor_id</code>,
+          <code>datafast_visitor_first_seen_at</code> et
+          <code>datafast_visitor_session_count</code> (12 mois), et
+          <code>datafast_session_id</code> (30 minutes).
+        </li>
+      </ul>
+      <p>
+        Ils mesurent aussi quelques gestes utiles (clic vers la prise de
+        rendez-vous, vers WhatsApp, téléchargement d’un guide), pour savoir ce
+        qui vous aide vraiment. Les réponses que vous donnez dans les
+        questionnaires n’y sont jamais envoyées.
+      </p>
+      <p>
+        Votre choix est retenu sur votre appareil (stockage local du navigateur,
+        strictement nécessaire, sans cookie) pendant 6 mois, puis le bandeau
+        vous le redemande. Vous pouvez le changer
+        à tout moment :
+        <a href={u('/technique/politique-confidentialite/') + '#cookies'} data-cookies-gerer>gérer les cookies</a>.
+        Retirer votre accord efface les cookies de mesure.
+      </p>
+      <p>
+        Les liens vers WhatsApp, cal.com (prise de rendez-vous) et les réseaux
+        sociaux vous emmènent sur ces services, qui appliquent leur propre
+        politique de confidentialité.
+      </p>
+
+      <h2>5. Vos droits</h2>
       <p>Conformément à la législation belge et européenne, vous disposez des droits suivants :</p>
       <ul>
         <li>droit d’accès à vos données,</li>
@@ -51,10 +103,13 @@ import { SITE } from '../../data/site';
       </ul>
       <p>
         Pour exercer ces droits, contactez :
-        <a href={'mailto:' + SITE.email}>{SITE.email}</a>.
+        <a href={'mailto:' + SITE.email}>{SITE.email}</a>. Vous pouvez aussi
+        retirer votre accord aux cookies à tout moment, sans effet sur ce qui a
+        été mesuré avant, et introduire une plainte auprès de l’Autorité de
+        protection des données (<a href="https://www.autoriteprotectiondonnees.be">autoriteprotectiondonnees.be</a>).
       </p>
 
-      <h2>5. Sécurité</h2>
+      <h2>6. Sécurité</h2>
       <p>
         Nous mettons tout en œuvre pour assurer la sécurité de vos données.
         Celles-ci sont hébergées sur des plateformes sécurisées, et nous
@@ -64,7 +119,7 @@ import { SITE } from '../../data/site';
         votre consentement.
       </p>
 
-      <p class="maj">Dernière mise à jour : 29 août 2026</p>
+      <p class="maj">Version 2, mise à jour le 19 novembre 2026 (version 1 : 29 août 2026)</p>
     </div>
   </section>
 </Base>
