@@ -15,7 +15,7 @@
   'use strict';
 
   // ——— Réglages ———
-  var GA4_ID = ''; // ID de mesure GA4 (G-XXXXXXXXXX), à coller une fois la propriété créée
+  var GA4_ID = 'G-HDNKEPZMLD'; // propriété GA4 « annecharlotte.be » (properties/491183723, compte Goood Studio), reprise du site Framer
   var DATAFAST_ID = 'dfid_m5WwsB60wnlIhsZZLbPXv'; // site DataFast « www.annecharlotte.be », créé en 07/2025 (historique Framer conservé)
   var DATAFAST_DOMAINE = 'www.annecharlotte.be'; // = domaine enregistré dans DataFast (comme Nutriciens)
   // DataFast en mode « sans cookie » (décision de Valentin, 19/11/2026) : chargé
