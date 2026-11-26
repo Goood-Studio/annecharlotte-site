@@ -68,6 +68,8 @@ export const SITE = {
   // écrit dans la base Notion « Pré-consultations ». Tant que c'est vide,
   // le questionnaire s'affiche mais ne peut pas être envoyé.
   bilanEndpoint: 'https://consult-boussole-acj.netlify.app/api/bilan',
+  // Nutristant (AWS Paris) : chaque bilan arrive aussi dans « Questionnaires de bilan reçus », même réf. BIL.
+  nutristantBilan: 'https://qr87qte1ub.execute-api.eu-west-3.amazonaws.com/public/bilan',
 
   // Cabinets de consultation (adresses publiques, nécessaires au SEO local).
   cabinets: [

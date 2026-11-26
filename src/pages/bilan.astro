@@ -45,7 +45,7 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
       <div class="progression" aria-hidden="true" hidden><div class="progres-barre"><span></span></div></div>
       <p class="etape-num" aria-live="polite" hidden></p>
 
-      <form id="miroir" data-endpoint={endpoint} novalidate hidden>
+      <form id="miroir" data-endpoint={endpoint} data-nutristant={SITE.nutristantBilan} novalidate hidden>
         <div class="piege" aria-hidden="true">
           <label>Ton site web <input type="text" name="site_web" tabindex="-1" autocomplete="off" /></label>
         </div>
@@ -445,6 +445,17 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
       consentement: q('[name="consentement"]').checked,
     };
   }
+  // Ce que Nutristant reçoit : la même demande que la boussole, et « comment tu m'as connue » au nom de son canal Filo.
+  const CANAL_NUTRISTANT: Record<string, string> = { medecin: 'Med traitant', gyneco: 'Gyneco', gastro: 'Mon gastro', instagram: 'Insta', viavia: 'Via via', internet: 'Internet', soignant: 'Un autre soignant', autre: 'Autrement' };
+  function pourNutristant(r: ReturnType<typeof reponses>) {
+    return {
+      lien: 'anne-charlotte', action: 'envoyer', prenom: r.prenom, initiale: r.initiale,
+      demande: {
+        ref, date: new Date().toISOString(), motifs: r.motifs, demande: r.demande, pointB: r.pointB, miroir: r.miroir,
+        dejaEssaye: r.dejaEssaye, lieu: r.lieu, ...(r.connue ? { connue: r.connue, connu: { nom: CANAL_NUTRISTANT[r.connue] ?? r.connue } } : {}),
+      },
+    };
+  }
   qa<HTMLButtonElement>('[data-lieu]').forEach((bouton) =>
     bouton.addEventListener('click', async () => {
       if (dejaRepondu) return allerSurCal(bouton);
@@ -458,17 +469,23 @@ const endpoint = import.meta.env.PUBLIC_BILAN_ENDPOINT || SITE.bilanEndpoint;
       // La réservation ne doit jamais dépendre de l'envoi : s'il échoue ou
       // traîne, on part quand même sur cal.com après 4 secondes maximum.
       const endpoint = form.dataset.endpoint;
-      if (endpoint) {
-        await Promise.race([
-          fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reponses(bouton.dataset.lieu!)),
-            keepalive: true,
-          }).catch(() => null),
-          new Promise((r) => setTimeout(r, 4000)),
-        ]);
-      }
+      const r = reponses(bouton.dataset.lieu!);
+      const envois: Promise<unknown>[] = [];
+      if (endpoint) envois.push(fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(r),
+        keepalive: true,
+      }).catch(() => null));
+      // Et dans Nutristant, sa fiche « Questionnaires de bilan reçus » (pas les robots : champ piège ou trop rapide).
+      const nutristant = form.dataset.nutristant;
+      if (nutristant && !r.site_web && r.dureeSecondes >= 15) envois.push(fetch(nutristant, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pourNutristant(r)),
+        keepalive: true,
+      }).catch(() => null));
+      if (envois.length) await Promise.race([Promise.all(envois), new Promise((x) => setTimeout(x, 4000))]);
       ecrireMemo(ref);
       allerSurCal(bouton);
     })
